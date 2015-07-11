@@ -47,6 +47,7 @@ trap 'error "script killed"' SIGINT SIGQUIT
 [[ ! -f .env ]] && {
     msg "Copying ${c_y}.env.example$c_w to ${c_y}.env$c_w with a randomly generated ${c_g}APP_KEY"
     sed 's|^APP_KEY=.*|APP_KEY='"$(</dev/urandom tr -dc A-Za-z0-9 | head -c"${1:-32}")"'|' .env.example > .env
+    exit
 }
 
 msg "Running: ${c_m}composer installl --no-dev"
