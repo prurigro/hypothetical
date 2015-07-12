@@ -4,6 +4,7 @@
         <title>Hypothetical Template</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="{{ elixir("js/lib.js") }}"></script>
         <script src="{{ elixir("js/app.js") }}"></script>
         @if (Config::get('app.debug'))
