@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
     </head>
     <body class="{{ Request::path() == "/" ? "index" : Request::path() }}">
+        @include('elements.nav')
         @yield('page')
     </body>
 </html>
