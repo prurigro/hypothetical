@@ -6,7 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "radic/blade-extensions": "~6.0",
+        "erusev/parsedown": "~1.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
