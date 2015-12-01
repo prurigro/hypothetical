@@ -60,7 +60,7 @@ msg "Running: ${c_m}php artisan migrate"
 php artisan migrate || error "${c_m}php artisan migrate$c_w exited with an error status"
 
 msg "Running: ${c_m}npm install"
-npm install || error "${c_m}npm install$c_w exited with an error status"
+npm install --production || error "${c_m}npm install$c_w exited with an error status"
 
 msg "Running: ${c_m}bower install"
 bower install || error "${c_m}bower install$c_w exited with an error status"
