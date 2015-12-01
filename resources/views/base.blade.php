@@ -14,8 +14,9 @@
         @endif
         <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
     </head>
-    <body class="{{ Request::path() == "/" ? "index" : Request::path() }}">
-        @include('elements.nav')
-        @yield('page')
+    <body class="{{ Request::path() == "/" ? "index" : preg_replace('/\//', '-', Request::path()) }}">
+        @yield('page-top')
+        @yield('page-content')
+        @yield('page-bottom')
     </body>
 </html>

@@ -1,6 +1,6 @@
-@extends('main')
+@extends('public')
 
-@section('page')
+@section('page-content')
 
 <div class="container">
     <div class="content">
