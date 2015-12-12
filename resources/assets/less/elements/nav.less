@@ -1,3 +1,39 @@
-nav {
+nav.navbar {
+    background-color: @c_base;
     z-index: 1;
+
+    .navbar-logo {
+        top: 25px;
+        left: 15px;
+        width: 150px;
+        height: 150px;
+        background-image: url('/img/logo.png');
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    #navbar {
+        box-shadow: none;
+        border: none;
+
+        ul.nav {
+            li {
+                a {
+                    color: @c_text_light;
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+
+                &:hover a { color: @c_text; }
+                &.active a { color: @c_text; }
+                &.active a, &.active:hover a, &:hover a, &:focus a { background-color: transparent; }
+            }
+        }
+    }
+
+    .navbar-toggle {
+        border: none;
+        &, &:hover, &:focus { background-color: transparent; }
+     }
 }
