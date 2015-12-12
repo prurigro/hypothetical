@@ -148,6 +148,7 @@ return [
          * Custom Service Providers...
          */
         Radic\BladeExtensions\BladeExtensionsServiceProvider::class,
+        Gwnobots\LaravelHead\LaravelHeadServiceProvider::class,
 
     ],
 
