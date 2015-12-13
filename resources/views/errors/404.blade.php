@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Be Right Back - {{ env('SITE_NAME') }}</title>
+        <title>Page Not Found - {{ env('SITE_NAME') }}</title>
 
         <style>
             html, body {
@@ -38,7 +38,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Be Right Back</div>
+                <div class="title">Page Not Found</div>
             </div>
         </div>
     </body>
