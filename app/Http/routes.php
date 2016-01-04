@@ -10,6 +10,12 @@ Route::get('/', function () {
     return view('website.home');
 });
 
+Route::get('/contact', function() {
+    return view('website.contact');
+});
+
+Route::post('/contact-submit', 'ContactController@postContactSubmit');
+
 /*
 |--------------------------------------------------------------------------
 | Content Management Routes

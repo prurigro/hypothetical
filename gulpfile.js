@@ -18,6 +18,7 @@ elixir.config.autoprefix = {
 // javascript files in resources/assets/js/
 var jsLocal = [
     'site-vars.js',
+    'contact.js',
     'app.js'
 ];
 
