@@ -1,34 +1,47 @@
 <?php
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => 'web'], function () {
     /*
     |--------------------------------------------------------------------------
     | Public Routes
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/', function () {
-        return view('website.home');
+    Route::get('/', function() {
+        Head::setTitle('Home');
+        return view('website.index');
     });
 
     Route::get('/contact', function() {
+        Head::setTitle('Contact');
         return view('website.contact');
     });
 
-    Route::post('/contact-submit', 'ContactController@postContactSubmit');
-
     /*
     |--------------------------------------------------------------------------
-    | Content Management Routes
+    | Post Routes
     |--------------------------------------------------------------------------
     */
 
-    // Authentication
-    Route::get('auth/login', 'Auth\AuthController@getLogin');
-    Route::post('auth/login', 'Auth\AuthController@postLogin');
-    Route::get('auth/logout', 'Auth\AuthController@getLogout');
+    Route::post('/contact-submit', 'ContactController@postContactSubmit');
+    Route::post('/subscription-submit', 'SubscriptionController@postSubscriptionSubmit');
 
-    // Registration
-    Route::get('auth/register', 'Auth\AuthController@getRegister');
-    Route::post('auth/register', 'Auth\AuthController@postRegister');
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::auth();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::group(['prefix' => 'dashboard'], function() {
+        Route::get('/', 'DashboardController@index');
+        Route::controller('', DashboardController::class);
+    });
 });

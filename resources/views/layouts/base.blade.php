@@ -2,9 +2,9 @@
 <html lang="en">
     <head>
         {!! Head::render() !!}
-        <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <script src="{{ elixir('js/lib.js') }}"></script>
-        <script src="{{ elixir('js/app.js') }}"></script>
+        @yield('page-includes')
 
         @if (Config::get('app.debug'))
             <script type="text/javascript">
@@ -12,9 +12,13 @@
             </script>
         @endif
     </head>
-    <body class="{{ Request::path() == "/" ? "index" : preg_replace('/\//', '-', Request::path()) }}">
+    <body class="{{ Request::path() == '/' ? 'index' : preg_replace('/\/.*/', '', Request::path()) }}">
         @yield('page-top')
-        @yield('page-content')
+
+        <div id="page-content">
+            @yield('content')
+        </div>
+
         @yield('page-bottom')
     </body>
 </html>

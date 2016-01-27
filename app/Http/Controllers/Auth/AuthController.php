@@ -41,6 +41,20 @@ class AuthController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        if (env('REGISTRATION', false)) {
+            return view('auth.register');
+        } else {
+            header('Location: /login');
+        }
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -49,8 +63,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -63,10 +77,12 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        if (env('REGISTRATION', false)) {
+            return User::create([
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        }
     }
 }

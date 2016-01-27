@@ -14,12 +14,11 @@ class ContactController extends Controller
             'message' => 'required'
         ]);
 
-        $contact = new Contact;
-
         $name    = $request['name'];
         $email   = $request['email'];
         $message = $request['message'];
 
+        $contact = new Contact;
         $contact->name = $name;
         $contact->email = $email;
         $contact->message = $message;

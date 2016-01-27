@@ -1,5 +1,5 @@
 @extends('layouts.error')
 
 @section('error-title')
-    Be Right Back
+    No Such Record
 @endsection

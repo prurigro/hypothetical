@@ -9,7 +9,10 @@
         "laravel/framework": "5.2.*",
         "radic/blade-extensions": "~6.0",
         "erusev/parsedown": "~1.5",
-        "gwnobots/laravel-head": "dev-master"
+        "gwnobots/laravel-head": "dev-master",
+        "spatie/laravel-newsletter": "^2.2",
+        "intervention/image": "^2.3",
+        "maatwebsite/excel": "~2.0.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

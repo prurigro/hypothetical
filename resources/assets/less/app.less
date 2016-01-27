@@ -1,10 +1,7 @@
 // Core
-@import "bootstrap";
+@import "bootstrap/less/bootstrap";
 @import "var";
 @import "fonts";
-
-// Base
-@import "auth";
 
 // Supplementary
 @import "elements/**";
@@ -20,6 +17,8 @@ html, body {
     width: 100%;
     height: 100%;
 }
+
+html.no-scroll { overflow-y: hidden; }
 
 body {
     min-width: 300px;

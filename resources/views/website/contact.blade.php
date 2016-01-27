@@ -1,7 +1,6 @@
-@extends('public')
+@extends('layouts.public')
 
-@section('page-content')
-
+@section('content')
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
@@ -10,12 +9,12 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-md-8 col-md-push-2">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
                 <div id="contact-form">
                     <form action="#" method="POST" accept-charset="UTF-8">
                         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}" />
-                        <input type="text" name="name" id="name" placeholder="Name" /><br />
-                        <input type="text" name="email" id="email" placeholder="Email" /><br />
+                        <input type="text" name="name" id="name" placeholder="Name" />
+                        <input type="text" name="email" id="email" placeholder="Email" />
                         <textarea name="message" id="message" placeholder="Message"></textarea>
 
                         <input id="submit" type="submit" value="Submit" />
@@ -26,5 +25,4 @@
             </div>
         </div>
     </div>
-
 @endsection

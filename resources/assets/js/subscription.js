@@ -1,16 +1,16 @@
-// contact form functionality
-function contactFormInit() {
-    var $form = $('#contact-form'),
+// subscription form functionality
+function subscriptionFormInit() {
+    var $form = $('#subscription-form'),
         $input = $form.find(':input'),
         $notify = $('#notification'),
-        contact = {},
+        subscribe = {},
         submitting = false;
 
-    var getContactData = function() {
-        contact = {
+    var getSubscribeData = function() {
+        subscribe = {
             name:    $('#name').val(),
             email:   $('#email').val(),
-            message: $('#message').val(),
+            address: $('#address').val(),
             _token:  $('#token').val()
         };
     };
@@ -21,20 +21,23 @@ function contactFormInit() {
 
         if (!submitting) {
             submitting = true;
-            getContactData();
+            getSubscribeData();
 
             $.ajax({
                 type: 'POST',
-                url:  '/contact-submit',
-                data: contact
+                url:  '/subscription-submit',
+                data: subscribe
             }).always(function(response) {
                 $form.find('.error').removeClass('error');
-                $notify.removeClass('visible');
+                $notify.removeClass('visible').removeClass('error');
 
                 if (response === 'success') {
-                    $input.attr('disabled', true);
-                    $submit.addClass('disabled');
-                    $notify.text('Thanks for your message!').addClass('success').addClass('visible');
+                    $form.addClass('success');
+
+                    setTimeout(function() {
+                        $notify.text('Thanks for subscribing!').addClass('success').addClass('visible');
+                        $input.fadeOut(150);
+                    }, 1000);
                 } else {
                     var responseJSON = response.responseJSON,
                         errors = 0;
@@ -47,10 +50,9 @@ function contactFormInit() {
                         }
                     }
 
-                    if (errors > 0) {
-                        $notify.find('span').text(errors);
-                        $notify.addClass('visible');
-                    }
+                    // if there are no errors with form fields then there must have been an API error
+                    if (errors === 0)
+                        $notify.text('An error occurred. Are you already subscribed?').addClass('error').addClass('visible');
 
                     // re-enable submitting
                     submitting = false;
