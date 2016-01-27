@@ -26,8 +26,8 @@ function askConfirmation(message, command) {
 
     // close the modal if the escape button is pressed
     var escapeModal = function(e) {
-         if (e.keyCode == 27)
-             closeConfirmationModal();
+        if (e.keyCode == 27)
+            closeConfirmationModal();
     };
 
     // functionality to run when clicking the confirm button
