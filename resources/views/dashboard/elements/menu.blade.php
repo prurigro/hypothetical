@@ -1,9 +1,6 @@
 @set('menu', [
     [ 'Contact', 'contact' ],
-    [ 'Subscriptions', 'subscriptions' ],
-    [ 'Shows', 'shows' ],
-    [ 'News', 'news' ],
-    [ 'Videos', 'videos' ]
+    [ 'Subscriptions', 'subscriptions' ]
 ])
 
 @foreach($menu as $menu_item)

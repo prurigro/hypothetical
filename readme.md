@@ -239,3 +239,14 @@ If the value of `imgup` has been set to `true`, ensure `public/uploads/model_nam
 By default, uploaded images are saved in JPEG format with the value of the `id` column of the respective row as its name and `.jpg` as its file extension.
 
 When a row is deleted, its respective image will be deleted as well if it exists.
+
+### Adding to the Dashboard Menu
+
+Add an array to the menu array in `resources/views/dashboard/elements/menu.blade.php` where the visible title as the first item and the model name as the second:
+
+```php
+@set('menu', [
+    [ 'Page Name', 'model_name' ],
+    [ 'Contact', 'contact' ]
+])
+```
