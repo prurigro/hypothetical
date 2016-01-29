@@ -21,12 +21,9 @@ html, body {
 html.no-scroll { overflow-y: hidden; }
 
 body {
-    min-width: 300px;
-    margin: 0;
-    padding: 0;
-    line-height: 1.5;
-    font-weight: 100;
     color: @c_text;
+    padding-top: @nav_height;
+    @media (max-width: @grid-float-breakpoint-max) { padding-top: @mobile_nav_height; }
 }
 
 * {
@@ -34,33 +31,4 @@ body {
     .font_sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-body.index {
-    .container {
-        .content {
-            text-align: center;
-
-            .title {
-                position: relative;
-                top: ~"calc(50vh - 131px)";
-                font-size: 96px;
-
-                @media (max-width: 1225px) {
-                    top: ~"calc(50vh - 119px)";
-                    font-size: 82px;
-                }
-
-                @media (max-width: 1025px) {
-                    top: ~"calc(50vh - 97px)";
-                    font-size: 58px;
-                }
-
-                @media (max-width: (@screen-sm - 1)) {
-                    top: ~"calc(50vh - 83px)";
-                    font-size: 42px;
-                }
-            }
-        }
-    }
 }

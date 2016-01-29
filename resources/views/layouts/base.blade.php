@@ -14,11 +14,7 @@
     </head>
     <body class="{{ Request::path() == '/' ? 'index' : preg_replace('/\/.*/', '', Request::path()) }}">
         @yield('page-top')
-
-        <div id="page-content">
-            @yield('content')
-        </div>
-
+        <div id="page-content">@yield('content')</div>
         @yield('page-bottom')
     </body>
 </html>

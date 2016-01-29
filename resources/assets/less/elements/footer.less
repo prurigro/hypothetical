@@ -3,7 +3,12 @@ footer {
     height: 32px;
     line-height: 32px;
     padding-left: 10px;
-    background-color: #000;
+    background-color: @c_base;
     color: @c_text_light;
-    font-size: 11px;
+
+    &.sticky-footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+    }
 }

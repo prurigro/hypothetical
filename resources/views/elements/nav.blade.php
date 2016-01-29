@@ -11,7 +11,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="navlink navlink-section-contact"><a href="/contact" title="Contact">Contact</a></li>
+                <li class="navlink"><a href="/" title="Home">Home</a></li>
+                <li class="navlink"><a href="/contact" title="Contact">Contact</a></li>
             </ul>
         </div>
     </div>
