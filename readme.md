@@ -1,6 +1,6 @@
 # Hypothetical Template
 
-A hypothetical website template
+The Hypothetical website template
 
 ## Dashboard
 
