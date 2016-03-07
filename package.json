@@ -1,11 +1,11 @@
 {
   "private": true,
   "devDependencies": {
-    "laravel-elixir-livereload": "^1.1.0"
+    "laravel-elixir-livereload": "^1.1.5-beta1"
   },
   "dependencies": {
     "gulp": "^3.9.1",
-    "laravel-elixir": "^3.4.0",
+    "laravel-elixir": "^5.0.0",
     "less-plugin-glob": "^1.1.1"
   }
 }
