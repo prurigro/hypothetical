@@ -50,12 +50,10 @@ elixir(function(mix) {
         .scripts(jsLocal, 'public/js/app.js', 'resources/assets/js/')
         .scripts(jsDashboard, 'public/js/dashboard.js', 'resources/assets/js/')
         .scripts(jsBower, 'public/js/lib.js', 'bower_components/')
-        .scripts(jsDashboardBower, 'public/js/lib-dashboard.js', 'bower_components/');
+        .scripts(jsDashboardBower, 'public/js/lib-dashboard.js', 'bower_components/')
+        .version(['css/dashboard.css', 'css/app.css', 'js/dashboard.js', 'js/app.js', 'js/lib.js', 'js/lib-dashboard.js']);
 
-    if (elixir.config.production) {
-        // run the version function on production
-        mix.version(['css/dashboard.css', 'css/app.css', 'js/dashboard.js', 'js/app.js', 'js/lib.js', 'js/lib-dashboard.js']);
-    } else {
+    if (!elixir.config.production) {
         // start livereload when not production
         require('laravel-elixir-livereload');
         mix.livereload();
