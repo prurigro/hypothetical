@@ -4,10 +4,6 @@ var gulp     = require('gulp'),
     elixir   = require('laravel-elixir'),
     lessglob = require('less-plugin-glob');
 
-// require livereload when not production
-if (!elixir.config.production)
-    require('laravel-elixir-livereload');
-
 // autoprefixer settings
 elixir.config.autoprefix = {
     remove: false,
@@ -49,21 +45,19 @@ elixir(function(mix) {
     mix
         .copy('bower_components/bootstrap/dist/fonts/**', 'public/fonts')
         .copy('bower_components/font-awesome/fonts/**', 'public/fonts')
-        .less('dashboard.less', 'public/css/dashboard.css', {
-            paths: lessPaths,
-            plugins: [ lessglob ]
-        })
-        .less('app.less', 'public/css/app.css', {
-            paths: lessPaths,
-            plugins: [ lessglob ]
-        })
+        .less('dashboard.less', 'public/css/dashboard.css', { paths: lessPaths, plugins: [lessglob] })
+        .less('app.less', 'public/css/app.css', { paths: lessPaths, plugins: [lessglob] })
         .scripts(jsLocal, 'public/js/app.js', 'resources/assets/js/')
         .scripts(jsDashboard, 'public/js/dashboard.js', 'resources/assets/js/')
         .scripts(jsBower, 'public/js/lib.js', 'bower_components/')
-        .scripts(jsDashboardBower, 'public/js/lib-dashboard.js', 'bower_components/')
-        .version([ 'css/dashboard.css', 'css/app.css', 'js/dashboard.js', 'js/app.js', 'js/lib.js', 'js/lib-dashboard.js' ]);
+        .scripts(jsDashboardBower, 'public/js/lib-dashboard.js', 'bower_components/');
 
-    // start livereload when not production
-    if (!elixir.config.production)
+    if (elixir.config.production) {
+        // run the version function on production
+        mix.version(['css/dashboard.css', 'css/app.css', 'js/dashboard.js', 'js/app.js', 'js/lib.js', 'js/lib-dashboard.js']);
+    } else {
+        // start livereload when not production
+        require('laravel-elixir-livereload');
         mix.livereload();
+    }
 });
