@@ -19,7 +19,7 @@
         <div class="container-fluid">
             <div class="row">
                 @foreach($columns as $column)
-                    @set('value', empty($col_name) ? '' : $item[$column['name']])
+                    @set('value', $item[$column['name']])
 
                     @if($column['type'] == 'hidden')
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
