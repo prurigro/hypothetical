@@ -45,6 +45,7 @@ elixir(function(mix) {
     mix
         .copy('bower_components/bootstrap/dist/fonts/**', 'public/fonts')
         .copy('bower_components/font-awesome/fonts/**', 'public/fonts')
+        .copy('resources/assets/fonts/**', 'public/fonts')
         .less('dashboard.less', 'public/css/dashboard.css', { paths: lessPaths, plugins: [lessglob] })
         .less('app.less', 'public/css/app.css', { paths: lessPaths, plugins: [lessglob] })
         .scripts(jsLocal, 'public/js/app.js', 'resources/assets/js/')

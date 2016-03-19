@@ -4,9 +4,7 @@
 /public/build
 /public/css
 /public/js
-/public/fonts/FontAwesome.otf
-/public/fonts/fontawesome-webfont.*
-/public/fonts/glyphicons-halflings-regular.*
+/public/fonts
 /public/uploads
 /storage/exports
 .env
