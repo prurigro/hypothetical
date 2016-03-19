@@ -21,6 +21,7 @@ html, body {
 html.no-scroll { overflow-y: hidden; }
 
 body {
+    .font_sans;
     color: @c_text;
     padding-top: @nav_height;
     @media (max-width: @grid-float-breakpoint-max) { padding-top: @mobile_nav_height; }
@@ -28,7 +29,6 @@ body {
 
 * {
     outline: none !important;
-    .font_sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
