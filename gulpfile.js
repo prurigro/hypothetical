@@ -33,7 +33,7 @@ var jsBower = [
 
 var jsDashboardBower = [
     'Sortable/Sortable.js',
-    'datetimepicker/jquery.datetimepicker.js',
+    'datetimepicker/build/jquery.datetimepicker.full.min.js',
     'simplemde/dist/simplemde.min.js'
 ];
 
