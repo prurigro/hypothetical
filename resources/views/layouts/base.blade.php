@@ -3,7 +3,7 @@
     <head>
         {!! Head::render() !!}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <script src="{{ elixir('js/lib.js') }}"></script>
+        <script src="/js/lib.js"></script>
         @yield('page-includes')
 
         @if(Config::get('app.debug'))

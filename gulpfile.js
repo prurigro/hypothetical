@@ -1,62 +1,148 @@
-process.env.DISABLE_NOTIFIER = true;
+// include packages
+var gulp           = require('gulp'),
+    gUtil          = require('gulp-util'),
+    gLess          = require('gulp-less'),
+    gConcat        = require('gulp-concat'),
+    gPlumber       = require('gulp-plumber'),
+    gUglify        = require('gulp-uglify'),
+    lessGlob       = require('less-plugin-glob'),
+    lessAutoPrefix = require('less-plugin-autoprefix'),
+    lessCleanCSS   = require('less-plugin-clean-css');
 
-var gulp     = require('gulp'),
-    elixir   = require('laravel-elixir'),
-    lessglob = require('less-plugin-glob');
+// determine if gulp has been run with --production
+var prod = gUtil.env.production;
 
-// autoprefixer settings
-elixir.config.autoprefix = {
-    remove: false,
-    cascade: false,
-    browsers: [ 'last 2 versions' ]
-};
+// initialize plugins
+var autoprefix = new lessAutoPrefix({ remove: false, cascade: false, browsers: [ 'last 2 versions' ] }),
+    cleancss   = new lessCleanCSS({ advanced: true });
 
-// javascript files for the dashboard in resources/assets/js/
+// declare less plugins based on wither gulp has been run with --production
+var lessPlugins = prod ? [ lessGlob, autoprefix, cleancss ] : [ lessGlob, autoprefix ];
+
+// javascript files for the public site
+var jsPublic = [
+    'resources/assets/js/site-vars.js',
+    'resources/assets/js/contact.js',
+    'resources/assets/js/subscription.js',
+    'resources/assets/js/app.js'
+];
+
+// javascript libraries for the public site
+var jsPublicLibs = [
+    'bower_components/jquery/dist/jquery.min.js',
+    'bower_components/bootstrap/dist/js/bootstrap.min.js',
+    'bower_components/jQuery.stickyFooter/assets/js/jquery.stickyfooter.js'
+];
+
+// javascript files for the dashboard
 var jsDashboard = [
-    'dashboard.js'
+    'resources/assets/js/dashboard.js'
 ];
 
-// javascript files for the public site in resources/assets/js/
-var jsLocal = [
-    'site-vars.js',
-    'contact.js',
-    'subscription.js',
-    'app.js'
+// javascript libraries for the dashboard
+var jsDashboardLibs = [
+    'bower_components/Sortable/Sortable.js',
+    'bower_components/datetimepicker/build/jquery.datetimepicker.full.min.js',
+    'bower_components/simplemde/dist/simplemde.min.js'
 ];
 
-// javascript files in bower_components/ for libraries
-var jsBower = [
-    'jquery/dist/jquery.min.js',
-    'bootstrap/dist/js/bootstrap.min.js',
-    'jQuery.stickyFooter/assets/js/jquery.stickyfooter.js'
+// paths to folders containing fonts that should be copied to public/fonts/
+var fontPaths = [
+    'resources/assets/fonts/**',
+    'bower_components/bootstrap/dist/fonts/**',
+    'bower_components/font-awesome/fonts/**'
 ];
 
-var jsDashboardBower = [
-    'Sortable/Sortable.js',
-    'datetimepicker/build/jquery.datetimepicker.full.min.js',
-    'simplemde/dist/simplemde.min.js'
-];
+// function to handle gulp-plumber errors
+function plumberError(err) {
+    console.log(err);
+    this.emit('end');
+}
 
-// less import path locations other than resources/assets/less/
-var lessPaths = [ 'bower_components' ];
+// function to handle the processing of less files
+function processLess(filename) {
+    return gulp.src('resources/assets/less/' + filename + '.less')
+        .pipe(gPlumber(plumberError))
+        .pipe(gLess({ plugins: lessPlugins, paths: 'bower_components/' }))
+        .pipe(gConcat(filename + '.css'))
+        .pipe(gulp.dest('public/css/'));
+}
 
-elixir(function(mix) {
-    // compile the project
-    mix
-        .copy('bower_components/bootstrap/dist/fonts/**', 'public/fonts')
-        .copy('bower_components/font-awesome/fonts/**', 'public/fonts')
-        .copy('resources/assets/fonts/**', 'public/fonts')
-        .less('dashboard.less', 'public/css/dashboard.css', { paths: lessPaths, plugins: [lessglob] })
-        .less('app.less', 'public/css/app.css', { paths: lessPaths, plugins: [lessglob] })
-        .scripts(jsLocal, 'public/js/app.js', 'resources/assets/js/')
-        .scripts(jsDashboard, 'public/js/dashboard.js', 'resources/assets/js/')
-        .scripts(jsBower, 'public/js/lib.js', 'bower_components/')
-        .scripts(jsDashboardBower, 'public/js/lib-dashboard.js', 'bower_components/')
-        .version(['css/dashboard.css', 'css/app.css', 'js/dashboard.js', 'js/app.js', 'js/lib.js', 'js/lib-dashboard.js']);
+// function to handle the processing of javascript files
+function processJavaScript(ouputFilename, inputFiles) {
+    var javascript = gulp.src(inputFiles)
+        .pipe(gPlumber(plumberError))
+        .pipe(gConcat(ouputFilename + '.js'));
 
-    if (!elixir.config.production) {
-        // start livereload when not production
-        require('laravel-elixir-livereload');
-        mix.livereload();
-    }
+    // minify if running gulp with --production
+    if (prod) javascript.pipe(gUglify());
+    return javascript.pipe(gulp.dest('public/js/'));
+}
+
+// gulp task for public styles
+gulp.task('less-public', function() {
+    return processLess('app');
 });
+
+// gulp task for dashboard styles
+gulp.task('less-dashboard', function() {
+    return processLess('dashboard');
+});
+
+// gulp task for public javascript
+gulp.task('js-public', function() {
+    return processJavaScript('app', jsPublic);
+});
+
+// gulp task for public javascript libraries
+gulp.task('js-public-libs', function() {
+    return processJavaScript('lib', jsPublicLibs);
+});
+
+// gulp task for dashboard javascript
+gulp.task('js-dashboard', function() {
+    return processJavaScript('dashboard', jsDashboard);
+});
+
+// gulp task for dashboard javascript libraries
+gulp.task('js-dashboard-libs', function() {
+    return processJavaScript('lib-dashboard', jsDashboardLibs);
+});
+
+// gulp task to copy fonts
+gulp.task('fonts', function() {
+    return gulp.src(fontPaths)
+        .pipe(gPlumber(plumberError))
+        .pipe(gulp.dest('public/fonts/'));
+});
+
+// gulp watch task
+gulp.task('watch', function() {
+    var gLiveReload = require('gulp-livereload');
+
+    var liveReloadUpdate = function(wait) {
+        setTimeout(function() {
+            gLiveReload.changed('.');
+        }, wait || 1);
+    };
+
+    gLiveReload.listen();
+    gulp.watch(jsPublic, [ 'js-public' ]).on('change', liveReloadUpdate);
+    gulp.watch(jsDashboard, [ 'js-dashboard' ]).on('change', liveReloadUpdate);
+    gulp.watch([ 'app/**/*.php', 'resources/views/**/*.blade.php' ]).on('change', liveReloadUpdate);
+
+    gulp.watch('resources/assets/less/**/*.less', [ 'less-public', 'less-dashboard' ]).on('change', function() {
+        liveReloadUpdate(1000);
+    });
+});
+
+// gulp default task
+gulp.task('default', [
+    'less-public',
+    'less-dashboard',
+    'js-public',
+    'js-public-libs',
+    'js-dashboard',
+    'js-dashboard-libs',
+    'fonts'
+]);
