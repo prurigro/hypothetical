@@ -359,7 +359,8 @@ function editItemInit() {
             ],
             blockStyles: { italic: '_' },
             autoDownloadFontAwesome: false,
-            tabSize: 4
+            tabSize: 4,
+            spellChecker: false
         });
 
         setTimeout(function() {
