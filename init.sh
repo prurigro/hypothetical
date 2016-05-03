@@ -75,4 +75,3 @@ gulp --production || error "${c_m}gulp --production$c_w exited with an error sta
     msg "Running: ${c_m}php artisan up"
     php artisan up
 }
-
