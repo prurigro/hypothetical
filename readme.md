@@ -174,6 +174,7 @@ This function should be named the same as the one above except with `Edit` at th
             'columns' => [
                 [ 'name' => 'title',  'type' => 'text', 'label' => 'The Title' ],
                 [ 'name' => 'iframe', 'type' => 'text' ],
+                [ 'name' => 'halign', 'type' => 'select', 'options' => [ 'left', 'center', 'right' ] ],
                 [ 'name' => 'story',  'type' => 'mkd' ],
                 [ 'name' => 'order',  'type' => 'hidden' ]
             ]
@@ -199,6 +200,7 @@ The following is a list of possible `types` in the `columns` array for Editable 
 * `text`: Text input field for text data
 * `mkd`: Markdown editor for text data containing markdown
 * `date`: Date and time selection tool for date/time data
+* `select`: Text input via option select with possible options in an `options` array
 * `hidden`: Fields that will contain values to pass to the update function but won't appear on the page (this must be used for the sort column)
 
 #### Edit Item Functionality

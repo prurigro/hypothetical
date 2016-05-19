@@ -17,8 +17,8 @@
         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
 
         <div class="container-fluid">
-            <div class="row">
-                @foreach($columns as $column)
+            @foreach($columns as $column)
+                <div class="row">
                     @set('value', $item[$column['name']])
 
                     @if($column['type'] == 'hidden')
@@ -35,12 +35,24 @@
                                 <input class="date-time-picker" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ preg_replace('/:[0-9][0-9]$/', '', $value) }}" />
                             @elseif($column['type'] == 'mkd')
                                 <textarea class="mkd-editor" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}"></textarea>
+                            @elseif($column['type'] == 'select')
+                                <select class="text-input" name="{{ $column['name'] }}" id="{{ $column['name'] }}">
+                                    @foreach($column['options'] as $option)
+                                        @if($option === $value)
+                                            <option value="{{ $option }}" selected="selected">{{ $option }}</option>
+                                        @else
+                                            <option value="{{ $option }}">{{ $option }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             @endif
                         </div>
                     @endif
-                @endforeach
+                </div>
+            @endforeach
 
-                @if(!empty($imgup) && $imgup)
+            @if(!empty($imgup) && $imgup)
+                <div class="row">
                     <div class="col-xs-12 col-md-2">
                         <label for="{{ $column['name'] }}">Picture:</label>
                     </div>
@@ -55,8 +67,8 @@
                             <div>(No Image Set)</div>
                         @endif
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
 
             <div class="row">
                 <button id="back" type="button" class="back-button btn btn-default">Back</button>
