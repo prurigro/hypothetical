@@ -3,7 +3,7 @@
     <head>
         {!! Head::render() !!}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <script src="/js/lib.js"></script>
+        <script src"/js/modernizr.js"></script>
         @yield('page-includes')
 
         @if(Config::get('app.debug'))
@@ -12,6 +12,7 @@
             </script>
         @endif
     </head>
+
     <body class="{{ Request::path() == '/' ? 'index' : preg_replace('/\/.*/', '', Request::path()) }}">
         @yield('page-top')
         <div id="page-content">@yield('content')</div>

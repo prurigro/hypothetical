@@ -1,6 +1,7 @@
 @extends('layouts.base')
 
 @section('page-includes')
+    <script src="/js/lib.js"></script>
     <script src="/js/app.js"></script>
     <link rel="stylesheet" href="/css/app.css" />
 @endsection
