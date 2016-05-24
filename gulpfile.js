@@ -115,7 +115,7 @@ gulp.task("js-dashboard-libs", function() {
 
 // gulp task for modernizr
 gulp.task("modernizr", function() {
-    var modernizr = gulp.src([ "public/js/*.js", "public/css/*.css" ])
+    var modernizr = gulp.src([ "public/js/lib.js", "public/js/app.js", "public/css/app.css" ])
         .pipe(gModernizr({ tests: modernizrTests, crawl: false }))
         .pipe(gPlumber(plumberError))
         .pipe(gConcat("modernizr.js"));
