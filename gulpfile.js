@@ -160,6 +160,5 @@ gulp.task("default", [
     "js-public-libs",
     "js-dashboard",
     "js-dashboard-libs",
-    "modernizr",
     "fonts"
 ]);
