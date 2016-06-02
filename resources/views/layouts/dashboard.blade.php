@@ -1,9 +1,9 @@
 @extends('layouts.base')
 
 @section('page-includes')
-    <script src="/js/lib-dashboard.js"></script>
-    <script src="/js/dashboard.js"></script>
-    <link rel="stylesheet" href="/css/dashboard.css" />
+    <script src="/js/lib-dashboard.js?version={{ env('CACHE_BUST') }}"></script>
+    <script src="/js/dashboard.js?version={{ env('CACHE_BUST') }}"></script>
+    <link rel="stylesheet" href="/css/dashboard.css?version={{ env('CACHE_BUST') }}" />
 @endsection
 
 @section('page-top')

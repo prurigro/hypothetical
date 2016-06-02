@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # dependencies
-deps=('bower' 'composer' 'gulp' 'npm' 'php')
+deps=('bower' 'composer' 'egrep' 'gulp' 'npm' 'php' 'sed')
 
 # Colour scheme
 [[ -t 1 ]] && {
@@ -58,6 +58,14 @@ trap 'error "script killed"' SIGINT SIGQUIT
 
 msg "Running: ${c_m}composer installl --no-dev"
 composer install --no-interaction --no-dev || error "${c_m}composer install --no-interaction --no-dev$c_w exited with an error status"
+
+egrep -q '^CACHE_BUST=' .env || {
+    msg "Adding the ${c_y}CACHE_BUST$c_w variable"
+    printf '\n%s\n' 'CACHE_BUST=' >> .env
+}
+
+msg "Updating ${c_y}CACHE_BUST$c_w variable"
+sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(</dev/urandom tr -dc A-Za-z0-9 | head -c"${1:-32}")"'|' .env
 
 msg "Running: ${c_m}php artisan migrate"
 php artisan migrate || error "${c_m}php artisan migrate$c_w exited with an error status"

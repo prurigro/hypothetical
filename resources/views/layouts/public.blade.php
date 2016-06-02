@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
 @section('page-includes')
-    <script src="/js/modernizr.js"></script>
-    <script src="/js/lib.js"></script>
-    <script src="/js/app.js"></script>
-    <link rel="stylesheet" href="/css/app.css" />
+    <script src="/js/modernizr.js?version={{ env('CACHE_BUST') }}"></script>
+    <script src="/js/lib.js?version={{ env('CACHE_BUST') }}"></script>
+    <script src="/js/app.js?version={{ env('CACHE_BUST') }}"></script>
+    <link rel="stylesheet" href="/css/app.css?version={{ env('CACHE_BUST') }}" />
 @endsection
 
 @section('page-top')
