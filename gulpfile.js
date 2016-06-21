@@ -6,6 +6,8 @@ var gulp = require("gulp"),
     gPlumber = require("gulp-plumber"),
     gUglify = require("gulp-uglify"),
     gModernizr = require("gulp-modernizr"),
+    gPostCSS = require("gulp-postcss"),
+    autoprefixer = require("autoprefixer"),
     lessGlob = require("less-plugin-glob"),
     lessAutoPrefix = require("less-plugin-autoprefix"),
     lessCleanCSS = require("less-plugin-clean-css");
@@ -14,11 +16,11 @@ var gulp = require("gulp"),
 var prod = gUtil.env.production;
 
 // initialize plugins
-var autoprefix = new lessAutoPrefix({ remove: false, cascade: false, browsers: [ "last 2 versions" ] }),
-    cleancss = new lessCleanCSS({ advanced: true });
+var cleancss = new lessCleanCSS({ advanced: true });
 
-// declare less plugins and modernizr tests
-var lessPlugins = prod ? [ lessGlob, autoprefix, cleancss ] : [ lessGlob, autoprefix ],
+// declare plugin settings and modernizr tests
+var lessPlugins = prod ? [ lessGlob, cleancss ] : [ lessGlob ],
+    autoprefixerSettings = { remove: false, cascade: false, browsers: [ "last 6 versions" ] },
     modernizrTests = [];
 
 // javascript files for the public site
@@ -68,6 +70,7 @@ function processLess(filename) {
     return gulp.src("resources/assets/less/" + filename + ".less")
         .pipe(gPlumber(plumberError))
         .pipe(gLess({ plugins: lessPlugins, paths: "bower_components/" }))
+        .pipe(gPostCSS([ autoprefixer(autoprefixerSettings) ]))
         .pipe(gConcat(filename + ".css"))
         .pipe(gulp.dest("public/css/"));
 }
