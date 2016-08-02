@@ -56,7 +56,7 @@ const jsDashboardLibs = [
 const fontPaths = [
     "resources/assets/fonts/**",
     "bower_components/bootstrap/dist/fonts/**",
-    "bower_components/font-awesome/fonts/**"
+    "bower_components/fontawesome/fonts/**"
 ];
 
 // function to handle gulp-plumber errors
