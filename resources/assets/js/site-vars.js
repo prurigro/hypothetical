@@ -1,3 +1,3 @@
-var SiteVars = {
-    page: location.href.replace(/^[^:]*:\/\/[^\/]*\//, '').replace(/(\/|#|\?).*/, '')
+let SiteVars = {
+    page: location.href.replace(/^[^:]*:\/\/[^\/]*\//, "").replace(/(\/|#|\?).*/, "")
 };

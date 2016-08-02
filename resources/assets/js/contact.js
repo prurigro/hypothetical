@@ -1,55 +1,59 @@
 // contact form functionality
 function contactFormInit() {
-    var $form = $('#contact-form'),
-        $input = $form.find(':input'),
-        $notify = $('#notification'),
-        contact = {},
+    const $form = $("#contact-form"),
+        $input = $form.find(":input"),
+        $notify = $("#notification");
+
+    let contact = {},
         submitting = false;
 
-    var getContactData = function() {
+    const getContactData = function() {
         contact = {
-            name:    $('#name').val(),
-            email:   $('#email').val(),
-            message: $('#message').val(),
-            _token:  $('#token').val()
+            name: $("#name").val(),
+            email: $("#email").val(),
+            message: $("#message").val(),
+            _token: $("#token").val()
         };
     };
 
-    $('#submit').on('click', function(e) {
+    $("#submit").on("click", function(e) {
+        const $submit = $(this);
+
         e.preventDefault();
-        var $submit = $(this);
 
         if (!submitting) {
             submitting = true;
             getContactData();
 
             $.ajax({
-                type: 'POST',
-                url:  '/contact-submit',
+                type: "POST",
+                url: "/contact-submit",
                 data: contact
             }).always(function(response) {
-                $form.find('.error').removeClass('error');
-                $notify.removeClass('visible');
+                let responseJSON, errors, prop;
 
-                if (response === 'success') {
-                    $input.attr('disabled', true);
-                    $submit.addClass('disabled');
-                    $notify.text('Thanks for your message!').addClass('success').addClass('visible');
+                $form.find(".error").removeClass("error");
+                $notify.removeClass("visible");
+
+                if (response === "success") {
+                    $input.attr("disabled", true);
+                    $submit.addClass("disabled");
+                    $notify.text("Thanks for your message!").addClass("success").addClass("visible");
                 } else {
-                    var responseJSON = response.responseJSON,
-                        errors = 0;
+                    responseJSON = response.responseJSON;
+                    errors = 0;
 
                     // add the error class to fields that haven't been filled out
-                    for (var prop in responseJSON) {
+                    for (prop in responseJSON) {
                         if (responseJSON.hasOwnProperty(prop)) {
-                            $('#' + prop).addClass('error');
+                            $("#" + prop).addClass("error");
                             errors++;
                         }
                     }
 
                     if (errors > 0) {
-                        $notify.find('span').text(errors);
-                        $notify.addClass('visible');
+                        $notify.find("span").text(errors);
+                        $notify.addClass("visible");
                     }
 
                     // re-enable submitting
