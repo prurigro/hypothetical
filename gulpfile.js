@@ -33,8 +33,8 @@ const jsPublic = [
 
 // javascript libraries for the public site
 const jsPublicLibs = [
-    "bower_components/jquery/dist/jquery.min.js",
-    "bower_components/bootstrap/dist/js/bootstrap.min.js",
+    "bower_components/jquery/dist/jquery.js",
+    "bower_components/bootstrap/dist/js/bootstrap.js",
     "bower_components/jQuery.stickyFooter/assets/js/jquery.stickyfooter.js"
 ];
 
@@ -45,10 +45,10 @@ const jsDashboard = [
 
 // javascript libraries for the dashboard
 const jsDashboardLibs = [
-    "bower_components/jquery/dist/jquery.min.js",
-    "bower_components/bootstrap/dist/js/bootstrap.min.js",
+    "bower_components/jquery/dist/jquery.js",
+    "bower_components/bootstrap/dist/js/bootstrap.js",
     "bower_components/Sortable/Sortable.js",
-    "bower_components/datetimepicker/build/jquery.datetimepicker.full.min.js",
+    "bower_components/datetimepicker/build/jquery.datetimepicker.full.js",
     "bower_components/simplemde/dist/simplemde.min.js"
 ];
 
