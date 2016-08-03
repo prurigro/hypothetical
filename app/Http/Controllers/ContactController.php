@@ -4,8 +4,8 @@ use Mail;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
-class ContactController extends Controller
-{
+class ContactController extends Controller {
+
     public function postContactSubmit(Request $request)
     {
         $this->validate($request, [
@@ -35,4 +35,5 @@ class ContactController extends Controller
 
         return 'success';
     }
+
 }

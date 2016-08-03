@@ -4,8 +4,8 @@ use Newsletter;
 use App\Models\Subscriptions;
 use Illuminate\Http\Request;
 
-class SubscriptionController extends Controller
-{
+class SubscriptionController extends Controller {
+
     public function postSubscriptionSubmit(Request $request)
     {
         $this->validate($request, [
@@ -36,4 +36,5 @@ class SubscriptionController extends Controller
 
         return 'success';
     }
+
 }

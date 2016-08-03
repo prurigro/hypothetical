@@ -10,8 +10,8 @@ use Excel;
 use App\Models\Contact;
 use App\Models\Subscriptions;
 
-class DashboardController extends Controller
-{
+class DashboardController extends Controller {
+
     /**
      * Create a new controller instance.
      *
@@ -213,4 +213,5 @@ class DashboardController extends Controller
         // Return a success
         return 'success';
     }
+
 }
