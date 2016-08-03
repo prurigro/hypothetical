@@ -2,14 +2,15 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
-{
-    // the contact table
+class Contact extends Model {
+
+    // The contact table
     protected $table = 'contact';
 
-    // returns the list of all contact submissions
+    // Returns the list of all contact submissions
     public static function getContactSubmissions()
     {
         return self::orderBy('created_at', 'desc')->get();
     }
+
 }

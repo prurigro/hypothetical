@@ -2,14 +2,15 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Subscriptions extends Model
-{
-    // the subscriptions table
+class Subscriptions extends Model {
+
+    // The subscriptions table
     protected $table = 'subscriptions';
 
-    // returns the list of all subscriptions
+    // Returns the list of all subscriptions
     public static function getSubscriptions()
     {
         return self::orderBy('created_at', 'desc')->get();
     }
+
 }
