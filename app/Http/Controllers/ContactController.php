@@ -26,7 +26,7 @@ class ContactController extends Controller {
 
         // Send the email if the MAIL_SENDTO variable is set
         if (env('MAIL_SENDTO') != null) {
-            Mail::send('email.contact', [ 'contact' => $contact ], function ($mail) use ($contact) {
+            Mail::send('email.contact', [ 'contact' => $contact ], function($mail) use ($contact) {
                 $mail->from(env('MAIL_ADDRESS'), env('SITE_NAME'))
                     ->to(env('MAIL_SENDTO'))
                     ->subject('Contact form submission');
