@@ -24,7 +24,7 @@ class ContactController extends Controller {
         $contact->message = $message;
         $contact->save();
 
-        // Send the email if this is the production environment
+        // Send the email if the MAIL_SENDTO variable is set
         if (env('MAIL_SENDTO') != null) {
             Mail::send('email.contact', [ 'contact' => $contact ], function ($mail) use ($contact) {
                 $mail->from(env('MAIL_ADDRESS'), env('SITE_NAME'))
