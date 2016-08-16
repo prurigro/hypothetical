@@ -1,10 +1,12 @@
 // Libraries
+
 @import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "fontawesome/scss/font-awesome.scss";
-@import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox";
-@import "jquery-ui/themes/base/datepicker";
+@import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.scss";
+@import "datetimepicker/jquery.datetimepicker";
 @import "simplemde/dist/simplemde.min";
 @import "SpinKit/css/spinners/11-folding-cube";
+
 
 // Core
 @import "_var";

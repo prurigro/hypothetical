@@ -114,6 +114,13 @@ gulp.task("js-dashboard-libs", function() {
     return processJavaScript("lib-dashboard", jsDashboardLibs, false);
 });
 
+// gulp task to copy fonts
+gulp.task("fonts", function() {
+    return gulp.src(fontPaths)
+        .pipe(gPlumber(plumberError))
+        .pipe(gulp.dest("public/fonts/"));
+});
+
 // gulp task for modernizr
 gulp.task("modernizr", function() {
     const modernizr = gulp.src([ "public/js/lib.js", "public/js/app.js", "public/css/app.css" ])
@@ -129,13 +136,6 @@ gulp.task("modernizr", function() {
     // minify if running gulp with --production
     if (prod) { modernizr.pipe(gUglify()); }
     return modernizr.pipe(gulp.dest("public/js/"));
-});
-
-// gulp task to copy fonts
-gulp.task("fonts", function() {
-    return gulp.src(fontPaths)
-        .pipe(gPlumber(plumberError))
-        .pipe(gulp.dest("public/fonts/"));
 });
 
 // gulp watch task
