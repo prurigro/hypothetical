@@ -1,0 +1,70 @@
+.navbar {
+    z-index: 1;
+    margin-bottom: 0px;
+    height: $nav-height;
+    padding-right: 10px;
+    border: 0;
+    border-radius: 0px;
+    background-color: $c-base;
+    @media (max-width: $grid-float-breakpoint-max) { height: $nav-height-mobile; }
+
+    .navbar-logo {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        width: ($nav-height - 10);
+        height: ($nav-height - 10);
+        background-image: url("/img/logo.png");
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        cursor: pointer;
+
+        @media (max-width: $grid-float-breakpoint-max) {
+            width: ($nav-height-mobile - 10);
+            height: ($nav-height-mobile - 10);
+        }
+    }
+
+    #navbar-collapse {
+        border: 0;
+        box-shadow: none;
+
+        @media (max-width: $grid-float-breakpoint-max) {
+            position: relative;
+            bottom: 4px;
+            width: 100vw;
+            padding-bottom: 5px;
+            background-color: $c-base;
+        }
+
+        .nav li a {
+            padding: 0px 15px;
+            color: $c-text-light;
+            font-size: 24px;
+            line-height: $nav-height;
+            text-transform: uppercase;
+            text-decoration: none;
+            user-select: none;
+
+            @media (max-width: $grid-float-breakpoint-max) {
+                font-size: 18px;
+                line-height: 40px;
+            }
+        }
+    }
+
+    .navbar-toggle {
+        position: relative;
+        bottom: 2px;
+        left: 20px;
+        border: 0;
+        &, &:hover, &:focus { background-color: transparent; }
+
+        .icon-bar {
+            width: 27px;
+            height: 4px;
+            background-color: $c-text-light;
+        }
+    }
+}

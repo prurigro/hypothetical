@@ -1,14 +1,14 @@
 footer {
     width: 100%;
     height: 32px;
-    line-height: 32px;
     padding-left: 10px;
-    background-color: @c_base;
-    color: @c_text_light;
+    background-color: $c-base;
+    color: $c-text-light;
+    line-height: 32px;
 
     &.sticky-footer {
-        width: 100%;
         position: absolute;
         bottom: 0px;
+        width: 100%;
     }
 }

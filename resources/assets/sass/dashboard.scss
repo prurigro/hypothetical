@@ -1,68 +1,77 @@
-// Core
-@import "bootstrap/less/bootstrap";
-@import "fontawesome/less/font-awesome";
+// Libraries
+@import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "fontawesome/scss/font-awesome.scss";
 @import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox";
-@import (inline) "datetimepicker/jquery.datetimepicker.css";
-@import (inline) "simplemde/dist/simplemde.min.css";
-@import (inline) "SpinKit/css/spinners/11-folding-cube.css";
-@import "var";
-@import "fonts";
-@fa-font-path: "../../fonts";
+@import "jquery-ui/themes/base/datepicker";
+@import "simplemde/dist/simplemde.min";
+@import "SpinKit/css/spinners/11-folding-cube";
+
+// Core
+@import "_var";
+@import "_fonts";
+
+// Fontawesome Path
+$fa-font-path: "/fonts";
 
 * {
     outline: none !important;
-    .font_sans;
+}
+
+body {
+    @include font-sans;
+    min-width: 350px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-body { min-width: 350px; }
-
-nav.navbar {
-    background-color: @c_dashboard_dark;
+.navbar {
+    background-color: $c-dashboard-dark;
     .navbar-brand { font-weight: bold; }
 
     #spark-navbar-collapse {
+        border: 0;
         box-shadow: none;
-        border: none;
 
         .dropdown {
             .dropdown-toggle .caret { margin-left: 4px; }
 
             &.open .dropdown-toggle {
-                background-color: darken(@c_dashboard_dark, 5%);
-                color: @c_dashboard_light;
+                background-color: darken($c-dashboard-dark, 5%);
+                color: $c-dashboard-light;
             }
 
             .dropdown-menu {
-                top: calc(100% ~"-" 1px);
+                top: calc(100% - 1px);
                 right: -1px;
-                background-color: @c_dashboard_dark;
-                & > li > a:hover, & > li > a:focus { background-color: transparent; }
-                & > li > a { &, &:hover, &:focus { color: #fff; } }
+                background-color: $c-dashboard-dark;
+                > li > a:hover, > li > a:focus { background-color: transparent; }
+
+                > li > a {
+                    &, &:hover, &:focus { color: #fff; }
+                }
             }
         }
     }
 
     .navbar-brand, .navbar-default .navbar-nav > li > a, .navbar-nav > li > a {
-        &, &:hover, &:focus { color: @c_dashboard_light; }
+        &, &:hover, &:focus { color: $c-dashboard-light; }
     }
 
     .navbar-toggle {
         position: relative;
         bottom: 0px;
         left: 10px;
-        border: none;
+        border: 0;
         &, &:hover, &:focus { background-color: transparent; }
 
         .icon-bar {
             width: 27px;
             height: 4px;
-            background-color: @c_dashboard_light;
+            background-color: $c-dashboard-light;
             transition: background-color 100ms;
         }
 
-        &:hover .icon-bar { background-color: darken(@c_dashboard_dark, 15%); }
+        &:hover .icon-bar { background-color: darken($c-dashboard-dark, 15%); }
     }
 }
 
@@ -72,25 +81,25 @@ nav.navbar {
 
     .panel-body {
         padding-bottom: 0px;
-        background-color: lighten(@c_dashboard_light, 1%);
+        background-color: lighten($c-dashboard-light, 1%);
 
         .help-text {
-            padding: 5px 10px;
             margin-top: 10px;
             margin-bottom: 10px;
+            padding: 5px 10px;
+            border: 1px solid darken($c-dashboard-dark, 5%);
             border-radius: 5px;
-            border: 1px solid darken(@c_dashboard_dark, 5%);
-            background-color: @c_dashboard_dark;
-            color: @c_text_light;
+            background-color: $c-dashboard-dark;
+            color: $c-text-light;
         }
     }
 
-    & > .panel-heading {
-        border-top: 1px solid darken(@c_dashboard_dark, 5%);
-        border-right: 1px solid darken(@c_dashboard_dark, 5%);
-        border-left: 1px solid darken(@c_dashboard_dark, 5%);
-        background-color: @c_dashboard_dark;
-        color: @c_dashboard_light;
+    > .panel-heading {
+        border-top: 1px solid darken($c-dashboard-dark, 5%);
+        border-right: 1px solid darken($c-dashboard-dark, 5%);
+        border-left: 1px solid darken($c-dashboard-dark, 5%);
+        background-color: $c-dashboard-dark;
+        color: $c-dashboard-light;
         font-weight: bold;
 
         .btn {
@@ -104,76 +113,78 @@ nav.navbar {
         }
 
         a {
+            color: $c-text;
             text-decoration: none;
-            color: @c_text;
         }
     }
 }
 
-.form-control {
-    &:focus {
-        border-color: @c_dashboard_dark;
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px fade(@c_dashboard_dark, 60%);
-    }
+.form-control:focus {
+    border-color: $c-dashboard-dark;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px fade-out($c-dashboard-dark, 0.4);
 }
 
 .btn {
-    border-color: darken(@c_dashboard_dark, 5%);
-    background-color: @c_dashboard_dark;
+    border-color: darken($c-dashboard-dark, 5%);
+    background-color: $c-dashboard-dark;
     transition: background-color 100ms;
-    &:hover { background-color: darken(@c_dashboard_dark, 5%); }
-    &:focus { background-color: lighten(@c_dashboard_dark, 5%); }
+    &:hover { background-color: darken($c-dashboard-dark, 5%); }
+    &:focus { background-color: lighten($c-dashboard-dark, 5%); }
 
     &.btn-warning {
-        border-color: darken(@c_dashboard_edit, 10%);
-        background-color: @c_dashboard_edit;
-        &:hover { background-color: darken(@c_dashboard_edit, 5%); }
-        &:focus { background-color: lighten(@c_dashboard_edit, 5%); }
+        border-color: darken($c-dashboard-edit, 10%);
+        background-color: $c-dashboard-edit;
+        &:hover { background-color: darken($c-dashboard-edit, 5%); }
+        &:focus { background-color: lighten($c-dashboard-edit, 5%); }
     }
 
     &.btn-danger {
-        border-color: darken(@c_dashboard_delete, 10%);
-        background-color: @c_dashboard_delete;
-        &:hover { background-color: darken(@c_dashboard_delete, 5%); }
-        &:focus { background-color: lighten(@c_dashboard_delete, 5%); }
+        border-color: darken($c-dashboard-delete, 10%);
+        background-color: $c-dashboard-delete;
+        &:hover { background-color: darken($c-dashboard-delete, 5%); }
+        &:focus { background-color: lighten($c-dashboard-delete, 5%); }
     }
 
     &.btn-default {
-        border-color: darken(@c_dashboard_light, 10%);
-        background-color: @c_dashboard_light;
-        color: @c_text;
-        &:hover { background-color: darken(@c_dashboard_light, 5%); }
-        &:focus { background-color: lighten(@c_dashboard_light, 5%); }
+        border-color: darken($c-dashboard-light, 10%);
+        background-color: $c-dashboard-light;
+        color: $c-text;
+        &:hover { background-color: darken($c-dashboard-light, 5%); }
+        &:focus { background-color: lighten($c-dashboard-light, 5%); }
     }
 
-    &.btn-link { color: @c_dashboard_light; }
+    &.btn-link { color: $c-dashboard-light; }
     &, &:hover, &:focus { text-decoration: none; }
 }
 
 .table {
-    & > thead > tr > th { border-bottom: 1px solid #666; }
+    > thead > tr > th { border-bottom: 1px solid #666; }
 
-    @media (max-width: @screen-md-max) {
-        tr.heading-row { display: none; }
-        tr:not(:first-child) { border-top: 1px solid #ddd; }
+    @media (max-width: $screen-md-max) {
+        tr {
+            &.heading-row { display: none; }
+            &:not(:first-child) { border-top: 1px solid #ddd; }
+        }
 
-        & > tbody > tr > td {
+        > tbody > tr > td {
             &:first-child { padding-top: 20px; }
             &:last-child { padding-bottom: 20px; }
         }
 
-        & > tbody > tr:first-child > td:first-child { padding-top: 0px; }
-        & > tbody > tr:last-child > td:last-child { padding-bottom: 0px; }
+        > tbody > tr {
+            &:first-child > td:first-child { padding-top: 0px; }
+            &:last-child > td:last-child { padding-bottom: 0px; }
 
-        & > tbody > tr > td {
-            display: block;
-            border-top: none;
+            > td {
+                display: block;
+                border-top: 0;
+            }
         }
     }
 
-    @media (min-width: @screen-lg-min) {
-        & > tbody > tr > td { padding: 20px 8px; }
-        & > tbody > tr:last-child > td { padding-bottom: 0px; }
+    @media (min-width: $screen-lg-min) {
+        > tbody > tr > td { padding: 20px 8px; }
+        > tbody > tr:last-child > td { padding-bottom: 0px; }
         .mobile-heading { display: none; }
     }
 }
@@ -191,14 +202,14 @@ nav.navbar {
             a {
                 display: block;
                 padding: 10px 15px;
-                color: @c_dashboard_dark;
                 background-color: #fff;
+                color: $c-dashboard-dark;
                 transition: background-color 100ms, color 100ms;
                 &:focus, &:hover { text-decoration: none; }
 
                 &:hover {
-                    color: @c_dashboard_light;
-                    background-color: @c_dashboard_dark;
+                    background-color: $c-dashboard-dark;
+                    color: $c-dashboard-light;
                 }
             }
 
@@ -221,8 +232,8 @@ nav.navbar {
             padding-bottom: 4px;
 
             .sort-icon {
-                display: inline-block;
                 margin-right: 10px;
+                display: inline-block;
                 cursor: grab;
                 cursor: -webkit-grabbing;
             }
@@ -234,14 +245,14 @@ nav.navbar {
             }
 
             .button-column {
-                text-align: right;
                 padding-right: 0px;
                 padding-left: 0px;
+                text-align: right;
 
                 .btn {
+                    margin: 3px;
                     min-width: 70px;
                     height: 26px;
-                    margin: 3px;
                     padding-top: 1px;
                     padding-bottom: 2px;
                 }
@@ -261,16 +272,16 @@ nav.navbar {
     }
 
     input {
+        margin-bottom: 15px;
         display: block;
         width: 100%;
-        margin-bottom: 15px;
     }
 
     .current-image {
         width: 125px;
         height: 125px;
-        background-size: contain;
         background-position: left center;
+        background-size: contain;
         background-repeat: no-repeat;
     }
 
@@ -280,9 +291,9 @@ nav.navbar {
     .back-button, .submit-button {
         margin: 25px 15px 15px 15px;
 
-        @media (max-width: (@screen-sm - 1)) {
+        @media (max-width: ($screen-sm - 1)) {
             float: none;
-            width: calc(100% ~"-" 30px);
+            width: calc(100% - 30px);
             &:first-child { margin: 25px 15px 5px 15px; }
             &:last-child { margin: 5px 15px 25px 15px; }
         }
@@ -290,16 +301,16 @@ nav.navbar {
 }
 
 #loading-modal {
+    z-index: 1000;
     position: fixed;
     top: 0px;
     left: 0px;
+    visibility: hidden;
     width: 100%;
     height: 100%;
-    background-color: fade(lighten(@c_dashboard_light, 1%), 40%);
-    transition: opacity 250ms;
+    background-color: fade-out(lighten($c-dashboard-light, 1%), 0.6);
     opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
+    transition: opacity 250ms;
 
     .spinner-container {
         position: absolute;
@@ -310,17 +321,17 @@ nav.navbar {
 }
 
 .modal {
-    display: table;
+    z-index: 1000;
     position: fixed;
     top: 0px;
     left: 0px;
+    visibility: hidden;
+    display: table;
     width: 100%;
     height: 100%;
-    background-color: fade(lighten(@c_dashboard_light, 1%), 40%);
-    transition: opacity 250ms;
+    background-color: fade-out(lighten($c-dashboard-light, 1%), 0.6);
     opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
+    transition: opacity 250ms;
 
     .modal-container {
         display: table-cell;
@@ -329,8 +340,8 @@ nav.navbar {
         .panel { margin: 0px; }
 
         .btn {
-            display: inline-block;
             margin: 20px 15px;
+            display: inline-block;
         }
     }
 
@@ -346,8 +357,8 @@ nav.navbar {
 
             .btn {
                 position: absolute;
-                right: 0px;
                 top: 50%;
+                right: 0px;
                 transform: translateY(-50%);
             }
         }

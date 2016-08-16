@@ -1,0 +1,36 @@
+// Libraries
+@import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+// Core
+@import "_var";
+@import "_fonts";
+
+// Supplementary
+@import "elements/**";
+@import "pages/**";
+
+//
+//  Main Styles
+//
+
+* {
+    outline: none !important;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    &.no-scroll { overflow-y: hidden; }
+}
+
+body {
+    @include font-sans;
+    width: 100%;
+    height: 100%;
+    padding-top: $nav-height;
+    color: $c-text;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
+    @media (max-width: $grid-float-breakpoint-max) { padding-top: $nav-height-mobile; }
+}

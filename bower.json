@@ -8,13 +8,13 @@
   "license": "MIT",
   "dependencies": {
     "jquery": "~2.2.4",
-    "bootstrap": "^3.3.7",
     "fontawesome": "~4.6.3",
     "awesome-bootstrap-checkbox": "~0.3.7",
     "Sortable": "~1.4.2",
     "simplemde": "~1.11.2",
     "datetimepicker": "~2.5.4",
     "SpinKit": "~1.2.5",
-    "jQuery.stickyFooter": "https://github.com/miWebb/jQuery.stickyFooter.git#~1.2.3"
+    "jQuery.stickyFooter": "https://github.com/miWebb/jQuery.stickyFooter.git#~1.2.3",
+    "bootstrap-sass": "^3.3.7"
   }
 }

@@ -1,25 +1,22 @@
 // include packages
 const gulp = require("gulp"),
     gUtil = require("gulp-util"),
-    gLess = require("gulp-less"),
+    gSass = require("gulp-sass"),
+    gSassGlob = require("gulp-sass-glob"),
     gConcat = require("gulp-concat"),
     gPlumber = require("gulp-plumber"),
     gUglify = require("gulp-uglify"),
     gModernizr = require("gulp-modernizr"),
     gBabel = require("gulp-babel"),
     gPostCSS = require("gulp-postcss"),
-    autoprefixer = require("autoprefixer"),
-    lessGlob = require("less-plugin-glob"),
-    lessCleanCSS = require("less-plugin-clean-css");
+    autoprefixer = require("autoprefixer");
 
 // determine if gulp has been run with --production
 const prod = gUtil.env.production;
 
-// initialize plugins
-const cleancss = new lessCleanCSS({ advanced: true });
-
 // declare plugin settings and modernizr tests
-const lessPlugins = prod ? [ lessGlob, cleancss ] : [ lessGlob ],
+const sassOutputStyle = prod ? "compressed" : "nested",
+    sassIncludePaths = [ "bower_components" ],
     autoprefixerSettings = { remove: false, cascade: false, browsers: [ "last 6 versions" ] },
     modernizrTests = [];
 
@@ -34,7 +31,7 @@ const jsPublic = [
 // javascript libraries for the public site
 const jsPublicLibs = [
     "bower_components/jquery/dist/jquery.js",
-    "bower_components/bootstrap/dist/js/bootstrap.js",
+    "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
     "bower_components/jQuery.stickyFooter/assets/js/jquery.stickyfooter.js"
 ];
 
@@ -46,7 +43,7 @@ const jsDashboard = [
 // javascript libraries for the dashboard
 const jsDashboardLibs = [
     "bower_components/jquery/dist/jquery.js",
-    "bower_components/bootstrap/dist/js/bootstrap.js",
+    "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
     "bower_components/Sortable/Sortable.js",
     "bower_components/datetimepicker/build/jquery.datetimepicker.full.js",
     "bower_components/simplemde/dist/simplemde.min.js"
@@ -55,7 +52,7 @@ const jsDashboardLibs = [
 // paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
     "resources/assets/fonts/**",
-    "bower_components/bootstrap/dist/fonts/**",
+    "bower_components/bootstrap-sass/assets/fonts/**/*",
     "bower_components/fontawesome/fonts/**"
 ];
 
@@ -65,11 +62,12 @@ function plumberError(err) {
     this.emit("end");
 }
 
-// function to handle the processing of less files
-function processLess(filename) {
-    return gulp.src("resources/assets/less/" + filename + ".less")
+// function to handle the processing of sass files
+function processSass(filename) {
+    return gulp.src("resources/assets/sass/" + filename + ".scss")
         .pipe(gPlumber(plumberError))
-        .pipe(gLess({ plugins: lessPlugins, paths: "bower_components/" }))
+        .pipe(gSassGlob())
+        .pipe(gSass({ outputStyle: sassOutputStyle, includePaths: sassIncludePaths }))
         .pipe(gPostCSS([ autoprefixer(autoprefixerSettings) ]))
         .pipe(gConcat(filename + ".css"))
         .pipe(gulp.dest("public/css/"));
@@ -87,13 +85,13 @@ function processJavaScript(ouputFilename, inputFiles, es6) {
 }
 
 // gulp task for public styles
-gulp.task("less-public", function() {
-    return processLess("app");
+gulp.task("sass-public", function() {
+    return processSass("app");
 });
 
 // gulp task for dashboard styles
-gulp.task("less-dashboard", function() {
-    return processLess("dashboard");
+gulp.task("sass-dashboard", function() {
+    return processSass("dashboard");
 });
 
 // gulp task for public javascript
@@ -155,15 +153,15 @@ gulp.task("watch", function() {
     gulp.watch(jsDashboard, [ "js-dashboard" ]).on("change", liveReloadUpdate);
     gulp.watch([ "app/**/*.php", "resources/views/**/*.blade.php" ]).on("change", liveReloadUpdate);
 
-    gulp.watch("resources/assets/less/**/*.less", [ "less-public", "less-dashboard" ]).on("change", function() {
+    gulp.watch("resources/assets/sass/**/*.scss", [ "sass-public", "sass-dashboard" ]).on("change", function() {
         liveReloadUpdate(1000);
     });
 });
 
 // gulp default task
 gulp.task("default", [
-    "less-public",
-    "less-dashboard",
+    "sass-public",
+    "sass-dashboard",
     "js-public",
     "js-public-libs",
     "js-dashboard",
