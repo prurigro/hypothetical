@@ -44,7 +44,7 @@ Route::group([ 'prefix' => 'dashboard' ], function() {
     Route::get('/', 'DashboardController@index');
     Route::get('/contact', 'DashboardController@getContact');
     Route::get('/subscriptions', 'DashboardController@getSubscriptions');
-    Route::get('/export', 'DashboardController@getExport');
+    Route::get('/export/{model}', 'DashboardController@getExport');
     Route::post('/image-upload', 'DashboardController@postImageUpload');
     Route::post('/edit', 'DashboardController@postEdit');
     Route::post('/reorder', 'DashboardController@postReorder');
