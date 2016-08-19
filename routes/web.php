@@ -32,6 +32,7 @@ Route::post('/subscription-submit', 'SubscriptionController@postSubscriptionSubm
 */
 
 Route::auth();
+Route::get('/logout', 'Auth\LoginController@logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,13 @@ Route::auth();
 |--------------------------------------------------------------------------
 */
 
-Route::group(['prefix' => 'dashboard'], function() {
+Route::group([ 'prefix' => 'dashboard' ], function() {
     Route::get('/', 'DashboardController@index');
-    Route::controller('', DashboardController::class);
+    Route::get('/contact', 'DashboardController@getContact');
+    Route::get('/subscriptions', 'DashboardController@getSubscriptions');
+    Route::get('/export', 'DashboardController@getExport');
+    Route::post('/image-upload', 'DashboardController@postImageUpload');
+    Route::post('/edit', 'DashboardController@postEdit');
+    Route::post('/reorder', 'DashboardController@postReorder');
+    Route::delete('/delete', 'DashboardController@deleteDelete');
 });
