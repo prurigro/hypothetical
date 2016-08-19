@@ -1,9 +1,11 @@
 /vendor
 /node_modules
 /bower_components
+/public/storage
 /public/css
 /public/js
 /public/fonts
 /public/uploads
 /storage/exports
-.env
+/.idea
+/.env

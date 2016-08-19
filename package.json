@@ -1,5 +1,9 @@
 {
   "private": true,
+  "scripts": {
+    "prod": "gulp --production",
+    "dev": "gulp default watch"
+  },
   "devDependencies": {
     "gulp-livereload": "^3.8.1"
   },
