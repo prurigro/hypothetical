@@ -183,7 +183,6 @@ return [
         Gwnobots\LaravelHead\LaravelHeadServiceProvider::class,
         Spatie\Newsletter\NewsletterServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Collective\Bus\BusServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],

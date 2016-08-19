@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aa56f122ce172f7f25127adbf9c77979",
-    "content-hash": "63519e2a46cffe1dc17f4e9d7a504f7e",
+    "hash": "7686d8ee455840371a40af5bc4034ba0",
+    "content-hash": "310121cde83ed33ff35d9703a3c22f26",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -796,60 +796,6 @@
                 "laravel"
             ],
             "time": "2016-08-17 15:05:00"
-        },
-        {
-            "name": "laravelcollective/bus",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/LaravelCollective/bus.git",
-                "reference": "44fcf9b3988618a5d0487bbe95ba398e939d10e8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/bus/zipball/44fcf9b3988618a5d0487bbe95ba398e939d10e8",
-                "reference": "44fcf9b3988618a5d0487bbe95ba398e939d10e8",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/container": "5.3.*",
-                "illuminate/contracts": "5.3.*",
-                "illuminate/pipeline": "5.3.*",
-                "illuminate/support": "5.3.*",
-                "php": ">=5.6.4"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.4",
-                "phpunit/phpunit": "~5.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Collective\\Bus\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
-                },
-                {
-                    "name": "Adam Engebretson",
-                    "email": "adam@laravelcollective.com"
-                }
-            ],
-            "description": "The Laravel Bus (5.1) package for use in Laravel 5.3.",
-            "homepage": "http://laravelcollective.com",
-            "time": "2016-08-04 04:22:53"
         },
         {
             "name": "laravelcollective/html",
