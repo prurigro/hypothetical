@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' =>  env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +120,7 @@ return [
     |
     */
 
-    'log' => 'single',
+    'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
@@ -172,6 +172,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 

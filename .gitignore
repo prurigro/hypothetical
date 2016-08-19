@@ -8,4 +8,6 @@
 /public/uploads
 /storage/exports
 /.idea
-/.env
+.env
+Homestead.yaml
+Homestead.json
