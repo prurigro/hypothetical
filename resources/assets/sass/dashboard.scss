@@ -6,13 +6,16 @@
 @import "simplemde/dist/simplemde.min";
 @import "SpinKit/css/spinners/11-folding-cube";
 
-
 // Core
 @import "_var";
 @import "_fonts";
 
 // Fontawesome Path
 $fa-font-path: "/fonts";
+
+//
+// Main Dashboard Styles
+//
 
 * {
     outline: none !important;
