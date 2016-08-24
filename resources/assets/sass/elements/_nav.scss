@@ -12,8 +12,8 @@
         position: absolute;
         top: 5px;
         left: 10px;
-        width: ($nav-height - 10);
-        height: ($nav-height - 10);
+        width: ($nav-height - 10px);
+        height: ($nav-height - 10px);
         background-image: url("/img/logo.png");
         background-position: center center;
         background-size: contain;
@@ -21,8 +21,8 @@
         cursor: pointer;
 
         @media (max-width: $grid-float-breakpoint-max) {
-            width: ($nav-height-mobile - 10);
-            height: ($nav-height-mobile - 10);
+            width: ($nav-height-mobile - 10px);
+            height: ($nav-height-mobile - 10px);
         }
     }
 
