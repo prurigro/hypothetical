@@ -151,7 +151,7 @@ gulp.task("watch", function() {
     gLiveReload.listen();
     gulp.watch(jsPublic, [ "js-public" ]).on("change", liveReloadUpdate);
     gulp.watch(jsDashboard, [ "js-dashboard" ]).on("change", liveReloadUpdate);
-    gulp.watch([ "app/**/*.php", "resources/views/**/*.blade.php" ]).on("change", liveReloadUpdate);
+    gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ]).on("change", liveReloadUpdate);
 
     gulp.watch("resources/assets/sass/**/*.scss", [ "sass-public", "sass-dashboard" ]).on("change", function() {
         liveReloadUpdate(1000);
