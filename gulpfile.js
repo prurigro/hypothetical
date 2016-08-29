@@ -9,6 +9,7 @@ const gulp = require("gulp"),
     gModernizr = require("gulp-modernizr"),
     gBabel = require("gulp-babel"),
     gPostCSS = require("gulp-postcss"),
+    gStripDebug = require("gulp-strip-debug"),
     autoprefixer = require("autoprefixer");
 
 // determine if gulp has been run with --production
@@ -80,7 +81,7 @@ function processJavaScript(ouputFilename, inputFiles, es6) {
         .pipe(gConcat(ouputFilename + ".js"));
 
     if (es6) { javascript.pipe(gBabel({ presets: [ "es2015" ] })); }
-    if (prod) { javascript.pipe(gUglify()); }
+    if (prod) { javascript.pipe(gStripDebug()).pipe(gUglify()); }
     return javascript.pipe(gulp.dest("public/js/"));
 }
 
