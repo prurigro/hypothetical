@@ -15,7 +15,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-modernizr": "^1.0.0-alpha",
     "gulp-plumber": "^1.1.0",
-    "gulp-postcss": "^6.1.1",
+    "gulp-postcss": "^6.2.0",
     "gulp-sass": "^2.3.2",
     "gulp-sass-glob": "^1.0.6",
     "gulp-strip-debug": "^1.1.0",
