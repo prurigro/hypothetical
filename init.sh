@@ -3,6 +3,10 @@
 # dependencies
 deps=('bower' 'composer' 'egrep' 'gulp' 'npm' 'php' 'sed')
 
+# default settings
+no_artisan=0
+artisan_down=0
+
 # Colour scheme
 [[ -t 1 ]] && {
     c_d=$'\e[1;30m' # DARK GREY
@@ -44,13 +48,16 @@ done
 # Exit with an error on ctrl-c
 trap 'error "script killed"' SIGINT SIGQUIT
 
+# Check for the --no-artisan argument and set a flag that prevents artisan commands from being run if present
+[[ -n "$1" && "$1" = '--no-artisan' ]] && no_artisan=1
+
 [[ ! -f .env ]] && {
     msg "Copying ${c_y}.env.example$c_w to ${c_y}.env$c_w with a randomly generated ${c_g}APP_KEY"
-    sed 's|^APP_KEY=.*|APP_KEY='"$(</dev/urandom tr -dc A-Za-z0-9 | head -c"${1:-32}")"'|' .env.example > .env
+    sed 's|^APP_KEY=.*|APP_KEY='"$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env.example > .env
     exit
 }
 
-[[ -d vendor ]] && {
+(( ! no_artisan )) && [[ -d vendor ]] && {
     artisan_down=1
     msg "Running: ${c_m}php artisan down"
     php artisan down
@@ -65,10 +72,12 @@ egrep -q '^CACHE_BUST=' .env || {
 }
 
 msg "Updating ${c_y}CACHE_BUST$c_w variable"
-sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(</dev/urandom tr -dc A-Za-z0-9 | head -c"${1:-32}")"'|' .env
+sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env
 
-msg "Running: ${c_m}php artisan migrate"
-php artisan migrate || error "${c_m}php artisan migrate$c_w exited with an error status"
+(( ! no_artisan )) && {
+    msg "Running: ${c_m}php artisan migrate"
+    php artisan migrate || error "${c_m}php artisan migrate$c_w exited with an error status"
+}
 
 msg "Running: ${c_m}npm install"
 npm install --production || error "${c_m}npm install$c_w exited with an error status"
