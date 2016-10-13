@@ -7,7 +7,7 @@
   "description": "The Hypothetical website template",
   "license": "MIT",
   "dependencies": {
-    "jquery": "~2.2.4",
+    "jquery": "~3.1.1",
     "fontawesome": "~4.6.3",
     "awesome-bootstrap-checkbox": "~0.3.7",
     "Sortable": "~1.4.2",
