@@ -73,8 +73,8 @@ php artisan migrate || error "${c_m}php artisan migrate$c_w exited with an error
 msg "Running: ${c_m}npm install"
 npm install --production || error "${c_m}npm install$c_w exited with an error status"
 
-msg "Running: ${c_m}bower install"
-bower install || error "${c_m}bower install$c_w exited with an error status"
+msg "Running: ${c_m}bower prune && bower install"
+bower prune && bower install || error "${c_m}bower prune && bower install$c_w exited with an error status"
 
 msg "Running: ${c_m}gulp --production"
 gulp --production || error "${c_m}gulp --production$c_w exited with an error status"
