@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.public', [ 'title' => 'Contact' ])
 
 @section('content')
     <div class="container">
@@ -16,7 +16,6 @@
                         <input type="text" name="name" id="name" placeholder="Name" />
                         <input type="text" name="email" id="email" placeholder="Email" />
                         <textarea name="message" id="message" placeholder="Message"></textarea>
-
                         <input id="submit" type="submit" value="Submit" />
                     </form>
 

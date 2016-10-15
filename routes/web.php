@@ -7,12 +7,10 @@
 */
 
 Route::get('/', function() {
-    Head::setTitle('Home');
     return view('website.index');
 });
 
 Route::get('/contact', function() {
-    Head::setTitle('Contact');
     return view('website.contact');
 });
 

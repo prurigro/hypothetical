@@ -1,8 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        {!! Head::render() !!}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        @set('page_title', (isset($title) ? $title . ' - ' : '') . env('SITE_NAME'))
+        <title>{{ $page_title }}</title>
+
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="title" content="{{ $page_title }}" />
+        <meta name="description" content="{{ env('SITE_DESC') }}" />
+        <meta name="dc:title" content="{{ $page_title }}" />
+        <meta name="dc:description" content="{{ env('SITE_DESC') }}" />
+
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="{{ $page_title }}" />
+        <meta property="og:description" content="{{ env('SITE_DESC') }}" />
+        <meta property="og:url" content="{{ Request::url() }}" />
+        <meta property="og:image" content="{{ asset('/img/logo.png') }}" />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="{{ $page_title }}" />
+        <meta name="twitter:description" content="{{ env('SITE_DESC') }}" />
+        <meta name="twitter:image" content="{{ asset('/img/logo.png') }}" />
+
+        <link rel="shortcut icon" href="{{ URL::to('/') }}/favicon.ico" />
+        <link rel="icon" href="{{ URL::to('/') }}/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="{{ URL::to('/') }}/favicon.png" type="image/png" />
+        <link rel="canonical" href="{{ Request::url() }}" />
+
         @yield('page-includes')
 
         @if(Config::get('app.debug'))

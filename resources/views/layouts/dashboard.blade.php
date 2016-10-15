@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.base', [ 'title' => 'Dashboard' ])
 
 @section('page-includes')
     <script src="/js/lib-dashboard.js?version={{ env('CACHE_BUST') }}"></script>

@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.public', [ 'title' => 'Home' ])
 
 @section('content')
     <div id="subscription-form">

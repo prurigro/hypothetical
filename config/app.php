@@ -182,7 +182,6 @@ return [
          * Custom Service Providers...
          */
         Radic\BladeExtensions\BladeExtensionsServiceProvider::class,
-        Gwnobots\LaravelHead\LaravelHeadServiceProvider::class,
         Spatie\Newsletter\NewsletterServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,

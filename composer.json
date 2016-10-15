@@ -9,7 +9,6 @@
         "laravel/framework": "5.3.*",
         "radic/blade-extensions": "~6.2",
         "erusev/parsedown": "~1.5",
-        "gwnobots/laravel-head": "dev-master",
         "spatie/laravel-newsletter": "^2.2",
         "intervention/image": "^2.3",
         "maatwebsite/excel": "^2.1"
