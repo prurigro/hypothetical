@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+    @set('page_title', (isset($title) ? $title . ' - ' : '') . env('SITE_NAME'))
+    @set('device_mobile', preg_match('/Mobi/', Request::header('User-Agent')) || preg_match('/iP(hone|ad|od);/', Request::header('User-Agent')))
+
     <head>
-        @set('page_title', (isset($title) ? $title . ' - ' : '') . env('SITE_NAME'))
         <title>{{ $page_title }}</title>
 
         <meta charset="UTF-8" />
@@ -38,7 +40,7 @@
         @endif
     </head>
 
-    <body class="page-{{ Request::path() == '/' ? 'index' : preg_replace('/\/.*/', '', Request::path()) }}">
+    <body class="page-{{ Request::path() == '/' ? 'index' : preg_replace('/\/.*/', '', Request::path()) }} {{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
         @yield('page-top')
 
         <div id="page-content">
