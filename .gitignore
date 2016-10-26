@@ -7,7 +7,6 @@
 /public/fonts
 /public/uploads
 /storage/exports
+/storage.*.key
 /.idea
 .env
-Homestead.yaml
-Homestead.json
