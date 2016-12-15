@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-# dependencies
+# Dependencies
 deps=('bower' 'composer' 'egrep' 'gulp' 'npm' 'php' 'sed')
 
-# default settings
+# Default settings
 no_artisan=0
+
+# Initialize variables
 artisan_down=0
 
 # Colour scheme
