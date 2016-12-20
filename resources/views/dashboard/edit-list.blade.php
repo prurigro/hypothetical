@@ -7,6 +7,7 @@
 @section('dashboard-body')
     @set('sort_data', $sortcol != false ? "data-sort=$sortcol" : '')
     @set('sort_icon', $sortcol != false ? '<i class="fa fa-bars sort-icon" title="Click and drag to reorder"></i>' : '')
+    @set('delete_button', $delete == true ? '<button type="button" class="delete-button btn btn-danger">Delete</button>' : '')
 
     <ul id="edit-list" class="list-group edit-list" data-model="{{ $model }}" {{ $sort_data }}>
         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}" />
@@ -22,7 +23,7 @@
 
                         <div class="col-xs-3 button-column">
                             <button type="button" class="edit-button btn btn-warning">Edit</button>
-                            <button type="button" class="delete-button btn btn-danger">Delete</button>
+                            {!! $delete_button !!}
                         </div>
                     </div>
                 </div>

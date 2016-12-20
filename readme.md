@@ -66,7 +66,8 @@ Viewable models must have an entry in the switch statement of the `getExport` fu
             'model'   => 'shows',
             'rows'    => Shows::getShowsList(),
             'column'  => 'title',
-            'sortcol' => 'false'
+            'sortcol' => false,
+            'delete'  => true
         ]);
     }
 ```
@@ -83,7 +84,8 @@ Viewable models must have an entry in the switch statement of the `getExport` fu
             'model'   => 'news',
             'rows'    => News::getNewsList(),
             'column'  => 'title',
-            'sortcol' => 'order'
+            'sortcol' => 'order',
+            'delete'  => false
         ]);
     }
 ```
@@ -92,11 +94,12 @@ Viewable models must have an entry in the switch statement of the `getExport` fu
 * `model`: The model that will be accessed on this page
 * `rows`: A function returning an array containing the data to be shown on this page
 * `column`: The column name in the array that contains the data to display in each row
-* `sortcol`: The name of the column containing the sort order or `'false'` to disable
+* `sortcol`: The name of the column containing the sort order or `false` to disable
+* `delete`: A delete button will appear in the list if this is set to `true`
 
 #### Delete Functionality
 
-Editable models must have an entry in the switch statement of the `deleteDelete` function to make deletion functionality work:
+Editable models with `delete` set to `true` must have an entry in the switch statement of the `deleteDelete` function to make deletion functionality work:
 
 ```php
     switch ($request['model']) {
