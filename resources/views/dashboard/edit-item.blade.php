@@ -61,6 +61,7 @@
                         <input class="image-upload" type="file" name="image-upload" id="image-upload" />
 
                         @set('current_image', "/uploads/$model/$id.jpg")
+
                         @if(file_exists(base_path() . '/public' . $current_image))
                             <div class="current-image" style="background-image: url({{ $current_image }});" />
                         @else
