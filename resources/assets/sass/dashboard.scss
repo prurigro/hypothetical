@@ -106,19 +106,22 @@ body {
         color: $c-dashboard-light;
         font-weight: bold;
 
-        .btn {
+        .dashboard-heading {
             float: right;
-            position: relative;
-            bottom: 3px;
-            min-width: 70px;
-            height: 26px;
-            padding-top: 1px;
-            padding-bottom: 2px;
-        }
 
-        a {
-            color: $c-text;
-            text-decoration: none;
+            .btn {
+                position: relative;
+                bottom: 3px;
+                min-width: 70px;
+                height: 26px;
+                padding-top: 1px;
+                padding-bottom: 2px;
+            }
+
+            a {
+                color: $c-text;
+                text-decoration: none;
+            }
         }
     }
 }

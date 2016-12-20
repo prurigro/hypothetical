@@ -34,24 +34,6 @@ First add a function to generate the page:
 * `rows`: A function returning an array containing the data to be shown on this page
 * `cols`: An array containing a set of arrays where the first element of each is the visible column name and the second is the column name in the array
 
-#### Export Functionality
-
-Viewable models must have an entry in the switch statement of the `getExport` function to make the export button work:
-
-```php
-    switch ($model) {
-        case 'contact':
-            $headings = [ 'Date', 'Name', 'Email', 'Message' ];
-            $items = Contact::select('created_at', 'name', 'email', 'message')->get();
-            break;
-        default:
-            abort(404);
-    }
-```
-
-* `$headings`: The visible column names in the same order as the array containing the items to be exported
-* `$items`: A function returning an array containing the data to be exported
-
 ### Adding an Editable Model to the Dashboard
 
 #### Editable List of Rows
@@ -67,7 +49,8 @@ Viewable models must have an entry in the switch statement of the `getExport` fu
             'rows'    => Shows::getShowsList(),
             'column'  => 'title',
             'sortcol' => false,
-            'delete'  => true
+            'delete'  => true,
+            'export'  => true
         ]);
     }
 ```
@@ -96,6 +79,7 @@ Viewable models must have an entry in the switch statement of the `getExport` fu
 * `column`: The column name in the array that contains the data to display in each row
 * `sortcol`: The name of the column containing the sort order or `false` to disable
 * `delete`: A delete button will appear in the list if this is set to `true`
+* `export`: An export button will appear in the heading if this is set to `true`
 
 #### Delete Functionality
 
@@ -255,3 +239,21 @@ Add an array to the menu array in `resources/views/dashboard/elements/menu.blade
     [ 'Contact', 'contact' ]
 ])
 ```
+
+#### Additional Requirement for Export Functionality
+
+Viewable models and editable models with `export` set to `true` must have an entry in the switch statement of the `getExport` function to make the export button work:
+
+```php
+    switch ($model) {
+        case 'contact':
+            $headings = [ 'Date', 'Name', 'Email', 'Message' ];
+            $items = Contact::select('created_at', 'name', 'email', 'message')->get();
+            break;
+        default:
+            abort(404);
+    }
+```
+
+* `$headings`: The visible column names in the same order as the array containing the items to be exported
+* `$items`: A function returning an array containing the data to be exported

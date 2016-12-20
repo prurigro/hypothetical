@@ -7,7 +7,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         {{ $heading }}
-                        @yield('dashboard-heading')
+
+                        <div class="dashboard-heading">
+                            @yield('dashboard-heading')
+                        </div>
                     </div>
 
                     <div class="panel-body">
