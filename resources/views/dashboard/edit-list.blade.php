@@ -5,7 +5,9 @@
         <a href="/dashboard/export/{{ $model }}"><button type="button" class="btn btn-default">Export</button></a>
     @endif
 
-    <button type="button" class="new-button btn btn-default">New</button>
+    @if($create == true)
+        <button type="button" class="new-button btn btn-default">New</button>
+    @endif
 @endsection
 
 @section('dashboard-body')

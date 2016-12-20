@@ -50,6 +50,7 @@ First add a function to generate the page:
             'column'  => 'title',
             'sortcol' => false,
             'delete'  => true,
+            'create'  => true,
             'export'  => true
         ]);
     }
@@ -68,7 +69,9 @@ First add a function to generate the page:
             'rows'    => News::getNewsList(),
             'column'  => 'title',
             'sortcol' => 'order',
-            'delete'  => false
+            'delete'  => false,
+            'create'  => true,
+            'export'  => true
         ]);
     }
 ```
@@ -78,8 +81,9 @@ First add a function to generate the page:
 * `rows`: A function returning an array containing the data to be shown on this page
 * `column`: The column name in the array that contains the data to display in each row
 * `sortcol`: The name of the column containing the sort order or `false` to disable
-* `delete`: A delete button will appear in the list if this is set to `true`
-* `export`: An export button will appear in the heading if this is set to `true`
+* `delete`: A `delete` button will appear in the list if this is set to `true`
+* `create`: A `new` button will appear in the heading if this is set to `true`
+* `export`: An `export` button will appear in the heading if this is set to `true`
 
 #### Editable Item
 
