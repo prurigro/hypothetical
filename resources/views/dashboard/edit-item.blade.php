@@ -45,6 +45,8 @@
                                         @endif
                                     @endforeach
                                 </select>
+                            @elseif($column['type'] == 'display')
+                                <div class="text-display">{{ $value }}</div>
                             @endif
                         </div>
                     @endif
