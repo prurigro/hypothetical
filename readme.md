@@ -81,23 +81,6 @@ First add a function to generate the page:
 * `delete`: A delete button will appear in the list if this is set to `true`
 * `export`: An export button will appear in the heading if this is set to `true`
 
-#### Delete Functionality
-
-Editable models with `delete` set to `true` must have an entry in the switch statement of the `deleteDelete` function to make deletion functionality work:
-
-```php
-    switch ($request['model']) {
-        case 'shows':
-            $items = new Shows();
-            break;
-        case 'news':
-            $items = new News();
-            break;
-        default:
-            return 'model-access-fail';
-    }
-```
-
 #### Editable Item
 
 This function should be named the same as the one above except with `Edit` at the end
@@ -238,6 +221,23 @@ Add an array to the menu array in `resources/views/dashboard/elements/menu.blade
     [ 'Page Name', 'model_name' ],
     [ 'Contact', 'contact' ]
 ])
+```
+
+#### Additional Requirement for Delete Functionality
+
+Editable models with `delete` set to `true` must have an entry in the switch statement of the `deleteDelete` function to make deletion functionality work:
+
+```php
+    switch ($request['model']) {
+        case 'shows':
+            $items = new Shows();
+            break;
+        case 'news':
+            $items = new News();
+            break;
+        default:
+            return 'model-access-fail';
+    }
 ```
 
 #### Additional Requirement for Export Functionality
