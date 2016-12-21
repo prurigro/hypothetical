@@ -249,6 +249,12 @@ body {
                 padding-top: 6px;
                 padding-bottom: 6px;
                 padding-left: 0px;
+                font-family: "Lucida Console", Monaco, monospace;
+
+                .column {
+                    float: left;
+                    margin-right: 10px;
+                }
             }
 
             .button-column {

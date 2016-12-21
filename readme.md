@@ -79,7 +79,7 @@ First add a function to generate the page:
 * `heading`: The title that will appear for this page
 * `model`: The model that will be accessed on this page
 * `rows`: A function returning an array containing the data to be shown on this page
-* `column`: The column name in the array that contains the data to display in each row
+* `column`: The column name in the array that contains the data to display in each row (an array can be used to specify multiple columns)
 * `sortcol`: The name of the column containing the sort order or `false` to disable
 * `delete`: A `delete` button will appear in the list if this is set to `true`
 * `create`: A `new` button will appear in the heading if this is set to `true`
