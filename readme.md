@@ -51,7 +51,8 @@ First add a function to generate the page:
             'sortcol' => false,
             'delete'  => true,
             'create'  => true,
-            'export'  => true
+            'export'  => true,
+            'filter'  => true
         ]);
     }
 ```
@@ -71,7 +72,8 @@ First add a function to generate the page:
             'sortcol' => 'order',
             'delete'  => false,
             'create'  => true,
-            'export'  => true
+            'export'  => true,
+            'filter'  => true
         ]);
     }
 ```
@@ -84,6 +86,7 @@ First add a function to generate the page:
 * `delete`: A `delete` button will appear in the list if this is set to `true`
 * `create`: A `new` button will appear in the heading if this is set to `true`
 * `export`: An `export` button will appear in the heading if this is set to `true`
+* `filter`: An input box will appear below the heading that can filter rows by input if this is set to `true`
 
 #### Editable Item
 

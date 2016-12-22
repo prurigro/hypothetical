@@ -193,10 +193,25 @@ function editListInit() {
         }
     };
 
+    // initialize filter functionality if the filter-input element exists
+    const filterInputInit = function() {
+        const $filter = $("#filter-input");
+
+        if ($filter.length) {
+            // empty the filter
+            $filter.val("");
+
+            const filterList = new List("edit-list-wrapper", {
+                valueNames: [ "title" ]
+            });
+        }
+    };
+
     newButtonInit();
     editButtonInit();
     deleteButtonInit();
     sortRowInit();
+    filterInputInit();
 }
 
 function editItemInit() {
