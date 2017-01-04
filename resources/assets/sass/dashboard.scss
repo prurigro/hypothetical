@@ -272,6 +272,14 @@ body {
                 .column {
                     float: left;
                     margin-right: 10px;
+
+                    @media (max-width: $screen-sm-max) {
+                        &:nth-child(n+4) { display: none; }
+                    }
+
+                    @media (max-width: $screen-xs-max) {
+                        &:nth-child(n+2) { display: none; }
+                    }
                 }
             }
 
