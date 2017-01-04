@@ -306,7 +306,12 @@ function editItemInit() {
         // functionality to run on success
         const returnSuccess = function() {
             hideLoadingModal();
-            window.location.href = "/dashboard/" + model;
+
+            if (operation === "create") {
+                window.location.href = "/" + location.href.replace(/^[^:]*:\/\/[^\/]*\//, "").replace(/\/[^/]*$/, "") + "/" + row_id;
+            } else {
+                window.location.href = "/dashboard/" + model;
+            }
         };
 
         // add the image from the image upload box for image-upload class elements
