@@ -23,7 +23,7 @@
 
                     @if($column['type'] == 'hidden')
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
-                    @else
+                    @elseif($column['type'] != 'display' || $id != 'new')
                         <div class="col-xs-12 col-md-2">
                             <label for="{{ $column['name'] }}">{{ empty($column['label']) ? ucfirst($column['name']) : $column['label'] }}:</label>
                         </div>
