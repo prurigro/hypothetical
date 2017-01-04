@@ -226,7 +226,8 @@ function editItemInit() {
         $spinner = $("#loading-modal"),
         fadeTime = 250,
         model = $editItem.data("model"),
-        id = $editItem.data("id");
+        id = $editItem.data("id"),
+        operation = id === "new" ? "create" : "update";
 
     let allowTimes = [],
         simplemde = [],
@@ -415,7 +416,7 @@ function editItemInit() {
                     uploadImage(response.replace(/^id:/, ""));
                 } else {
                     hideLoadingModal();
-                    showAlert("ERROR: Failed to update record");
+                    showAlert("ERROR: Failed to " + operation + " record");
                     submitting = false;
                 }
             });
