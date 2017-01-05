@@ -23,14 +23,21 @@ $fa-font-path: "/fonts";
 
 body {
     @include font-sans;
-    min-width: 440px;
+    min-width: 320px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 .navbar {
     background-color: $c-dashboard-dark;
-    .navbar-brand { font-weight: bold; }
+
+    .navbar-brand {
+        font-weight: bold;
+
+        @media (max-width: $screen-xs-max) {
+            font-size: 14px;
+        }
+    }
 
     #spark-navbar-collapse {
         border: 0;
@@ -96,7 +103,8 @@ body {
             width: 100%;
 
             @media (max-width: $screen-xs-max) {
-                margin-bottom: 0px;
+                margin: 3px 3px 0px 3px;
+                width: calc(100% - 6px);
             }
         }
 
@@ -251,6 +259,10 @@ body {
             padding-top: 4px;
             padding-bottom: 4px;
 
+            @media (max-width: $screen-xs-max) {
+                margin: 3px;
+            }
+
             .sort-icon {
                 margin-right: 10px;
                 display: inline-block;
@@ -259,35 +271,49 @@ body {
             }
 
             .title-column {
-                float: left;
                 padding-top: 6px;
                 padding-bottom: 6px;
                 padding-left: 0px;
                 font-family: "Lucida Console", Monaco, monospace;
 
                 @media (max-width: $screen-xs-max) {
-                    font-size: 12px;
+                    text-align: center;
+
+                    .column {
+                        margin-right: 3px;
+                        display: inline-block;
+
+                        &.spacer {
+                            display: block;
+                            font-size: 0;
+                        }
+                    }
                 }
 
-                .column {
-                    float: left;
-                    margin-right: 10px;
-
-                    @media (max-width: $screen-sm-max) {
-                        &:nth-child(n+4) { display: none; }
+                @media (min-width: $screen-sm-min) {
+                    &, .column {
+                        float: left;
                     }
 
-                    @media (max-width: $screen-xs-max) {
-                        &:nth-child(n+2) { display: none; }
+                    .column {
+                        margin-right: 10px;
                     }
                 }
             }
 
             .button-column {
-                float: right;
                 padding-right: 0px;
                 padding-left: 0px;
-                text-align: right;
+
+                @media (max-width: $screen-xs-max) {
+                    padding-bottom: 5px;
+                    text-align: center;
+                }
+
+                @media (min-width: $screen-sm-min) {
+                    float: right;
+                    text-align: right;
+                }
 
                 .btn {
                     margin: 3px;
@@ -297,8 +323,7 @@ body {
                     padding-bottom: 2px;
 
                     @media (max-width: $screen-xs-max) {
-                        height: 20px;
-                        font-size: 11px;
+                        min-width: 33%;
                     }
                 }
             }
