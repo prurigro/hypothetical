@@ -48,6 +48,7 @@ First add a function to generate the page:
             'model'   => 'shows',
             'rows'    => Shows::getShowsList(),
             'column'  => 'title',
+            'button'  => [ 'Email Show', 'Are you sure you want to send an email?', 'Email successfully sent', 'Failed to send email', '/email-show' ],
             'sortcol' => false,
             'delete'  => true,
             'create'  => true,
@@ -69,6 +70,7 @@ First add a function to generate the page:
             'model'   => 'news',
             'rows'    => News::getNewsList(),
             'column'  => 'title',
+            'button'  => [ 'Email Show', 'Are you sure you want to send an email?', 'Email successfully sent', 'Failed to send email', '/email-show' ],
             'sortcol' => 'order',
             'delete'  => false,
             'create'  => true,
@@ -82,6 +84,7 @@ First add a function to generate the page:
 * `model`: The model that will be accessed on this page
 * `rows`: A function returning an array containing the data to be shown on this page
 * `column`: The column name in the array that contains the data to display in each row (an array can be used to specify multiple columns)
+* `button`: Add a button with a title, confirmation, success and error messages, and a post request path that takes an id and returns `success` on success
 * `sortcol`: The name of the column containing the sort order or `false` to disable
 * `delete`: A `delete` button will appear in the list if this is set to `true`
 * `create`: A `new` button will appear in the heading if this is set to `true`

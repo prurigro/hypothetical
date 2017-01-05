@@ -157,6 +157,38 @@ function editListInit() {
         });
     };
 
+    // initialize action button functionality
+    const actionButtonInit = function() {
+        const $actionButtons = $(".btn.action-button");
+
+        $actionButtons.on("click", function() {
+            const $this = $(this),
+                $listItem = $this.closest(".list-group-item"),
+                itemId = $listItem.data("id"),
+                confirmationMessage = $this.data("confirmation"),
+                successMessage = $this.data("success"),
+                errorMessage = $this.data("error"),
+                postUrl = $this.data("url");
+
+            askConfirmation(confirmationMessage, function() {
+                $.ajax({
+                    type: "POST",
+                    url: postUrl,
+                    data: {
+                        id: itemId,
+                        _token: $("#token").val()
+                    }
+                }).always(function(response) {
+                    if (response === "success") {
+                        showAlert(successMessage);
+                    } else {
+                        showAlert("ERROR: " + errorMessage);
+                    }
+                });
+            });
+        });
+    };
+
     // initialize sort functionality if data-sort is set
     const sortRowInit = function() {
         let sortOrder = {}, sortCol, sortable;
@@ -210,6 +242,7 @@ function editListInit() {
     newButtonInit();
     editButtonInit();
     deleteButtonInit();
+    actionButtonInit();
     sortRowInit();
     filterInputInit();
 }

@@ -44,6 +44,10 @@
                             </div>
 
                             <div class="button-column">
+                                @if(isset($button) && is_array($button))
+                                    <button type="button" class="action-button btn btn-default" data-confirmation="{{ $button[1] }}" data-success="{{ $button[2] }}" data-error="{{ $button[3] }}" data-url="{{ $button[4] }}">{{ $button[0] }}</button>
+                                @endif
+
                                 <button type="button" class="edit-button btn btn-warning">Edit</button>
 
                                 @if($delete)
