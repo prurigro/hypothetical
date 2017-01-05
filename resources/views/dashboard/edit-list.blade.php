@@ -31,10 +31,12 @@
                                 <div class="title">
                                     @if(is_array($column))
                                         @foreach($column as $col)
-                                            <div class="column">{{ $row[$col] }}</div>
+                                            @if($row[$col] != '')
+                                                <div class="column">{{ $row[$col] }}</div>
 
-                                            @if(!$loop->last)
-                                                <div class="column">|</div>
+                                                @if(!$loop->last)
+                                                    <div class="column">|</div>
+                                                @endif
                                             @endif
                                         @endforeach
                                     @else
