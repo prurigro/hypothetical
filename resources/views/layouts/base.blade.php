@@ -40,7 +40,13 @@
         @endif
     </head>
 
-    <body class="page-{{ Request::path() == '/' ? 'index' : preg_replace('/\/.*/', '', Request::path()) }} {{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
+    @if(preg_match('/^dashboard/', Request::path()))
+        @set('body_class', preg_replace([ '/\/(new|[0-9][0-9]*)$/', '/\//' ], [ '', '-' ], Request::path()))
+    @else
+        @set('body_class', Request::path() == '/' ? 'index' : preg_replace('/\/.*/', '', Request::path()))
+    @endif
+
+    <body class="page-{{ $body_class }} {{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
         @yield('page-top')
 
         <div id="page-content">
