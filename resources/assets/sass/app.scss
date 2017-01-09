@@ -13,8 +13,16 @@
 // Main Website Styles
 //
 
-* {
-    outline: none !important;
+[data-whatinput="initial"], [data-whatinput="keyboard"] {
+    :focus {
+        outline: 1px dotted $c-base;
+    }
+}
+
+[data-whatinput="mouse"], [data-whatinput="touch"] {
+    :focus {
+        outline: none !important;
+    }
 }
 
 html {

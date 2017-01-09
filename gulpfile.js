@@ -33,6 +33,7 @@ const jsPublic = [
 const jsPublicLibs = [
     "bower_components/jquery/dist/jquery.js",
     "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
+    "bower_components/what-input/dist/what-input.js",
     "bower_components/jQuery.stickyFooter/assets/js/jquery.stickyfooter.js"
 ];
 
