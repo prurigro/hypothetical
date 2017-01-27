@@ -14,7 +14,6 @@
     "simplemde": "~1.11.2",
     "datetimepicker": "~2.5.4",
     "SpinKit": "~1.2.5",
-    "jQuery.stickyFooter": "https://github.com/miWebb/jQuery.stickyFooter.git#~1.2.3",
     "bootstrap-sass": "^3.3.7",
     "list.js": "^1.4.1",
     "what-input": "^4.0.6"

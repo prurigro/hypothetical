@@ -33,10 +33,20 @@ html {
 body {
     @include font-sans;
     width: 100%;
-    padding-top: $nav-height;
     color: $c-text;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
     @media (max-width: $grid-float-breakpoint-max) { padding-top: $nav-height-mobile; }
+}
+
+#page-container {
+    display: flex;
+    min-height: 100vh;
+    padding-top: $nav-height;
+    flex-direction: column;
+
+    #main-content {
+        flex: 1;
+    }
 }

@@ -49,10 +49,12 @@
     <body class="page-{{ $body_class }} {{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
         @yield('page-top')
 
-        <div id="page-content">
-            @yield('content')
-        </div>
+        <div id="page-container">
+            <div id="main-content">
+                @yield('content')
+            </div>
 
-        @yield('page-bottom')
+            @yield('page-bottom')
+        </div>
     </body>
 </html>
