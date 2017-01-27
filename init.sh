@@ -68,6 +68,12 @@ trap 'error "script killed"' SIGINT SIGQUIT
 msg "Running: ${c_m}composer installl --no-dev"
 composer install --no-interaction --no-dev || error "${c_m}composer install --no-interaction --no-dev$c_w exited with an error status"
 
+msg "Running: ${c_m}php artisan route:clear"
+php artisan route:clear
+
+msg "Running: ${c_m}php artisan view:clear"
+php artisan view:clear
+
 egrep -q '^CACHE_BUST=' .env || {
     msg "Adding the ${c_y}CACHE_BUST$c_w variable"
     printf '\n%s\n' 'CACHE_BUST=' >> .env
