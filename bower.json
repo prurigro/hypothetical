@@ -15,7 +15,7 @@
     "datetimepicker": "~2.5.4",
     "SpinKit": "~1.2.5",
     "bootstrap-sass": "^3.3.7",
-    "list.js": "^1.4.1",
+    "list.js": "^1.5.0",
     "what-input": "^4.0.6"
   }
 }
