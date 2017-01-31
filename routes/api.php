@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function(Request $request) {
     return $request->user();
 });
+
+/*
+|--------------------------------------------------------------------------
+| Post Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/contact-submit', 'ContactController@postContactSubmit');
+Route::post('/subscription-submit', 'SubscriptionController@postSubscriptionSubmit');

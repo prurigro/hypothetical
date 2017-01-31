@@ -27,15 +27,6 @@ Route::get('/contact', function() {
 
 /*
 |--------------------------------------------------------------------------
-| Post Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::post('/contact-submit', 'ContactController@postContactSubmit');
-Route::post('/subscription-submit', 'SubscriptionController@postSubscriptionSubmit');
-
-/*
-|--------------------------------------------------------------------------
 | Authentication Routes
 |--------------------------------------------------------------------------
 */

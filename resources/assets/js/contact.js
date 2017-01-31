@@ -27,7 +27,7 @@ function contactFormInit() {
 
             $.ajax({
                 type: "POST",
-                url: "/contact-submit",
+                url: "/api/contact-submit",
                 data: contact
             }).always(function(response) {
                 let responseJSON, errors, prop;
