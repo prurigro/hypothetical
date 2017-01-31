@@ -2,8 +2,8 @@
 // Overrides
 //
 
-$grid-float-breakpoint: $screen-sm;
-$grid-float-breakpoint-max: ($grid-float-breakpoint - 1);
+$grid-float-breakpoint: 768px;
+$grid-float-breakpoint-max: ($grid-float-breakpoint - 1px);
 
 //
 // Custom Variables

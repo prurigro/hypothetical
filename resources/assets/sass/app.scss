@@ -1,9 +1,9 @@
-// Libraries
-@import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
-
 // Core
 @import "_var";
 @import "_fonts";
+
+// Libraries
+@import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 
 // Supplementary
 @import "elements/**/*.scss";
