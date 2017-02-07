@@ -14,14 +14,10 @@ class ContactController extends Controller {
             'message' => 'required'
         ]);
 
-        $name    = $request['name'];
-        $email   = $request['email'];
-        $message = $request['message'];
-
         $contact = new Contact;
-        $contact->name = $name;
-        $contact->email = $email;
-        $contact->message = $message;
+        $contact->name = $request['name'];
+        $contact->email = $request['email'];
+        $contact->message = $request['message'];
         $contact->save();
 
         // Send the email if the MAIL_SENDTO variable is set

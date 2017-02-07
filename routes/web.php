@@ -1,5 +1,7 @@
 <?php
 
+use App\Utilities\Language;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +25,11 @@ Route::get('/', function() {
 
 Route::get('/contact', function() {
     return view('website.contact');
+});
+
+Route::get('/language/{lang}', function($lang) {
+    Language::setSessionLanguage($lang);
+    return redirect()->back();
 });
 
 /*

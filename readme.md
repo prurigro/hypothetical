@@ -2,6 +2,27 @@
 
 The Hypothetical website template
 
+## Utilities
+
+### Language
+
+The default language is set by the `DEFAULT_LANGUAGE` variable in the `.env` file. This will be the language used until it is changed, which can be done using the `/language/{lang}` route or directly using `Language::setSessionLanguage($lang)` where in both cases `lang` is the language code for a given language.
+
+In the view, a block of text can be configured with multiple languages using the following syntax:
+
+```php
+    @lang([
+        'en' => "This is a sentence",
+        'fr' => "C'est une phrase"
+    ])
+```
+
+or
+
+```php
+    {{ Language::select([ 'en' => "This is a sentence", 'fr' => "C'est une phrase" ]) }}
+```
+
 ## Dashboard
 
 Unless otherwise stated all examples in this section are to be added to `app/Http/Controllers/DashboardController.php`.

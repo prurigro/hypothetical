@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ Language::getSessionLanguage() }}">
     @set('page_title', (isset($title) ? $title . ' - ' : '') . env('SITE_NAME'))
     @set('device_mobile', preg_match('/Mobi/', Request::header('User-Agent')) || preg_match('/iP(hone|ad|od);/', Request::header('User-Agent')))
 
