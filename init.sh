@@ -88,7 +88,7 @@ sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(tr -dc A-Za-z0-9 </dev/urandom | head -c
 }
 
 msg "Running: ${c_m}npm install"
-npm install --production || error "${c_m}npm install$c_w exited with an error status"
+npm prune && npm install --production || error "${c_m}npm prune && npm install --production$c_w exited with an error status"
 
 msg "Running: ${c_m}bower prune && bower install"
 bower prune && bower install || error "${c_m}bower prune && bower install$c_w exited with an error status"
