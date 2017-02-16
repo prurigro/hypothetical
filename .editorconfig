@@ -8,8 +8,8 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# JavaScript, LESS, PHP and Shell
-[*.{js,less,php,sh}]
+# JavaScript, LESS, PHP, SCSS and Shell
+[*.{js,less,php,scss,sh}]
 indent_size = 4
 
 # JSON
