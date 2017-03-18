@@ -7,15 +7,15 @@
   "description": "The Hypothetical website template",
   "license": "MIT",
   "dependencies": {
-    "jquery": "~3.1.1",
+    "jquery": "~3.2.0",
     "fontawesome": "~4.7.0",
     "awesome-bootstrap-checkbox": "~0.3.7",
-    "Sortable": "~1.4.2",
+    "Sortable": "~1.5.1",
     "simplemde": "~1.11.2",
     "datetimepicker": "~2.5.4",
     "SpinKit": "~1.2.5",
     "bootstrap-sass": "^3.3.7",
     "list.js": "^1.5.0",
-    "what-input": "^4.0.6"
+    "what-input": "^4.1.1"
   }
 }
