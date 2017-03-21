@@ -15,11 +15,11 @@
     "gulp-concat": "^2.6.1",
     "gulp-modernizr": "^1.0.0-alpha",
     "gulp-plumber": "^1.1.0",
-    "gulp-postcss": "^6.3.0",
+    "gulp-postcss": "^6.4.0",
     "gulp-sass": "^3.1.0",
     "gulp-sass-glob": "^1.0.8",
     "gulp-strip-debug": "^1.1.0",
-    "gulp-uglify": "^2.1.0",
+    "gulp-uglify": "^2.1.2",
     "gulp-util": "^3.0.8"
   }
 }
