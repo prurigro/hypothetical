@@ -11,6 +11,12 @@
     font-style: normal;
 }
 
+@mixin normalize-font {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 @mixin font-sans {
+    @include normalize-font;
     font-family: OpenSans-Regular, Arial, Helvetica, sans-serif;
 }
