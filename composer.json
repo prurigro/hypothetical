@@ -8,7 +8,7 @@
         "php": ">=5.6.4",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "radic/blade-extensions": "~6.2",
+        "radic/blade-extensions": "~7.0",
         "erusev/parsedown": "~1.5",
         "spatie/laravel-newsletter": "^2.2",
         "intervention/image": "^2.3",
