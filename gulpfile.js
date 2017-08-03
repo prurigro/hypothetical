@@ -144,9 +144,9 @@ gulp.task("modernizr", function() {
 gulp.task("watch", function() {
     const gLiveReload = require("gulp-livereload");
 
-    const liveReloadUpdate = function(wait) {
+    const liveReloadUpdate = function(files, wait) {
         setTimeout(function() {
-            gLiveReload.changed(".");
+            gLiveReload.changed(files);
         }, wait || 1);
     };
 
@@ -155,8 +155,8 @@ gulp.task("watch", function() {
     gulp.watch(jsDashboard, [ "js-dashboard" ]).on("change", liveReloadUpdate);
     gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ]).on("change", liveReloadUpdate);
 
-    gulp.watch("resources/assets/sass/**/*.scss", [ "sass-public", "sass-dashboard" ]).on("change", function() {
-        liveReloadUpdate(1000);
+    gulp.watch("resources/assets/sass/**/*.scss", [ "sass-public", "sass-dashboard" ]).on("change", function(files) {
+        liveReloadUpdate(files, 1000);
     });
 });
 
