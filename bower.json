@@ -10,12 +10,12 @@
     "jquery": "~3.2.1",
     "fontawesome": "~4.7.0",
     "awesome-bootstrap-checkbox": "~0.3.7",
-    "Sortable": "~1.5.1",
+    "Sortable": "~1.6.0",
     "simplemde": "~1.11.2",
     "datetimepicker": "~2.5.4",
     "SpinKit": "~1.2.5",
     "bootstrap-sass": "^3.3.7",
     "list.js": "^1.5.0",
-    "what-input": "^4.1.1"
+    "what-input": "^4.3.1"
   }
 }
