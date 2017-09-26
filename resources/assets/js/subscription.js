@@ -2,21 +2,24 @@
 function subscriptionFormInit() {
     const $form = $("#subscription-form"),
         $input = $form.find(":input"),
-        $notify = $("#notification");
+        $name = $form.find("[name='name']"),
+        $email = $form.find("[name='email']"),
+        $token = $form.find("[name='_token']"),
+        $submit = $form.find("[name='submit']"),
+        $notify = $form.find(".notification");
 
     let subscribe = {},
         submitting = false;
 
     const getSubscribeData = function() {
         subscribe = {
-            name: $("#name").val(),
-            email: $("#email").val(),
-            address: $("#address").val(),
-            _token: $("#token").val()
+            name: $name.val(),
+            email: $email.val(),
+            _token: $token.val()
         };
     };
 
-    $("#submit").on("click", function(e) {
+    $submit.on("click", function(e) {
         e.preventDefault();
 
         if (!submitting) {
@@ -25,10 +28,10 @@ function subscriptionFormInit() {
 
             $.ajax({
                 type: "POST",
-                url: "/subscription-submit",
+                url: "/api/subscription-submit",
                 data: subscribe
             }).always(function(response) {
-                let responseJSON, errors, prop;
+                let errors;
 
                 $form.find(".error").removeClass("error");
                 $notify.removeClass("visible").removeClass("error");
@@ -41,13 +44,12 @@ function subscriptionFormInit() {
                         $input.fadeOut(150);
                     }, 1000);
                 } else {
-                    responseJSON = response.responseJSON;
                     errors = 0;
 
                     // add the error class to fields that haven't been filled out
-                    for (prop in responseJSON) {
-                        if (responseJSON.hasOwnProperty(prop)) {
-                            $("#" + prop).addClass("error");
+                    for (let errorName in response.responseJSON.errors) {
+                        if ($form.find(`[name='${errorName}']`).length) {
+                            $form.find(`[name='${errorName}']`).addClass("error");
                             errors++;
                         }
                     }

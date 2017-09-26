@@ -10,22 +10,19 @@ class SubscriptionController extends Controller {
     {
         $this->validate($request, [
             'name'    => 'required',
-            'email'   => 'required|email',
-            'address' => array('required', 'regex:/^([A-Za-z][0-9][A-Za-z] *[0-9][A-Za-z][0-9]|[0-9][0-9][0-9][0-9][0-9])$/')
+            'email'   => 'required|email'
         ]);
 
         $name    = $request['name'];
         $fname   = preg_replace('/ .*$/', '', $name);
         $lname   = preg_match('/. ./', $name) === 1 ? preg_replace('/^[^ ][^ ]* /', '', $name) : '';
         $email   = $request['email'];
-        $address = $request['address'];
 
         if (env('MAILCHIMP_APIKEY', '') != '' && env('MAILCHIMP_LISTID', '') != '') {
             // Submit the subscription request
             Newsletter::subscribe($email, [
                 'FNAME'   => $fname,
-                'LNAME'   => $lname,
-                'ADDRESS' => $address
+                'LNAME'   => $lname
             ]);
         }
 
@@ -33,7 +30,6 @@ class SubscriptionController extends Controller {
         $subscriptions = new Subscriptions;
         $subscriptions->name = $name;
         $subscriptions->email = $email;
-        $subscriptions->location = $address;
         $subscriptions->save();
 
         return 'success';
