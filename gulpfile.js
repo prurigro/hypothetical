@@ -6,7 +6,6 @@ const gulp = require("gulp"),
     gConcat = require("gulp-concat"),
     gPlumber = require("gulp-plumber"),
     gUglify = require("gulp-uglify"),
-    gModernizr = require("gulp-modernizr"),
     gBabel = require("gulp-babel"),
     gPostCSS = require("gulp-postcss"),
     gStripDebug = require("gulp-strip-debug"),
@@ -15,11 +14,10 @@ const gulp = require("gulp"),
 // determine if gulp has been run with --production
 const prod = gUtil.env.production;
 
-// declare plugin settings and modernizr tests
+// declare plugin settings
 const sassOutputStyle = prod ? "compressed" : "nested",
     sassIncludePaths = [ "bower_components" ],
-    autoprefixerSettings = { remove: false, cascade: false, browsers: [ "last 6 versions" ] },
-    modernizrTests = [];
+    autoprefixerSettings = { remove: false, cascade: false, browsers: [ "last 6 versions" ] };
 
 // javascript files for the public site
 const jsPublic = [
@@ -121,23 +119,6 @@ gulp.task("fonts", function() {
     return gulp.src(fontPaths)
         .pipe(gPlumber(plumberError))
         .pipe(gulp.dest("public/fonts/"));
-});
-
-// gulp task for modernizr
-gulp.task("modernizr", function() {
-    const modernizr = gulp.src([ "public/js/lib.js", "public/js/app.js", "public/css/app.css" ])
-        .pipe(gModernizr({
-            tests: modernizrTests,
-            excludeTests: [ "hidden" ],
-            crawl: false,
-            options: [ "setClasses", "addTest", "html5printshiv", "testProp", "fnBind" ]
-        }))
-        .pipe(gPlumber(plumberError))
-        .pipe(gConcat("modernizr.js"));
-
-    // minify if running gulp with --production
-    if (prod) { modernizr.pipe(gUglify()); }
-    return modernizr.pipe(gulp.dest("public/js/"));
 });
 
 // gulp watch task

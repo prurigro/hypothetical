@@ -96,9 +96,6 @@ bower prune && bower install || error "${c_m}bower prune && bower install$c_w ex
 msg "Running: ${c_m}gulp --production"
 gulp --production || error "${c_m}gulp --production$c_w exited with an error status"
 
-msg "Running: ${c_m}gulp modernizr --production"
-gulp modernizr --production || error "${c_m}gulp modernizr --production$c_w exited with an error status"
-
 (( artisan_down )) && {
     msg "Running: ${c_m}php artisan up"
     php artisan up
