@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Newsletter;
+use Log;
 use App\Models\Subscriptions;
 use Illuminate\Http\Request;
 
