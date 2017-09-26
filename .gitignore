@@ -1,6 +1,7 @@
 /vendor
 /node_modules
 /bower_components
+/public/hot
 /public/storage
 /public/css
 /public/js
@@ -8,5 +9,6 @@
 /public/uploads
 /storage/exports
 /storage.*.key
-/.idea
+npm-debug.log
+yarn-error.log
 .env
