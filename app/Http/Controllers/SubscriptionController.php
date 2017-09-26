@@ -18,7 +18,7 @@ class SubscriptionController extends Controller {
         $lname   = preg_match('/. ./', $name) === 1 ? preg_replace('/^[^ ][^ ]* /', '', $name) : '';
         $email   = $request['email'];
 
-        if (env('MAILCHIMP_APIKEY', '') != '' && env('MAILCHIMP_LISTID', '') != '') {
+        if (env('MAILCHIMP_APIKEY') != null && env('MAILCHIMP_LISTID') != null) {
             // Submit the subscription request
             Newsletter::subscribeOrUpdate($email, [
                 'FNAME' => $fname,
