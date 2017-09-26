@@ -74,7 +74,7 @@ php artisan route:clear
 msg "Running: ${c_m}php artisan view:clear"
 php artisan view:clear
 
-egrep -q '^CACHE_BUST=' .env || {
+grep -qe '^CACHE_BUST=' .env || {
     msg "Adding the ${c_y}CACHE_BUST$c_w variable"
     printf '\n%s\n' 'CACHE_BUST=' >> .env
 }
@@ -85,6 +85,11 @@ sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(tr -dc A-Za-z0-9 </dev/urandom | head -c
 (( ! no_artisan )) && {
     msg "Running: ${c_m}php artisan migrate"
     php artisan migrate || error "${c_m}php artisan migrate$c_w exited with an error status"
+}
+
+[[ -f package-lock.json ]] && {
+    msg "Deleting: ${c_y}package-lock.json$c_w"
+    rm package-lock.json
 }
 
 msg "Running: ${c_m}npm install"
