@@ -2,21 +2,26 @@
 function contactFormInit() {
     const $form = $("#contact-form"),
         $input = $form.find(":input"),
-        $notify = $("#notification");
+        $name = $form.find("[name='name']"),
+        $email = $form.find("[name='email']"),
+        $message = $form.find("[name='message']"),
+        $token = $form.find("[name='_token']"),
+        $submit = $form.find("[name='submit']"),
+        $notify = $form.find(".notification");
 
     let contact = {},
         submitting = false;
 
     const getContactData = function() {
         contact = {
-            name: $("#name").val(),
-            email: $("#email").val(),
-            message: $("#message").val(),
-            _token: $("#token").val()
+            name: $name.val(),
+            email: $email.val(),
+            message: $message.val(),
+            _token: $token.val()
         };
     };
 
-    $("#submit").on("click", function(e) {
+    $submit.on("click", function(e) {
         const $submit = $(this);
 
         e.preventDefault();
@@ -30,7 +35,7 @@ function contactFormInit() {
                 url: "/api/contact-submit",
                 data: contact
             }).always(function(response) {
-                let responseJSON, errors, prop;
+                let errors;
 
                 $form.find(".error").removeClass("error");
                 $notify.removeClass("visible");
@@ -40,13 +45,12 @@ function contactFormInit() {
                     $submit.addClass("disabled");
                     $notify.text("Thanks for your message!").addClass("success").addClass("visible");
                 } else {
-                    responseJSON = response.responseJSON;
                     errors = 0;
 
                     // add the error class to fields that haven't been filled out
-                    for (prop in responseJSON) {
-                        if (responseJSON.hasOwnProperty(prop)) {
-                            $("#" + prop).addClass("error");
+                    for (let errorName in response.responseJSON.errors) {
+                        if ($form.find(`[name='${errorName}']`).length) {
+                            $form.find(`[name='${errorName}']`).addClass("error");
                             errors++;
                         }
                     }

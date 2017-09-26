@@ -21,7 +21,7 @@
             height: 150px;
         }
 
-        #submit {
+        .submit {
             background-color: lighten($c-base, 5%);
             color: $c-text-light;
             font-weight: bold;
@@ -31,7 +31,7 @@
             &.disabled { background-color: $c-base; }
         }
 
-        #notification {
+        .notification {
             margin: 0px auto 15px auto;
             padding: 5px 10px;
             background-color: lighten($c-error, 15%);
