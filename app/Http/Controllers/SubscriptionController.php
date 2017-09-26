@@ -20,12 +20,14 @@ class SubscriptionController extends Controller {
         $email   = $request['email'];
         $address = $request['address'];
 
-        // Submit the subscription request
-        Newsletter::subscribe($email, [
-            'FNAME'   => $fname,
-            'LNAME'   => $lname,
-            'ADDRESS' => $address
-        ]);
+        if (env('MAILCHIMP_APIKEY', '') != '' && env('MAILCHIMP_LISTID', '') != '') {
+            // Submit the subscription request
+            Newsletter::subscribe($email, [
+                'FNAME'   => $fname,
+                'LNAME'   => $lname,
+                'ADDRESS' => $address
+            ]);
+        }
 
         // Save to the database on success
         $subscriptions = new Subscriptions;
