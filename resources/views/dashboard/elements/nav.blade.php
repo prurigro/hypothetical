@@ -9,7 +9,7 @@
             </button>
 
             <a class="navbar-brand" href="{{ url('/dashboard') }}">
-                {{ env('SITE_NAME') }} Dashboard
+                {{ env('APP_NAME') }} Dashboard
             </a>
         </div>
 

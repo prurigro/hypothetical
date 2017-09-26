@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>@yield('error-title') - {{ env('SITE_NAME') }}</title>
+        <title>@yield('error-title') - {{ env('APP_NAME') }}</title>
 
         <style>
             html, body {

@@ -58,15 +58,15 @@ return array(
     ),
 
     'properties' => array(
-        'creator'        => env('SITE_NAME', 'Dashboard'),
-        'lastModifiedBy' => env('SITE_NAME', 'Dashboard'),
+        'creator'        => env('APP_NAME', 'Dashboard'),
+        'lastModifiedBy' => env('APP_NAME', 'Dashboard'),
         'title'          => 'Spreadsheet Export',
         'description'    => 'Exported Spreadsheet Data',
         'subject'        => 'Spreadsheet export',
         'keywords'       => 'excel, export',
         'category'       => 'Excel',
-        'manager'        => env('SITE_NAME', 'Dashboard'),
-        'company'        => env('SITE_NAME', 'Dashboard'),
+        'manager'        => env('APP_NAME', 'Dashboard'),
+        'company'        => env('APP_NAME', 'Dashboard'),
     ),
 
     /*
@@ -106,7 +106,7 @@ return array(
     |
     */
 
-    'creator'    => env('SITE_NAME', 'Dashboard'),
+    'creator'    => env('APP_NAME', 'Dashboard'),
 
     'csv'        => array(
         /*

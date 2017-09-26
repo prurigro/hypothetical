@@ -1,1 +1,1 @@
-<footer>&copy; {{ date('Y') }} {{ env('SITE_NAME') }}</footer>
+<footer>&copy; {{ date('Y') }} {{ env('APP_NAME') }}</footer>
