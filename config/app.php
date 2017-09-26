@@ -236,7 +236,6 @@ return [
         /*
          * Custom Class Aliases...
          */
-        'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
         'Image'      => Intervention\Image\Facades\Image::class,
         'Excel'      => Maatwebsite\Excel\Facades\Excel::class,
         'Language'   => App\Utilities\Language::class,

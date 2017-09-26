@@ -20,10 +20,14 @@ class SubscriptionController extends Controller {
 
         if (env('MAILCHIMP_APIKEY', '') != '' && env('MAILCHIMP_LISTID', '') != '') {
             // Submit the subscription request
-            Newsletter::subscribe($email, [
-                'FNAME'   => $fname,
-                'LNAME'   => $lname
+            Newsletter::subscribeOrUpdate($email, [
+                'FNAME' => $fname,
+                'LNAME' => $lname
             ]);
+
+            if (!Newsletter::lastActionSucceeded()) {
+                Log::info('Mail Chimp Error: ' . Newsletter::getLastError());
+            }
         }
 
         // Save to the database on success
