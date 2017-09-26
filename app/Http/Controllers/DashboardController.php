@@ -59,8 +59,7 @@ class DashboardController extends Controller {
             'cols'    => [
                 [ 'Date', 'created_at' ],
                 [ 'Email', 'email' ],
-                [ 'Name', 'name' ],
-                [ 'Postal / Zip', 'location' ]
+                [ 'Name', 'name' ]
             ]
         ]);
     }
@@ -84,8 +83,8 @@ class DashboardController extends Controller {
                 $items = Contact::select('created_at', 'name', 'email', 'message')->get();
                 break;
             case 'subscriptions':
-                $headings = [ 'Date', 'Email', 'Name', 'Postal / Zip' ];
-                $items = Subscriptions::select('created_at', 'email', 'name', 'location')->get();
+                $headings = [ 'Date', 'Email', 'Name' ];
+                $items = Subscriptions::select('created_at', 'email', 'name')->get();
                 break;
             default:
                 abort(404);
