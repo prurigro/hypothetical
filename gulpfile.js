@@ -79,7 +79,7 @@ function processJavaScript(ouputFilename, inputFiles, es6) {
         .pipe(gPlumber(plumberError))
         .pipe(gConcat(ouputFilename + ".js"));
 
-    if (es6) { javascript.pipe(gBabel({ presets: [ "es2015" ] })); }
+    if (es6) { javascript.pipe(gBabel()); }
     if (prod) { javascript.pipe(gStripDebug()).pipe(gUglify()); }
     return javascript.pipe(gulp.dest("public/js/"));
 }
