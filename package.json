@@ -20,6 +20,7 @@
     "gulp-sass-glob": "^1.0.8",
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8"
+    "gulp-util": "^3.0.8",
+    "what-input": "^5.0.3"
   }
 }
