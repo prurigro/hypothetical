@@ -31,6 +31,7 @@ const jsPublic = [
 const jsPublicLibs = [
     "bower_components/jquery/dist/jquery.js",
     "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
+    "node_modules/gsap/src/uncompressed/TweenMax.js",
     "node_modules/what-input/dist/what-input.js"
 ];
 
