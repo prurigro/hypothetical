@@ -1,18 +1,18 @@
 // include packages
 const gulp = require("gulp"),
-    gUtil = require("gulp-util"),
-    gSass = require("gulp-sass"),
-    gSassGlob = require("gulp-sass-glob"),
-    gConcat = require("gulp-concat"),
-    gPlumber = require("gulp-plumber"),
-    gUglify = require("gulp-uglify"),
-    gBabel = require("gulp-babel"),
-    gPostCSS = require("gulp-postcss"),
-    gStripDebug = require("gulp-strip-debug"),
-    autoprefixer = require("autoprefixer");
+    gutil = require("gulp-util"),
+    plumber = require("gulp-plumber"),
+    concat = require("gulp-concat"),
+    sass = require("gulp-sass"),
+    sassGlob = require("gulp-sass-glob"),
+    postCSS = require("gulp-postcss"),
+    autoprefixer = require("autoprefixer"),
+    babel = require("gulp-babel"),
+    stripDebug = require("gulp-strip-debug"),
+    uglify = require("gulp-uglify");
 
 // determine if gulp has been run with --production
-const prod = gUtil.env.production;
+const prod = gutil.env.production;
 
 // declare plugin settings
 const sassOutputStyle = prod ? "compressed" : "nested",
@@ -66,22 +66,22 @@ function plumberError(err) {
 // function to handle the processing of sass files
 function processSass(filename) {
     return gulp.src("resources/assets/sass/" + filename + ".scss")
-        .pipe(gPlumber(plumberError))
-        .pipe(gSassGlob())
-        .pipe(gSass({ outputStyle: sassOutputStyle, includePaths: sassIncludePaths }))
-        .pipe(gPostCSS([ autoprefixer(autoprefixerSettings) ]))
-        .pipe(gConcat(filename + ".css"))
+        .pipe(plumber(plumberError))
+        .pipe(sassGlob())
+        .pipe(sass({ outputStyle: sassOutputStyle, includePaths: sassIncludePaths }))
+        .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
+        .pipe(concat(filename + ".css"))
         .pipe(gulp.dest("public/css/"));
 }
 
 // function to handle the processing of javascript files
 function processJavaScript(ouputFilename, inputFiles, es6) {
     const javascript = gulp.src(inputFiles)
-        .pipe(gPlumber(plumberError))
-        .pipe(gConcat(ouputFilename + ".js"));
+        .pipe(plumber(plumberError))
+        .pipe(concat(ouputFilename + ".js"));
 
-    if (es6) { javascript.pipe(gBabel()); }
-    if (prod) { javascript.pipe(gStripDebug()).pipe(gUglify()); }
+    if (es6) { javascript.pipe(babel()); }
+    if (prod) { javascript.pipe(stripDebug()).pipe(uglify()); }
     return javascript.pipe(gulp.dest("public/js/"));
 }
 
@@ -118,7 +118,7 @@ gulp.task("js-dashboard-libs", function() {
 // gulp task to copy fonts
 gulp.task("fonts", function() {
     return gulp.src(fontPaths)
-        .pipe(gPlumber(plumberError))
+        .pipe(plumber(plumberError))
         .pipe(gulp.dest("public/fonts/"));
 });
 
