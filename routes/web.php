@@ -19,18 +19,22 @@ use App\Utilities\Language;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function() {
-    return view('website.index');
-});
-
-Route::get('/contact', function() {
-    return view('website.contact');
-});
-
 Route::get('/language/{lang}', function($lang) {
     Language::setSessionLanguage($lang);
     return redirect()->back();
 });
+
+// Route::get('/', function() {
+//     return view('pages.index');
+// });
+//
+// Route::get('/contact', function() {
+//     return view('pages.contact');
+// });
+
+Route::get('/{vue?}', function() {
+    return view('templates.public-vue');
+})->where('vue', '[\/\w\.-]*');
 
 /*
 |--------------------------------------------------------------------------

@@ -41,21 +41,13 @@
         @endif
     </head>
 
-    @if(preg_match('/^dashboard/', Request::path()))
-        @set('body_class', preg_replace([ '/\/(new|[0-9][0-9]*)$/', '/\//' ], [ '', '-' ], Request::path()))
-    @else
-        @set('body_class', Request::path() == '/' ? 'index' : preg_replace('/\/.*/', '', Request::path()))
-    @endif
-
-    <body class="page-{{ $body_class }} {{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
+    <body class="{{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
         @yield('page-top')
 
-        <div id="page-container">
-            <div id="main-content">
-                @yield('content')
-            </div>
-
-            @yield('page-bottom')
+        <div id="page-content">
+            @yield('page-content')
         </div>
+
+        @yield('page-bottom')
     </body>
 </html>

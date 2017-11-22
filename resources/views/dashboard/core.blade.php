@@ -1,6 +1,6 @@
-@extends('layouts.dashboard')
+@extends('templates.dashboard')
 
-@section('content')
+@section('page-content')
     <div class="container spark-screen">
         <div class="row">
             <div class="col-xs-12">

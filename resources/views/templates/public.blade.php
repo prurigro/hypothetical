@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('templates.base')
 
 @section('page-includes')
     <script src="/js/lib.js?version={{ env('CACHE_BUST') }}"></script>
@@ -6,10 +6,14 @@
     <link rel="stylesheet" href="/css/app.css?version={{ env('CACHE_BUST') }}" />
 @endsection
 
-@section('page-top')
-    @include('elements.nav')
-@endsection
+@section('page-content')
+    @include('sections.nav')
 
-@section('page-bottom')
-    @include('elements.footer')
+    <div class="page-container">
+        <div class="main-content">
+            @yield('content')
+        </div>
+
+        @include('sections.footer')
+    </div>
 @endsection

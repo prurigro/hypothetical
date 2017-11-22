@@ -2,5 +2,5 @@
 
 @section('dashboard-body')
     @set('menu_class', 'list-group-item')
-    <ul class="list-group linked-list">@include('dashboard.elements.menu')</ul>
+    <ul class="list-group linked-list">@include('dashboard.sections.menu')</ul>
 @endsection

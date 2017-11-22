@@ -1,16 +1,16 @@
-@extends('layouts.public', [ 'title' => 'Contact' ])
+@extends('templates.public', [ 'title' => 'Contact' ])
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2">
-                <h1>Contact</h1>
+    <div class="contact-page-component">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-md-offset-2">
+                    <h1>Contact</h1>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2">
-                <div id="contact-form">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-md-offset-2">
                     <form action="#" method="POST" accept-charset="UTF-8">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input type="text" name="name" placeholder="Name" />

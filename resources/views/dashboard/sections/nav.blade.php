@@ -23,7 +23,7 @@
                     @endif
                 @else
                     @set('menu_class', 'nav-item')
-                    @include('dashboard.elements.menu')
+                    @include('dashboard.sections.menu')
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

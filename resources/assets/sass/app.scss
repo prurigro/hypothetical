@@ -6,7 +6,7 @@
 @import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 
 // Supplementary
-@import "elements/**/*.scss";
+@import "sections/**/*.scss";
 @import "pages/**/*.scss";
 
 //
@@ -38,13 +38,13 @@ body {
     @media (max-width: $grid-float-breakpoint-max) { padding-top: $nav-height-mobile; }
 }
 
-#page-container {
+.page-container {
     display: flex;
     min-height: 100vh;
     padding-top: $nav-height;
     flex-direction: column;
 
-    #main-content {
+    .main-content {
         flex-grow: 1;
     }
 }

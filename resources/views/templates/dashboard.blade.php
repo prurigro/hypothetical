@@ -1,4 +1,4 @@
-@extends('layouts.base', [ 'title' => 'Dashboard' ])
+@extends('templates.base', [ 'title' => 'Dashboard' ])
 
 @section('page-includes')
     <script src="/js/lib-dashboard.js?version={{ env('CACHE_BUST') }}"></script>
@@ -7,5 +7,5 @@
 @endsection
 
 @section('page-top')
-    @include('dashboard.elements.nav')
+    @include('dashboard.sections.nav')
 @endsection

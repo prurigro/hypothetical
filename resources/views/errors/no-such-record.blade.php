@@ -1,4 +1,4 @@
-@extends('layouts.error')
+@extends('templates.error')
 
 @section('error-title')
     No Such Record
