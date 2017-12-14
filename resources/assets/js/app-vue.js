@@ -33,11 +33,22 @@ const router = new VueRouter({
     mode: "history",
     linkActiveClass: "active",
     root: "/",
+
     routes: [
         { path: "/", component: HomePage },
         { path: "/contact", component: ContactPage },
         { path: "/*", component: Error404Page }
-    ]
+    ],
+
+    scrollBehavior(to, from, savedPosition) {
+        if (to.hash) {
+            return {
+                selector: `[id='${to.hash.slice(1)}']`
+            };
+        } else {
+            return { x: 0, y: 0 };
+        }
+    }
 });
 
 // Create a vuex store instance
@@ -89,10 +100,7 @@ router.beforeEach((to, from, next) => {
             // Fade the page out and scroll when moving from one page to another
             TweenMax.to("#router-view", 0.25, {
                 opacity: 0,
-                onComplete: () => {
-                    $("html, body").scrollTop(0);
-                    next();
-                }
+                onComplete: next
             });
         }
     }
