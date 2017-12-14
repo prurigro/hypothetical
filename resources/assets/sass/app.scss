@@ -35,7 +35,6 @@ body {
     width: 100%;
     color: $c-text;
     -webkit-overflow-scrolling: touch;
-    @media (max-width: $grid-float-breakpoint-max) { padding-top: $nav-height-mobile; }
 }
 
 .page-container {
@@ -43,6 +42,10 @@ body {
     min-height: 100vh;
     padding-top: $nav-height;
     flex-direction: column;
+
+    @media (max-width: $grid-float-breakpoint-max) {
+        padding-top: $nav-height-mobile;
+    }
 
     .main-content {
         flex-grow: 1;
