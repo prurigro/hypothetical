@@ -40,11 +40,14 @@ body {
 .page-container {
     display: flex;
     min-height: 100vh;
-    padding-top: $nav-height;
     flex-direction: column;
 
     @media (max-width: $grid-float-breakpoint-max) {
         padding-top: $nav-height-mobile;
+    }
+
+    @media (min-width: $grid-float-breakpoint) {
+        padding-top: $nav-height-desktop;
     }
 
     .main-content {

@@ -1,23 +1,54 @@
 <template>
-    <nav class="nav-section-component navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" id="navbar-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+    <nav class="nav-section-component">
+        <div class="nav-section-component-mobile-header">
+            <button
+                class="nav-section-component-mobile-header-toggle"
+                :class="{ open: openNav }"
+                @click="openNav = !openNav">
 
-                <router-link class="navbar-logo" to="/"></router-link>
-            </div>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+        </div>
 
-            <div id="navbar-collapse" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="navlink"><router-link to="/" title="Home">Home</router-link></li>
-                    <li class="navlink"><router-link to="/contact" title="Contact">Contact</router-link></li>
-                </ul>
+        <div class="nav-section-component-links" :class="{ open: openNav }">
+            <div class="nav-section-component-links-wrapper">
+                <router-link
+                    v-for="link in navLinks"
+                    class="navlink"
+                    :to="link.path"
+                    exact>
+
+                    <span>{{ link.title }}</span>
+                </router-link>
             </div>
         </div>
+
+        <router-link class="nav-section-component-logo" to="/" exact>
+            <img src="/img/logo.png" />
+        </router-link>
     </nav>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                openNav: false,
+
+                navLinks: [
+                    { path: "/", title: "Home" },
+                    { path: "/contact", title: "Contact" }
+                ]
+            };
+        },
+
+        watch: {
+            "$route"(to, from) {
+                this.openNav = false;
+            }
+        }
+    };
+</script>
