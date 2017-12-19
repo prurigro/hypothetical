@@ -36,6 +36,7 @@ const vuePublic = "resources/assets/js/app-vue.js";
 // Javascript files for the public site
 const jsPublic = [
     "resources/assets/js/site-vars.js",
+    "resources/assets/js/nav.js",
     "resources/assets/js/contact.js",
     "resources/assets/js/subscription.js",
     "resources/assets/js/app.js"

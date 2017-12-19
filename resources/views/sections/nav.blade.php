@@ -1,21 +1,21 @@
-<nav class="nav-section-component navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" id="navbar-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+<nav class="nav-section-component">
+    <div class="nav-section-component-mobile-header">
+        <button class="nav-section-component-mobile-header-toggle">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="sr-only">Toggle navigation</span>
+        </button>
+    </div>
 
-            <a class="navbar-logo" href="/"></a>
-        </div>
-
-        <div id="navbar-collapse" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="navlink"><a href="/" title="Home">Home</a></li>
-                <li class="navlink"><a href="/contact" title="Contact">Contact</a></li>
-            </ul>
+    <div class="nav-section-component-links" :class="{ open: openNav }">
+        <div class="nav-section-component-links-wrapper">
+            <a class="navlink" href="/"><span>Home</span></a>
+            <a class="navlink" href="/contact"><span>Contact</span></a>
         </div>
     </div>
+
+    <a class="nav-section-component-logo" href="/">
+        <img src="/img/logo.png" />
+    </a>
 </nav>
