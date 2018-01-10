@@ -15,29 +15,6 @@ use App\Utilities\Language;
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/language/{lang}', function($lang) {
-    Language::setSessionLanguage($lang);
-    return redirect()->back();
-});
-
-// Route::get('/', function() {
-//     return view('pages.index');
-// });
-//
-// Route::get('/contact', function() {
-//     return view('pages.contact');
-// });
-
-Route::get('/{vue?}', function() {
-    return view('templates.public-vue');
-})->where('vue', '[\/\w\.-]*');
-
-/*
-|--------------------------------------------------------------------------
 | Authentication Routes
 |--------------------------------------------------------------------------
 */
@@ -61,3 +38,26 @@ Route::group([ 'prefix' => 'dashboard' ], function() {
     Route::post('/reorder', 'DashboardController@postReorder');
     Route::delete('/delete', 'DashboardController@deleteDelete');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/language/{lang}', function($lang) {
+    Language::setSessionLanguage($lang);
+    return redirect()->back();
+});
+
+// Route::get('/', function() {
+//     return view('pages.index');
+// });
+//
+// Route::get('/contact', function() {
+//     return view('pages.contact');
+// });
+
+Route::get('/{vue?}', function() {
+    return view('templates.public-vue');
+})->where('vue', '[\/\w\.-]*');
