@@ -4,13 +4,13 @@
     <div class="contact-page-component">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <div class="col col-md-8 offset-md-2">
                     <h1>Contact</h1>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <div class="col col-md-8 offset-md-2">
                     <form action="#" method="POST" accept-charset="UTF-8">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input type="text" name="name" placeholder="Name" />

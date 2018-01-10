@@ -1,13 +1,24 @@
 //
-// Overrides
-//
-
-$grid-float-breakpoint: 768px;
-$grid-float-breakpoint-max: ($grid-float-breakpoint - 1px);
-
-//
 // Custom Variables
 //
+
+// Overrides
+$grid-breakpoints: (
+    xs: 0px,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1600px
+);
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1540px
+);
 
 // Colours
 $c-text: #111; // text
@@ -28,3 +39,7 @@ $nav-link-count: 2;
 $nav-height-desktop: 60px;
 $nav-height-mobile: 50px;
 $nav-link-height-mobile: 50px;
+
+// Breakpoints
+$nav-desktop-min: 768px;
+$nav-mobile-max: ($nav-desktop-min - 1px);

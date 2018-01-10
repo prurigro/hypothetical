@@ -13,7 +13,7 @@
         height: $nav-height-mobile;
         background-color: $c-base;
 
-        @media (min-width: $grid-float-breakpoint) {
+        @media (min-width: $nav-desktop-min) {
             display: none;
         }
 
@@ -85,7 +85,7 @@
         opacity: 1;
         transition: max-height 500ms;
 
-        @media (max-width: $grid-float-breakpoint-max) {
+        @media (max-width: $nav-mobile-max) {
             overflow: hidden;
             z-index: 100;
             position: relative;
@@ -96,7 +96,7 @@
             }
         }
 
-        @media (min-width: $grid-float-breakpoint) {
+        @media (min-width: $nav-desktop-min) {
             display: flex;
             width: 100%;
             height: $nav-height-desktop;
@@ -105,12 +105,12 @@
         }
 
         &-wrapper {
-            @media (max-width: $grid-float-breakpoint-max) {
+            @media (max-width: $nav-mobile-max) {
                 overflow-y: auto;
                 max-height: calc(100vh - #{$nav-height-mobile});
             }
 
-            @media (min-width: $grid-float-breakpoint) {
+            @media (min-width: $nav-desktop-min) {
                 padding: 0px $grid-gutter-width 0px (($grid-gutter-width / 2) + $desktop-logo-width + $logo-offset);
             }
 
@@ -121,7 +121,7 @@
                 font-size: 14px;
                 text-transform: uppercase;
 
-                @media (max-width: $grid-float-breakpoint-max) {
+                @media (max-width: $nav-mobile-max) {
                     display: block;
                     height: $nav-link-height-mobile;
                     padding: 0px 10px;
@@ -134,7 +134,7 @@
                     }
                 }
 
-                @media (min-width: $grid-float-breakpoint) {
+                @media (min-width: $nav-desktop-min) {
                     padding: 5px 20px;
                     transition: color 150ms;
 
@@ -147,9 +147,7 @@
                     }
 
                     &:not(.active):hover {
-                        @media (min-width: $grid-float-breakpoint) {
-                            color: darken($c-text-light, 5%);
-                        }
+                        color: darken($c-text-light, 5%);
                     }
                 }
 
@@ -187,22 +185,19 @@
 
     &-logo {
         position: absolute;
+        top: ($nav-height-mobile / 2);
         left: $logo-offset;
         transform: translateY(-50%);
         display: inline-block;
-        width: $desktop-logo-width;
+        width: $mobile-logo-width;
 
-        @media (max-width: $grid-float-breakpoint-max) {
-            top: ($nav-height-mobile / 2);
-            width: $mobile-logo-width;
-        }
-
-        @media (min-width: $grid-float-breakpoint) {
+        @media (min-width: $nav-desktop-min) {
             top: ($nav-height-desktop / 2);
+            width: $desktop-logo-width;
         }
 
         img {
-            @include img-responsive;
+            @include img-fluid;
             width: 100%;
         }
     }

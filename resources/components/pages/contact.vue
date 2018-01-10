@@ -2,13 +2,13 @@
     <div class="contact-page-component">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <div class="col col-md-8 offset-md-2">
                     <h1>Contact</h1>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <div class="col col-md-8 offset-md-2">
                     <div id="contact-form">
                         <form action="#" method="POST" accept-charset="UTF-8" @submit.prevent="submit">
                             <input type="text" v-model="form.name" name="name" placeholder="Name" />

@@ -3,7 +3,7 @@
 @import "_fonts";
 
 // Libraries
-@import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "bootstrap/scss/bootstrap.scss";
 
 // Supplementary
 @import "sections/**/*.scss";
@@ -27,7 +27,10 @@
 
 html {
     width: 100%;
-    &.no-scroll { overflow-y: hidden; }
+
+    &.no-scroll {
+        overflow-y: hidden;
+    }
 }
 
 body {
@@ -42,11 +45,11 @@ body {
     min-height: 100vh;
     flex-direction: column;
 
-    @media (max-width: $grid-float-breakpoint-max) {
+    @media (max-width: $nav-mobile-max) {
         padding-top: $nav-height-mobile;
     }
 
-    @media (min-width: $grid-float-breakpoint) {
+    @media (min-width: $nav-desktop-min) {
         padding-top: $nav-height-desktop;
     }
 

@@ -45,7 +45,8 @@ const jsPublic = [
 // Javascript libraries for the public site
 const jsPublicLibs = [
     "bower_components/jquery/dist/jquery.js",
-    "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
+    "node_modules/popper.js/dist/umd/popper.js",
+    "node_modules/bootstrap/dist/js/bootstrap.js",
     "node_modules/gsap/src/uncompressed/TweenMax.js",
     "node_modules/what-input/dist/what-input.js"
 ];
