@@ -83,7 +83,7 @@ grep -qe '^CACHE_BUST=' .env || {
 }
 
 msg "Updating ${c_y}CACHE_BUST$c_w variable"
-LC_CTYPE=C LANG=C sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env
+sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(LC_CTYPE=C LANG=C tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env
 
 (( ! no_artisan )) && {
     msg "Running: ${c_m}php artisan migrate"
