@@ -53,12 +53,6 @@ trap 'error "script killed"' SIGINT SIGQUIT
 # Check for the --no-artisan argument and set a flag that prevents artisan commands from being run if present
 [[ -n "$1" && "$1" = '--no-artisan' ]] && no_artisan=1
 
-[[ ! -f .env ]] && {
-    msg "Copying ${c_y}.env.example$c_w to ${c_y}.env$c_w with a randomly generated ${c_g}APP_KEY"
-    sed 's|^APP_KEY=.*|APP_KEY='"$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env.example > .env
-    exit
-}
-
 (( ! no_artisan )) && [[ -d vendor ]] && {
     artisan_down=1
     msg "Running: ${c_m}php artisan down"
@@ -67,6 +61,15 @@ trap 'error "script killed"' SIGINT SIGQUIT
 
 msg "Running: ${c_m}composer installl --no-dev"
 composer install --no-interaction --no-dev || error "${c_m}composer install --no-interaction --no-dev$c_w exited with an error status"
+
+[[ -f .env ]] && {
+    while read -r; do
+        [[ "$REPLY" =~ ^APP_KEY=(.*)$ && -z "${BASH_REMATCH[1]}" ]] && {
+            msg 'Generating Encryption Key' 'php artisan key:generate'
+            php artisan key:generate
+        }
+    done < .env
+}
 
 msg "Running: ${c_m}php artisan route:clear"
 php artisan route:clear
@@ -80,7 +83,7 @@ grep -qe '^CACHE_BUST=' .env || {
 }
 
 msg "Updating ${c_y}CACHE_BUST$c_w variable"
-sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env
+LC_CTYPE=C LANG=C sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env
 
 (( ! no_artisan )) && {
     msg "Running: ${c_m}php artisan migrate"
