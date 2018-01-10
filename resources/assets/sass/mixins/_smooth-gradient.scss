@@ -1,0 +1,3 @@
+@mixin smooth-gradient($direction, $color) {
+    background: linear-gradient($direction, $color 0%, fade-out($color, 0.022) 9.5%, fade-out($color, 0.075) 17.7%, fade-out($color, 0.143) 24.7%, fade-out($color, 0.219) 31%, fade-out($color, 0.299) 36.8%, fade-out($color, 0.38) 42.3%, fade-out($color, 0.462) 47.6%, fade-out($color, 0.545) 52.9%, fade-out($color, 0.627) 58.2%, fade-out($color, 0.709) 63.7%, fade-out($color, 0.788) 69.5%, fade-out($color, 0.862) 75.8%, fade-out($color, 0.93) 82.9%, fade-out($color, 0.981) 91.2%, fade-out($color, 1) 100%);
+}
