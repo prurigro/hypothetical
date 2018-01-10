@@ -44,7 +44,7 @@ const jsPublic = [
 
 // Javascript libraries for the public site
 const jsPublicLibs = [
-    "bower_components/jquery/dist/jquery.js",
+    "node_modules/jquery/dist/jquery.js",
     "node_modules/popper.js/dist/umd/popper.js",
     "node_modules/bootstrap/dist/js/bootstrap.js",
     "node_modules/gsap/src/uncompressed/TweenMax.js",
@@ -69,8 +69,8 @@ const jsDashboardLibs = [
 // Paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
     "resources/assets/fonts/**",
-    "bower_components/bootstrap-sass/assets/fonts/**/*",
-    "bower_components/fontawesome/fonts/**"
+    "node_modules/font-awesome/fonts/**",
+    "bower_components/bootstrap-sass/assets/fonts/**/*"
 ];
 
 // Handle errors

@@ -8,7 +8,6 @@
   "license": "MIT",
   "dependencies": {
     "jquery": "~3.2.1",
-    "fontawesome": "~4.7.0",
     "awesome-bootstrap-checkbox": "~0.3.7",
     "Sortable": "~1.6.0",
     "simplemde": "~1.11.2",
