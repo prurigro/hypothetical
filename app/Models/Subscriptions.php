@@ -14,6 +14,17 @@ class Subscriptions extends Model
     protected $table = 'subscriptions';
 
     /**
+     * Dashboard columns
+     *
+     * @var array
+     */
+    public static $dashboard_columns = [
+        [ 'Date', 'created_at' ],
+        [ 'Email', 'email' ],
+        [ 'Name', 'name' ]
+    ];
+
+    /**
      * Returns the list of all subscriptions
      *
      * @return array

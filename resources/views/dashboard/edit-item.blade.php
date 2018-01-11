@@ -45,6 +45,16 @@
                                         @endif
                                     @endforeach
                                 </select>
+                            @elseif($column['type'] == 'image')
+                                <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
+
+                                @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . ".jpg")
+
+                                @if(file_exists(base_path() . '/public' . $current_image))
+                                    <div class="current-image" style="background-image: url({{ $current_image }});"></div>
+                                @else
+                                    <div>(No Image Set)</div>
+                                @endif
                             @elseif($column['type'] == 'display')
                                 <div class="text-display">{{ $value }}</div>
                             @endif
@@ -52,26 +62,6 @@
                     @endif
                 </div>
             @endforeach
-
-            @if(!empty($imgup) && $imgup)
-                <div class="row">
-                    <div class="col-xs-12 col-md-2">
-                        <label for="{{ $column['name'] }}">Picture:</label>
-                    </div>
-
-                    <div class="col-xs-12 col-md-10">
-                        <input class="image-upload" type="file" name="image-upload" id="image-upload" />
-
-                        @set('current_image', "/uploads/$model/$id.jpg")
-
-                        @if(file_exists(base_path() . '/public' . $current_image))
-                            <div class="current-image" style="background-image: url({{ $current_image }});" />
-                        @else
-                            <div>(No Image Set)</div>
-                        @endif
-                    </div>
-                </div>
-            @endif
 
             <div class="row">
                 <button id="back" type="button" class="back-button btn btn-default">Back</button>

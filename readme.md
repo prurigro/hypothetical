@@ -171,12 +171,12 @@ This function should be named the same as the one above except with `Edit` at th
             'model'   => 'news',
             'id'      => $id,
             'item'    => $item,
-            'imgup'   => true,
             'columns' => [
                 [ 'name' => 'title',  'type' => 'text', 'label' => 'The Title' ],
                 [ 'name' => 'iframe', 'type' => 'text' ],
                 [ 'name' => 'halign', 'type' => 'select', 'options' => [ 'left', 'center', 'right' ] ],
                 [ 'name' => 'story',  'type' => 'mkd' ],
+                [ 'label' => 'Header Image', 'name' => 'headerimage', 'type' => 'image' ],
                 [ 'name' => 'order',  'type' => 'hidden' ]
             ]
         ]);
@@ -187,7 +187,6 @@ This function should be named the same as the one above except with `Edit` at th
 * `model`: The model that will be accessed on this page
 * `id`: Always set this to `$id`
 * `item`: Always set this to `$item`
-* `imgup`: Set this to `true` to enable image upload, otherwise set to `false`
 * `help_text`: An optional value that will add a box containing help text above the form if set
 * `columns`: An array containing a set of arrays where:
   * `name` is the name of the column to be edited
@@ -203,6 +202,7 @@ The following is a list of possible `types` in the `columns` array for Editable 
 * `date`: Date and time selection tool for date/time data
 * `select`: Text input via option select with possible options in an `options` array
 * `hidden`: Fields that will contain values to pass to the update function but won't appear on the page (this must be used for the sort column)
+* `image`: Fields that contain image uploads (name is not part of the database and is instead used in the filename)
 * `display`: Displayed information that can't be edited
 
 #### Edit Item Functionality

@@ -14,6 +14,18 @@ class Contact extends Model
     protected $table = 'contact';
 
     /**
+     * Dashboard columns
+     *
+     * @var array
+     */
+    public static $dashboard_columns = [
+        [ 'Date', 'created_at' ],
+        [ 'Name', 'name' ],
+        [ 'Email', 'email' ],
+        [ 'Message', 'message' ]
+    ];
+
+    /**
      * Returns the list of all contact submissions
      *
      * @return array

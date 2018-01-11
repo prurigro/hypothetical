@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use File;
 use Image;
 use Excel;
 
@@ -41,12 +42,7 @@ class DashboardController extends Controller {
             'heading' => 'Contact Form Submissions',
             'model'   => 'contact',
             'rows'    => Contact::getContactSubmissions(),
-            'cols'    => [
-                [ 'Date', 'created_at' ],
-                [ 'Name', 'name' ],
-                [ 'Email', 'email' ],
-                [ 'Message', 'message' ]
-            ]
+            'cols'    => Contact::$dashboard_columns
         ]);
     }
 
@@ -56,11 +52,7 @@ class DashboardController extends Controller {
             'heading' => 'Subscriptions',
             'model'   => 'subscriptions',
             'rows'    => Subscriptions::getSubscriptions(),
-            'cols'    => [
-                [ 'Date', 'created_at' ],
-                [ 'Email', 'email' ],
-                [ 'Name', 'name' ]
-            ]
+            'cols'    => Subscriptions::$dashboard_columns
         ]);
     }
 
@@ -104,9 +96,10 @@ class DashboardController extends Controller {
     public function postImageUpload(Request $request)
     {
         if ($request->hasFile('file')) {
-            $file = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . '.jpg';
+            $directory = base_path() . '/public/uploads/' . $request['model'] . '/img/';
+            file::makeDirectory($directory, 0755, true, true);
             $image = Image::make($request->file('file'));
-            $image->save($file);
+            $image->save($directory . $request['id'] . "-" . $request['name'] . '.jpg');
         } else {
             return 'file-upload-fail';
         }
@@ -199,11 +192,15 @@ class DashboardController extends Controller {
             return 'row-delete-fail';
         }
 
-        // delete the associated image if one exists
-        $image_file = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . '.jpg';
+        // delete associated files if they exist
+        foreach ($items::$dashboard_columns as $column) {
+            if ($column['type'] == 'image') {
+                $image_file = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . "-" . $column['name'] . '.jpg';
 
-        if (file_exists($image_file) && !unlink($image_file)) {
-            return 'image-delete-fail';
+                if (file_exists($image_file) && !unlink($image_file)) {
+                    return 'image-delete-fail';
+                }
+            }
         }
 
         // Return a success

@@ -254,7 +254,7 @@ function editItemInit() {
         $textInputs = $(".text-input"),
         $dateTimePickers = $(".date-time-picker"),
         $mkdEditors = $(".mkd-editor"),
-        $imgUpload = $("#image-upload"),
+        $imgUploads = $(".image-upload"),
         $token = $("#_token"),
         $spinner = $("#loading-modal"),
         fadeTime = 250,
@@ -333,8 +333,8 @@ function editItemInit() {
         });
     };
 
-    const uploadImage = function(row_id) {
-        let file;
+    const uploadImage = function(row_id, currentImage) {
+        let file, imgUpload;
 
         // functionality to run on success
         const returnSuccess = function() {
@@ -343,30 +343,39 @@ function editItemInit() {
         };
 
         // add the image from the image upload box for image-upload class elements
-        if ($imgUpload.length && $imgUpload.val() !== "") {
-            file = new FormData();
+        if ($imgUploads.length >= currentImage + 1) {
+            imgUpload = $imgUploads[currentImage];
 
-            // add the file, id and model to the formData variable
-            file.append("file", $imgUpload[0].files[0]);
-            file.append("id", row_id);
-            file.append("model", model);
+            if ($(imgUpload).val() !== "") {
+                file = new FormData();
 
-            $.ajax({
-                type: "POST",
-                url: "/dashboard/image-upload",
-                data: file,
-                processData: false,
-                contentType: false,
-                beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
-            }).always(function(response) {
-                if (response === "success") {
-                    returnSuccess();
-                } else {
-                    hideLoadingModal();
-                    showAlert("ERROR: Failed to upload image");
-                    submitting = false;
-                }
-            });
+                // add the file, id and model to the formData variable
+                file.append("file", imgUpload.files[0]);
+                file.append("name", $(imgUpload).attr("name"));
+                file.append("id", row_id);
+                file.append("model", model);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/dashboard/image-upload",
+                    data: file,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
+                }).always(function(response) {
+                    console.log(`response: ${response.responseText}`);
+
+                    if (response === "success") {
+                        uploadImage(row_id, currentImage + 1);
+                    } else {
+                        hideLoadingModal();
+                        showAlert("ERROR: Failed to upload image");
+                        submitting = false;
+                    }
+                });
+            } else {
+                uploadImage(row_id, currentImage + 1);
+            }
         } else {
             returnSuccess();
         }
@@ -438,6 +447,7 @@ function editItemInit() {
 
             // populate the formData object
             getFormData();
+            console.log(JSON.stringify(formData));
 
             // submit the update
             $.ajax({
@@ -446,7 +456,7 @@ function editItemInit() {
                 data: formData
             }).always(function(response) {
                 if (/^id:[0-9][0-9]*$/.test(response)) {
-                    uploadImage(response.replace(/^id:/, ""));
+                    uploadImage(response.replace(/^id:/, ""), 0);
                 } else {
                     hideLoadingModal();
                     showAlert("ERROR: Failed to " + operation + " record");
