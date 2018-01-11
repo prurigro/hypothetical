@@ -104,7 +104,7 @@ class DashboardController extends Controller {
     public function postImageUpload(Request $request)
     {
         if ($request->hasFile('file')) {
-            $file = base_path() . '/public/uploads/' . $request['model'] . '/' . $request['id'] . '.jpg';
+            $file = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . '.jpg';
             $image = Image::make($request->file('file'));
             $image->save($file);
         } else {
@@ -200,11 +200,10 @@ class DashboardController extends Controller {
         }
 
         // delete the associated image if one exists
-        $image_file = base_path() . '/public/uploads/' . $request['model'] . '/' . $request['id'] . '.jpg';
-        if (file_exists($image_file)) {
-            if (!unlink($image_file)) {
-                return 'image-delete-fail';
-            }
+        $image_file = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . '.jpg';
+
+        if (file_exists($image_file) && !unlink($image_file)) {
+            return 'image-delete-fail';
         }
 
         // Return a success
