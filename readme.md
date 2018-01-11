@@ -40,12 +40,7 @@ First add a function to generate the page:
             'heading' => 'Contact Form Submissions',
             'model'   => 'contact',
             'rows'    => Contact::getContactSubmissions(),
-            'cols'    => [
-                [ 'Date', 'created_at' ],
-                [ 'Name', 'name' ],
-                [ 'Email', 'email' ],
-                [ 'Message', 'message' ]
-            ]
+            'cols'    => Contact::$dashboard_columns
         ]);
     }
 ```
@@ -53,7 +48,16 @@ First add a function to generate the page:
 * `heading`: The title that will appear for this page
 * `model`: The model that will be accessed on this page
 * `rows`: A function returning an array containing the data to be shown on this page
-* `cols`: An array containing a set of arrays where the first element of each is the visible column name and the second is the column name in the array
+* `cols`: Expects a variable called `$dashboard_columns` in the respective model that contains an array:
+
+```php
+    public static $dashboard_columns = [
+        [ 'Date', 'created_at' ],
+        [ 'Name', 'name' ],
+        [ 'Email', 'email' ],
+        [ 'Message', 'message' ]
+    ];
+```
 
 ### Adding an Editable Model to the Dashboard
 
@@ -171,14 +175,7 @@ This function should be named the same as the one above except with `Edit` at th
             'model'   => 'news',
             'id'      => $id,
             'item'    => $item,
-            'columns' => [
-                [ 'name' => 'title',  'type' => 'text', 'label' => 'The Title' ],
-                [ 'name' => 'iframe', 'type' => 'text' ],
-                [ 'name' => 'halign', 'type' => 'select', 'options' => [ 'left', 'center', 'right' ] ],
-                [ 'name' => 'story',  'type' => 'mkd' ],
-                [ 'label' => 'Header Image', 'name' => 'headerimage', 'type' => 'image' ],
-                [ 'name' => 'order',  'type' => 'hidden' ]
-            ]
+            'columns' => News::$dashboard_columns
         ]);
     }
 ```
@@ -188,10 +185,21 @@ This function should be named the same as the one above except with `Edit` at th
 * `id`: Always set this to `$id`
 * `item`: Always set this to `$item`
 * `help_text`: An optional value that will add a box containing help text above the form if set
-* `columns`: An array containing a set of arrays where:
+* `columns`: Expects a variable called `$dashboard_columns` in the respective model that contains an array:
   * `name` is the name of the column to be edited
   * `type` is the type of column (details below)
   * `label` is an optional value that overrides the visible column name
+
+```php
+    public static $dashboard_columns = [
+        [ 'name' => 'title',  'type' => 'text', 'label' => 'The Title' ],
+        [ 'name' => 'iframe', 'type' => 'text' ],
+        [ 'name' => 'halign', 'type' => 'select', 'options' => [ 'left', 'center', 'right' ] ],
+        [ 'name' => 'story',  'type' => 'mkd' ],
+        [ 'label' => 'Header Image', 'name' => 'headerimage', 'type' => 'image' ],
+        [ 'name' => 'order',  'type' => 'hidden' ]
+    ];
+```
 
 ###### Editable Column Types
 
