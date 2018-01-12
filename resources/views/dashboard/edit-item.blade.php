@@ -53,7 +53,7 @@
                                 @if(file_exists(base_path() . '/public' . $current_image))
                                     <div class="current-image" style="background-image: url({{ $current_image }});"></div>
                                 @else
-                                    <div>(No Image Set)</div>
+                                    <div class="no-image">(No Image Set)</div>
                                 @endif
                             @elseif($column['type'] == 'display')
                                 <div class="text-display">{{ $value }}</div>
