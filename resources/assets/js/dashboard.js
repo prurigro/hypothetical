@@ -260,6 +260,7 @@ function editItemInit() {
         $spinner = $("#loading-modal"),
         fadeTime = 250,
         model = $editItem.data("model"),
+        path = $editItem.data("path"),
         id = $editItem.data("id"),
         operation = id === "new" ? "create" : "update";
 
@@ -340,7 +341,7 @@ function editItemInit() {
         // functionality to run on success
         const returnSuccess = function() {
             hideLoadingModal();
-            window.location.href = "/dashboard/" + model;
+            window.location.href = "/dashboard/" + path;
         };
 
         // add the image from the image upload box for image-upload class elements
@@ -433,7 +434,7 @@ function editItemInit() {
     $backButton.on("click", function() {
         if (!submitting) {
             askConfirmation("Cancel and return to the " + model + " list?", function() {
-                window.location.href = "/dashboard/" + model;
+                window.location.href = "/dashboard/" + path;
             });
         }
     });
