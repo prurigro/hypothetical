@@ -28,21 +28,19 @@
                                     <i class="fa fa-bars sort-icon" title="Click and drag to reorder"></i>
                                 @endif
 
-                                <div class="title">
-                                    @if(is_array($column))
-                                        @foreach($column as $col)
-                                            @if($row[$col] != '')
-                                                <div class="column">{{ $row[$col] }}</div>
+                                @if(is_array($column))
+                                    @foreach($column as $col)
+                                        @if($row[$col] != '')
+                                            <div class="column">{{ $row[$col] }}</div>
 
-                                                @if(!$loop->last)
-                                                    <div class="column spacer">|</div>
-                                                @endif
+                                            @if(!$loop->last)
+                                                <div class="column spacer">|</div>
                                             @endif
-                                        @endforeach
-                                    @else
-                                        {{ $row[$column] }}
-                                    @endif
-                                </div>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    {{ $row[$column] }}
+                                @endif
                             </div>
 
                             <div class="button-column">
