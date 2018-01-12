@@ -103,14 +103,15 @@ function showAlert(message, command) {
 function editListInit() {
     const editList = document.getElementById("edit-list"),
         $editList = $(editList),
-        model = $editList.data("model");
+        model = $editList.data("model"),
+        path = $editList.data("path");
 
     // initialize new button functionality
     const newButtonInit = function() {
         const $newButton = $(".btn.new-button");
 
         $newButton.on("click", function() {
-            window.location.href = "/dashboard/" + model + "-edit/new";
+            window.location.href = "/dashboard/" + path + "-edit/new";
         });
     };
 
@@ -124,7 +125,7 @@ function editListInit() {
                 itemId = $listItem.data("id");
 
             // go to the edit page
-            window.location.href = "/dashboard/" + model + "-edit/" + itemId;
+            window.location.href = "/dashboard/" + path + "-edit/" + itemId;
         });
     };
 

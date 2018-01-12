@@ -16,7 +16,7 @@
             <input id="filter-input" class="search" placeholder="Filter" />
         @endif
 
-        <ul id="edit-list" class="list-group edit-list list" data-model="{{ $model }}" {{ $sortcol != false ? "data-sort=$sortcol" : '' }}>
+        <ul id="edit-list" class="list-group edit-list list" data-model="{{ $model }}" data-path="{{ isset($path) ? $path : $model }}" {{ $sortcol != false ? "data-sort=$sortcol" : '' }}>
             <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}" />
 
             @foreach($rows as $row)
