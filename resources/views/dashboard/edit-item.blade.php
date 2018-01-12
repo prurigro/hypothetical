@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form id="edit-item" class="edit-item" data-id="{{ $id }}" data-model="{{ $model }}">
+    <form id="edit-item" class="edit-item" data-id="{{ $id }}" data-model="{{ $model }}" data-path="{{ isset($path) ? $path : $model }}">
         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
 
         <div class="container-fluid">

@@ -433,7 +433,7 @@ function editItemInit() {
     // initialize back button
     $backButton.on("click", function() {
         if (!submitting) {
-            askConfirmation("Cancel and return to the " + model + " list?", function() {
+            askConfirmation("Cancel and return to the " + path + " list?", function() {
                 window.location.href = "/dashboard/" + path;
             });
         }
