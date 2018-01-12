@@ -7,11 +7,18 @@
 @import "SpinKit/css/spinners/11-folding-cube";
 
 // Core
-@import "_var";
 @import "_fonts";
 
 // Fontawesome Path
 $fa-font-path: "/fonts";
+
+// Colours
+$c-text: #111; // text
+$c-text-light: #fff; // light text
+$c-dashboard-dark: #3e6087;
+$c-dashboard-light: #f1f1f1;
+$c-dashboard-edit: #87823e;
+$c-dashboard-delete: #87483e;
 
 //
 // Main Dashboard Styles
