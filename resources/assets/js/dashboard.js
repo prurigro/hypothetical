@@ -235,7 +235,7 @@ function editListInit() {
             $filter.val("");
 
             const filterList = new List("edit-list-wrapper", {
-                valueNames: [ "title" ]
+                valueNames: [ "title-column" ]
             });
         }
     };
