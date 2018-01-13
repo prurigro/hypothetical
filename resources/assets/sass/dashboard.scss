@@ -33,6 +33,7 @@ body {
     min-width: 320px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
 }
 
 .navbar {
@@ -225,112 +226,103 @@ body {
 
 .list-group {
     margin-bottom: 0px;
-    padding-bottom: 15px;
 
-    &.linked-list {
-        margin-bottom: 0px;
+    &.menu-list .list-group-item {
+        position: relative;
+        padding: 0px;
 
-        .list-group-item {
-            padding: 0px;
+        &-link {
+            display: block;
+            padding: 10px 15px;
+            background-color: transparent;
+            color: $c-text;
+            transition: background-color 150ms;
 
-            a {
-                display: block;
-                padding: 10px 15px;
-                background-color: #fff;
-                color: $c-dashboard-dark;
-                transition: background-color 100ms, color 100ms;
-                &:focus, &:hover { text-decoration: none; }
-
-                &:hover {
-                    background-color: $c-dashboard-dark;
-                    color: $c-dashboard-light;
-                }
-            }
-
-            &:first-child a {
-                border-top-right-radius: 4px;
-                border-top-left-radius: 4px;
-            }
-
-            &:last-child a {
-                border-bottom-right-radius: 4px;
-                border-bottom-left-radius: 4px;
+            &:hover {
+                background-color: fade-out(#000, 0.97);
+                text-decoration: none;
             }
         }
     }
 
-    &.edit-list {
-        .list-group-item {
-            position: relative;
-            padding-top: 4px;
-            padding-bottom: 4px;
+    &.edit-list .list-group-item {
+        padding-top: 4px;
+        padding-bottom: 4px;
+
+        @media (max-width: $screen-xs-max) {
+            margin: 3px;
+            padding-left: 60px;
+        }
+
+        .title-column {
+            padding-top: 6px;
+            padding-bottom: 6px;
+            padding-left: 0px;
+            font-family: "Lucida Console", Monaco, monospace;
 
             @media (max-width: $screen-xs-max) {
-                margin: 3px;
+                text-align: center;
             }
 
-            .title-column {
-                padding-top: 6px;
-                padding-bottom: 6px;
-                padding-left: 0px;
-                font-family: "Lucida Console", Monaco, monospace;
+            @media (min-width: $screen-sm-min) {
+                float: left;
+            }
+
+            .sort-icon {
+                margin-right: 10px;
+                display: inline-block;
+                cursor: grab;
+                cursor: -webkit-grabbing;
 
                 @media (max-width: $screen-xs-max) {
-                    text-align: center;
-
-                    .column {
-                        margin-right: 3px;
-                        display: inline-block;
-
-                        &.spacer {
-                            display: block;
-                            font-size: 0;
-                        }
-                    }
+                    position: absolute;
+                    top: 50%;
+                    left: 20px;
+                    transform: translateY(-50%);
                 }
+            }
 
-                @media (min-width: $screen-sm-min) {
-                    &, .column {
-                        float: left;
-                    }
-
-                    .column {
-                        margin-right: 10px;
-                    }
-                }
-
-                .sort-icon {
-                    margin-right: 10px;
+            .column {
+                @media (max-width: $screen-xs-max) {
+                    margin-right: 3px;
                     display: inline-block;
-                    cursor: grab;
-                    cursor: -webkit-grabbing;
-                }
-            }
 
-            .button-column {
-                padding-right: 0px;
-                padding-left: 0px;
-
-                @media (max-width: $screen-xs-max) {
-                    padding-bottom: 5px;
-                    text-align: center;
+                    &.spacer {
+                        display: block;
+                        font-size: 0;
+                    }
                 }
 
                 @media (min-width: $screen-sm-min) {
-                    float: right;
-                    text-align: right;
+                    float: left;
+                    margin-right: 10px;
                 }
+            }
+        }
 
-                .btn {
-                    margin: 3px;
-                    min-width: 70px;
-                    height: 26px;
-                    padding-top: 1px;
-                    padding-bottom: 2px;
+        .button-column {
+            padding-right: 0px;
+            padding-left: 0px;
 
-                    @media (max-width: $screen-xs-max) {
-                        min-width: 33%;
-                    }
+            @media (max-width: $screen-xs-max) {
+                padding-bottom: 5px;
+                text-align: center;
+            }
+
+            @media (min-width: $screen-sm-min) {
+                float: right;
+                text-align: right;
+            }
+
+            .btn {
+                margin: 3px;
+                min-width: 70px;
+                height: 26px;
+                padding-top: 1px;
+                padding-bottom: 2px;
+
+                @media (max-width: $screen-xs-max) {
+                    min-width: 33%;
                 }
             }
         }

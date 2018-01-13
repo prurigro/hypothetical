@@ -18,7 +18,7 @@
             <input id="filter-input" class="search" placeholder="Filter" />
         @endif
 
-        <ul id="edit-list" class="list-group edit-list list" data-model="{{ $model }}" data-path="{{ isset($path) ? $path : $model }}" {{ $sortcol != false ? "data-sort=$sortcol" : '' }}>
+        <ul id="edit-list" class="list-group edit-list" data-model="{{ $model }}" data-path="{{ isset($path) ? $path : $model }}" {{ $sortcol != false ? "data-sort=$sortcol" : '' }}>
             @foreach($rows as $row)
                 <li class="list-group-item" data-id="{{ $row['id'] }}">
                     <div class="container-fluid">
