@@ -367,7 +367,14 @@ body {
     }
 
     .back-button { float: left; }
-    .submit-button { float: right; }
+
+    .submit-button {
+        float: right;
+
+        &.disabled {
+            pointer-events: none;
+        }
+    }
 
     .back-button, .submit-button {
         margin: 25px 15px 15px 15px;

@@ -269,7 +269,8 @@ function editItemInit() {
         formData = {},
         submitting = false,
         hours,
-        minutes;
+        minutes,
+        changes = false;
 
     // show the loading modal
     const showLoadingModal = function() {
@@ -430,18 +431,28 @@ function editItemInit() {
         }, 100);
     });
 
+    // initialize change events for back button
+    $editItem.find("input, textarea, select").on("input change", function() {
+        changes = true;
+        $submit.removeClass("disabled");
+    });
+
     // initialize back button
     $backButton.on("click", function() {
         if (!submitting) {
-            askConfirmation("Cancel and return to the " + path + " list?", function() {
+            if (changes) {
+                askConfirmation("Cancel changes and return to the list?", function() {
+                    window.location.href = "/dashboard/" + path;
+                });
+            } else {
                 window.location.href = "/dashboard/" + path;
-            });
+            }
         }
     });
 
     // initialize submit button
     $submit.on("click", function() {
-        if (!submitting) {
+        if (!submitting && changes) {
             submitting = true;
 
             // show the loading modal

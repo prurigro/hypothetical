@@ -65,7 +65,7 @@
 
             <div class="row">
                 <button id="back" type="button" class="back-button btn btn-default">Back</button>
-                <button id="submit" type="button" class="submit-button btn btn-primary">{{ $id == 'new' ? 'Create' : 'Update' }} {{ $heading }} Item</button>
+                <button id="submit" type="button" class="submit-button btn btn-primary disabled">{{ $id == 'new' ? 'Create' : 'Update' }} {{ $heading }} Item</button>
             </div>
         </div>
     </form>
