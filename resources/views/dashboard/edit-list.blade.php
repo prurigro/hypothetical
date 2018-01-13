@@ -25,7 +25,9 @@
                         <div class="row">
                             <div class="title-column">
                                 @if($sortcol != false)
-                                    <i class="fa fa-bars sort-icon" title="Click and drag to reorder"></i>
+                                    <div class="sort-icon">
+                                        <i class="fa fa-bars" title="Click and drag to reorder"></i>
+                                    </div>
                                 @endif
 
                                 @if(is_array($column))
