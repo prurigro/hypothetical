@@ -234,8 +234,18 @@ function editListInit() {
             // empty the filter
             $filter.val("");
 
+            // initialize the filter list functionality
             const filterList = new List("edit-list-wrapper", {
                 valueNames: [ "title-column" ]
+            });
+
+            // add/remove a filtered class to identify when the list is filtered
+            $filter.on("input", function() {
+                if ($filter.val() === "") {
+                    $editList.removeClass("filtered");
+                } else {
+                    $editList.addClass("filtered");
+                }
             });
         }
     };

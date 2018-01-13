@@ -245,86 +245,95 @@ body {
         }
     }
 
-    &.edit-list .list-group-item {
-        padding-top: 4px;
-        padding-bottom: 4px;
-
-        @media (max-width: $screen-xs-max) {
-            margin: 3px;
-            padding-left: 60px;
-        }
-
-        .title-column {
-            padding-top: 6px;
-            padding-bottom: 6px;
-            padding-left: 0px;
-            font-family: "Lucida Console", Monaco, monospace;
+    &.edit-list {
+        .list-group-item {
+            padding-top: 4px;
+            padding-bottom: 4px;
 
             @media (max-width: $screen-xs-max) {
-                text-align: center;
+                margin: 3px;
+                padding-left: 60px;
             }
 
-            @media (min-width: $screen-sm-min) {
-                float: left;
-            }
-
-            .sort-icon {
-                margin-right: 10px;
-                display: inline-block;
-                cursor: grab;
-                cursor: -webkit-grabbing;
+            .title-column {
+                padding-top: 6px;
+                padding-bottom: 6px;
+                padding-left: 0px;
+                font-family: "Lucida Console", Monaco, monospace;
 
                 @media (max-width: $screen-xs-max) {
-                    position: absolute;
-                    top: 50%;
-                    left: 20px;
-                    transform: translateY(-50%);
-                }
-            }
-
-            .column {
-                @media (max-width: $screen-xs-max) {
-                    margin-right: 3px;
-                    display: inline-block;
-
-                    &.spacer {
-                        display: block;
-                        font-size: 0;
-                    }
+                    text-align: center;
                 }
 
                 @media (min-width: $screen-sm-min) {
                     float: left;
+                }
+
+                .sort-icon {
                     margin-right: 10px;
+                    display: inline-block;
+                    opacity: 1;
+                    transition: opacity 100ms;
+                    cursor: grab;
+                    cursor: -webkit-grabbing;
+
+                    @media (max-width: $screen-xs-max) {
+                        position: absolute;
+                        top: 50%;
+                        left: 20px;
+                        transform: translateY(-50%);
+                    }
+                }
+
+                .column {
+                    @media (max-width: $screen-xs-max) {
+                        margin-right: 3px;
+                        display: inline-block;
+
+                        &.spacer {
+                            display: block;
+                            font-size: 0;
+                        }
+                    }
+
+                    @media (min-width: $screen-sm-min) {
+                        float: left;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            .button-column {
+                padding-right: 0px;
+                padding-left: 0px;
+
+                @media (max-width: $screen-xs-max) {
+                    padding-bottom: 5px;
+                    text-align: center;
+                }
+
+                @media (min-width: $screen-sm-min) {
+                    float: right;
+                    text-align: right;
+                }
+
+                .btn {
+                    margin: 3px;
+                    min-width: 70px;
+                    height: 26px;
+                    padding-top: 1px;
+                    padding-bottom: 2px;
+
+                    @media (max-width: $screen-xs-max) {
+                        min-width: 33%;
+                    }
                 }
             }
         }
 
-        .button-column {
-            padding-right: 0px;
-            padding-left: 0px;
-
-            @media (max-width: $screen-xs-max) {
-                padding-bottom: 5px;
-                text-align: center;
-            }
-
-            @media (min-width: $screen-sm-min) {
-                float: right;
-                text-align: right;
-            }
-
-            .btn {
-                margin: 3px;
-                min-width: 70px;
-                height: 26px;
-                padding-top: 1px;
-                padding-bottom: 2px;
-
-                @media (max-width: $screen-xs-max) {
-                    min-width: 33%;
-                }
-            }
+        &.filtered .list-group-item .title-column .sort-icon {
+            opacity: 0.5;
+            pointer-events: none;
         }
     }
 }
