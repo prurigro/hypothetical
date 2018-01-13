@@ -98,7 +98,6 @@ body {
     margin-bottom: 40px;
 
     .panel-body {
-        padding-bottom: 0px;
         background-color: lighten($c-dashboard-light, 1%);
 
         @media (max-width: $screen-xs-max) {

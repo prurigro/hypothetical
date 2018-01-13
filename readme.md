@@ -256,13 +256,20 @@ When a row is deleted, its respective image will be deleted as well if it exists
 
 ### Adding to the Dashboard Menu
 
-Add an array to the menu array in `resources/views/dashboard/elements/menu.blade.php` where the visible title as the first item and the model name as the second:
+Edit the `$menu` array in `app/Models/DashboardMenu.php` where the first column of each item is the title and the second is either a path, or an array of submenu items.
 
 ```php
-@set('menu', [
-    [ 'Page Name', 'model_name' ],
-    [ 'Contact', 'contact' ]
-])
+    public static $menu = [
+        [ 'Contact', 'contact' ],
+        [ 'Subscriptions', 'subscriptions' ],
+
+        [
+            'Projects', [
+                [ 'Residential', 'projects-residential' ],
+                [ 'Commercial', 'projects-commercial' ]
+            ]
+        ]
+    ];
 ```
 
 #### Additional Requirement for Delete Functionality

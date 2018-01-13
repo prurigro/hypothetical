@@ -22,8 +22,27 @@
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @endif
                 @else
-                    @set('menu_class', 'nav-item')
-                    @include('dashboard.sections.menu')
+                    @foreach(App\Models\DashboardMenu::$menu as $menu_item)
+                        @if(is_array($menu_item[1]))
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ $menu_item[0] }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach($menu_item[1] as $submenu_item)
+                                        <li><a href="{{ url('/dashboard/' . $submenu_item[1]) }}">{{ $submenu_item[0] }}</a></li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ url('/dashboard/' . $menu_item[1]) }}">
+                                    {{ $menu_item[0] }}
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
