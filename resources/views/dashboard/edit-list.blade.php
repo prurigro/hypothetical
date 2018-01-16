@@ -36,7 +36,7 @@
                                             <div class="column">{{ $row[$col] }}</div>
 
                                             @if(!$loop->last)
-                                                <div class="column spacer">|</div>
+                                                <div class="spacer">|</div>
                                             @endif
                                         @endif
                                     @endforeach

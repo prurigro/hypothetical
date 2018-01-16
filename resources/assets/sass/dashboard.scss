@@ -286,19 +286,17 @@ body {
                 }
 
                 .column {
-                    @media (max-width: $screen-xs-max) {
-                        margin-right: 3px;
-                        display: inline-block;
+                    display: inline-block;
+                }
 
-                        &.spacer {
-                            display: block;
-                            font-size: 0;
-                        }
+                .spacer {
+                    @media (max-width: $screen-xs-max) {
+                        display: block;
+                        font-size: 0;
                     }
 
                     @media (min-width: $screen-sm-min) {
-                        float: left;
-                        margin-right: 10px;
+                        display: inline-block;
                     }
                 }
             }
