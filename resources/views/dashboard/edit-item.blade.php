@@ -32,7 +32,7 @@
                             @if($column['type'] == 'text')
                                 <input class="text-input" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
                             @elseif($column['type'] == 'date')
-                                <input class="date-time-picker" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ preg_replace('/:[0-9][0-9]$/', '', $value) }}" />
+                                <input class="date-picker" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value == '' ? date('Y-m-d', time()) : preg_replace('/:[0-9][0-9]$/', '', $value) }}" />
                             @elseif($column['type'] == 'mkd')
                                 <textarea class="mkd-editor" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}"></textarea>
                             @elseif($column['type'] == 'select')

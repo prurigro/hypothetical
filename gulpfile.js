@@ -61,7 +61,8 @@ const jsDashboardLibs = [
     "bower_components/jquery/dist/jquery.js",
     "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
     "bower_components/Sortable/Sortable.js",
-    "bower_components/datetimepicker/build/jquery.datetimepicker.full.js",
+    "bower_components/pickadate/lib/picker.js",
+    "bower_components/pickadate/lib/picker.date.js",
     "bower_components/list.js/dist/list.js",
     "bower_components/simplemde/dist/simplemde.min.js"
 ];

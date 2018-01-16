@@ -263,7 +263,7 @@ function editItemInit() {
         $submit = $("#submit"),
         $backButton = $("#back"),
         $textInputs = $(".text-input"),
-        $dateTimePickers = $(".date-time-picker"),
+        $datePickers = $(".date-picker"),
         $mkdEditors = $(".mkd-editor"),
         $imgUploads = $(".image-upload"),
         $token = $("#_token"),
@@ -327,8 +327,8 @@ function editItemInit() {
             addFormData(column, value);
         });
 
-        // add values from the contents of date-time-picker class elements
-        $dateTimePickers.each(function() {
+        // add values from the contents of date-picker class elements
+        $datePickers.each(function() {
             const $this = $(this),
                 column = $this.attr("id"),
                 value = $this.val() + ":00";
@@ -401,12 +401,12 @@ function editItemInit() {
         }
     }
 
-    // enable the datetimepicker for each element with the date-time-picker class
-    $dateTimePickers.each(function() {
-        $(this).datetimepicker({
-            format: "Y-m-d H:i",
-            allowTimes: allowTimes,
-            step: 15
+    // enable the datepicker for each element with the date-picker class
+    $datePickers.each(function() {
+        $(this).pickadate({
+            format: "yyyy-mm-dd",
+            formatSubmit: "yyyy-mm-dd",
+            clear: false
         });
     });
 

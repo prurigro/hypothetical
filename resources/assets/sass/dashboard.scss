@@ -2,7 +2,8 @@
 @import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "font-awesome/scss/font-awesome.scss";
 @import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.scss";
-@import "datetimepicker/jquery.datetimepicker";
+@import "pickadate/lib/themes/default";
+@import "pickadate/lib/themes/default.date";
 @import "simplemde/dist/simplemde.min";
 @import "SpinKit/css/spinners/11-folding-cube";
 
@@ -338,8 +339,18 @@ body {
 
 .edit-item {
     margin-top: 10px;
-    .CodeMirror, .CodeMirror-scroll { min-height: 100px; }
-    .date-time-picker { cursor: pointer; }
+
+    .CodeMirror, .CodeMirror-scroll {
+        min-height: 100px;
+    }
+
+    .CodeMirror {
+        padding: 5px;
+    }
+
+    .picker__holder {
+        overflow-y: hidden;
+    }
 
     label {
         height: 32px;
@@ -350,6 +361,17 @@ body {
         margin-bottom: 15px;
         display: block;
         width: 100%;
+
+        &:not([type=file]) {
+            padding: 5px 8px;
+            border: 1px solid darken($c-dashboard-light, 10%);
+            border-radius: 2px;
+            transition: border-color 150ms;
+        }
+
+        &.date-picker {
+            cursor: pointer;
+        }
     }
 
     .current-image {
