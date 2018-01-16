@@ -406,7 +406,9 @@ function editItemInit() {
         $(this).pickadate({
             format: "yyyy-mm-dd",
             formatSubmit: "yyyy-mm-dd",
-            clear: false
+            clear: false,
+            selectYears: true,
+            selectMonths: true
         });
     });
 
