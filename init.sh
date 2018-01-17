@@ -97,11 +97,6 @@ sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(LC_CTYPE=C LANG=C tr -dc A-Za-z0-9 </dev
     php artisan migrate || error "${c_m}php artisan migrate$c_w exited with an error status"
 }
 
-[[ -f package-lock.json ]] && {
-    msg "Deleting: ${c_y}package-lock.json$c_w"
-    rm package-lock.json
-}
-
 msg "Running: ${c_m}npm install"
 npm prune && npm install --production || error "${c_m}npm prune && npm install --production$c_w exited with an error status"
 
