@@ -34,10 +34,12 @@ function error {
 
 # Check for missing dependencies
 declare -a missing_deps=()
+
 for dep in "${deps[@]}"; do
     type -P "$dep" >/dev/null \
         || missing_deps=( ${missing_deps[@]} "$dep" )
 done
+
 [[ -n "${missing_deps[*]}" ]] && {
     error "${c_w}missing dependencies ($(
         for (( x=0; x < ${#missing_deps[@]}; x++ )); do
@@ -47,11 +49,16 @@ done
     )$c_w)"
 }
 
+# Exit with an error if the .env file does not exist
+[[ -f '.env' ]] \
+    || error 'The .env file does not exist'
+
 # Exit with an error on ctrl-c
 trap 'error "script killed"' SIGINT SIGQUIT
 
 # Check for the --no-artisan argument and set a flag that prevents artisan commands from being run if present
-[[ -n "$1" && "$1" = '--no-artisan' ]] && no_artisan=1
+[[ -n "$1" && "$1" = '--no-artisan' ]] \
+    && no_artisan=1
 
 (( ! no_artisan )) && [[ -d vendor ]] && {
     artisan_down=1
