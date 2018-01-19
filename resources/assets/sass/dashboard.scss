@@ -392,18 +392,33 @@ body {
 
     .current-image {
         margin-bottom: 15px;
+        display: block;
         width: 125px;
-        height: 125px;
-        background-position: left center;
-        background-size: contain;
-        background-repeat: no-repeat;
+        max-width: 100%;
     }
 
-    .no-image {
+    .current-file {
+        padding: 5px 10px;
+        border: 1px solid darken($c-dashboard-dark, 5%);
+        border-radius: 5px;
+        background-color: $c-dashboard-dark;
+        color: $c-text-light;
+        text-transform: uppercase;
+        transition: background-color 150ms;
+
+        &:hover {
+            background-color: lighten($c-dashboard-dark, 5%);
+            text-decoration: none;
+        }
+    }
+
+    .no-file {
         margin-bottom: 15px;
     }
 
-    .back-button { float: left; }
+    .back-button {
+        float: left;
+    }
 
     .submit-button {
         float: right;

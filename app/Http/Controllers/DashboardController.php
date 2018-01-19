@@ -95,11 +95,40 @@ class DashboardController extends Controller {
      */
     public function postImageUpload(Request $request)
     {
+        $this->validate($request, [
+            'id'    => 'required',
+            'model' => 'required',
+            'name'  => 'required'
+        ]);
+
         if ($request->hasFile('file')) {
             $directory = base_path() . '/public/uploads/' . $request['model'] . '/img/';
             file::makeDirectory($directory, 0755, true, true);
             $image = Image::make($request->file('file'));
             $image->save($directory . $request['id'] . "-" . $request['name'] . '.jpg');
+        } else {
+            return 'file-upload-fail';
+        }
+
+        return 'success';
+    }
+
+    /**
+     * Dashboard File Upload: Upload files
+     */
+    public function postFileUpload(Request $request)
+    {
+        $this->validate($request, [
+            'id'    => 'required',
+            'model' => 'required',
+            'name'  => 'required',
+            'ext'   => 'required'
+        ]);
+
+        if ($request->hasFile('file')) {
+            $directory = base_path() . '/public/uploads/' . $request['model'] . '/files/';
+            file::makeDirectory($directory, 0755, true, true);
+            $request->file('file')->move($directory, $request['id'] . "-" . $request['name'] . '.' . $request['ext']);
         } else {
             return 'file-upload-fail';
         }
@@ -195,10 +224,16 @@ class DashboardController extends Controller {
         // delete associated files if they exist
         foreach ($items::$dashboard_columns as $column) {
             if ($column['type'] == 'image') {
-                $image_file = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . "-" . $column['name'] . '.jpg';
+                $image = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . '-' . $column['name'] . '.jpg';
 
-                if (file_exists($image_file) && !unlink($image_file)) {
+                if (file_exists($image) && !unlink($image)) {
                     return 'image-delete-fail';
+                }
+            } else if ($column['type'] == 'file') {
+                $file = base_path() . '/public/uploads/' . $request['model'] . '/files/' . $request['id'] . '-' . $column['name'] . '.' . $column['ext'];
+
+                if (file_exists($file) && !unlink($file)) {
+                    return 'file-delete-fail';
                 }
             }
         }

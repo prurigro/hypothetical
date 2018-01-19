@@ -48,12 +48,22 @@
                             @elseif($column['type'] == 'image')
                                 <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
 
-                                @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . ".jpg")
+                                @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . '.jpg')
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
-                                    <div class="current-image" style="background-image: url({{ $current_image }});"></div>
+                                    <img class="current-image" src="{{ $current_image }}" />
                                 @else
-                                    <div class="no-image">(No Image Set)</div>
+                                    <div class="no-file">(No Image Set)</div>
+                                @endif
+                            @elseif($column['type'] == 'file')
+                                <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}" />
+
+                                @set('current_file', "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'])
+
+                                @if(file_exists(base_path() . '/public' . $current_file))
+                                    <a class="current-file" href="{{ $current_file }}" target="_blank">View Current {{ strtoupper($column['ext']) }}</a>
+                                @else
+                                    <div class="no-file">(No {{ strtoupper($column['ext']) }} Set)</div>
                                 @endif
                             @elseif($column['type'] == 'display')
                                 <div class="text-display">{{ $value }}</div>

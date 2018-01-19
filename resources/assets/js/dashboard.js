@@ -265,6 +265,7 @@ function editItemInit() {
         $textInputs = $(".text-input"),
         $datePickers = $(".date-picker"),
         $mkdEditors = $(".mkd-editor"),
+        $fileUploads = $(".file-upload"),
         $imgUploads = $(".image-upload"),
         $token = $("#_token"),
         $spinner = $("#loading-modal"),
@@ -346,13 +347,60 @@ function editItemInit() {
         });
     };
 
-    const uploadImage = function(row_id, currentImage) {
-        let file, imgUpload;
+    const uploadFile = function(row_id, currentFile) {
+        let file, fileUpload;
 
         // functionality to run on success
         const returnSuccess = function() {
             hideLoadingModal();
             window.location.href = "/dashboard/" + path;
+        };
+
+        // add the file from the file upload box for file-upload class elements
+        if ($fileUploads.length >= currentFile + 1) {
+            fileUpload = $fileUploads[currentFile];
+
+            if ($(fileUpload).val() !== "") {
+                file = new FormData();
+
+                // add the file, id and model to the formData variable
+                file.append("file", fileUpload.files[0]);
+                file.append("name", $(fileUpload).attr("name"));
+                file.append("id", row_id);
+                file.append("model", model);
+                file.append("ext", $(fileUpload).data("ext"));
+
+                $.ajax({
+                    type: "POST",
+                    url: "/dashboard/file-upload",
+                    data: file,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
+                }).always(function(response) {
+                    if (response === "success") {
+                        uploadFile(row_id, currentFile + 1);
+                    } else {
+                        hideLoadingModal();
+                        showAlert("ERROR: Failed to upload file");
+                        console.log(response.responseText);
+                        submitting = false;
+                    }
+                });
+            } else {
+                uploadFile(row_id, currentFile + 1);
+            }
+        } else {
+            returnSuccess();
+        }
+    };
+
+    const uploadImage = function(row_id, currentImage) {
+        let file, imgUpload;
+
+        // functionality to run on success
+        const returnSuccess = function() {
+            uploadFile(row_id, 0);
         };
 
         // add the image from the image upload box for image-upload class elements
@@ -376,8 +424,6 @@ function editItemInit() {
                     contentType: false,
                     beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
                 }).always(function(response) {
-                    console.log(`response: ${response.responseText}`);
-
                     if (response === "success") {
                         uploadImage(row_id, currentImage + 1);
                     } else {
@@ -472,7 +518,7 @@ function editItemInit() {
 
             // populate the formData object
             getFormData();
-            console.log(JSON.stringify(formData));
+            // console.log(JSON.stringify(formData));
 
             // submit the update
             $.ajax({
