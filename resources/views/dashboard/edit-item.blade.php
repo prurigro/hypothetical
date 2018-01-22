@@ -14,7 +14,7 @@
     @endif
 
     <form id="edit-item" class="edit-item" data-id="{{ $id }}" data-model="{{ $model }}" data-path="{{ isset($path) ? $path : $model }}">
-        <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
+        <input type="hidden" id="token" value="{{ csrf_token() }}" />
 
         <div class="container-fluid">
             @foreach($columns as $column)
@@ -51,9 +51,15 @@
                                 @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . '.jpg')
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
-                                    <img class="current-image" src="{{ $current_image }}" />
-                                @else
-                                    <div class="no-file">(No Image Set)</div>
+                                    <div id="current-image-{{ $column['name'] }}">
+                                        <img class="current-image" src="{{ $current_image }}" />
+
+                                        @if(array_key_exists('delete', $column) && $column['delete'])
+                                            <span class="edit-button delete image" data-name="{{ $column['name'] }}">
+                                                Delete Image
+                                            </span>
+                                        @endif
+                                    </div>
                                 @endif
                             @elseif($column['type'] == 'file')
                                 <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}" />
@@ -61,9 +67,15 @@
                                 @set('current_file', "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'])
 
                                 @if(file_exists(base_path() . '/public' . $current_file))
-                                    <a class="current-file" href="{{ $current_file }}" target="_blank">View Current {{ strtoupper($column['ext']) }}</a>
-                                @else
-                                    <div class="no-file">(No {{ strtoupper($column['ext']) }} Set)</div>
+                                    <div id="current-file-{{ $column['name'] }}">
+                                        <a class="edit-button view" href="{{ $current_file }}" target="_blank">View {{ strtoupper($column['ext']) }}</a>
+
+                                        @if(array_key_exists('delete', $column) && $column['delete'])
+                                            <span class="edit-button delete file" data-name="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}">
+                                                Delete {{ strtoupper($column['ext']) }}
+                                            </span>
+                                        @endif
+                                    </div>
                                 @endif
                             @elseif($column['type'] == 'display')
                                 <div class="text-display">{{ $value }}</div>

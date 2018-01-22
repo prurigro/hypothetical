@@ -397,23 +397,38 @@ body {
         max-width: 100%;
     }
 
-    .current-file {
+    .edit-button {
+        margin-bottom: ($grid-gutter-width / 2);
+        display: inline-block;
         padding: 5px 10px;
-        border: 1px solid darken($c-dashboard-dark, 5%);
         border-radius: 5px;
-        background-color: $c-dashboard-dark;
-        color: $c-text-light;
         text-transform: uppercase;
         transition: background-color 150ms;
+        cursor: pointer;
 
-        &:hover {
-            background-color: lighten($c-dashboard-dark, 5%);
+        &:hover, &:focus {
             text-decoration: none;
         }
-    }
 
-    .no-file {
-        margin-bottom: 15px;
+        &.view {
+            border: 1px solid darken($c-dashboard-dark, 5%);
+            background-color: $c-dashboard-dark;
+            color: $c-text-light;
+
+            &:hover {
+                background-color: lighten($c-dashboard-dark, 5%);
+            }
+        }
+
+        &.delete {
+            border: 1px solid darken($c-dashboard-delete, 5%);
+            background-color: $c-dashboard-delete;
+            color: $c-text-light;
+
+            &:hover {
+                background-color: lighten($c-dashboard-delete, 5%);
+            }
+        }
     }
 
     .back-button {

@@ -207,9 +207,11 @@ The following is a list of possible `types` in the `columns` array for Editable 
 * `hidden`: Fields that will contain values to pass to the update function but won't appear on the page (this must be used for the sort column)
 * `image`: Fields that contain image uploads
   * `name`: not part of the database and is instead used in the filename
+  * `delete`: (optional) if true then uploaded images can be deleted
 * `file`: Fields that contains file uploads
   * `name`: not part of the database and is instead used in the filename
   * `ext` required key containing the file extension
+  * `delete`: (optional) if true then uploaded files can be deleted
 * `display`: Displayed information that can't be edited
 
 #### Edit Item Functionality

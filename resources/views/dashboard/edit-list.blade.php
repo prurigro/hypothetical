@@ -12,7 +12,7 @@
 
 @section('dashboard-body')
     <div id="edit-list-wrapper">
-        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}" />
+        <input type="hidden" id="token" value="{{ csrf_token() }}" />
 
         @if($filter)
             <input id="filter-input" class="search" placeholder="Filter" />

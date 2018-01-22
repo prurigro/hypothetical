@@ -2,7 +2,7 @@
 jQuery.fn.reverse = [].reverse;
 
 // show the confirmation modal and run the supplied command if confirm is pressed
-function askConfirmation(message, command) {
+function askConfirmation(message, command, cancelCommand) {
     const $confirmationModal = $("#confirmation-modal"),
         $heading = $confirmationModal.find(".panel-heading"),
         $cancelButton = $confirmationModal.find(".btn.cancel-button"),
@@ -35,8 +35,17 @@ function askConfirmation(message, command) {
         closeConfirmationModal();
     };
 
+    // functionality to run when clicking the cancel button
+    const cancelModal = function() {
+        if (cancelCommand !== undefined) {
+            cancelCommand();
+        }
+
+        closeConfirmationModal();
+    };
+
     // hide the modal when the cancel button is pressed
-    $cancelButton.on("click", closeConfirmationModal);
+    $cancelButton.on("click", cancelModal);
 
     // hide the modal when the escape key is pressed
     $(document).on("keyup", escapeModal);
@@ -103,6 +112,7 @@ function showAlert(message, command) {
 function editListInit() {
     const editList = document.getElementById("edit-list"),
         $editList = $(editList),
+        $token = $("#token"),
         model = $editList.data("model"),
         path = $editList.data("path");
 
@@ -145,7 +155,7 @@ function editListInit() {
                     data: {
                         model: model,
                         id: itemId,
-                        _token: $("#token").val()
+                        _token: $token.val()
                     }
                 }).always(function(response) {
                     if (response === "success") {
@@ -177,7 +187,7 @@ function editListInit() {
                     url: postUrl,
                     data: {
                         id: itemId,
-                        _token: $("#token").val()
+                        _token: $token.val()
                     }
                 }).always(function(response) {
                     if (response === "success") {
@@ -212,7 +222,7 @@ function editListInit() {
                             model: model,
                             order: sortOrder,
                             column: sortCol,
-                            _token: $("#token").val()
+                            _token: $token.val()
                         }
                     }).always(function(response) {
                         if (response !== "success") {
@@ -267,7 +277,7 @@ function editItemInit() {
         $mkdEditors = $(".mkd-editor"),
         $fileUploads = $(".file-upload"),
         $imgUploads = $(".image-upload"),
-        $token = $("#_token"),
+        $token = $("#token"),
         $spinner = $("#loading-modal"),
         fadeTime = 250,
         model = $editItem.data("model"),
@@ -440,6 +450,74 @@ function editItemInit() {
         }
     };
 
+    $(".edit-button.delete.image").on("click", function(e) {
+        const $this = $(this),
+            name = $this.data("name");
+
+        if (!submitting) {
+            submitting = true;
+
+            askConfirmation("Are you sure you want to delete this image?", function() {
+                // delete the image
+                $.ajax({
+                    type: "DELETE",
+                    url: "/dashboard/image-delete",
+                    data: {
+                        id: id,
+                        model: model,
+                        name: name,
+                        _token: $token.val()
+                    }
+                }).always(function(response) {
+                    if (response === "success") {
+                        $(`#current-image-${name}`).slideUp(200);
+                    } else {
+                        showAlert("ERROR: Failed to delete the image: " + response);
+                    }
+
+                    submitting = false;
+                });
+            }, function() {
+                submitting = false;
+            });
+        }
+    });
+
+    $(".edit-button.delete.file").on("click", function(e) {
+        const $this = $(this),
+            name = $this.data("name"),
+            ext = $this.data("ext");
+
+        if (!submitting) {
+            submitting = true;
+
+            askConfirmation("Are you sure you want to delete this file?", function() {
+                // delete the file
+                $.ajax({
+                    type: "DELETE",
+                    url: "/dashboard/file-delete",
+                    data: {
+                        id: id,
+                        model: model,
+                        name: name,
+                        ext: ext,
+                        _token: $token.val()
+                    }
+                }).always(function(response) {
+                    if (response === "success") {
+                        $(`#current-file-${name}`).slideUp(200);
+                    } else {
+                        showAlert("ERROR: Failed to delete the file: " + response);
+                    }
+
+                    submitting = false;
+                });
+            }, function() {
+                submitting = false;
+            });
+        }
+    });
+
     // allow start time selection to start on the hour and every 15 minutes after
     for (hours = 0; hours <= 23; hours++) {
         for (minutes = 0; minutes <= 3; minutes++) {
@@ -518,7 +596,6 @@ function editItemInit() {
 
             // populate the formData object
             getFormData();
-            // console.log(JSON.stringify(formData));
 
             // submit the update
             $.ajax({

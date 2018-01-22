@@ -38,6 +38,8 @@ Route::group([ 'prefix' => 'dashboard' ], function() {
     Route::post('/edit', 'DashboardController@postEdit');
     Route::post('/reorder', 'DashboardController@postReorder');
     Route::delete('/delete', 'DashboardController@deleteDelete');
+    Route::delete('/image-delete', 'DashboardController@deleteImageDelete');
+    Route::delete('/file-delete', 'DashboardController@deleteFileDelete');
 });
 
 /*

@@ -105,7 +105,7 @@ class DashboardController extends Controller {
             $directory = base_path() . '/public/uploads/' . $request['model'] . '/img/';
             file::makeDirectory($directory, 0755, true, true);
             $image = Image::make($request->file('file'));
-            $image->save($directory . $request['id'] . "-" . $request['name'] . '.jpg');
+            $image->save($directory . $request['id'] . '-' . $request['name'] . '.jpg');
         } else {
             return 'file-upload-fail';
         }
@@ -128,7 +128,7 @@ class DashboardController extends Controller {
         if ($request->hasFile('file')) {
             $directory = base_path() . '/public/uploads/' . $request['model'] . '/files/';
             file::makeDirectory($directory, 0755, true, true);
-            $request->file('file')->move($directory, $request['id'] . "-" . $request['name'] . '.' . $request['ext']);
+            $request->file('file')->move($directory, $request['id'] . '-' . $request['name'] . '.' . $request['ext']);
         } else {
             return 'file-upload-fail';
         }
@@ -239,6 +239,51 @@ class DashboardController extends Controller {
         }
 
         // Return a success
+        return 'success';
+    }
+
+    /**
+     * Dashboard Image Delete: Delete images
+     */
+    public function deleteImageDelete(Request $request)
+    {
+        $this->validate($request, [
+            'id'    => 'required',
+            'model' => 'required',
+            'name'  => 'required'
+        ]);
+
+        $image = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . '-' . $request['name'] . '.jpg';
+
+        if (!file_exists($image)) {
+            return 'image-not-exists-fail';
+        } else if (!unlink($image)) {
+            return 'image-delete-fail';
+        }
+
+        return 'success';
+    }
+
+    /**
+     * Dashboard File Delete: Delete files
+     */
+    public function deleteFileDelete(Request $request)
+    {
+        $this->validate($request, [
+            'id'    => 'required',
+            'model' => 'required',
+            'name'  => 'required',
+            'ext'   => 'required'
+        ]);
+
+        $file = base_path() . '/public/uploads/' . $request['model'] . '/files/' . $request['id'] . '-' . $request['name'] . '.' . $request['ext'];
+
+        if (!file_exists($file)) {
+            return 'file-not-exists-fail';
+        } else if (!unlink($file)) {
+            return 'file-delete-fail';
+        }
+
         return 'success';
     }
 
