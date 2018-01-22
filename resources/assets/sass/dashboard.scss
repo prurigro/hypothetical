@@ -340,12 +340,13 @@ body {
 .edit-item {
     margin-top: 10px;
 
-    .CodeMirror, .CodeMirror-scroll {
-        min-height: 100px;
-    }
-
     .CodeMirror {
+        height: 300px;
         padding: 5px;
+
+        &-code {
+            margin-bottom: 10px;
+        }
     }
 
     .picker__holder {
