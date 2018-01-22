@@ -102,8 +102,10 @@ body {
     .panel-body {
         background-color: lighten($c-dashboard-light, 1%);
 
-        @media (max-width: $screen-xs-max) {
-            padding: 0px;
+        &.dashboard {
+            @media (max-width: $screen-xs-max) {
+                padding: 0px;
+            }
         }
 
         .search {

@@ -13,7 +13,7 @@
                         </div>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body dashboard">
                         @yield('dashboard-body')
                     </div>
                 </div>
