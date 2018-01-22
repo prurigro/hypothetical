@@ -265,7 +265,16 @@ body {
 
             @media (max-width: $screen-xs-max) {
                 margin: 3px;
-                padding-left: 60px;
+            }
+
+            @media (min-width: $screen-sm-min) {
+                display: flex;
+            }
+
+            &.sortable {
+                @media (max-width: $screen-xs-max) {
+                    padding-left: 50px;
+                }
             }
 
             .title-column {
@@ -279,7 +288,9 @@ body {
                 }
 
                 @media (min-width: $screen-sm-min) {
-                    float: left;
+                    overflow: hidden;
+                    flex-grow: 1;
+                    white-space: nowrap;
                 }
 
                 .sort-icon {
@@ -316,15 +327,16 @@ body {
 
             .button-column {
                 padding-right: 0px;
-                padding-left: 0px;
 
                 @media (max-width: $screen-xs-max) {
                     padding-bottom: 5px;
+                    padding-left: 0px;
                     text-align: center;
                 }
 
                 @media (min-width: $screen-sm-min) {
-                    float: right;
+                    padding-left: 5px;
+                    flex-shrink: 0;
                     text-align: right;
                 }
 
