@@ -191,7 +191,8 @@ This function should be named the same as the one above except with `Edit` at th
         [ 'name' => 'halign', 'type' => 'select', 'options' => [ 'left', 'center', 'right' ] ],
         [ 'name' => 'story',  'type' => 'mkd' ],
         [ 'label' => 'Header Image', 'name' => 'headerimage', 'type' => 'image' ],
-        [ 'name' => 'order',  'type' => 'hidden' ]
+        [ 'name' => 'order',  'type' => 'hidden' ],
+        [ 'label' => 'PDF File', 'name' => 'pdf', 'type' => 'file', 'ext' => 'pdf' ]
     ];
 ```
 
@@ -204,7 +205,11 @@ The following is a list of possible `types` in the `columns` array for Editable 
 * `date`: Date and time selection tool for date/time data
 * `select`: Text input via option select with possible options in an `options` array
 * `hidden`: Fields that will contain values to pass to the update function but won't appear on the page (this must be used for the sort column)
-* `image`: Fields that contain image uploads (name is not part of the database and is instead used in the filename)
+* `image`: Fields that contain image uploads
+  * `name`: not part of the database and is instead used in the filename
+* `file`: Fields that contains file uploads
+  * `name`: not part of the database and is instead used in the filename
+  * `ext` required key containing the file extension
 * `display`: Displayed information that can't be edited
 
 #### Edit Item Functionality
