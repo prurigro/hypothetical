@@ -40,7 +40,7 @@ First add a function to generate the page:
             'heading' => 'Contact Form Submissions',
             'model'   => 'contact',
             'rows'    => Contact::getContactSubmissions(),
-            'cols'    => Contact::$dashboard_columns
+            'columns' => Contact::$dashboard_columns
         ]);
     }
 ```
@@ -48,7 +48,7 @@ First add a function to generate the page:
 * `heading`: The title that will appear for this page
 * `model`: The model that will be accessed on this page
 * `rows`: A function returning an array containing the data to be shown on this page
-* `cols`: Expects a variable called `$dashboard_columns` in the respective model that contains an array:
+* `columns`: Expects a variable called `$dashboard_columns` in the respective model that contains an array:
 
 ```php
     public static $dashboard_columns = [
@@ -143,15 +143,7 @@ This function should be named the same as the one above except with `Edit` at th
             'id'      => $id,
             'item'    => $item,
             'help_text' => '<strong>NOTE:</strong> This is some help text for the current page',
-            'columns' => [
-                [ 'name' => 'venue',       'type' => 'text' ],
-                [ 'name' => 'date',        'type' => 'date' ],
-                [ 'name' => 'address',     'type' => 'text' ],
-                [ 'name' => 'phone',       'type' => 'text' ],
-                [ 'name' => 'website',     'type' => 'text' ],
-                [ 'name' => 'cover',       'type' => 'text' ],
-                [ 'name' => 'description', 'type' => 'mkd' ]
-            ]
+            'columns' => $dashboard_columns
         ]);
     }
 ```

@@ -42,7 +42,7 @@ class DashboardController extends Controller {
             'heading' => 'Contact Form Submissions',
             'model'   => 'contact',
             'rows'    => Contact::getContactSubmissions(),
-            'cols'    => Contact::$dashboard_columns
+            'columns' => Contact::$dashboard_columns
         ]);
     }
 
@@ -52,7 +52,7 @@ class DashboardController extends Controller {
             'heading' => 'Subscriptions',
             'model'   => 'subscriptions',
             'rows'    => Subscriptions::getSubscriptions(),
-            'cols'    => Subscriptions::$dashboard_columns
+            'columns' => Subscriptions::$dashboard_columns
         ]);
     }
 

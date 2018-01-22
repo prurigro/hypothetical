@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr class="heading-row">
-                @foreach($cols as $column)
+                @foreach($columns as $column)
                     <th>{{ $column[0] }}</th>
                 @endforeach
             </tr>
@@ -17,7 +17,7 @@
         <tbody>
             @foreach($rows as $row)
                 <tr>
-                    @foreach($cols as $column)
+                    @foreach($columns as $column)
                         <td><strong class="mobile-heading">{{ $column[0] }}: </strong>{{ $row[$column[1]] }}</td>
                     @endforeach
                 </tr>
