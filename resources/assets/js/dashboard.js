@@ -564,7 +564,8 @@ function editItemInit() {
 
         setTimeout(function() {
             simplemde[column].value($this.attr("value"));
-        }, 100);
+            simplemde[column].refresh();
+        }, 500);
     });
 
     // initialize change events for back button
