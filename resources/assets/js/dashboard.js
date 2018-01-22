@@ -450,6 +450,11 @@ function editItemInit() {
         }
     };
 
+    const contentChanged = function() {
+        changes = true;
+        $submit.removeClass("disabled");
+    };
+
     $(".edit-button.delete.image").on("click", function(e) {
         const $this = $(this),
             name = $this.data("name");
@@ -564,15 +569,13 @@ function editItemInit() {
 
         setTimeout(function() {
             simplemde[column].value($this.attr("value"));
-            simplemde[column].refresh();
+            simplemde[column].codemirror.refresh();
+            simplemde[column].codemirror.on("change", contentChanged);
         }, 500);
     });
 
     // initialize change events for back button
-    $editItem.find("input, textarea, select").on("input change", function() {
-        changes = true;
-        $submit.removeClass("disabled");
-    });
+    $editItem.find("input, select").on("input change", contentChanged);
 
     // initialize back button
     $backButton.on("click", function() {
