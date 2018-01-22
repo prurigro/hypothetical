@@ -7,23 +7,25 @@
 @endsection
 
 @section('dashboard-body')
-    <table class="table">
-        <thead>
-            <tr class="heading-row">
-                @foreach($columns as $column)
-                    <th>{{ $column[0] }}</th>
-                @endforeach
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach($rows as $row)
-                <tr>
+    <div class="view-table-container">
+        <table class="table">
+            <thead>
+                <tr class="heading-row">
                     @foreach($columns as $column)
-                        <td><strong class="mobile-heading">{{ $column[0] }}: </strong>{{ $row[$column[1]] }}</td>
+                        <th>{{ $column[0] }}</th>
                     @endforeach
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                @foreach($rows as $row)
+                    <tr>
+                        @foreach($columns as $column)
+                            <td><strong class="mobile-heading">{{ $column[0] }}: </strong>{{ $row[$column[1]] }}</td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 @endsection

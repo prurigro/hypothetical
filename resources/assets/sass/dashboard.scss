@@ -195,35 +195,45 @@ body {
     &, &:hover, &:focus { text-decoration: none; }
 }
 
-.table {
-    > thead > tr > th { border-bottom: 1px solid #666; }
-
-    @media (max-width: $screen-md-max) {
-        tr {
-            &.heading-row { display: none; }
-            &:not(:first-child) { border-top: 1px solid #ddd; }
-        }
-
-        > tbody > tr > td {
-            &:first-child { padding-top: 20px; }
-            &:last-child { padding-bottom: 20px; }
-        }
-
-        > tbody > tr {
-            &:first-child > td:first-child { padding-top: 0px; }
-            &:last-child > td:last-child { padding-bottom: 0px; }
-
-            > td {
-                display: block;
-                border-top: 0;
-            }
-        }
+.view-table-container {
+    @media (max-width: $screen-xs-max) {
+        padding: 10px 5px;
     }
 
-    @media (min-width: $screen-lg-min) {
-        > tbody > tr > td { padding: 20px 8px; }
-        > tbody > tr:last-child > td { padding-bottom: 0px; }
-        .mobile-heading { display: none; }
+    .table {
+        margin-bottom: 0px;
+
+        > thead > tr > th {
+            border-bottom: 1px solid #666;
+        }
+
+        @media (max-width: $screen-md-max) {
+            tr {
+                &.heading-row { display: none; }
+                &:not(:first-child) { border-top: 1px solid #ddd; }
+            }
+
+            > tbody > tr > td {
+                &:first-child { padding-top: 20px; }
+                &:last-child { padding-bottom: 20px; }
+            }
+
+            > tbody > tr {
+                &:first-child > td:first-child { padding-top: 0px; }
+                &:last-child > td:last-child { padding-bottom: 0px; }
+
+                > td {
+                    display: block;
+                    border-top: 0;
+                }
+            }
+        }
+
+        @media (min-width: $screen-lg-min) {
+            > tbody > tr > td { padding: 20px 8px; }
+            > tbody > tr:last-child > td { padding-bottom: 0px; }
+            .mobile-heading { display: none; }
+        }
     }
 }
 
