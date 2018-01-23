@@ -213,18 +213,26 @@ body {
                 &:not(:first-child) { border-top: 1px solid #ddd; }
             }
 
-            > tbody > tr > td {
-                &:first-child { padding-top: 20px; }
-                &:last-child { padding-bottom: 20px; }
-            }
-
             > tbody > tr {
-                &:first-child > td:first-child { padding-top: 0px; }
-                &:last-child > td:last-child { padding-bottom: 0px; }
-
                 > td {
                     display: block;
                     border-top: 0;
+
+                    &:first-child {
+                        padding-top: 20px;
+                    }
+
+                    &:last-child {
+                        padding-bottom: 20px;
+                    }
+                }
+
+                &:first-child > td:first-child {
+                    padding-top: 0px;
+                }
+
+                &:last-child > td:last-child {
+                    padding-bottom: 0px;
                 }
             }
         }
@@ -299,7 +307,6 @@ body {
                     opacity: 1;
                     transition: opacity 100ms;
                     cursor: grab;
-                    cursor: -webkit-grabbing;
 
                     @media (max-width: $screen-xs-max) {
                         position: absolute;
@@ -403,7 +410,7 @@ body {
         display: block;
         width: 100%;
 
-        &:not([type=file]) {
+        &:not([type="file"]) {
             padding: 5px 8px;
             border: 1px solid darken($c-dashboard-light, 10%);
             border-radius: 2px;
