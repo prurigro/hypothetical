@@ -18,5 +18,5 @@
 
 @mixin font-sans {
     @include normalize-font;
-    font-family: OpenSans-Regular, Arial, Helvetica, sans-serif;
+    font-family: "OpenSans-Regular", Arial, Helvetica, sans-serif;
 }
