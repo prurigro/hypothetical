@@ -9,12 +9,14 @@
 @section('page-content')
     <nav-component></nav-component>
 
-    <div class="page-container">
-        <div id="router-view" class="main-content">
-            <router-view></router-view>
-        </div>
+    <div class="flex-wrapper">
+        <div class="page-container">
+            <div id="router-view" class="main-content">
+                <router-view></router-view>
+            </div>
 
-        <footer-component></footer-component>
+            <footer-component></footer-component>
+        </div>
     </div>
 @endsection
 
