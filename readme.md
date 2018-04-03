@@ -296,7 +296,7 @@ Viewable models and editable models with `export` set to `true` must have an ent
     switch ($model) {
         case 'contact':
             $headings = [ 'Date', 'Name', 'Email', 'Message' ];
-            $items = Contact::select('created_at', 'name', 'email', 'message')->get();
+            $items = Contact::select('created_at', 'name', 'email', 'message')->get()->toArray();
             break;
         default:
             abort(404);

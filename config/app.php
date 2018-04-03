@@ -165,7 +165,6 @@ return [
         Radic\BladeExtensions\BladeExtensionsServiceProvider::class,
         Spatie\Newsletter\NewsletterServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -220,7 +219,6 @@ return [
          * Custom Class Aliases...
          */
         'Image'      => Intervention\Image\Facades\Image::class,
-        'Excel'      => Maatwebsite\Excel\Facades\Excel::class,
         'Language'   => App\Utilities\Language::class,
 
     ]

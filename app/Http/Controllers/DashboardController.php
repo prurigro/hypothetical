@@ -4,7 +4,8 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use File;
 use Image;
-use Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 use App\Models\Contact;
 use App\Models\Subscriptions;
@@ -65,29 +66,32 @@ class DashboardController extends Controller {
      */
     public function getExport($model)
     {
-        // set the name of the spreadsheet
-        $sheet_name = ucfirst($model);
+        // set the filename of the spreadsheet
+        $filename = preg_replace([ '/\ /', '/[^a-z0-9\-]/' ], [ '-', '' ], strtolower(env('APP_NAME'))) . '-' . $model . '-' . date('m-d-Y');
 
         // set the model using the 'model' request argument
         switch ($model) {
             case 'contact':
                 $headings = [ 'Date', 'Name', 'Email', 'Message' ];
-                $items = Contact::select('created_at', 'name', 'email', 'message')->get();
+                $items = Contact::select('created_at', 'name', 'email', 'message')->get()->toArray();
                 break;
             case 'subscriptions':
                 $headings = [ 'Date', 'Email', 'Name' ];
-                $items = Subscriptions::select('created_at', 'email', 'name')->get();
+                $items = Subscriptions::select('created_at', 'email', 'name')->get()->toArray();
                 break;
             default:
                 abort(404);
         }
 
-        Excel::create($sheet_name, function($excel) use($sheet_name, $headings, $items) {
-            $excel->sheet($sheet_name, function($sheet) use($sheet_name, $headings, $items) {
-                $sheet->fromArray($items);
-                $sheet->row(1, $headings);
-            });
-        })->store('xls')->export('xls');
+        array_unshift($items, $headings);
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(25);
+        $spreadsheet->getActiveSheet()->fromArray($items, NULL, 'A1');
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
     }
 
     /**
