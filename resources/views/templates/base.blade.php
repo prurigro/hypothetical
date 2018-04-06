@@ -33,12 +33,6 @@
         <link rel="canonical" href="{{ Request::url() }}" />
 
         @yield('page-includes')
-
-        @if(Config::get('app.debug'))
-            <script type="text/javascript">
-                document.write('<script src="//{{ env('LR_HOST', 'localhost') }}:35729/livereload.js?snipver=1" type="text/javascript"><\/script>')
-            </script>
-        @endif
     </head>
 
     <body class="{{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
@@ -49,5 +43,11 @@
         </div>
 
         @yield('page-bottom')
+
+        @if(Config::get('app.debug'))
+            <script id="__bs_script__">//<![CDATA[
+                document.write("<script async src='http://{{ env('BS_HOST', 'localhost') }}:3000/browser-sync/browser-sync-client.js?version={{ env('CACHE_BUST') }}'><\/script>".replace("HOST", location.hostname));
+            //]]></script>
+        @endif
     </body>
 </html>

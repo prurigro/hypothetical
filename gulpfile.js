@@ -25,6 +25,13 @@ const browserify = require("browserify"),
 // Determine if gulp has been run with --production
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 
+// Include browsersync when gulp has not been run with --production
+let browserSync = undefined;
+
+if (!isProduction) {
+    browserSync = require("browser-sync").create();
+}
+
 // Declare plugin settings
 const sassOutputStyle = isProduction ? "compressed" : "nested",
     sassPaths = [ "bower_components", "node_modules" ],
@@ -83,13 +90,18 @@ function handleError(err) {
 
 // Process sass
 function processSass(filename) {
-    return gulp.src("resources/assets/sass/" + filename + ".scss")
+    const css = gulp.src("resources/assets/sass/" + filename + ".scss")
         .pipe(plumber(handleError))
         .pipe(sassGlob())
         .pipe(sass({ outputStyle: sassOutputStyle, includePaths: sassPaths }))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
-        .pipe(concat(filename + ".css"))
-        .pipe(gulp.dest("public/css/"));
+        .pipe(concat(filename + ".css"));
+
+    if (isProduction) {
+        return css.pipe(gulp.dest("public/css/"));
+    } else {
+        return css.pipe(gulp.dest("public/css/")).pipe(browserSync.stream({ match: "**/" + filename + ".css" }));
+    }
 }
 
 // Process vue
@@ -162,27 +174,26 @@ gulp.task("fonts", function() {
 });
 
 // Task to run tasks when their respective files are changed
+const watchReload = function(done) {
+    browserSync.reload();
+    done();
+};
+
+gulp.task("js-public-watch", [ "js-public" ], watchReload);
+gulp.task("js-public-vue-watch", [ "js-public-vue" ], watchReload);
+gulp.task("js-dashboard-watch", [ "js-dashboard" ], watchReload);
+
 gulp.task("watch", function() {
-    const livereload = require("gulp-livereload");
-
-    const liveReloadUpdate = function(files, wait) {
-        setTimeout(function() {
-            livereload.changed(files);
-        }, wait || 1);
-    };
-
-    livereload.listen();
-    gulp.watch(jsPublic, [ "js-public" ]).on("change", liveReloadUpdate);
-    gulp.watch(jsDashboard, [ "js-dashboard" ]).on("change", liveReloadUpdate);
-    gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ]).on("change", liveReloadUpdate);
-
-    gulp.watch([ vuePublic, "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], [ "js-public-vue" ]).on("change", function(files) {
-        liveReloadUpdate(files, 3000);
+    browserSync.init({
+        logLevel: "silent",
+        baseDir: "./public"
     });
 
-    gulp.watch("resources/assets/sass/**/*.scss", [ "sass-public", "sass-dashboard" ]).on("change", function(files) {
-        liveReloadUpdate(files, 1000);
-    });
+    gulp.watch(jsPublic, [ "js-public-watch" ]);
+    gulp.watch(jsDashboard, [ "js-dashboard-watch" ]);
+    gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ]).on("change", browserSync.reload);
+    gulp.watch([ vuePublic, "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], [ "js-public-vue-watch" ]);
+    gulp.watch("resources/assets/sass/**/*.scss", [ "sass-public", "sass-dashboard" ]);
 });
 
 // Task to run non-development tasks
