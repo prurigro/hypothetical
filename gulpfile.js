@@ -1,6 +1,7 @@
 // Core packages
 const gulp = require("gulp"),
-    gutil = require("gulp-util"),
+    minimist = require("minimist"),
+    log = require("fancy-log"),
     plumber = require("gulp-plumber"),
     concat = require("gulp-concat");
 
@@ -22,7 +23,7 @@ const browserify = require("browserify"),
     buffer = require("vinyl-buffer");
 
 // Determine if gulp has been run with --production
-const isProduction = gutil.env.production;
+const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 
 // Declare plugin settings
 const sassOutputStyle = isProduction ? "compressed" : "nested",
@@ -76,7 +77,7 @@ const fontPaths = [
 
 // Handle errors
 function handleError(err) {
-    gutil.log(err);
+    log.error(err);
     this.emit("end");
 }
 
