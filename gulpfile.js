@@ -186,7 +186,13 @@ gulp.task("js-dashboard-watch", [ "js-dashboard" ], watchReload);
 gulp.task("watch", function() {
     browserSync.init({
         logLevel: "silent",
-        baseDir: "./public"
+        baseDir: "./public",
+
+        ghostMode: {
+            clicks: true,
+            forms: true,
+            scroll: false
+        }
     });
 
     gulp.watch(jsPublic, [ "js-public-watch" ]);
