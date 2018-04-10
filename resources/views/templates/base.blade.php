@@ -27,9 +27,9 @@
         <meta name="twitter:description" content="{{ env('APP_DESC') }}" />
         <meta name="twitter:image" content="{{ asset('/img/logo.png') }}" />
 
-        <link rel="shortcut icon" href="{{ URL::to('/') }}/favicon.ico" />
-        <link rel="icon" href="{{ URL::to('/') }}/favicon.ico" type="image/x-icon" />
-        <link rel="icon" href="{{ URL::to('/') }}/favicon.png" type="image/png" />
+        <link rel="shortcut icon" href="{{ URL::to('/') }}/favicon.ico?version={{ env('CACHE_BUST') }}" />
+        <link rel="icon" href="{{ URL::to('/') }}/favicon.ico?version={{ env('CACHE_BUST') }}" type="image/x-icon" />
+        <link rel="icon" href="{{ URL::to('/') }}/favicon.png?version={{ env('CACHE_BUST') }}" type="image/png" />
         <link rel="canonical" href="{{ Request::url() }}" />
 
         @yield('page-includes')
