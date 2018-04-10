@@ -206,9 +206,7 @@ gulp.task("watch", () => {
     gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ], gulp.series(browserSyncReload));
     gulp.watch([ vuePublic, "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], gulp.series("js-public-vue", browserSyncReload));
     gulp.watch(jsPublic, gulp.series("js-public", browserSyncReload));
-    gulp.watch(jsPublicLibs, gulp.series("js-public-libs", browserSyncReload));
     gulp.watch(jsDashboard, gulp.series("js-dashboard", browserSyncReload));
-    gulp.watch(jsDashboardLibs, gulp.series("js-dashboard-libs", browserSyncReload));
     gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard"));
 });
 
