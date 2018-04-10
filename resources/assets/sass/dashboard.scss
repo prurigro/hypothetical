@@ -1,7 +1,6 @@
 // Libraries
 @import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "font-awesome/scss/font-awesome.scss";
-@import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.scss";
 @import "pickadate/lib/themes/default";
 @import "pickadate/lib/themes/default.date";
 @import "simplemde/dist/simplemde.min";
@@ -16,6 +15,7 @@ $fa-font-path: "/fonts";
 // Colours
 $c-text: #111; // text
 $c-text-light: #fff; // light text
+$c-input-bg: #fff; // white
 $c-dashboard-dark: #3e6087;
 $c-dashboard-light: #f1f1f1;
 $c-dashboard-edit: #87823e;
@@ -31,20 +31,31 @@ $c-dashboard-delete: #87483e;
 
 body {
     @include font-sans;
-    min-width: 320px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
 }
 
 .navbar {
+    border: 0;
     background-color: $c-dashboard-dark;
 
-    .navbar-brand {
+    @media (max-width: $screen-xs-max) {
+        margin-bottom: 0px;
+    }
+
+    &-header {
+        height: $navbar-height;
+    }
+
+    &-brand {
+        overflow: hidden;
+        max-width: calc(100vw - 60px);
         font-weight: bold;
+        white-space: nowrap;
 
         @media (max-width: $screen-xs-max) {
-            font-size: 14px;
+            font-size: 12px;
         }
     }
 
@@ -53,7 +64,9 @@ body {
         box-shadow: none;
 
         .dropdown {
-            .dropdown-toggle .caret { margin-left: 4px; }
+            .dropdown-toggle .caret {
+                margin-left: 4px;
+            }
 
             &.open .dropdown-toggle {
                 background-color: darken($c-dashboard-dark, 5%);
@@ -64,25 +77,36 @@ body {
                 top: calc(100% - 1px);
                 right: -1px;
                 background-color: $c-dashboard-dark;
-                > li > a:hover, > li > a:focus { background-color: transparent; }
+
+                > li > a:hover, > li > a:focus {
+                    background-color: transparent;
+                }
 
                 > li > a {
-                    &, &:hover, &:focus { color: #fff; }
+                    &, &:hover, &:focus {
+                        color: #fff;
+                    }
                 }
             }
         }
     }
 
     .navbar-brand, .navbar-default .navbar-nav > li > a, .navbar-nav > li > a {
-        &, &:hover, &:focus { color: $c-dashboard-light; }
+        &, &:hover, &:focus {
+            color: $c-dashboard-light;
+        }
     }
 
     .navbar-toggle {
-        position: relative;
-        bottom: 0px;
-        left: 10px;
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        margin: 0px;
         border: 0;
-        &, &:hover, &:focus { background-color: transparent; }
+
+        &, &:hover, &:focus {
+            background-color: transparent;
+        }
 
         .icon-bar {
             width: 27px;
@@ -91,13 +115,15 @@ body {
             transition: background-color 100ms;
         }
 
-        &:hover .icon-bar { background-color: darken($c-dashboard-dark, 15%); }
+        &:hover .icon-bar {
+            background-color: darken($c-dashboard-dark, 15%);
+        }
     }
 }
 
 .panel-default {
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 
     .panel-body {
         background-color: lighten($c-dashboard-light, 1%);
@@ -130,6 +156,7 @@ body {
     }
 
     > .panel-heading {
+        position: relative;
         border-top: 1px solid darken($c-dashboard-dark, 5%);
         border-right: 1px solid darken($c-dashboard-dark, 5%);
         border-left: 1px solid darken($c-dashboard-dark, 5%);
@@ -138,11 +165,12 @@ body {
         font-weight: bold;
 
         .dashboard-heading {
-            float: right;
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
 
             .btn {
-                position: relative;
-                bottom: 3px;
                 min-width: 70px;
                 height: 26px;
                 padding-top: 1px;
@@ -162,12 +190,72 @@ body {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px fade-out($c-dashboard-dark, 0.4);
 }
 
+.panel-body .form-group .checkbox {
+    position: relative;
+    display: inline-block;
+    min-height: 0px;
+    padding-top: 0px;
+    padding-left: 22px;
+    user-select: none;
+
+    span, input {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        transform: translateY(-50%);
+        display: block;
+        width: 16px;
+        height: 16px;
+    }
+
+    span {
+        border: 1px solid lighten($c-text, 50%);
+        border-radius: 4px;
+        background-color: $c-input-bg;
+        pointer-events: none;
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            transform: scale(0);
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1OTcuMzM5IiBoZWlnaHQ9IjQ0MS4wMzgiIHZpZXdCb3g9IjAgMCA1NjAuMDA1IDQxMy40NzMiPjxwYXRoIGQ9Ik0uNTQ2IDI0MS4xNXMzNC44NS00Mi4wNTMgNzQuMjE0LTU0LjcxYzEwLjY1OCA3Ljk5MyA3MS4wNzggMTI4LjczNSA4MS43MzYgMTI3LjQwMyAxMS45OS0xLjMzMiA5MC45NzItMTExLjM3IDI2MS43NzMtMzEzLjIzMSAwIDAgNDkuNDMgMjIuNDQgMTQwLjM3NyAyNy4xMjItMjM3LjgxIDE4Ni41MzctMzYwLjgyIDM2OC4zNzUtMzcxLjU5OCAzNzcuMTYtMzAuNjQzIDE0LjY1NS00Ni4zNSA2LjE3Ni01Ny4wMDgtLjQ4NkMxMDQuNzI3IDM4MS43NiAxLjg4IDI0Ni40OC41NDYgMjQxLjE1MXoiIGZpbGw9IiMwYTBhMGEiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIi8+PC9zdmc+Cg==");
+            background-position: center center;
+            background-size: 75% auto;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: transform 150ms, opacity 150ms;
+        }
+    }
+
+    input {
+        margin: 0px;
+        padding: 0px;
+        opacity: 0;
+        cursor: pointer;
+
+        &:checked + span:after {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}
+
 .btn {
     border-color: darken($c-dashboard-dark, 5%);
     background-color: $c-dashboard-dark;
     transition: background-color 100ms;
     &:hover { background-color: darken($c-dashboard-dark, 5%); }
     &:focus { background-color: lighten($c-dashboard-dark, 5%); }
+
+    &.vertical-margin {
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
 
     &.btn-warning {
         border-color: darken($c-dashboard-edit, 10%);
@@ -209,8 +297,13 @@ body {
 
         @media (max-width: $screen-md-max) {
             tr {
-                &.heading-row { display: none; }
-                &:not(:first-child) { border-top: 1px solid #ddd; }
+                &.heading-row {
+                    display: none;
+                }
+
+                &:not(:first-child) {
+                    border-top: 1px solid #ddd;
+                }
             }
 
             > tbody > tr {
