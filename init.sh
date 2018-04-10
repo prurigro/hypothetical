@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Dependencies
-deps=('bower' 'composer' 'egrep' 'gulp' 'npm' 'php' 'sed')
+deps=('bower' 'composer' 'egrep' 'npm' 'php' 'sed')
 
 # Default settings
 no_artisan=0
@@ -37,7 +37,7 @@ declare -a missing_deps=()
 
 for dep in "${deps[@]}"; do
     type -P "$dep" >/dev/null \
-        || missing_deps=( ${missing_deps[@]} "$dep" )
+        || missing_deps=( "${missing_deps[@]}" "$dep" )
 done
 
 [[ -n "${missing_deps[*]}" ]] && {
@@ -104,7 +104,7 @@ msg "Running: ${c_m}bower prune && bower install"
 bower prune && bower install || error "${c_m}bower prune && bower install$c_w exited with an error status"
 
 msg "Running: ${c_m}gulp --production"
-gulp --production || error "${c_m}gulp --production$c_w exited with an error status"
+"$(npm bin)/gulp" --production || error "${c_m}gulp --production$c_w exited with an error status"
 
 (( artisan_down )) && {
     msg "Running: ${c_m}php artisan up"

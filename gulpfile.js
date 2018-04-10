@@ -95,13 +95,14 @@ function processSass(filename) {
         .pipe(sassGlob())
         .pipe(sass({ outputStyle: sassOutputStyle, includePaths: sassPaths }))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
-        .pipe(concat(filename + ".css"));
+        .pipe(concat(filename + ".css"))
+        .pipe(gulp.dest("public/css/"));
 
-    if (isProduction) {
-        return css.pipe(gulp.dest("public/css/"));
-    } else {
-        return css.pipe(gulp.dest("public/css/")).pipe(browserSync.stream({ match: "**/" + filename + ".css" }));
+    if (!isProduction) {
+        css.pipe(browserSync.stream({ match: "**/" + filename + ".css" }));
     }
+
+    return css;
 }
 
 // Process vue
@@ -116,7 +117,10 @@ function processVue(ouputFilename, inputFile) {
         .pipe(source(ouputFilename + ".js"))
         .pipe(buffer());
 
-    if (isProduction) { javascript.pipe(stripDebug()).pipe(uglify().on("error", handleError)); }
+    if (isProduction) {
+        javascript.pipe(stripDebug()).pipe(uglify().on("error", handleError));
+    }
+
     return javascript.pipe(gulp.dest("public/js/"));
 }
 
@@ -126,67 +130,72 @@ function processJavaScript(ouputFilename, inputFiles, es6) {
         .pipe(plumber(handleError))
         .pipe(concat(ouputFilename + ".js"));
 
-    if (es6) { javascript.pipe(babel()); }
-    if (isProduction) { javascript.pipe(stripDebug()).pipe(uglify()); }
+    if (es6) {
+        javascript.pipe(babel());
+    }
+
+    if (isProduction) {
+        javascript.pipe(stripDebug()).pipe(uglify());
+    }
+
     return javascript.pipe(gulp.dest("public/js/"));
 }
 
 // Task for public styles
-gulp.task("sass-public", function() {
+gulp.task("sass-public", () => {
     return processSass("app");
 });
 
 // Task for dashboard styles
-gulp.task("sass-dashboard", function() {
+gulp.task("sass-dashboard", () => {
     return processSass("dashboard");
 });
 
 // Task for public vue
-gulp.task("js-public-vue", function() {
+gulp.task("js-public-vue", () => {
     return processVue("app-vue", vuePublic);
 });
 
 // Task for public javascript
-gulp.task("js-public", function() {
+gulp.task("js-public", () => {
     return processJavaScript("app", jsPublic, true);
 });
 
 // Task for public javascript libraries
-gulp.task("js-public-libs", function() {
+gulp.task("js-public-libs", () => {
     return processJavaScript("lib", jsPublicLibs, false);
 });
 
 // Task for dashboard javascript
-gulp.task("js-dashboard", function() {
+gulp.task("js-dashboard", () => {
     return processJavaScript("dashboard", jsDashboard, true);
 });
 
 // Task for dashboard javascript libraries
-gulp.task("js-dashboard-libs", function() {
+gulp.task("js-dashboard-libs", () => {
     return processJavaScript("lib-dashboard", jsDashboardLibs, false);
 });
 
 // Task to copy fonts
-gulp.task("fonts", function() {
-    return gulp.src(fontPaths)
+gulp.task("fonts", (done) => {
+    gulp.src(fontPaths)
         .pipe(plumber(handleError))
         .pipe(gulp.dest("public/fonts/"));
+
+    done();
 });
 
-// Task to run tasks when their respective files are changed
-const watchReload = function(done) {
-    browserSync.reload();
-    done();
-};
+// Task to watch files and run respective tasks when changes occur
+gulp.task("watch", () => {
+    const browserSyncReload = (done) => {
+        browserSync.reload();
+        done();
+    };
 
-gulp.task("js-public-watch", [ "js-public" ], watchReload);
-gulp.task("js-public-vue-watch", [ "js-public-vue" ], watchReload);
-gulp.task("js-dashboard-watch", [ "js-dashboard" ], watchReload);
-
-gulp.task("watch", function() {
     browserSync.init({
         logLevel: "silent",
         baseDir: "./public",
+        notify: false,
 
         ghostMode: {
             clicks: true,
@@ -195,15 +204,17 @@ gulp.task("watch", function() {
         }
     });
 
-    gulp.watch(jsPublic, [ "js-public-watch" ]);
-    gulp.watch(jsDashboard, [ "js-dashboard-watch" ]);
-    gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ]).on("change", browserSync.reload);
-    gulp.watch([ vuePublic, "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], [ "js-public-vue-watch" ]);
-    gulp.watch("resources/assets/sass/**/*.scss", [ "sass-public", "sass-dashboard" ]);
+    gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ], gulp.series(browserSyncReload));
+    gulp.watch([ vuePublic, "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], gulp.series("js-public-vue", browserSyncReload));
+    gulp.watch(jsPublic, gulp.series("js-public", browserSyncReload));
+    gulp.watch(jsPublicLibs, gulp.series("js-public-libs", browserSyncReload));
+    gulp.watch(jsDashboard, gulp.series("js-dashboard", browserSyncReload));
+    gulp.watch(jsDashboardLibs, gulp.series("js-dashboard-libs", browserSyncReload));
+    gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard"));
 });
 
 // Task to run non-development tasks
-gulp.task("default", [
+gulp.task("default", gulp.parallel(
     "sass-public",
     "sass-dashboard",
     "js-public-vue",
@@ -212,4 +223,4 @@ gulp.task("default", [
     "js-dashboard",
     "js-dashboard-libs",
     "fonts"
-]);
+));
