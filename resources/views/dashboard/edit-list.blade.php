@@ -23,8 +23,12 @@
                 <li class="list-group-item {{ $sortcol != false ? 'sortable' : '' }}" data-id="{{ $row['id'] }}">
                     <div class="title-column">
                         @if($sortcol != false)
-                            <div class="sort-icon">
-                                <i class="fa fa-bars" title="Click and drag to reorder"></i>
+                            <div class="sort-icon" title="Click and drag to reorder">
+                                <div class="sort-icon-inner">
+                                    <div class="sort-icon-inner-bar"></div>
+                                    <div class="sort-icon-inner-bar"></div>
+                                    <div class="sort-icon-inner-bar"></div>
+                                </div>
                             </div>
                         @endif
 

@@ -411,6 +411,35 @@ body {
                         left: 20px;
                         transform: translateY(-50%);
                     }
+
+                    &-inner {
+                        position: relative;
+                        top: 2px;
+                        display: inline-block;
+                        width: 12px;
+                        height: 14px;
+
+                        &-bar {
+                            position: absolute;
+                            left: 0px;
+                            width: 100%;
+                            height: 2px;
+                            background-color: $c-text;
+
+                            &:nth-child(1) {
+                                top: 2px;
+                            }
+
+                            &:nth-child(2) {
+                                top: 50%;
+                                transform: translateY(-50%);
+                            }
+
+                            &:nth-child(3) {
+                                bottom: 2px;
+                            }
+                        }
+                    }
                 }
 
                 .column {
