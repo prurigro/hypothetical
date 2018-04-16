@@ -1,12 +1,5 @@
 .subscription-form-section-component {
     $trans-speed: 100ms;
-    position: absolute;
-    top: 50%;
-    right: 0px;
-    left: 0px;
-    transform: translateY(-50%);
-    margin-right: auto;
-    margin-left: auto;
     width: 200px;
 
     input {
