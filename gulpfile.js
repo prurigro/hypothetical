@@ -140,6 +140,11 @@ gulp.task("sass-dashboard", () => {
     return processSass("dashboard");
 });
 
+// Task for error page styles
+gulp.task("sass-error", () => {
+    return processSass("error");
+});
+
 // Task for public javascript
 gulp.task("js-public", () => {
     return processVue("app", jsPublic);
@@ -191,13 +196,14 @@ gulp.task("watch", () => {
     gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ], gulp.series(browserSyncReload));
     gulp.watch([ jsPublic, "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], gulp.series("js-public", browserSyncReload));
     gulp.watch(jsDashboard, gulp.series("js-dashboard", browserSyncReload));
-    gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard"));
+    gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard", "sass-error"));
 });
 
 // Task to run non-development tasks
 gulp.task("default", gulp.parallel(
     "sass-public",
     "sass-dashboard",
+    "sass-error",
     "js-public",
     "js-public-libs",
     "js-dashboard",

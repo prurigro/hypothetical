@@ -1,5 +1,3 @@
-@extends('templates.error')
-
-@section('error-title')
-    No Such Record
-@endsection
+@extends('templates.error', [
+    'title' => 'No Such Record'
+])

@@ -1,46 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>@yield('error-title') - {{ env('APP_NAME') }}</title>
+@extends('templates.base')
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+@section('page-includes')
+    <link rel="stylesheet" href="/css/error.css?version={{ env('CACHE_BUST') }}" />
+@endsection
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                color: #B0BEC5;
-                display: table;
-                font-weight: 100;
-                font-family: Impact, Charcoal, sans-serif;
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 72px;
-                margin-bottom: 40px;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">@yield('error-title')</div>
+@section('page-content')
+    <div class="flex-wrapper">
+        <div class="error-page">
+            <div class="error-page-content">
+                {{ $title }}
             </div>
         </div>
-    </body>
-</html>
+    </div>
+@endsection

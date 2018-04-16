@@ -10,6 +10,18 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "OpenSans-Bold";
+    src: url("/fonts/OpenSans-Bold.eot");
+    src: url("/fonts/OpenSans-Bold.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/OpenSans-Bold.woff") format("woff"),
+    url("/fonts/OpenSans-Bold.woff2") format("woff2"),
+    url("/fonts/OpenSans-Bold.ttf") format("truetype"),
+    url("/fonts/OpenSans-Bold.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 @mixin normalize-font {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -18,4 +30,9 @@
 @mixin font-sans {
     @include normalize-font;
     font-family: "OpenSans-Regular", Arial, Helvetica, sans-serif;
+}
+
+@mixin font-sans-bold {
+    @include normalize-font;
+    font-family: "OpenSans-Bold", Arial, Helvetica, sans-serif;
 }

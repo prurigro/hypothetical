@@ -1,0 +1,28 @@
+// Core
+@import "_fonts";
+
+// Libraries
+@import "bootstrap/scss/bootstrap.scss";
+
+.error-page {
+    display: flex;
+    min-height: 100vh;
+    padding: $grid-gutter-width ($grid-gutter-width / 2);
+    align-items: center;
+
+    &-content {
+        @include font-sans-bold;
+        width: 100%;
+        font-size: 22px;
+        text-align: center;
+        text-transform: uppercase;
+
+        @include media-breakpoint-up(sm) {
+            font-size: 32px;
+        }
+
+        @include media-breakpoint-up(lg) {
+            font-size: 48px;
+        }
+    }
+}

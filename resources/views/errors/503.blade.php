@@ -1,5 +1,3 @@
-@extends('templates.error')
-
-@section('error-title')
-    Be Right Back
-@endsection
+@extends('templates.error', [
+    'title' => 'Be Right Back'
+])
