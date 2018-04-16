@@ -16,12 +16,6 @@ const babel = require("gulp-babel"),
     stripDebug = require("gulp-strip-debug"),
     uglify = require("gulp-uglify");
 
-// Vue packages
-const browserify = require("browserify"),
-    vueify = require("vueify"),
-    source = require("vinyl-source-stream"),
-    buffer = require("vinyl-buffer");
-
 // Determine if gulp has been run with --production
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 
@@ -35,11 +29,16 @@ if (!isProduction) {
 // Declare plugin settings
 const sassOutputStyle = isProduction ? "compressed" : "nested",
     sassPaths = [ "bower_components", "node_modules" ],
-    autoprefixerSettings = { remove: false, cascade: false, browsers: [ "last 6 versions" ] },
-    vuePaths = [ "./bower_components", "./node_modules", "./resources/components", "./resources/assets/js" ];
+    autoprefixerSettings = { remove: false, cascade: false, browsers: [ "last 6 versions" ] };
 
 // Javascript files for the public site
-const jsPublic = [ "resources/assets/js/app.js" ];
+const jsPublic = [
+    "resources/assets/js/site-vars.js",
+    "resources/assets/js/nav.js",
+    "resources/assets/js/contact.js",
+    "resources/assets/js/subscription.js",
+    "resources/assets/js/app.js"
+];
 
 // Javascript libraries for the public site
 const jsPublicLibs = [
@@ -94,25 +93,6 @@ function processSass(filename) {
     return css;
 }
 
-// Process vue
-function processVue(ouputFilename, inputFile) {
-    const javascript = browserify({
-        entries: [ inputFile ],
-        paths: vuePaths
-    }).transform("babelify")
-        .transform(vueify)
-        .bundle()
-        .on("error", handleError)
-        .pipe(source(ouputFilename + ".js"))
-        .pipe(buffer());
-
-    if (isProduction) {
-        javascript.pipe(stripDebug()).pipe(uglify().on("error", handleError));
-    }
-
-    return javascript.pipe(gulp.dest("public/js/"));
-}
-
 // Process javascript
 function processJavaScript(ouputFilename, inputFiles, es6) {
     const javascript = gulp.src(inputFiles)
@@ -142,7 +122,7 @@ gulp.task("sass-dashboard", () => {
 
 // Task for public javascript
 gulp.task("js-public", () => {
-    return processVue("app", jsPublic);
+    return processJavaScript("app", jsPublic, true);
 });
 
 // Task for public javascript libraries
@@ -189,7 +169,7 @@ gulp.task("watch", () => {
     });
 
     gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ], gulp.series(browserSyncReload));
-    gulp.watch([ jsPublic, "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], gulp.series("js-public", browserSyncReload));
+    gulp.watch(jsPublic, gulp.series("js-public", browserSyncReload));
     gulp.watch(jsDashboard, gulp.series("js-dashboard", browserSyncReload));
     gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard"));
 });

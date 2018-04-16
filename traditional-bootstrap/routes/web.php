@@ -53,6 +53,10 @@ Route::get('/language/{lang}', function($lang) {
     return redirect()->back();
 });
 
-Route::get('/{vue?}', function() {
-    return view('templates.public');
-})->where('vue', '[\/\w\.-]*');
+Route::get('/', function() {
+    return view('pages.index');
+});
+
+Route::get('/contact', function() {
+    return view('pages.contact');
+});

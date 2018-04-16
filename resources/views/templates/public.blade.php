@@ -2,20 +2,24 @@
 
 @section('page-includes')
     <script src="/js/lib.js?version={{ env('CACHE_BUST') }}"></script>
-    <script src="/js/app.js?version={{ env('CACHE_BUST') }}"></script>
     <link rel="stylesheet" href="/css/app.css?version={{ env('CACHE_BUST') }}" />
+    @include('elements.variables')
 @endsection
 
 @section('page-content')
-    @include('sections.nav')
+    <nav-component></nav-component>
 
     <div class="flex-wrapper">
         <div class="page-container">
-            <div class="main-content">
-                @yield('content')
+            <div id="router-view" class="main-content">
+                <router-view></router-view>
             </div>
 
-            @include('sections.footer')
+            <footer-component></footer-component>
         </div>
     </div>
+@endsection
+
+@section('page-bottom')
+    <script src="/js/app.js?version={{ env('CACHE_BUST') }}"></script>
 @endsection
