@@ -1,6 +1,6 @@
 <template>
     <div class="error-page-component">
-        Page Not Found
+        <h1>Page Not Found</h1>
     </div>
 </template>
 
