@@ -328,6 +328,7 @@ body {
         margin-bottom: 0px;
 
         > thead > tr > th {
+            border-top: 0;
             border-bottom: 1px solid #666;
         }
 
@@ -645,8 +646,14 @@ body {
         @include media-breakpoint-down(sm) {
             float: none;
             width: calc(100% - 30px);
-            &:first-child { margin: 25px 15px 5px 15px; }
-            &:last-child { margin: 5px 15px 25px 15px; }
+
+            &:first-child {
+                margin: 25px 15px 5px 15px;
+            }
+
+            &:last-child {
+                margin: 5px 15px 25px 15px;
+            }
         }
     }
 }
