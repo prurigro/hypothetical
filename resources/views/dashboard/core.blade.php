@@ -3,9 +3,9 @@
 @section('page-content')
     <div class="container spark-screen">
         <div class="row">
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
                         {{ $heading }}
 
                         <div class="dashboard-heading">
@@ -13,7 +13,7 @@
                         </div>
                     </div>
 
-                    <div class="panel-body dashboard">
+                    <div class="card-body dashboard">
                         @yield('dashboard-body')
                     </div>
                 </div>
@@ -25,9 +25,9 @@
         <div class="modal-container">
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading"></div>
+                    <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+                        <div class="card">
+                            <div class="card-header"></div>
                             <button type="button" class="cancel-button btn btn-primary">Cancel</button>
                             <button type="button" class="confirm-button btn btn-danger">Confirm</button>
                         </div>
@@ -41,9 +41,9 @@
         <div class="modal-container">
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">ALERT</div>
+                    <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+                        <div class="card">
+                            <div class="card-header">ALERT</div>
                             <div class="message"></div>
                             <button type="button" class="accept-button btn btn-primary">OK</button>
                         </div>

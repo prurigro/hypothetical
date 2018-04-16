@@ -2,7 +2,7 @@
 
 @section('dashboard-heading')
     @if(count($rows) > 0)
-        <a href="/dashboard/export/{{ $model }}"><button type="button" class="btn btn-default">Export</button></a>
+        <a href="/dashboard/export/{{ $model }}"><button type="button" class="btn btn-secondary">Export</button></a>
     @endif
 @endsection
 

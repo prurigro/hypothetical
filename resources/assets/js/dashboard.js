@@ -4,7 +4,7 @@ jQuery.fn.reverse = [].reverse;
 // show the confirmation modal and run the supplied command if confirm is pressed
 function askConfirmation(message, command, cancelCommand) {
     const $confirmationModal = $("#confirmation-modal"),
-        $heading = $confirmationModal.find(".panel-heading"),
+        $heading = $confirmationModal.find(".card-header"),
         $cancelButton = $confirmationModal.find(".btn.cancel-button"),
         $confirmButton = $confirmationModal.find(".btn.confirm-button"),
         fadeTime = 250;
@@ -452,7 +452,7 @@ function editItemInit() {
 
     const contentChanged = function() {
         changes = true;
-        $submit.removeClass("disabled");
+        $submit.removeClass("no-input");
     };
 
     $(".edit-button.delete.image").on("click", function(e) {

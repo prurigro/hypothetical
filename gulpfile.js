@@ -58,7 +58,7 @@ const jsDashboard = [
 // Javascript libraries for the dashboard
 const jsDashboardLibs = [
     "bower_components/jquery/dist/jquery.js",
-    "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
+    "node_modules/bootstrap/dist/js/bootstrap.js",
     "bower_components/Sortable/Sortable.js",
     "bower_components/pickadate/lib/picker.js",
     "bower_components/pickadate/lib/picker.date.js",

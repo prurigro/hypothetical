@@ -2,11 +2,11 @@
 
 @section('dashboard-heading')
     @if($export && count($rows) > 0)
-        <a href="/dashboard/export/{{ $model }}"><button type="button" class="btn btn-default">Export</button></a>
+        <a href="/dashboard/export/{{ $model }}"><button type="button" class="btn btn-secondary">Export</button></a>
     @endif
 
     @if($create)
-        <button type="button" class="new-button btn btn-default">New</button>
+        <button type="button" class="new-button btn btn-secondary">New</button>
     @endif
 @endsection
 
@@ -49,7 +49,7 @@
 
                     <div class="button-column">
                         @if(isset($button) && is_array($button))
-                            <button type="button" class="action-button btn btn-default" data-confirmation="{{ $button[1] }}" data-success="{{ $button[2] }}" data-error="{{ $button[3] }}" data-url="{{ $button[4] }}">{{ $button[0] }}</button>
+                            <button type="button" class="action-button btn btn-secondary" data-confirmation="{{ $button[1] }}" data-success="{{ $button[2] }}" data-error="{{ $button[3] }}" data-url="{{ $button[4] }}">{{ $button[0] }}</button>
                         @endif
 
                         <button type="button" class="edit-button btn btn-warning">Edit</button>
