@@ -18,9 +18,6 @@ $c-dashboard-light: #f1f1f1;
 $c-dashboard-edit: #87823e;
 $c-dashboard-delete: #87483e;
 
-// Sizes
-$navbar-height: 50px;
-
 //
 // Main Dashboard Styles
 //
@@ -37,21 +34,23 @@ body {
 }
 
 .navbar {
+    margin-bottom: $grid-gutter-width;
     border: 0;
     background-color: $c-dashboard-dark;
+
+    @include media-breakpoint-down(md) {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
 
     @include media-breakpoint-down(sm) {
         margin-bottom: 0px;
     }
 
-    &-header {
-        height: $navbar-height;
-    }
-
     &-brand {
+        @include font-sans-bold;
         overflow: hidden;
         max-width: calc(100vw - 60px);
-        font-weight: bold;
         white-space: nowrap;
 
         @include media-breakpoint-down(sm) {
@@ -59,64 +58,36 @@ body {
         }
     }
 
-    #spark-navbar-collapse {
-        border: 0;
-        box-shadow: none;
-
-        .dropdown {
-            .dropdown-toggle .caret {
-                margin-left: 4px;
-            }
-
-            &.open .dropdown-toggle {
-                background-color: darken($c-dashboard-dark, 5%);
-                color: $c-dashboard-light;
-            }
-
-            .dropdown-menu {
-                top: calc(100% - 1px);
-                right: -1px;
-                background-color: $c-dashboard-dark;
-
-                > li > a:hover, > li > a:focus {
-                    background-color: transparent;
-                }
-
-                > li > a {
-                    &, &:hover, &:focus {
-                        color: #fff;
-                    }
-                }
-            }
-        }
-    }
-
-    .navbar-brand, .navbar-default .navbar-nav > li > a, .navbar-nav > li > a {
-        &, &:hover, &:focus {
-            color: $c-dashboard-light;
-        }
-    }
-
-    .navbar-toggle {
+    &-toggler {
         position: absolute;
-        top: 6px;
-        right: 8px;
-        margin: 0px;
+        top: 3px;
+        right: 0px;
         border: 0;
 
-        &, &:hover, &:focus {
-            background-color: transparent;
+        @include media-breakpoint-up(md) {
+            top: 10px;
+        }
+    }
+
+    .dropdown-menu {
+        padding: 0px;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+
+        @include media-breakpoint-up(lg) {
+            top: 45px;
         }
 
-        .icon-bar {
-            width: 27px;
-            height: 4px;
-            background-color: $c-dashboard-light;
-            transition: background-color 100ms;
+        @include media-breakpoint-down(md) {
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
         }
 
-        &:hover .icon-bar {
-            background-color: darken($c-dashboard-dark, 15%);
+        .dropdown-item {
+            @include media-breakpoint-down(md) {
+                padding-right: 8px;
+                padding-left: 8px;
+            }
         }
     }
 }
@@ -281,8 +252,18 @@ body {
     color: $c-text-light;
     font-size: 14px;
     transition: background-color 100ms;
-    &:hover { background-color: darken($c-dashboard-dark, 5%); }
-    &:focus { background-color: lighten($c-dashboard-dark, 5%); }
+
+    &:hover {
+        background-color: darken($c-dashboard-dark, 5%);
+    }
+
+    &:focus {
+        background-color: lighten($c-dashboard-dark, 5%);
+    }
+
+    &, &:hover, &:focus {
+        text-decoration: none;
+    }
 
     &.vertical-margin {
         margin-top: 3px;
@@ -296,27 +277,46 @@ body {
     &.btn-warning {
         border-color: darken($c-dashboard-edit, 10%);
         background-color: $c-dashboard-edit;
-        &:hover { background-color: darken($c-dashboard-edit, 5%); }
-        &:focus { background-color: lighten($c-dashboard-edit, 5%); }
+
+        &:hover {
+            background-color: darken($c-dashboard-edit, 5%);
+        }
+
+        &:focus {
+            background-color: lighten($c-dashboard-edit, 5%);
+        }
     }
 
     &.btn-danger {
         border-color: darken($c-dashboard-delete, 10%);
         background-color: $c-dashboard-delete;
-        &:hover { background-color: darken($c-dashboard-delete, 5%); }
-        &:focus { background-color: lighten($c-dashboard-delete, 5%); }
+
+        &:hover {
+            background-color: darken($c-dashboard-delete, 5%);
+        }
+
+        &:focus {
+            background-color: lighten($c-dashboard-delete, 5%);
+        }
     }
 
     &.btn-secondary {
         border-color: darken($c-dashboard-light, 10%);
         background-color: $c-dashboard-light;
         color: $c-text;
-        &:hover { background-color: darken($c-dashboard-light, 5%); }
-        &:focus { background-color: lighten($c-dashboard-light, 5%); }
+
+        &:hover {
+            background-color: darken($c-dashboard-light, 5%);
+        }
+
+        &:focus {
+            background-color: lighten($c-dashboard-light, 5%);
+        }
     }
 
-    &.btn-link { color: $c-dashboard-light; }
-    &, &:hover, &:focus { text-decoration: none; }
+    &.btn-link {
+        color: $c-dashboard-light;
+    }
 }
 
 .view-table-container {
@@ -743,82 +743,82 @@ body {
     }
 
     &.fa-arrows-alt:after {
-        background-image: url("/img/dashboard/fa/arrows-alt.svg");
+        background-image: url("/img/dashboard/arrows-alt.svg");
     }
 
     &.fa-bold:after {
-        background-image: url("/img/dashboard/fa/bold.svg");
+        background-image: url("/img/dashboard/bold.svg");
     }
 
     &.fa-code:after {
-        background-image: url("/img/dashboard/fa/code.svg");
+        background-image: url("/img/dashboard/code.svg");
     }
 
     &.fa-columns:after {
-        background-image: url("/img/dashboard/fa/columns.svg");
+        background-image: url("/img/dashboard/columns.svg");
     }
 
     &.fa-eraser:after {
-        background-image: url("/img/dashboard/fa/eraser.svg");
+        background-image: url("/img/dashboard/eraser.svg");
     }
 
     &.fa-eye:after {
-        background-image: url("/img/dashboard/fa/eye.svg");
+        background-image: url("/img/dashboard/eye.svg");
     }
 
     &.fa-header:after {
-        background-image: url("/img/dashboard/fa/header.svg");
+        background-image: url("/img/dashboard/header.svg");
     }
 
     &.fa-italic:after {
-        background-image: url("/img/dashboard/fa/italic.svg");
+        background-image: url("/img/dashboard/italic.svg");
     }
 
     &.fa-link:after {
-        background-image: url("/img/dashboard/fa/link.svg");
+        background-image: url("/img/dashboard/link.svg");
     }
 
     &.fa-list-ol:after {
-        background-image: url("/img/dashboard/fa/list-ol.svg");
+        background-image: url("/img/dashboard/list-ol.svg");
     }
 
     &.fa-list-ul:after {
-        background-image: url("/img/dashboard/fa/list-ul.svg");
+        background-image: url("/img/dashboard/list-ul.svg");
     }
 
     &.fa-minus:after {
-        background-image: url("/img/dashboard/fa/minus.svg");
+        background-image: url("/img/dashboard/minus.svg");
     }
 
     &.fa-picture-o:after {
-        background-image: url("/img/dashboard/fa/picture-o.svg");
+        background-image: url("/img/dashboard/picture-o.svg");
     }
 
     &.fa-question-circle:after {
-        background-image: url("/img/dashboard/fa/question-circle.svg");
+        background-image: url("/img/dashboard/question-circle.svg");
     }
 
     &.fa-quote-left:after {
-        background-image: url("/img/dashboard/fa/quote-left.svg");
+        background-image: url("/img/dashboard/quote-left.svg");
     }
 
     &.fa-repeat:after {
-        background-image: url("/img/dashboard/fa/repeat.svg");
+        background-image: url("/img/dashboard/repeat.svg");
     }
 
     &.fa-star:after {
-        background-image: url("/img/dashboard/fa/star.svg");
+        background-image: url("/img/dashboard/star.svg");
     }
 
     &.fa-strikethrough:after {
-        background-image: url("/img/dashboard/fa/strikethrough.svg");
+        background-image: url("/img/dashboard/strikethrough.svg");
     }
 
     &.fa-table:after {
-        background-image: url("/img/dashboard/fa/table.svg");
+        background-image: url("/img/dashboard/table.svg");
     }
 
     &.fa-undo:after {
-        background-image: url("/img/dashboard/fa/undo.svg");
+        background-image: url("/img/dashboard/undo.svg");
     }
 }
