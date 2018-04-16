@@ -77,8 +77,7 @@ const jsDashboardLibs = [
 
 // Paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
-    "resources/assets/fonts/**",
-    "node_modules/font-awesome/fonts/**"
+    "resources/assets/fonts/**"
 ];
 
 // Handle errors

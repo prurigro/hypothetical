@@ -1,6 +1,5 @@
 // Libraries
 @import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
-@import "font-awesome/scss/font-awesome.scss";
 @import "pickadate/lib/themes/default";
 @import "pickadate/lib/themes/default.date";
 @import "simplemde/dist/simplemde.min";
@@ -8,9 +7,6 @@
 
 // Core
 @import "_fonts";
-
-// Fontawesome Path
-$fa-font-path: "/fonts";
 
 // Colours
 $c-text: #111; // text
