@@ -19,22 +19,22 @@
                 @endif
             @else
                 @foreach(App\Models\DashboardMenu::$menu as $menu_item)
-                    @if(is_array($menu_item[1]))
+                    @if(array_key_exists('submenu', $menu_item))
                         <li class="nav-item dropdown">
                             <a id="menu-dropdown" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ $menu_item[0] }} <span class="caret"></span>
+                                {{ $menu_item['title'] }} <span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-dropdown">
-                                @foreach($menu_item[1] as $submenu_item)
-                                    <a class="dropdown-item" href="{{ url('/dashboard/' . $submenu_item[1]) }}">{{ $submenu_item[0] }}</a>
+                                @foreach($menu_item['submenu'] as $submenu_item)
+                                    <a class="dropdown-item" href="{{ url('/dashboard/' . $submenu_item['type'] . '/' . $submenu_item['model']) }}">{{ $submenu_item['title'] }}</a>
                                 @endforeach
                             </div>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link {{ $current_page == $menu_item[1] ? 'active' : '' }}" href="{{ url('/dashboard/' . $menu_item[1]) }}">
-                                {{ $menu_item[0] }}
+                            <a class="nav-link {{ $current_page == $menu_item['model'] ? 'active' : '' }}" href="{{ url('/dashboard/' . $menu_item['type'] . '/' . $menu_item['model']) }}">
+                                {{ $menu_item['title'] }}
                             </a>
                         </li>
                     @endif

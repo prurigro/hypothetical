@@ -10,7 +10,21 @@ class DashboardMenu
      * @return array
      */
     public static $menu = [
-        [ 'Contact', 'contact' ],
-        [ 'Subscriptions', 'subscriptions' ]
+        [
+            'title' => 'Submissions',
+
+            'submenu' => [
+                [
+                    'title' => 'Contact',
+                    'type' => 'view',
+                    'model' => 'contact'
+                ],
+                [
+                    'title' => 'Subscriptions',
+                    'type' => 'view',
+                    'model' => 'subscriptions'
+                ]
+            ]
+        ]
     ];
 }
