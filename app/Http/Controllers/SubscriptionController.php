@@ -16,7 +16,7 @@ class SubscriptionController extends Controller {
 
         $name    = $request['name'];
         $fname   = preg_replace('/ .*$/', '', $name);
-        $lname   = preg_match('/. ./', $name) === 1 ? preg_replace('/^[^ ][^ ]* /', '', $name) : '';
+        $lname   = preg_match('/. ./', $name) == 1 ? preg_replace('/^[^ ][^ ]* /', '', $name) : '';
         $email   = $request['email'];
 
         if (env('MAILCHIMP_APIKEY') != null && env('MAILCHIMP_LISTID') != null) {
