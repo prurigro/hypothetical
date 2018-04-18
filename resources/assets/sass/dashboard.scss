@@ -137,7 +137,7 @@ body {
                 padding-left: 8px;
             }
 
-            &:hover, &:focus, &:active {
+            &.active, &:hover, &:focus, &:active {
                 background-color: fade-out(#000, 0.95);
                 color: $c-text;
             }

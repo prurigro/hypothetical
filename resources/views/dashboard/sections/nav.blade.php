@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg">
-    @set('current_page', preg_replace([ '/^.*\/dashboard\/?/', '/\/.*/' ], [ '', '' ], Request::url()))
+    @set('current_page', preg_replace([ '/^.*\//', '/\/.*/' ], [ '', '' ], Request::url()))
 
     <a class="navbar-brand" href="{{ url('/dashboard') }}">
         {{ env('APP_NAME') }} Dashboard
@@ -33,7 +33,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-dropdown-{{ $dropdown_id }}">
                                 @foreach($menu_item['submenu'] as $submenu_item)
-                                    <a class="dropdown-item" href="{{ url('/dashboard/' . $submenu_item['type'] . '/' . $submenu_item['model']) }}">{{ $submenu_item['title'] }}</a>
+                                    <a class="dropdown-item {{ $current_page == $submenu_item['model'] ? 'active' : '' }}" href="{{ url('/dashboard/' . $submenu_item['type'] . '/' . $submenu_item['model']) }}">{{ $submenu_item['title'] }}</a>
                                 @endforeach
                             </div>
                         </li>
