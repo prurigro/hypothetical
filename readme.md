@@ -54,283 +54,96 @@ Other information about database interaction, routing, controllers, etc can be v
 
 ## Dashboard
 
-Unless otherwise stated all examples in this section are to be added to `app/Http/Controllers/DashboardController.php`.
+### Updating the dashboard menu
 
-### Adding a Viewable Model to the Dashboard
+The dashboard menu can be edited by changing the `$menu` array in `app/Models/Dashboard.php`.
 
-#### Viewable List of Rows
+The each item in the array is itself an array, containing either a menu item or a dropdown of menu items.
 
-First add a function to generate the page:
+Dropdowns should contain the following keys:
 
-```php
-    public function getContact()
-    {
-        return view('dashboard.view', [
-            'heading' => 'Contact Form Submissions',
-            'model'   => 'contact',
-            'rows'    => Contact::getContactSubmissions(),
-            'columns' => Contact::$dashboard_columns
-        ]);
-    }
-```
+* `title`: The text that appears on the dropdown item
+* `submenu`: This is an array of menu items.
 
-* `heading`: The title that will appear for this page
-* `model`: The model that will be accessed on this page
-* `rows`: A function returning an array containing the data to be shown on this page
-* `columns`: Expects a variable called `$dashboard_columns` in the respective model that contains an array:
+Menu items should contain the following keys:
 
-```php
-    public static $dashboard_columns = [
-        [ 'Date', 'created_at' ],
-        [ 'Name', 'name' ],
-        [ 'Email', 'email' ],
-        [ 'Message', 'message' ]
-    ];
-```
+* `title`: The text that appears on the menu item
+* `type`: The dashboard type (this can be `view` for a viewable table or `edit` for an editable list)
+* `model`: The lowercase name of the database model
 
-### Adding an Editable Model to the Dashboard
+### Adding a new model to the dashboard
 
-#### Editable List of Rows
+Create a model that extends the `DashboardModel` class and override variables that don't fit the defaults.
 
-##### Editable List for Unsortable Model
+#### DashboardModel variables
 
-```php
-    public function getShows()
-    {
-        return view('dashboard.edit-list', [
-            'heading' => 'Shows',
-            'model'   => 'shows',
-            'path'    => 'shows-page',
-            'rows'    => Shows::getShowsList(),
-            'column'  => 'title',
-            'button'  => [ 'Email Show', 'Are you sure you want to send an email?', 'Email successfully sent', 'Failed to send email', '/email-show' ],
-            'sortcol' => false,
-            'delete'  => true,
-            'create'  => true,
-            'export'  => true,
-            'filter'  => true
-        ]);
-    }
-```
+* `$dashboard_type`: The dashboard type (this can be `view` for a viewable table or `edit` for an editable list)
+* `$dashboard_heading`: This sets the heading that appears on the dashboard page; not setting this will use the model name
+* `$export`: This enables a button that allows the table to be exported as a spreadsheet
 
-##### Editable List for Sortable Model
+##### Edit variables
 
-**NOTE**: Sortable models must have an entry configured in the `postReorder` function (details below)
+These are variables that only function when the `$dashboard_type` variable is set to `edit`.
 
-```php
-    public function getNews()
-    {
-        return view('dashboard.edit-list', [
-            'heading' => 'News',
-            'model'   => 'news',
-            'rows'    => News::getNewsList(),
-            'column'  => 'title',
-            'button'  => [ 'Email Show', 'Are you sure you want to send an email?', 'Email successfully sent', 'Failed to send email', '/email-show' ],
-            'sortcol' => 'order',
-            'delete'  => false,
-            'create'  => true,
-            'export'  => true,
-            'filter'  => true
-        ]);
-    }
-```
+* `$create`: A boolean determining whether to enable a button that allows new records to be created
+* `$delete`: A boolean determining whether to enable a button that allows records to be deleted
+* `$filter`: A boolean determining whether to enable an input field that allows records to be searched
+* `$dashboard_help_text`: An html string that will add a help box to the top of the edit-item page
+* `$dashboard_display`: An array to configure what column data to show on each item in the edit-list
+* `$dashboard_reorder`: A boolean determining whether to render drag handles to reorder the items in the list
+* `$dashboard_sort_column`: A string containing the column used to sort the list (this should be an `integer` when `$dashboard_reorder` is true)
+* `$dashboard_sort_direction`: When `$dashboard_reorder` is false this determines the sort direction (this can be `desc` for descending or `asc` ascending)
+* `$dashboard_button`: An array containing the following items in this order:
+    * The title
+    * Confirmation text asking the user to confirm
+    * A "success" message to display when the response is `success`
+    * A "failure" message to display when the response is not `success`
+    * The URL to send the POST request to with the respective `id` in the request variable
 
-* `heading`: The title that will appear for this page
-* `model`: The model that will be accessed on this page
-* `path`: (optional) This can be used to set a different URL path than the default of the model name
-* `rows`: A function returning an array containing the data to be shown on this page
-* `column`: The column name in the array that contains the data to display in each row (an array can be used to specify multiple columns)
-* `button`: Add a button with a title, confirmation, success and error messages, and a post request path that takes an id and returns `success` on success
-* `sortcol`: The name of the column containing the sort order or `false` to disable
-* `delete`: A `delete` button will appear in the list if this is set to `true`
-* `create`: A `new` button will appear in the heading if this is set to `true`
-* `export`: An `export` button will appear in the heading if this is set to `true`
-* `filter`: An input box will appear below the heading that can filter rows by input if this is set to `true`
+##### Configuring the columns
 
-#### Editable Item
+All `DashboardModel` models require a `$dashboard_columns` array that declares which columns to show and how to treat them.
 
-This function should be named the same as the one above except with `Edit` at the end
+All models use the following attributes:
 
-##### Editable Item for Unsortable Model
+* `name`: The name of the model
+* `title`: (optional) The title that should be associated with the model; when unset this becomes the model name with its first letter capitalized
 
-```php
-    public function getShowsEdit($id = 'new')
-    {
-        if ($id != 'new') {
-            if (Shows::where('id', $id)->exists()) {
-                $item = Shows::where('id', $id)->first();
-            } else {
-                return view('errors.no-such-record');
-            }
-        } else {
-            $item = null;
-        }
+Models with their `$dashboard_type` set to `edit` also use:
 
-        return view('dashboard.edit-item', [
-            'heading' => 'Shows',
-            'model'   => 'shows',
-            'id'      => $id,
-            'item'    => $item,
-            'help_text' => '<strong>NOTE:</strong> This is some help text for the current page',
-            'columns' => $dashboard_columns
-        ]);
-    }
-```
+* `type`: The column type which can be any of the following:
+    * `text`: Text input field for text data
+    * `mkd`: Markdown editor for text data containing markdown
+    * `date`: Date and time selection tool for date/time data
+    * `select`: Text input via option select with possible options in an `options` array
+    * `hidden`: Fields that will contain values to pass to the update function but won't appear on the page (this must be used for the sort column)
+    * `image`: Fields that contain image uploads
+    * `file`: Fields that contains file uploads
+    * `display`: Displayed information that can't be edited
+    * `user`: This should point to a foreign key that references the id on the users table; setting this will bind items to the user that created them
+* `name`: (required by `file` and `image`) Used along with the record id to determine the filename
+* `delete`: (optional for `file` and `image`) Enables a delete button for the upload when set to true
+* `ext`: (required by `file`) Configures the file extension of the upload
 
-##### Editable Item for Sortable Model
-
-```php
-    public function getNewsEdit($id = 'new')
-    {
-        if ($id != 'new') {
-            if (News::where('id', $id)->exists()) {
-                $item = News::where('id', $id)->first();
-            } else {
-                return view('errors.no-such-record');
-            }
-        } else {
-            $item = new News();
-            $item['order'] = News::count();
-        }
-
-        return view('dashboard.edit-item', [
-            'heading' => 'News',
-            'model'   => 'news',
-            'id'      => $id,
-            'item'    => $item,
-            'columns' => News::$dashboard_columns
-        ]);
-    }
-```
-
-* `heading`: The title that will appear for this page
-* `model`: The model that will be accessed on this page
-* `id`: Always set this to `$id`
-* `item`: Always set this to `$item`
-* `help_text`: An optional value that will add a box containing help text above the form if set
-* `columns`: Expects a variable called `$dashboard_columns` in the respective model that contains an array:
-  * `name` is the name of the column to be edited
-  * `type` is the type of column (details below)
-  * `label` is an optional value that overrides the visible column name
+An example of the `$dashboard_columns` array in a model with its `$dashboard_type` set to `view`:
 
 ```php
     public static $dashboard_columns = [
-        [ 'name' => 'title',  'type' => 'text', 'label' => 'The Title' ],
-        [ 'name' => 'iframe', 'type' => 'text' ],
-        [ 'name' => 'halign', 'type' => 'select', 'options' => [ 'left', 'center', 'right' ] ],
-        [ 'name' => 'story',  'type' => 'mkd' ],
-        [ 'label' => 'Header Image', 'name' => 'headerimage', 'type' => 'image' ],
-        [ 'name' => 'order',  'type' => 'hidden' ],
-        [ 'label' => 'PDF File', 'name' => 'pdf', 'type' => 'file', 'ext' => 'pdf' ]
+        [ 'title' => 'Date', 'name' => 'created_at' ],
+        [ 'name' => 'email' ],
+        [ 'name' => 'name' ]
     ];
 ```
 
-###### Editable Column Types
-
-The following is a list of possible `types` in the `columns` array for Editable Items:
-
-* `text`: Text input field for text data
-* `mkd`: Markdown editor for text data containing markdown
-* `date`: Date and time selection tool for date/time data
-* `select`: Text input via option select with possible options in an `options` array
-* `hidden`: Fields that will contain values to pass to the update function but won't appear on the page (this must be used for the sort column)
-* `image`: Fields that contain image uploads
-  * `name`: not part of the database and is instead used in the filename
-  * `delete`: (optional) if true then uploaded images can be deleted
-* `file`: Fields that contains file uploads
-  * `name`: not part of the database and is instead used in the filename
-  * `ext` required key containing the file extension
-  * `delete`: (optional) if true then uploaded files can be deleted
-* `display`: Displayed information that can't be edited
-
-#### Edit Item Functionality
-
-Editable models must have an entry in the switch statement of the `postEdit` function to make create and edit functionality work:
+An example of the `$dashboard_columns` array in a model with its `$dashboard_type` set to `edit`:
 
 ```php
-    switch ($request['model']) {
-        case 'shows':
-            $item = $id == 'new' ? new Shows : Shows::find($id);
-            break;
-        case 'news':
-            $item = $id == 'new' ? new News : News::find($id);
-            break;
-        default:
-            return 'model-access-fail';
-    }
-```
-
-#### Additional Requirement for Sortable Models
-
-Sortable models must have an entry in the switch statement of the `postReorder` function to make sorting functionality work:
-
-```php
-    switch ($request['model']) {
-        case 'news':
-            $items = new News();
-            break;
-        default:
-            return 'model-access-fail';
-    }
-```
-
-#### Additional Requirements for Image Upload
-
-If the value of `imgup` has been set to `true`, ensure `public/uploads/model_name` exists (where `model_name` is the name of the given model) and contains a `.gitkeep` that exists in version control.
-
-By default, uploaded images are saved in JPEG format with the value of the `id` column of the respective row as its name and `.jpg` as its file extension.
-
-When a row is deleted, its respective image will be deleted as well if it exists.
-
-### Adding to the Dashboard Menu
-
-Edit the `$menu` array in `app/Models/DashboardMenu.php` where the first column of each item is the title and the second is either a path, or an array of submenu items.
-
-```php
-    public static $menu = [
-        [ 'Contact', 'contact' ],
-        [ 'Subscriptions', 'subscriptions' ],
-
-        [
-            'Projects', [
-                [ 'Residential', 'projects-residential' ],
-                [ 'Commercial', 'projects-commercial' ]
-            ]
-        ]
+    public static $dashboard_columns = [
+        [ 'name' => 'user_id', 'type' => 'user' ],
+        [ 'name' => 'created_at', 'title' => 'Date', 'type' => 'display' ],
+        [ 'name' => 'title',  'type' => 'text' ],
+        [ 'name' => 'body',  'type' => 'mkd' ],
+        [ 'name' => 'tags', 'type' => 'text' ],
+        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true ]
     ];
 ```
-
-#### Additional Requirement for Delete Functionality
-
-Editable models with `delete` set to `true` must have an entry in the switch statement of the `deleteDelete` function to make deletion functionality work:
-
-```php
-    switch ($request['model']) {
-        case 'shows':
-            $items = new Shows();
-            break;
-        case 'news':
-            $items = new News();
-            break;
-        default:
-            return 'model-access-fail';
-    }
-```
-
-#### Additional Requirement for Export Functionality
-
-Viewable models and editable models with `export` set to `true` must have an entry in the switch statement of the `getExport` function to make the export button work:
-
-```php
-    switch ($model) {
-        case 'contact':
-            $headings = [ 'Date', 'Name', 'Email', 'Message' ];
-            $items = Contact::select('created_at', 'name', 'email', 'message')->get()->toArray();
-            break;
-        default:
-            abort(404);
-    }
-```
-
-* `$headings`: The visible column names in the same order as the array containing the items to be exported
-* `$items`: A function returning an array containing the data to be exported

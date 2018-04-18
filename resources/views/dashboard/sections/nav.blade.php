@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg">
     @set('current_page', preg_replace([ '/^.*\/dashboard\/?/', '/\/.*/' ], [ '', '' ], Request::url()))
 
     <a class="navbar-brand" href="{{ url('/dashboard') }}">
@@ -6,7 +6,11 @@
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dashboard-navbar" aria-controls="dashboard-navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon">
+            <span class="navbar-toggler-icon-bar"></span>
+            <span class="navbar-toggler-icon-bar"></span>
+            <span class="navbar-toggler-icon-bar"></span>
+        </span>
     </button>
 
     <div id="dashboard-navbar" class="collapse navbar-collapse">
@@ -18,14 +22,16 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">Register</a></li>
                 @endif
             @else
-                @foreach(App\Models\DashboardMenu::$menu as $menu_item)
+                @foreach(App\Models\Dashboard::$menu as $menu_item)
                     @if(array_key_exists('submenu', $menu_item))
-                        <li class="nav-item dropdown">
-                            <a id="menu-dropdown" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ $menu_item['title'] }} <span class="caret"></span>
-                            </a>
+                        @set('dropdown_id', preg_replace([ '/\ \ */', '/[^a-z\-]/' ], [ '-', '' ], strtolower($menu_item['title'])))
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-dropdown">
+                        <li class="nav-item dropdown">
+                            <span id="menu-dropdown-{{ $dropdown_id }}" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ $menu_item['title'] }} <span class="caret"></span>
+                            </span>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-dropdown-{{ $dropdown_id }}">
                                 @foreach($menu_item['submenu'] as $submenu_item)
                                     <a class="dropdown-item" href="{{ url('/dashboard/' . $submenu_item['type'] . '/' . $submenu_item['model']) }}">{{ $submenu_item['title'] }}</a>
                                 @endforeach

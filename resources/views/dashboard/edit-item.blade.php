@@ -1,7 +1,7 @@
 @extends('dashboard.core')
 
 @section('dashboard-body')
-    @if(!empty($help_text))
+    @if($help_text != '')
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form id="edit-item" class="edit-item" data-id="{{ $id }}" data-model="{{ $model }}" data-path="{{ isset($path) ? $path : $model }}">
+    <form id="edit-item" class="edit-item" data-id="{{ $id }}" data-model="{{ $model }}">
         <input type="hidden" id="token" value="{{ csrf_token() }}" />
 
         <div class="container-fluid">
@@ -23,9 +23,11 @@
 
                     @if($column['type'] == 'hidden')
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
+                    @elseif($column['type'] == 'user')
+                        <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ Auth::id() }}" />
                     @elseif($column['type'] != 'display' || $id != 'new')
                         <div class="col-12 col-md-2">
-                            <label for="{{ $column['name'] }}">{{ empty($column['label']) ? ucfirst($column['name']) : $column['label'] }}:</label>
+                            <label for="{{ $column['name'] }}">{{ array_key_exists('title', $column) ? $column['title'] : ucfirst($column['name']) }}:</label>
                         </div>
 
                         <div class="col-12 col-md-10">
@@ -46,13 +48,12 @@
                                     @endforeach
                                 </select>
                             @elseif($column['type'] == 'image')
-                                <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
-
                                 @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . '.jpg')
+                                <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
                                     <div id="current-image-{{ $column['name'] }}">
-                                        <img class="current-image" src="{{ $current_image }}" />
+                                        <img class="current-image" src="{{ $current_image }}?version={{ env('CACHE_BUST') }}" />
 
                                         @if(array_key_exists('delete', $column) && $column['delete'])
                                             <span class="edit-button delete image" data-name="{{ $column['name'] }}">

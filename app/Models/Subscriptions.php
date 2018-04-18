@@ -4,33 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Subscriptions extends Model
+class Subscriptions extends DashboardModel
 {
-    /**
-     * The subscriptions table
-     *
-     * @var string
-     */
     protected $table = 'subscriptions';
 
-    /**
-     * Dashboard columns
-     *
-     * @var array
-     */
-    public static $dashboard_columns = [
-        [ 'Date', 'created_at' ],
-        [ 'Email', 'email' ],
-        [ 'Name', 'name' ]
-    ];
+    public static $export = true;
 
-    /**
-     * Returns the list of all subscriptions
-     *
-     * @return array
-     */
-    public static function getSubscriptions()
-    {
-        return self::orderBy('created_at', 'desc')->get();
-    }
+    public static $dashboard_columns = [
+        [ 'title' => 'Date', 'name' => 'created_at' ],
+        [ 'name' => 'email' ],
+        [ 'name' => 'name' ]
+    ];
 }

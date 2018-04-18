@@ -2,7 +2,7 @@
 
 @section('dashboard-body')
     <div class="list-group menu-list">
-        @foreach(App\Models\DashboardMenu::$menu as $menu_item)
+        @foreach(App\Models\Dashboard::$menu as $menu_item)
             @if(array_key_exists('submenu', $menu_item))
                 @foreach($menu_item['submenu'] as $submenu_item)
                     <li class="list-group-item">

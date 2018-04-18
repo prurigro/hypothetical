@@ -11,8 +11,8 @@
         <table class="table">
             <thead>
                 <tr class="heading-row">
-                    @foreach($columns as $column)
-                        <th>{{ $column[0] }}</th>
+                    @foreach($columns as $index => $column)
+                        <th>{{ $column_headings[$index] }}</th>
                     @endforeach
                 </tr>
             </thead>
@@ -20,8 +20,8 @@
             <tbody>
                 @foreach($rows as $row)
                     <tr>
-                        @foreach($columns as $column)
-                            <td><strong class="mobile-heading">{{ $column[0] }}: </strong>{{ $row[$column[1]] }}</td>
+                        @foreach($columns as $index => $column)
+                            <td><strong class="mobile-heading">{{ $column_headings[$index] }}: </strong>{{ $row[$column['name']] }}</td>
                         @endforeach
                     </tr>
                 @endforeach

@@ -18,7 +18,7 @@
             <input id="filter-input" class="search" placeholder="Filter" />
         @endif
 
-        <ul id="edit-list" class="list-group edit-list list" data-model="{{ $model }}" data-path="{{ isset($path) ? $path : $model }}" {{ $sortcol != false ? "data-sort=$sortcol" : '' }}>
+        <ul id="edit-list" class="list-group edit-list list" data-model="{{ $model }}" {{ $sortcol != false ? "data-sort=$sortcol" : '' }}>
             @foreach($rows as $row)
                 <li class="list-group-item {{ $sortcol != false ? 'sortable' : '' }}" data-id="{{ $row['id'] }}">
                     <div class="title-column">
@@ -32,23 +32,19 @@
                             </div>
                         @endif
 
-                        @if(is_array($column))
-                            @foreach($column as $col)
-                                @if($row[$col] != '')
-                                    <div class="column">{{ $row[$col] }}</div>
+                        @foreach($display as $display_column)
+                            @if($row[$display_column] != '')
+                                <div class="column">{{ $row[$display_column] }}</div>
 
-                                    @if(!$loop->last)
-                                        <div class="spacer">|</div>
-                                    @endif
+                                @if(!$loop->last)
+                                    <div class="spacer">|</div>
                                 @endif
-                            @endforeach
-                        @else
-                            {{ $row[$column] }}
-                        @endif
+                            @endif
+                        @endforeach
                     </div>
 
                     <div class="button-column">
-                        @if(isset($button) && is_array($button))
+                        @if(!empty($button))
                             <button type="button" class="action-button btn btn-secondary" data-confirmation="{{ $button[1] }}" data-success="{{ $button[2] }}" data-error="{{ $button[3] }}" data-url="{{ $button[4] }}">{{ $button[0] }}</button>
                         @endif
 

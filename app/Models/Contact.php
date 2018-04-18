@@ -4,34 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Contact extends DashboardModel
 {
-    /**
-     * The contact table
-     *
-     * @var string
-     */
     protected $table = 'contact';
 
-    /**
-     * Dashboard columns
-     *
-     * @var array
-     */
-    public static $dashboard_columns = [
-        [ 'Date', 'created_at' ],
-        [ 'Name', 'name' ],
-        [ 'Email', 'email' ],
-        [ 'Message', 'message' ]
-    ];
+    public static $dashboard_heading = 'Contact Form Submissions';
 
-    /**
-     * Returns the list of all contact submissions
-     *
-     * @return array
-     */
-    public static function getContactSubmissions()
-    {
-        return self::orderBy('created_at', 'desc')->get();
-    }
+    public static $export = true;
+
+    public static $dashboard_columns = [
+        [ 'name' => 'created_at', 'title' => 'Date' ],
+        [ 'name' => 'name' ],
+        [ 'name' => 'email' ],
+        [ 'name' => 'message' ]
+    ];
 }

@@ -113,15 +113,14 @@ function editListInit() {
     const editList = document.getElementById("edit-list"),
         $editList = $(editList),
         $token = $("#token"),
-        model = $editList.data("model"),
-        path = $editList.data("path");
+        model = $editList.data("model");
 
     // initialize new button functionality
     const newButtonInit = function() {
         const $newButton = $(".btn.new-button");
 
         $newButton.on("click", function() {
-            window.location.href = "/dashboard/" + path + "-edit/new";
+            window.location.href = "/dashboard/edit-item/" + model + "/new";
         });
     };
 
@@ -135,7 +134,7 @@ function editListInit() {
                 itemId = $listItem.data("id");
 
             // go to the edit page
-            window.location.href = "/dashboard/" + path + "-edit/" + itemId;
+            window.location.href = "/dashboard/edit-item/" + model + "/" + itemId;
         });
     };
 
@@ -281,7 +280,6 @@ function editItemInit() {
         $spinner = $("#loading-modal"),
         fadeTime = 250,
         model = $editItem.data("model"),
-        path = $editItem.data("path"),
         id = $editItem.data("id"),
         operation = id === "new" ? "create" : "update";
 
@@ -363,7 +361,7 @@ function editItemInit() {
         // functionality to run on success
         const returnSuccess = function() {
             hideLoadingModal();
-            window.location.href = "/dashboard/" + path;
+            window.location.href = "/dashboard/edit/" + model;
         };
 
         // add the file from the file upload box for file-upload class elements
@@ -582,10 +580,10 @@ function editItemInit() {
         if (!submitting) {
             if (changes) {
                 askConfirmation("Cancel changes and return to the list?", function() {
-                    window.location.href = "/dashboard/" + path;
+                    window.location.href = "/dashboard/edit/" + model;
                 });
             } else {
-                window.location.href = "/dashboard/" + path;
+                window.location.href = "/dashboard/edit/" + model;
             }
         }
     });
@@ -604,7 +602,7 @@ function editItemInit() {
             // submit the update
             $.ajax({
                 type: "POST",
-                url: "/dashboard/edit",
+                url: "/dashboard/update",
                 data: formData
             }).always(function(response) {
                 if (/^id:[0-9][0-9]*$/.test(response)) {
