@@ -57,11 +57,11 @@ const jsDashboard = [
 
 // Javascript libraries for the dashboard
 const jsDashboardLibs = [
-    "bower_components/jquery/dist/jquery.js",
+    "node_modules/jquery/dist/jquery.js",
     "node_modules/bootstrap/dist/js/bootstrap.js",
+    "node_modules/pickadate/lib/picker.js",
+    "node_modules/pickadate/lib/picker.date.js",
     "bower_components/Sortable/Sortable.js",
-    "bower_components/pickadate/lib/picker.js",
-    "bower_components/pickadate/lib/picker.date.js",
     "bower_components/list.js/dist/list.js",
     "bower_components/simplemde/dist/simplemde.min.js"
 ];
