@@ -11,9 +11,7 @@ use App\Models\Dashboard;
 class DashboardController extends Controller {
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Create a new controller instance
      */
     public function __construct()
     {
@@ -21,15 +19,21 @@ class DashboardController extends Controller {
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return Response
+     * Show the application dashboard
      */
-    public function index()
+    public function getIndex()
     {
         return view('dashboard.home', [
             'heading' => 'Dashboard Home'
         ]);
+    }
+
+    /**
+     * Show the dashboard credits
+     */
+    public function getCredits()
+    {
+        return view('dashboard.credits');
     }
 
     /**

@@ -7,5 +7,5 @@
 @endsection
 
 @section('page-top')
-    @include('dashboard.sections.nav')
+    @include('dashboard.nav')
 @endsection

@@ -120,7 +120,7 @@ function editListInit() {
         const $newButton = $(".btn.new-button");
 
         $newButton.on("click", function() {
-            window.location.href = "/dashboard/edit-item/" + model + "/new";
+            window.location.href = "/dashboard/edit/" + model + "/new";
         });
     };
 
@@ -134,7 +134,7 @@ function editListInit() {
                 itemId = $listItem.data("id");
 
             // go to the edit page
-            window.location.href = "/dashboard/edit-item/" + model + "/" + itemId;
+            window.location.href = "/dashboard/edit/" + model + "/" + itemId;
         });
     };
 

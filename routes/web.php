@@ -29,10 +29,11 @@ Route::get('/logout', 'Auth\LoginController@logout');
 */
 
 Route::group([ 'prefix' => 'dashboard' ], function() {
-    Route::get('/', 'DashboardController@index');
+    Route::get('/', 'DashboardController@getIndex');
+    Route::get('/credits', 'DashboardController@getCredits');
     Route::get('/view/{model}', 'DashboardController@getView');
     Route::get('/edit/{model}', 'DashboardController@getEditList');
-    Route::get('/edit-item/{model}/{id}', 'DashboardController@getEditItem');
+    Route::get('/edit/{model}/{id}', 'DashboardController@getEditItem');
     Route::get('/export/{model}', 'DashboardController@getExport');
     Route::post('/image-upload', 'DashboardController@postImageUpload');
     Route::post('/file-upload', 'DashboardController@postFileUpload');

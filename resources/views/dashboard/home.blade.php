@@ -10,7 +10,7 @@
 
                         <a
                             class="list-group-item-link"
-                            href="{{ url('/dashboard/' . $submenu_item['type'] . '/' . $submenu_item['model']) }}">
+                            href="/dashboard/{{ $submenu_item['type'] }}/{{ $submenu_item['model'] }}">
                         </a>
                     </li>
                 @endforeach
@@ -20,7 +20,7 @@
 
                     <a
                         class="list-group-item-link"
-                        href="{{ url('/dashboard/' . $menu_item['type'] . '/' . $menu_item['model']) }}">
+                        href="/dashboard/{{ $menu_item['type'] }}/{{ $menu_item['model'] }}">
                     </a>
                 </li>
             @endif

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg">
     @set('current_page', preg_replace([ '/^.*\//', '/\/.*/' ], [ '', '' ], Request::url()))
 
-    <a class="navbar-brand" href="{{ url('/dashboard') }}">
+    <a class="navbar-brand" href="/dashboard">
         {{ env('APP_NAME') }} Dashboard
     </a>
 
@@ -16,10 +16,10 @@
     <div id="dashboard-navbar" class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
             @if (Auth::guest())
-                <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Login</a></li>
+                <li class="nav-item"><a class="nav-link {{ $current_page == 'login' ? 'active' : '' }}" href="/login">Login</a></li>
 
                 @if(env('REGISTRATION', false))
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">Register</a></li>
+                    <li class="nav-item"><a class="nav-link {{ $current_page == 'register' ? 'active' : '' }}" href="/register">Register</a></li>
                 @endif
             @else
                 @foreach(App\Models\Dashboard::$menu as $menu_item)
@@ -33,13 +33,13 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-dropdown-{{ $dropdown_id }}">
                                 @foreach($menu_item['submenu'] as $submenu_item)
-                                    <a class="dropdown-item {{ $current_page == $submenu_item['model'] ? 'active' : '' }}" href="{{ url('/dashboard/' . $submenu_item['type'] . '/' . $submenu_item['model']) }}">{{ $submenu_item['title'] }}</a>
+                                    <a class="dropdown-item {{ $current_page == $submenu_item['model'] ? 'active' : '' }}" href="/dashboard/{{ $submenu_item['type'] }}/{{ $submenu_item['model'] }}">{{ $submenu_item['title'] }}</a>
                                 @endforeach
                             </div>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link {{ $current_page == $menu_item['model'] ? 'active' : '' }}" href="{{ url('/dashboard/' . $menu_item['type'] . '/' . $menu_item['model']) }}">
+                            <a class="nav-link {{ $current_page == $menu_item['model'] ? 'active' : '' }}" href="/dashboard/{{ $menu_item['type'] }}/{{ $menu_item['model'] }}">
                                 {{ $menu_item['title'] }}
                             </a>
                         </li>
@@ -52,7 +52,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
-                        <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
+                        <a class="dropdown-item {{ $current_page == 'credits' ? 'active' : '' }}" href="/dashboard/credits">Credits</a>
+                        <a class="dropdown-item" href="/logout">Logout</a>
                     </div>
                 </li>
             @endif
