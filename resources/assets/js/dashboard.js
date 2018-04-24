@@ -361,7 +361,7 @@ function editItemInit() {
         // functionality to run on success
         const returnSuccess = function() {
             hideLoadingModal();
-            window.location.href = "/dashboard/edit/" + model;
+            window.location.href = `/dashboard/edit/${model}/${row_id}`;
         };
 
         // add the file from the file upload box for file-upload class elements
