@@ -80,16 +80,16 @@ function handleError(err) {
 
 // Process sass
 function processSass(filename) {
-    const css = gulp.src("resources/assets/sass/" + filename + ".scss")
+    const css = gulp.src(`resources/assets/sass/${filename}.scss`)
         .pipe(plumber(handleError))
         .pipe(sassGlob())
         .pipe(sass({ outputStyle: sassOutputStyle, includePaths: sassPaths }))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
-        .pipe(concat(filename + ".css"))
+        .pipe(concat(`${filename}.css`))
         .pipe(gulp.dest("public/css/"));
 
     if (!isProduction) {
-        css.pipe(browserSync.stream({ match: "**/" + filename + ".css" }));
+        css.pipe(browserSync.stream({ match: `**/${filename}.css` }));
     }
 
     return css;
@@ -104,7 +104,7 @@ function processVue(ouputFilename, inputFile) {
         .transform(vueify)
         .bundle()
         .on("error", handleError)
-        .pipe(source(ouputFilename + ".js"))
+        .pipe(source(`${ouputFilename}.js`))
         .pipe(buffer());
 
     if (isProduction) {
@@ -118,7 +118,7 @@ function processVue(ouputFilename, inputFile) {
 function processJavaScript(ouputFilename, inputFiles, es6) {
     const javascript = gulp.src(inputFiles)
         .pipe(plumber(handleError))
-        .pipe(concat(ouputFilename + ".js"));
+        .pipe(concat(`${ouputFilename}.js`));
 
     if (es6) {
         javascript.pipe(babel());
