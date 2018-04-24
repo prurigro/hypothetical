@@ -22,7 +22,7 @@
                     <li class="nav-item"><a class="nav-link {{ $current_page == 'register' ? 'active' : '' }}" href="/register">Register</a></li>
                 @endif
             @else
-                @foreach(App\Models\Dashboard::$menu as $menu_item)
+                @foreach(App\Dashboard::$menu as $menu_item)
                     @if(array_key_exists('submenu', $menu_item))
                         @set('dropdown_id', preg_replace([ '/\ \ */', '/[^a-z\-]/' ], [ '-', '' ], strtolower($menu_item['title'])))
 

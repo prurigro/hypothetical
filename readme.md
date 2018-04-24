@@ -56,7 +56,7 @@ Other information about database interaction, routing, controllers, etc can be v
 
 ### Updating the dashboard menu
 
-The dashboard menu can be edited by changing the `$menu` array in `app/Models/Dashboard.php`.
+The dashboard menu can be edited by changing the `$menu` array in `app/Dashboard.php`.
 
 The each item in the array is itself an array, containing either a menu item or a dropdown of menu items.
 
