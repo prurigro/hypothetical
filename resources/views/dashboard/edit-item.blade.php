@@ -53,7 +53,7 @@
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
                                     <div id="current-image-{{ $column['name'] }}">
-                                        <img class="current-image" src="{{ $current_image }}?version={{ env('CACHE_BUST') }}" />
+                                        <img class="current-image" src="{{ $current_image }}?version={{ $item->timestamp() }}" />
 
                                         @if(array_key_exists('delete', $column) && $column['delete'])
                                             <span class="edit-button delete image" data-name="{{ $column['name'] }}">
@@ -63,13 +63,12 @@
                                     </div>
                                 @endif
                             @elseif($column['type'] == 'file')
-                                <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}" />
-
                                 @set('current_file', "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'])
+                                <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}" />
 
                                 @if(file_exists(base_path() . '/public' . $current_file))
                                     <div id="current-file-{{ $column['name'] }}">
-                                        <a class="edit-button view" href="{{ $current_file }}" target="_blank">View {{ strtoupper($column['ext']) }}</a>
+                                        <a class="edit-button view" href="{{ $current_file }}?version={{ $item->timestamp() }}" target="_blank">View {{ strtoupper($column['ext']) }}</a>
 
                                         @if(array_key_exists('delete', $column) && $column['delete'])
                                             <span class="edit-button delete file" data-name="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}">

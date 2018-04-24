@@ -168,4 +168,13 @@ class DashboardModel extends Model
 
         return $user_check;
     }
+
+    /**
+     * Returns the Unix timestamp of the latest update
+     *
+     * @return number
+     */
+    public function timestamp() {
+        return strtotime($this->updated_at);
+    }
 }
