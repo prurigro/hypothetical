@@ -36,7 +36,9 @@
                             @elseif($column['type'] == 'date')
                                 <input class="date-picker" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value == '' ? date('Y-m-d', time()) : preg_replace('/:[0-9][0-9]$/', '', $value) }}" />
                             @elseif($column['type'] == 'mkd')
-                                <textarea class="mkd-editor" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}"></textarea>
+                                <div class="mkd-editor-container">
+                                    <textarea class="mkd-editor" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}"></textarea>
+                                </div>
                             @elseif($column['type'] == 'select')
                                 <select class="text-input" name="{{ $column['name'] }}" id="{{ $column['name'] }}">
                                     @foreach($column['options'] as $option)

@@ -609,6 +609,7 @@ body {
 }
 
 .edit-item {
+    $label-height: 30px;
     margin-top: 10px;
 
     .CodeMirror {
@@ -641,12 +642,19 @@ body {
     }
 
     label {
-        height: 32px;
-        line-height: 32px;
+        min-height: $label-height;
+        line-height: $label-height;
+
+        @include media-breakpoint-up(md) {
+            margin-bottom: 0px;
+        }
+    }
+
+    .text-display, .mkd-editor-container, input, select {
+        margin-bottom: 15px;
     }
 
     input {
-        margin-bottom: 15px;
         display: block;
         width: 100%;
 
@@ -655,6 +663,11 @@ body {
             border: 1px solid darken($c-dashboard-light, 10%);
             border-radius: 2px;
             transition: border-color 150ms;
+        }
+
+        &[type="file"] {
+            height: $label-height;
+            font-size: 14px;
         }
 
         &.date-picker {
@@ -718,18 +731,29 @@ body {
     }
 
     .back-button, .submit-button {
-        margin: 25px 15px 15px 15px;
+        margin: 20px 15px 15px 15px;
 
         @include media-breakpoint-down(sm) {
             float: none;
             width: calc(100% - 30px);
 
             &:first-child {
-                margin: 25px 15px 5px 15px;
+                margin-top: 20px;
+                margin-bottom: 5px;
             }
 
             &:last-child {
-                margin: 5px 15px 25px 15px;
+                margin-top: 5px;
+                margin-bottom: 20px;
+            }
+        }
+
+        &.no-horizontal-margins {
+            margin-right: 0px;
+            margin-left: 0px;
+
+            @include media-breakpoint-down(sm) {
+                width: 100%;
             }
         }
     }
