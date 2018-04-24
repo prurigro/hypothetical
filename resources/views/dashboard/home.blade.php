@@ -1,4 +1,6 @@
-@extends('dashboard.core')
+@extends('dashboard.core', [
+    'heading' => 'Dashboard Home'
+])
 
 @section('dashboard-body')
     <div class="list-group menu-list">

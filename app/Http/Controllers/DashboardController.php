@@ -19,17 +19,15 @@ class DashboardController extends Controller {
     }
 
     /**
-     * Show the application dashboard
+     * Dashboard home
      */
     public function getIndex()
     {
-        return view('dashboard.home', [
-            'heading' => 'Dashboard Home'
-        ]);
+        return view('dashboard.home');
     }
 
     /**
-     * Show the dashboard credits
+     * Project credits
      */
     public function getCredits()
     {
@@ -237,11 +235,11 @@ class DashboardController extends Controller {
                 file::makeDirectory($directory, 0755, true, true);
                 $image = Image::make($request->file('file'));
                 $image->save($directory . $request['id'] . '-' . $request['name'] . '.jpg');
+                $item->touch();
+                return 'success';
             } else {
                 return 'file-upload-fail';
             }
-
-            return 'success';
         } else {
             return 'model-access-fail';
         }
@@ -272,11 +270,11 @@ class DashboardController extends Controller {
                 $directory = base_path() . '/public/uploads/' . $request['model'] . '/files/';
                 file::makeDirectory($directory, 0755, true, true);
                 $request->file('file')->move($directory, $request['id'] . '-' . $request['name'] . '.' . $request['ext']);
+                $item->touch();
+                return 'success';
             } else {
                 return 'file-upload-fail';
             }
-
-            return 'success';
         } else {
             return 'model-access-fail';
         }
