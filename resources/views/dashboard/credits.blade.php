@@ -1,35 +1,23 @@
-@extends('templates.dashboard')
+@extends('dashboard.core', [
+    'heading' => 'Credits'
+])
 
-@section('page-content')
-    <div class="container spark-screen">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        Credits
-                    </div>
+@section('dashboard-body')
+    <div class="dashboard-credits">
+        <h2>Authors</h2>
 
-                    <div class="card-body dashboard">
-                        <div class="dashboard-credits">
-                            <h2>Authors</h2>
+        <ul>
+            @foreach(App\Models\Dashboard::$author_credits as $credit)
+                <li><a href="{{ $credit['url'] }}" target="_blank" rel="noreferrer">{{ $credit['name'] }}</a></li>
+            @endforeach
+        </ul>
 
-                            <ul>
-                                @foreach(App\Models\Dashboard::$author_credits as $credit)
-                                    <li><a href="{{ $credit['url'] }}" target="_blank" rel="noreferrer">{{ $credit['name'] }}</a></li>
-                                @endforeach
-                            </ul>
+        <h2>Libraries</h2>
 
-                            <h2>Libraries</h2>
-
-                            <ul>
-                                @foreach(App\Models\Dashboard::$library_credits as $credit)
-                                    <li><a href="{{ $credit['url'] }}" target="_blank" rel="noreferrer">{{ $credit['name'] }}</a></li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <ul>
+            @foreach(App\Models\Dashboard::$library_credits as $credit)
+                <li><a href="{{ $credit['url'] }}" target="_blank" rel="noreferrer">{{ $credit['name'] }}</a></li>
+            @endforeach
+        </ul>
     </div>
 @endsection
