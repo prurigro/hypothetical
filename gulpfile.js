@@ -195,8 +195,8 @@ gulp.task("watch", () => {
     });
 
     gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ], gulp.series(browserSyncReload));
-    gulp.watch([ jsPublic, "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], gulp.series("js-public", browserSyncReload));
-    gulp.watch(jsDashboard, gulp.series("js-dashboard", browserSyncReload));
+    gulp.watch([ "resources/assets/js/**/app.js", "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], gulp.series("js-public", browserSyncReload));
+    gulp.watch("resources/assets/js/**/dashboard.js", gulp.series("js-dashboard", browserSyncReload));
     gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard", "sass-error"));
 });
 
