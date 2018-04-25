@@ -313,7 +313,7 @@ body {
                         display: block;
                         width: 100%;
                         height: 100%;
-                        background-image: url("/img/dashboard/checkmark.svg");
+                        background-image: url("/img/dashboard/icons/checkmark.svg");
                         background-position: center center;
                         background-size: 65% auto;
                         background-repeat: no-repeat;
@@ -856,12 +856,12 @@ body {
             }
 
             .image-upload-button {
-                background-image: url("/img/dashboard/upload.svg");
+                background-image: url("/img/dashboard/icons/upload.svg");
                 transition: background-color 150ms;
             }
 
             .image-delete-button {
-                background-image: url("/img/dashboard/trash-alt.svg");
+                background-image: url("/img/dashboard/icons/trash-alt.svg");
                 opacity: 1;
                 transition: background-color 150ms, opacity 150ms;
 
@@ -966,82 +966,82 @@ body {
     }
 
     &.fa-arrows-alt:after {
-        background-image: url("/img/dashboard/arrows-alt.svg");
+        background-image: url("/img/dashboard/icons/arrows-alt.svg");
     }
 
     &.fa-bold:after {
-        background-image: url("/img/dashboard/bold.svg");
+        background-image: url("/img/dashboard/icons/bold.svg");
     }
 
     &.fa-code:after {
-        background-image: url("/img/dashboard/code.svg");
+        background-image: url("/img/dashboard/icons/code.svg");
     }
 
     &.fa-columns:after {
-        background-image: url("/img/dashboard/columns.svg");
+        background-image: url("/img/dashboard/icons/columns.svg");
     }
 
     &.fa-eraser:after {
-        background-image: url("/img/dashboard/eraser.svg");
+        background-image: url("/img/dashboard/icons/eraser.svg");
     }
 
     &.fa-eye:after {
-        background-image: url("/img/dashboard/eye.svg");
+        background-image: url("/img/dashboard/icons/eye.svg");
     }
 
     &.fa-header:after {
-        background-image: url("/img/dashboard/header.svg");
+        background-image: url("/img/dashboard/icons/header.svg");
     }
 
     &.fa-italic:after {
-        background-image: url("/img/dashboard/italic.svg");
+        background-image: url("/img/dashboard/icons/italic.svg");
     }
 
     &.fa-link:after {
-        background-image: url("/img/dashboard/link.svg");
+        background-image: url("/img/dashboard/icons/link.svg");
     }
 
     &.fa-list-ol:after {
-        background-image: url("/img/dashboard/list-ol.svg");
+        background-image: url("/img/dashboard/icons/list-ol.svg");
     }
 
     &.fa-list-ul:after {
-        background-image: url("/img/dashboard/list-ul.svg");
+        background-image: url("/img/dashboard/icons/list-ul.svg");
     }
 
     &.fa-minus:after {
-        background-image: url("/img/dashboard/minus.svg");
+        background-image: url("/img/dashboard/icons/minus.svg");
     }
 
     &.fa-picture-o:after {
-        background-image: url("/img/dashboard/picture-o.svg");
+        background-image: url("/img/dashboard/icons/picture-o.svg");
     }
 
     &.fa-question-circle:after {
-        background-image: url("/img/dashboard/question-circle.svg");
+        background-image: url("/img/dashboard/icons/question-circle.svg");
     }
 
     &.fa-quote-left:after {
-        background-image: url("/img/dashboard/quote-left.svg");
+        background-image: url("/img/dashboard/icons/quote-left.svg");
     }
 
     &.fa-repeat:after {
-        background-image: url("/img/dashboard/repeat.svg");
+        background-image: url("/img/dashboard/icons/repeat.svg");
     }
 
     &.fa-star:after {
-        background-image: url("/img/dashboard/star.svg");
+        background-image: url("/img/dashboard/icons/star.svg");
     }
 
     &.fa-strikethrough:after {
-        background-image: url("/img/dashboard/strikethrough.svg");
+        background-image: url("/img/dashboard/icons/strikethrough.svg");
     }
 
     &.fa-table:after {
-        background-image: url("/img/dashboard/table.svg");
+        background-image: url("/img/dashboard/icons/table.svg");
     }
 
     &.fa-undo:after {
-        background-image: url("/img/dashboard/undo.svg");
+        background-image: url("/img/dashboard/icons/undo.svg");
     }
 }

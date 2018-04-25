@@ -35,7 +35,7 @@ class User extends Authenticatable
      *
      * @var string
      */
-    public static $default_profile_image = '/img/profile.png';
+    public static $default_profile_image = '/img/dashboard/missing-profile.png';
 
     /**
      * The directory user profile uploads are stored in
