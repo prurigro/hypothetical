@@ -10,7 +10,9 @@
 
 // Colours
 $c-text: #111; // text
+$c-text-inactive: fade-out($c-text, 0.25); // inactive text
 $c-text-light: #fff; // light text
+$c-text-light-inactive: fade-out($c-text-light, 0.25); // inactive light text
 $c-input-bg: #fff; // white
 $c-dashboard-error: #a80000;
 $c-dashboard-dark: #3e6087;
@@ -31,6 +33,16 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
+}
+
+.site-content {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+
+    .page-content {
+        flex-grow: 1;
+    }
 }
 
 .navbar {
@@ -103,7 +115,8 @@ body {
     }
 
     .nav-link {
-        color: fade-out($c-text-light, 0.25);
+        color: $c-text-light-inactive;
+        transition: color 150ms;
 
         &.active {
             color: $c-text-light;
@@ -138,9 +151,37 @@ body {
             }
 
             &.active, &:hover, &:focus, &:active {
-                background-color: fade-out(#000, 0.95);
                 color: $c-text;
             }
+
+            &:hover, &:focus {
+                background-color: fade-out(#000, 0.97);
+            }
+
+            &.active {
+                background-color: fade-out(#000, 0.93);
+            }
+        }
+    }
+}
+
+.dashboard-footer {
+    margin-top: $grid-gutter-width;
+    width: 100%;
+    padding: 8px ($grid-gutter-width / 2);
+    background-color: $c-dashboard-dark;
+    text-align: right;
+
+    a {
+        color: $c-text-light-inactive;
+        transition: color 150ms;
+
+        &:hover, &:focus {
+            text-decoration: none;
+        }
+
+        &.active {
+            color: $c-text-light;
         }
     }
 }
@@ -663,6 +704,10 @@ body {
             border: 1px solid darken($c-dashboard-light, 10%);
             border-radius: 2px;
             transition: border-color 150ms;
+
+            &.error {
+                border-color: $c-dashboard-error;
+            }
         }
 
         &[type="file"] {

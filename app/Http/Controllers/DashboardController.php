@@ -2,10 +2,12 @@
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Auth;
 use File;
 use Image;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\User;
 use App\Dashboard;
 
 class DashboardController extends Controller {
@@ -23,7 +25,7 @@ class DashboardController extends Controller {
      */
     public function getIndex()
     {
-        return view('dashboard.home');
+        return view('dashboard.pages.home');
     }
 
     /**
@@ -31,7 +33,17 @@ class DashboardController extends Controller {
      */
     public function getCredits()
     {
-        return view('dashboard.credits');
+        return view('dashboard.pages.credits');
+    }
+
+    /**
+     * Dashboard settings
+     */
+    public function getSettings()
+    {
+        return view('dashboard.pages.settings', [
+            'user' => User::find(Auth::id())
+        ]);
     }
 
     /**
@@ -42,7 +54,7 @@ class DashboardController extends Controller {
         $model_class = Dashboard::getModel($model, 'view');
 
         if ($model_class != null) {
-            return view('dashboard.view', [
+            return view('dashboard.pages.view', [
                 'heading' => $model_class::getDashboardHeading($model),
                 'column_headings' => $model_class::getDashboardColumnData('headings'),
                 'model' => $model,
@@ -62,7 +74,7 @@ class DashboardController extends Controller {
         $model_class = Dashboard::getModel($model, 'edit');
 
         if ($model_class != null) {
-            return view('dashboard.edit-list', [
+            return view('dashboard.pages.edit-list', [
                 'heading' => $model_class::getDashboardHeading($model),
                 'model'   => $model,
                 'rows'    => $model_class::getDashboardData(),
@@ -101,7 +113,7 @@ class DashboardController extends Controller {
                 }
             }
 
-            return view('dashboard.edit-item', [
+            return view('dashboard.pages.edit-item', [
                 'heading'   => $model_class::getDashboardHeading($model),
                 'model'     => $model,
                 'id'        => $id,
@@ -277,6 +289,23 @@ class DashboardController extends Controller {
             }
         } else {
             return 'model-access-fail';
+        }
+    }
+
+    /**
+     * User Password: Change the current user's password
+     */
+    public function postUserPassword(Request $request)
+    {
+        $this->validate($request, [
+            'oldpass' => 'required|string|min:6',
+            'newpass' => 'required|string|min:6|confirmed'
+        ]);
+
+        if (User::find(Auth::id())->updatePassword($request['oldpass'], $request['newpass'])) {
+            return 'success';
+        } else {
+            return 'old-password-fail';
         }
     }
 

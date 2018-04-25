@@ -7,15 +7,17 @@
 @endsection
 
 @section('page-content')
-    <nav-component></nav-component>
+    <div id="vue-container">
+        <nav-component></nav-component>
 
-    <div class="flex-wrapper">
-        <div class="page-container">
-            <div id="router-view" class="main-content">
-                <router-view></router-view>
+        <div class="flex-wrapper">
+            <div class="page-container">
+                <div id="router-view" class="main-content">
+                    <router-view></router-view>
+                </div>
+
+                <footer-component></footer-component>
             </div>
-
-            <footer-component></footer-component>
         </div>
     </div>
 @endsection

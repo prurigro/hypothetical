@@ -125,4 +125,4 @@ router.afterEach((to, from) => {
 const App = new Vue({
     router,
     store
-}).$mount("#page-content");
+}).$mount("#vue-container");

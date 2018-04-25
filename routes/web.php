@@ -31,6 +31,7 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::group([ 'prefix' => 'dashboard' ], function() {
     Route::get('/', 'DashboardController@getIndex');
     Route::get('/credits', 'DashboardController@getCredits');
+    Route::get('/settings', 'DashboardController@getSettings');
     Route::get('/view/{model}', 'DashboardController@getView');
     Route::get('/edit/{model}', 'DashboardController@getEditList');
     Route::get('/edit/{model}/{id}', 'DashboardController@getEditItem');
@@ -39,6 +40,7 @@ Route::group([ 'prefix' => 'dashboard' ], function() {
     Route::post('/file-upload', 'DashboardController@postFileUpload');
     Route::post('/update', 'DashboardController@postUpdate');
     Route::post('/reorder', 'DashboardController@postReorder');
+    Route::post('/user-password', 'DashboardController@postUserPassword');
     Route::delete('/delete', 'DashboardController@deleteDelete');
     Route::delete('/image-delete', 'DashboardController@deleteImageDelete');
     Route::delete('/file-delete', 'DashboardController@deleteFileDelete');

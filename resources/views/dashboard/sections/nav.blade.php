@@ -1,6 +1,4 @@
 <nav class="navbar navbar-expand-lg">
-    @set('current_page', preg_replace([ '/^.*\//', '/\/.*/' ], [ '', '' ], Request::url()))
-
     <a class="navbar-brand" href="/dashboard">
         {{ env('APP_NAME') }} Dashboard
     </a>
@@ -27,7 +25,7 @@
                         @set('dropdown_id', preg_replace([ '/\ \ */', '/[^a-z\-]/' ], [ '-', '' ], strtolower($menu_item['title'])))
 
                         <li class="nav-item dropdown">
-                            <span id="menu-dropdown-{{ $dropdown_id }}" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span id="menu-dropdown-{{ $dropdown_id }}" class="nav-link dropdown-toggle {{ array_search($current_page, array_column($menu_item['submenu'], 'model')) !== false ? 'active' : '' }}" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ $menu_item['title'] }} <span class="caret"></span>
                             </span>
 
@@ -47,12 +45,12 @@
                 @endforeach
 
                 <li class="nav-item dropdown">
-                    <a id="user-dropdown" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a id="user-dropdown" class="nav-link dropdown-toggle {{ $current_page == 'settings' ? 'active' : '' }}" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
-                        <a class="dropdown-item {{ $current_page == 'credits' ? 'active' : '' }}" href="/dashboard/credits">Credits</a>
+                        <a class="dropdown-item {{ $current_page == 'settings' ? 'active' : '' }}" href="/dashboard/settings">Settings</a>
                         <a class="dropdown-item" href="/logout">Logout</a>
                     </div>
                 </li>

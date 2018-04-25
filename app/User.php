@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Hash;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'api_token'
     ];
+
+    /**
+     * Update the user's password
+     *
+     * @var string
+     */
+    public function updatePassword($oldpass, $newpass)
+    {
+        if (Hash::check($oldpass, $this->password)) {
+            $this->password = Hash::make($newpass);
+            $this->save();
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -36,13 +36,17 @@
     </head>
 
     <body class="{{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
-        @yield('page-top')
+        <div class="flex-wrapper">
+            <div class="site-content">
+                @yield('page-top')
 
-        <div id="page-content">
-            @yield('page-content')
+                <div class="page-content">
+                    @yield('page-content')
+                </div>
+
+                @yield('page-bottom')
+            </div>
         </div>
-
-        @yield('page-bottom')
 
         @if(Config::get('app.debug'))
             <script id="__bs_script__">//<![CDATA[

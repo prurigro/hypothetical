@@ -1,3 +1,23 @@
+const $loadingModal = $("#loading-modal"),
+    fadeTime = 250;
+
+// show the loading modal
+const showLoadingModal = function() {
+    $loadingModal.css({
+        visibility: "visible",
+        opacity: 1
+    });
+};
+
+// hide the loading modal
+const hideLoadingModal = function() {
+    $loadingModal.css({ opacity: 0 });
+
+    setTimeout(function() {
+        $loadingModal.css({ visibility: "hidden" });
+    }, fadeTime);
+};
+
 // declare a reverse function for jquery
 jQuery.fn.reverse = [].reverse;
 
@@ -6,8 +26,7 @@ function askConfirmation(message, command, cancelCommand) {
     const $confirmationModal = $("#confirmation-modal"),
         $heading = $confirmationModal.find(".card-header"),
         $cancelButton = $confirmationModal.find(".btn.cancel-button"),
-        $confirmButton = $confirmationModal.find(".btn.confirm-button"),
-        fadeTime = 250;
+        $confirmButton = $confirmationModal.find(".btn.confirm-button");
 
     // close the confirmation modal and unbind its events
     const closeConfirmationModal = function() {
@@ -21,7 +40,10 @@ function askConfirmation(message, command, cancelCommand) {
 
         // hide the modal
         $confirmationModal.css({ opacity: 0 });
-        setTimeout(function() { $confirmationModal.css({ visibility: "hidden" }); }, fadeTime);
+
+        setTimeout(function() {
+            $confirmationModal.css({ visibility: "hidden" });
+        }, fadeTime);
     };
 
     // close the modal if the escape button is pressed
@@ -67,8 +89,7 @@ function askConfirmation(message, command, cancelCommand) {
 function showAlert(message, command) {
     const $alertModal = $("#alert-modal"),
         $message = $alertModal.find(".message"),
-        $acceptButton = $alertModal.find(".btn.accept-button"),
-        fadeTime = 250;
+        $acceptButton = $alertModal.find(".btn.accept-button");
 
     // close the alert modal and unbind its events
     const closeAlertModal = function() {
@@ -160,7 +181,7 @@ function editListInit() {
                     if (response === "success") {
                         $listItem.slideUp(150, function() { $listItem.remove(); });
                     } else {
-                        showAlert("ERROR: Failed to delete record");
+                        showAlert("Failed to delete record");
                     }
                 });
             });
@@ -225,7 +246,7 @@ function editListInit() {
                         }
                     }).always(function(response) {
                         if (response !== "success") {
-                            showAlert("ERROR: Sorting failed", function() {
+                            showAlert("Sorting failed", function() {
                                 document.location.reload(true);
                             });
                         }
@@ -277,8 +298,6 @@ function editItemInit() {
         $fileUploads = $(".file-upload"),
         $imgUploads = $(".image-upload"),
         $token = $("#token"),
-        $spinner = $("#loading-modal"),
-        fadeTime = 250,
         model = $editItem.data("model"),
         id = $editItem.data("id"),
         operation = id === "new" ? "create" : "update";
@@ -290,20 +309,6 @@ function editItemInit() {
         hours,
         minutes,
         changes = false;
-
-    // show the loading modal
-    const showLoadingModal = function() {
-        $spinner.css({
-            visibility: "visible",
-            opacity: 1
-        });
-    };
-
-    // hide the loading modal
-    const hideLoadingModal = function() {
-        $spinner.css({ opacity: 0 });
-        setTimeout(function() { $spinner.css({ visibility: "hidden" }); }, fadeTime);
-    };
 
     // fill the formData object with data from all the form fields
     const getFormData = function() {
@@ -390,7 +395,7 @@ function editItemInit() {
                         uploadFile(row_id, currentFile + 1);
                     } else {
                         hideLoadingModal();
-                        showAlert("ERROR: Failed to upload file");
+                        showAlert("Failed to upload file");
                         console.log(response.responseText);
                         submitting = false;
                     }
@@ -436,7 +441,7 @@ function editItemInit() {
                         uploadImage(row_id, currentImage + 1);
                     } else {
                         hideLoadingModal();
-                        showAlert("ERROR: Failed to upload image");
+                        showAlert("Failed to upload image");
                         submitting = false;
                     }
                 });
@@ -475,7 +480,7 @@ function editItemInit() {
                     if (response === "success") {
                         $(`#current-image-${name}`).slideUp(200);
                     } else {
-                        showAlert("ERROR: Failed to delete the image: " + response);
+                        showAlert("Failed to delete image: " + response);
                     }
 
                     submitting = false;
@@ -510,7 +515,7 @@ function editItemInit() {
                     if (response === "success") {
                         $(`#current-file-${name}`).slideUp(200);
                     } else {
-                        showAlert("ERROR: Failed to delete the file: " + response);
+                        showAlert("Failed to delete file: " + response);
                     }
 
                     submitting = false;
@@ -566,13 +571,16 @@ function editItemInit() {
         });
 
         setTimeout(function() {
+            // load the initial value into the editor
             simplemde[column].value($this.attr("value"));
             simplemde[column].codemirror.refresh();
+
+            // watch for changes to simplemde editor contents
             simplemde[column].codemirror.on("change", contentChanged);
         }, 500);
     });
 
-    // initialize change events for back button
+    // watch for changes to input and select element contents
     $editItem.find("input, select").on("input change", contentChanged);
 
     // initialize back button
@@ -609,10 +617,104 @@ function editItemInit() {
                     uploadImage(response.replace(/^id:/, ""), 0);
                 } else {
                     hideLoadingModal();
-                    showAlert("ERROR: Failed to " + operation + " record");
+                    showAlert("Failed to " + operation + " record");
                     submitting = false;
                 }
             });
+        }
+    });
+}
+
+function userPasswordInit() {
+    const $form = $("#user-password"),
+        $submit = $form.find(".submit-button"),
+        $inputs = $form.find("input"),
+        $oldpass = $("#oldpass"),
+        $newpass = $("#newpass"),
+        $newpassConfirmation = $("#newpass_confirmation"),
+        $token = $("#token");
+
+    let formData = {},
+        submitting = false;
+
+    const getFormData = function() {
+        formData = {
+            oldpass: $oldpass.val(),
+            newpass: $newpass.val(),
+            newpass_confirmation: $newpassConfirmation.val(),
+            _token: $token.val()
+        };
+    };
+
+    // remove the error class from inputs and enable submit if all inputs have data when changes are made
+    $inputs.on("input change", function() {
+        let enableSubmit = true;
+
+        for (let i = 0; i < $inputs.length; i++) {
+            if ($inputs[i].value === "") {
+                enableSubmit = false;
+                break;
+            }
+        }
+
+        if (enableSubmit) {
+            $submit.removeClass("no-input");
+        } else {
+            $submit.addClass("no-input");
+        }
+
+        $inputs.removeClass("error");
+    });
+
+    // initialize submit button
+    $submit.on("click", function() {
+        if (!submitting) {
+            submitting = true;
+
+            // remove the error class from inputs
+            $inputs.removeClass("error");
+
+            // show the loading modal
+            showLoadingModal();
+
+            // populate the formData object
+            getFormData();
+
+            if (formData.newpass !== formData.newpass_confirmation) {
+                // fail with an error if the newpass and newpass_confirmation don't match
+                $newpassConfirmation.val("");
+                $newpass.addClass("error");
+                $newpassConfirmation.addClass("error");
+                showAlert("New passwords do not match");
+                submitting = false;
+            } else {
+                // submit the update
+                $.ajax({
+                    type: "POST",
+                    url: "/dashboard/user-password",
+                    data: formData
+                }).always(function(response) {
+                    if (response === "success") {
+                        hideLoadingModal();
+
+                        showAlert("Password updated successfully", function() {
+                            $inputs.val("").trigger("change");
+                        });
+                    } else {
+                        submitting = false;
+
+                        if (response === "old-password-fail") {
+                            $oldpass.addClass("error");
+                            showAlert("Old password is not correct");
+                        } else {
+                            $newpass.addClass("error");
+                            $newpassConfirmation.val("");
+                            hideLoadingModal();
+                            showAlert("New password must be at least 6 characters");
+                        }
+                    }
+                });
+            }
         }
     });
 }
@@ -621,7 +723,13 @@ function editItemInit() {
 $(document).ready(function() {
     if ($("#edit-list").length) {
         editListInit();
-    } else if ($("#edit-item").length) {
+    }
+
+    if ($("#edit-item").length) {
         editItemInit();
+    }
+
+    if ($("#user-password").length) {
+        userPasswordInit();
     }
 });

@@ -1,4 +1,5 @@
 @extends('templates.base', [ 'title' => 'Dashboard' ])
+@set('current_page', preg_replace([ '/^.*\//', '/\/.*/' ], [ '', '' ], Request::url()))
 
 @section('page-includes')
     <script src="/js/lib-dashboard.js?version={{ env('CACHE_BUST') }}"></script>
@@ -7,5 +8,9 @@
 @endsection
 
 @section('page-top')
-    @include('dashboard.nav')
+    @include('dashboard.sections.nav')
+@endsection
+
+@section('page-bottom')
+    @include('dashboard.sections.footer')
 @endsection
