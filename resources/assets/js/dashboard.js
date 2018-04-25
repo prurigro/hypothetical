@@ -630,7 +630,8 @@ function userProfileImageInit() {
         $upload = $("#profile-image-upload"),
         $delete = $("#profile-image-delete"),
         $token = $("#token"),
-        $displayInner = $form.find(".image-display-inner").first();
+        $display = $form.find(".image-display").first(),
+        defaultImage = $display.data("default");
 
     let file,
         submitting = false;
@@ -660,7 +661,7 @@ function userProfileImageInit() {
                     submitting = false;
 
                     if (/\.png\?version=/.test(response)) {
-                        $displayInner.css({ backgroundImage: `url(${response})` });
+                        $display.css({ backgroundImage: `url(${response})` });
                         $delete.removeClass("inactive");
                     } else {
                         showAlert("Failed to upload image");
@@ -687,7 +688,7 @@ function userProfileImageInit() {
                     }
                 }).always(function(response) {
                     if (response === "success") {
-                        $displayInner.css({ backgroundImage: "none" });
+                        $display.css({ backgroundImage: `url(${defaultImage})` });
                         $delete.addClass("inactive");
                     } else {
                         showAlert("Failed to delete profile image");

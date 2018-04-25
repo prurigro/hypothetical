@@ -10,9 +10,12 @@
             <div class="col-12 col-md-8">
                 <form id="user-profile-image" class="edit-item user-profile-image">
                     @set('profile_image', $user->profileImage())
+                    @set('default_image', App\User::$default_profile_image)
 
-                    <div class="image-display" style="background-image: url('{{ App\User::$default_profile_image }}')">
-                        <div class="image-display-inner" style="background-image: url('{{ $profile_image !== null ? $profile_image : App\User::$default_profile_image }}')"></div>
+                    <div
+                        class="image-display"
+                        style="background-image: url('{{ $profile_image !== null ? $profile_image : $default_image }}')"
+                        data-default="{{ $default_image }}">
                     </div>
 
                     <div class="image-buttons">
