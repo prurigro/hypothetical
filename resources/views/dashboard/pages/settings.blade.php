@@ -20,8 +20,8 @@
 
                     <div class="image-buttons">
                         <input id="profile-image-upload" name="profile-image-upload" type="file" />
-                        <label for="profile-image-upload" class="image-upload-button">Upload Profile Image</label>
-                        <span id="profile-image-delete" class="image-delete-button {{ $profile_image === null ? 'inactive' : '' }}">Delete Profile Image</span>
+                        <label for="profile-image-upload" class="image-upload-button" title="Upload Profile Image"></label>
+                        <span id="profile-image-delete" class="image-delete-button {{ $profile_image === null ? 'inactive' : '' }}" title="Delete Profile Image"></span>
                     </div>
                 </form>
             </div>
