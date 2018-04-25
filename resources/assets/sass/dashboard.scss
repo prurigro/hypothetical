@@ -836,9 +836,9 @@ body {
             }
 
             .image-upload-button, .image-delete-button {
-                @include aspect-ratio(1, 1);
                 display: block;
                 width: 40px;
+                height: 40px;
                 min-height: 0;
                 border: 1px solid darken($c-dashboard-light, 14%);
                 border-radius: 3px;
@@ -863,7 +863,7 @@ body {
             .image-delete-button {
                 background-image: url("/img/dashboard/trash-alt.svg");
                 opacity: 1;
-                transition:  background-color 150ms, opacity 150ms;
+                transition: background-color 150ms, opacity 150ms;
 
                 &.inactive {
                     opacity: 0.35;
