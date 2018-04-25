@@ -2,11 +2,11 @@
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Auth;
 use File;
 use Image;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\User;
 use App\Dashboard;
 
@@ -21,34 +21,14 @@ class DashboardController extends Controller {
     }
 
     /**
-     * Dashboard home
+     * Dashboard CMS
      */
     public function getIndex()
     {
         return view('dashboard.pages.home');
     }
 
-    /**
-     * Project credits
-     */
-    public function getCredits()
-    {
-        return view('dashboard.pages.credits');
-    }
-
-    /**
-     * Dashboard settings
-     */
-    public function getSettings()
-    {
-        return view('dashboard.pages.settings', [
-            'user' => User::find(Auth::id())
-        ]);
-    }
-
-    /**
-     * Dashboard View
-     */
+    // View Model Data
     public function getView($model)
     {
         $model_class = Dashboard::getModel($model, 'view');
@@ -66,9 +46,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard Edit List
-     */
+    // Edit List of Model Rows
     public function getEditList($model)
     {
         $model_class = Dashboard::getModel($model, 'edit');
@@ -91,9 +69,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard Edit Item
-     */
+    // Create and Edit Model Item
     public function getEditItem($model, $id = 'new')
     {
         $model_class = Dashboard::getModel($model, 'edit');
@@ -126,9 +102,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard Export: Export data as a spreadsheet
-     */
+    // Export Spreadsheet of Model Data
     public function getExport($model)
     {
         $model_class = Dashboard::getModel($model);
@@ -151,9 +125,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard Reorder: Reorder rows
-     */
+    // Reorder Model Rows
     public function postReorder(Request $request)
     {
         $this->validate($request, [
@@ -181,9 +153,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard Update: Create and update rows
-     */
+    // Create and Update Model Item Data
     public function postUpdate(Request $request)
     {
         $this->validate($request, [
@@ -222,9 +192,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard Image Upload: Upload images
-     */
+    // Upload Model Item Image
     public function postImageUpload(Request $request)
     {
         $this->validate($request, [
@@ -257,9 +225,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard File Upload: Upload files
-     */
+    // Upload Model Item File
     public function postFileUpload(Request $request)
     {
         $this->validate($request, [
@@ -292,26 +258,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * User Password: Change the current user's password
-     */
-    public function postUserPassword(Request $request)
-    {
-        $this->validate($request, [
-            'oldpass' => 'required|string|min:6',
-            'newpass' => 'required|string|min:6|confirmed'
-        ]);
-
-        if (User::find(Auth::id())->updatePassword($request['oldpass'], $request['newpass'])) {
-            return 'success';
-        } else {
-            return 'old-password-fail';
-        }
-    }
-
-    /**
-     * Dashboard Delete: Delete rows
-     */
+    // Delete Model Item
     public function deleteDelete(Request $request)
     {
         $this->validate($request, [
@@ -357,9 +304,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard Image Delete: Delete images
-     */
+    // Delete Model Item Image
     public function deleteImageDelete(Request $request)
     {
         $this->validate($request, [
@@ -390,9 +335,7 @@ class DashboardController extends Controller {
         }
     }
 
-    /**
-     * Dashboard File Delete: Delete files
-     */
+    // Delete Model Item File
     public function deleteFileDelete(Request $request)
     {
         $this->validate($request, [
@@ -422,6 +365,94 @@ class DashboardController extends Controller {
         } else {
             return 'model-access-fail';
         }
+    }
+
+    /**
+     * Dashboard settings
+     */
+    public function getSettings()
+    {
+        return view('dashboard.pages.settings', [
+            'user' => User::find(Auth::id())
+        ]);
+    }
+
+    // User Password Update
+    public function postUserPasswordUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'oldpass' => 'required|string|min:6',
+            'newpass' => 'required|string|min:6|confirmed'
+        ]);
+
+        if (User::find(Auth::id())->updatePassword($request['oldpass'], $request['newpass'])) {
+            return 'success';
+        } else {
+            return 'old-password-fail';
+        }
+    }
+
+    // User Profile Image Upload
+    public function postUserProfileImageUpload(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $user = User::find(Auth::id());
+
+            if ($user !== null) {
+                $image = Image::make($request->file('file'));
+                $max_width = User::$profile_image_max['width'];
+                $max_height = User::$profile_image_max['height'];
+
+                if ($image->width() > $max_width || $image->height() > $max_height) {
+                    $new_width = $max_width;
+                    $new_height = ($new_width / $image->width()) * $image->height();
+
+                    if ($new_height > $max_height) {
+                        $new_height = $max_height;
+                        $new_width = ($new_height / $image->height()) * $image->width();
+                    }
+
+                    $image->resize($new_width, $new_height);
+                }
+
+                file::makeDirectory(base_path() . '/public' . User::$profile_image_dir, 0755, true, true);
+                $image->save($user->profileImage(true, true));
+                $user->touch();
+                return $user->profileImage() . '?version=' . $user->timestamp();
+            } else {
+                return 'record-access-fail';
+            }
+        } else {
+            return 'file-upload-fail';
+        }
+    }
+
+    // User Profile Image Delete
+    public function deleteUserProfileImageDelete(Request $request)
+    {
+        $user = User::find(Auth::id());
+
+        if ($user !== null) {
+            $profile_image = $user->profileImage(true);
+
+            if ($profile_image === null) {
+                return 'image-not-exists-fail';
+            } else if (!unlink($profile_image)) {
+                return 'image-delete-fail';
+            }
+
+            return 'success';
+        } else {
+            return 'record-access-fail';
+        }
+    }
+
+    /**
+     * Credits Page
+     */
+    public function getCredits()
+    {
+        return view('dashboard.pages.credits');
     }
 
 }

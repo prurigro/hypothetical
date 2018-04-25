@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Auth;
+use App\Traits\Timestamp;
 
 class DashboardModel extends Model
 {
+    use Timestamp;
+
     /*
      * The dashboard page type
      *
@@ -167,14 +170,5 @@ class DashboardModel extends Model
         }
 
         return $user_check;
-    }
-
-    /**
-     * Returns the Unix timestamp of the latest update
-     *
-     * @return number
-     */
-    public function timestamp() {
-        return strtotime($this->updated_at);
     }
 }

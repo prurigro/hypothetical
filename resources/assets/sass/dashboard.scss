@@ -8,6 +8,9 @@
 // Core
 @import "_fonts";
 
+// Supplementary
+@import "mixins/**/*.scss";
+
 // Colours
 $c-text: #111; // text
 $c-text-inactive: fade-out($c-text, 0.25); // inactive text
@@ -799,6 +802,80 @@ body {
 
             @include media-breakpoint-down(sm) {
                 width: 100%;
+            }
+        }
+    }
+
+    &.user-profile-image {
+        display: block;
+        width: 100%;
+        max-width: 150px;
+
+        .image-display {
+            @include aspect-ratio(1, 1);
+            position: relative;
+            width: 100%;
+            border: 1px solid darken($c-dashboard-light, 10%);
+            border-radius: 3px;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+
+            &-inner {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 100%;
+                background-position: center center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+        }
+
+        .image-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+
+            input {
+                display: none;
+            }
+
+            .image-upload-button, .image-delete-button {
+                @include aspect-ratio(1, 1);
+                display: block;
+                width: 40px;
+                min-height: 0;
+                border: 1px solid darken($c-dashboard-light, 14%);
+                border-radius: 3px;
+                background-color: darken($c-dashboard-light, 10%);
+                background-position: center center;
+                background-size: 50% auto;
+                background-repeat: no-repeat;
+                font-size: 0px;
+                line-height: 1;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: darken($c-dashboard-light, 7%);
+                }
+            }
+
+            .image-upload-button {
+                background-image: url("/img/dashboard/upload.svg");
+                transition: background-color 150ms;
+            }
+
+            .image-delete-button {
+                background-image: url("/img/dashboard/trash-alt.svg");
+                opacity: 1;
+                transition:  background-color 150ms, opacity 150ms;
+
+                &.inactive {
+                    opacity: 0.35;
+                    pointer-events: none;
+                }
             }
         }
     }

@@ -625,6 +625,83 @@ function editItemInit() {
     });
 }
 
+function userProfileImageInit() {
+    const $form = $("#user-profile-image"),
+        $upload = $("#profile-image-upload"),
+        $delete = $("#profile-image-delete"),
+        $token = $("#token"),
+        $displayInner = $form.find(".image-display-inner").first();
+
+    let file,
+        submitting = false;
+
+    $upload.on("change", function() {
+        if ($upload.val() !== "" && !submitting) {
+            submitting = true;
+
+            askConfirmation("Update your user profile image?", function() {
+                // show the loading modal
+                showLoadingModal();
+
+                // add the image to the form data
+                file = new FormData();
+                file.append("file", $upload[0].files[0]);
+
+                // submit the form data
+                $.ajax({
+                    type: "POST",
+                    url: "/dashboard/user/profile-image-upload",
+                    data: file,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
+                }).always(function(response) {
+                    hideLoadingModal();
+                    submitting = false;
+
+                    if (/\.png\?version=/.test(response)) {
+                        $displayInner.css({ backgroundImage: `url(${response})` });
+                        $delete.removeClass("inactive");
+                    } else {
+                        showAlert("Failed to upload image");
+                    }
+                });
+            }, function() {
+                $upload.val("");
+                submitting = false;
+            });
+        }
+    });
+
+    $delete.on("click", function() {
+        if (!submitting) {
+            submitting = true;
+
+            askConfirmation("Delete your profile image?", function() {
+                // delete the profile image
+                $.ajax({
+                    type: "DELETE",
+                    url: "/dashboard/user/profile-image-delete",
+                    data: {
+                        _token: $token.val()
+                    }
+                }).always(function(response) {
+                    if (response === "success") {
+                        $displayInner.css({ backgroundImage: "none" });
+                        $delete.addClass("inactive");
+                    } else {
+                        showAlert("Failed to delete profile image");
+                    }
+
+                    submitting = false;
+                });
+            }, function() {
+                submitting = false;
+            });
+        }
+    });
+}
+
 function userPasswordInit() {
     const $form = $("#user-password"),
         $submit = $form.find(".submit-button"),
@@ -691,27 +768,22 @@ function userPasswordInit() {
                 // submit the update
                 $.ajax({
                     type: "POST",
-                    url: "/dashboard/user-password",
+                    url: "/dashboard/user/password-update",
                     data: formData
                 }).always(function(response) {
+                    hideLoadingModal();
+                    submitting = false;
+
                     if (response === "success") {
-                        hideLoadingModal();
-
-                        showAlert("Password updated successfully", function() {
-                            $inputs.val("").trigger("change");
-                        });
+                        $inputs.val("").trigger("change");
+                        showAlert("Password updated successfully");
+                    } else if (response === "old-password-fail") {
+                        $oldpass.addClass("error");
+                        showAlert("Old password is not correct");
                     } else {
-                        submitting = false;
-
-                        if (response === "old-password-fail") {
-                            $oldpass.addClass("error");
-                            showAlert("Old password is not correct");
-                        } else {
-                            $newpass.addClass("error");
-                            $newpassConfirmation.val("");
-                            hideLoadingModal();
-                            showAlert("New password must be at least 6 characters");
-                        }
+                        $newpass.addClass("error");
+                        $newpassConfirmation.val("");
+                        showAlert("New password must be at least 6 characters");
                     }
                 });
             }
@@ -727,6 +799,10 @@ $(document).ready(function() {
 
     if ($("#edit-item").length) {
         editItemInit();
+    }
+
+    if ($("#user-profile-image").length) {
+        userProfileImageInit();
     }
 
     if ($("#user-password").length) {

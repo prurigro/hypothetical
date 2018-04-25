@@ -16,7 +16,13 @@
 
         <ul>
             @foreach(App\Dashboard::$library_credits as $credit)
-                <li><a href="{{ $credit['url'] }}" target="_blank" rel="noreferrer">{{ $credit['name'] }}</a></li>
+                <li>
+                    <a href="{{ $credit['url'] }}" target="_blank" rel="noreferrer">{{ $credit['name'] }}</a>
+
+                    @if(array_key_exists('license', $credit))
+                        (<a href="{{ $credit['license'] }}" target="_blank" rel="noreferrer">License</a>)
+                    @endif
+                </li>
             @endforeach
         </ul>
     </div>

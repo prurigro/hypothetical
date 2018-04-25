@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Hash;
+use App\Traits\Timestamp;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Timestamp;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +31,30 @@ class User extends Authenticatable
     ];
 
     /**
+     * The default user profile image
+     *
+     * @var string
+     */
+    public static $default_profile_image = '/img/profile.png';
+
+    /**
+     * The directory user profile uploads are stored in
+     *
+     * @var string
+     */
+    public static $profile_image_dir = '/uploads/user/img/';
+
+    /**
+     * The maximum profile image width and height
+     *
+     * @var array
+     */
+    public static $profile_image_max = [
+        'width' => 512,
+        'height' => 512
+    ];
+
+    /**
      * Update the user's password
      *
      * @var string
@@ -42,5 +68,22 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    /**
+     * Get user profile image
+     *
+     * @var string
+     */
+    public function profileImage($show_full_path = false, $always_return_path = false)
+    {
+        $site_path = self::$profile_image_dir . $this->id . '-profile.png';
+        $file_path = base_path() . '/public' . $site_path;
+
+        if (file_exists($file_path) || $always_return_path) {
+            return $show_full_path ? $file_path : $site_path;
+        } else {
+            return null;
+        }
     }
 }

@@ -50,7 +50,7 @@ class Dashboard
      */
     public static $library_credits = [
         [ 'name' => 'Bootstrap', 'url' => 'https://getbootstrap.com' ],
-        [ 'name' => 'Font Awesome', 'url' => 'https://fontawesome.com' ],
+        [ 'name' => 'Font Awesome', 'url' => 'https://fontawesome.com', 'license' => 'https://fontawesome.com/license' ],
         [ 'name' => 'GreenSock', 'url' => 'https://greensock.com/gsap' ],
         [ 'name' => 'jQuery', 'url' => 'https://jquery.org' ],
         [ 'name' => 'List.js', 'url' => 'http://listjs.com' ],
