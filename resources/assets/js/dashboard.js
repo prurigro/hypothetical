@@ -2,21 +2,21 @@ const $loadingModal = $("#loading-modal"),
     fadeTime = 250;
 
 // show the loading modal
-const showLoadingModal = function() {
+function showLoadingModal() {
     $loadingModal.css({
         visibility: "visible",
         opacity: 1
     });
-};
+}
 
 // hide the loading modal
-const hideLoadingModal = function() {
+function hideLoadingModal() {
     $loadingModal.css({ opacity: 0 });
 
     setTimeout(function() {
         $loadingModal.css({ visibility: "hidden" });
     }, fadeTime);
-};
+}
 
 // declare a reverse function for jquery
 jQuery.fn.reverse = [].reverse;
@@ -31,7 +31,7 @@ function askConfirmation(message, command, cancelCommand) {
     // close the confirmation modal and unbind its events
     const closeConfirmationModal = function() {
         // unbind events
-        $(document).off("keyup", escapeModal);
+        $(document).off("keydown", escapeModal);
         $cancelButton.off("click", closeConfirmationModal);
         $confirmButton.off("click", confirmModal);
 
@@ -48,7 +48,11 @@ function askConfirmation(message, command, cancelCommand) {
 
     // close the modal if the escape button is pressed
     const escapeModal = function(e) {
-        if (e.keyCode === 27) { closeConfirmationModal(); }
+        if (e.keyCode === 27) {
+            closeConfirmationModal();
+        } else {
+            e.preventDefault();
+        }
     };
 
     // functionality to run when clicking the confirm button
@@ -70,7 +74,7 @@ function askConfirmation(message, command, cancelCommand) {
     $cancelButton.on("click", cancelModal);
 
     // hide the modal when the escape key is pressed
-    $(document).on("keyup", escapeModal);
+    $(document).on("keydown", escapeModal);
 
     // run the command and hide the modal when the confirm button is pressed
     $confirmButton.on("click", confirmModal);
@@ -94,7 +98,7 @@ function showAlert(message, command) {
     // close the alert modal and unbind its events
     const closeAlertModal = function() {
         // unbind events
-        $(document).off("keyup", escapeModal);
+        $(document).off("keydown", escapeModal);
         $acceptButton.off("click", closeAlertModal);
 
         // clear the message
@@ -102,19 +106,28 @@ function showAlert(message, command) {
 
         // hide the modal
         $alertModal.css({ opacity: 0 });
-        setTimeout(function() { $alertModal.css({ visibility: "hidden" }); }, fadeTime);
+
+        setTimeout(function() {
+            $alertModal.css({ visibility: "hidden" });
+        }, fadeTime);
 
         // if a command was passed run it now
-        if (command !== undefined) { command(); }
+        if (command !== undefined) {
+            command();
+        }
     };
 
     // close the modal if the escape button is pressed
     const escapeModal = function(e) {
-        if (e.keyCode === 27) { closeAlertModal(); }
+        if (e.keyCode === 27) {
+            closeAlertModal();
+        } else {
+            e.preventDefault();
+        }
     };
 
     // hide the modal when the escape key is pressed
-    $(document).on("keyup", escapeModal);
+    $(document).on("keydown", escapeModal);
 
     // hide the modal when the accept button is pressed
     $acceptButton.on("click", closeAlertModal);
@@ -395,9 +408,10 @@ function editItemInit() {
                         uploadFile(row_id, currentFile + 1);
                     } else {
                         hideLoadingModal();
-                        showAlert("Failed to upload file");
-                        console.log(response.responseText);
-                        submitting = false;
+
+                        showAlert("Failed to upload file", function() {
+                            submitting = false;
+                        });
                     }
                 });
             } else {
@@ -441,8 +455,10 @@ function editItemInit() {
                         uploadImage(row_id, currentImage + 1);
                     } else {
                         hideLoadingModal();
-                        showAlert("Failed to upload image");
-                        submitting = false;
+
+                        showAlert("Failed to upload image", function() {
+                            submitting = false;
+                        });
                     }
                 });
             } else {
@@ -479,11 +495,12 @@ function editItemInit() {
                 }).always(function(response) {
                     if (response === "success") {
                         $(`#current-image-${name}`).slideUp(200);
+                        submitting = false;
                     } else {
-                        showAlert("Failed to delete image: " + response);
+                        showAlert("Failed to delete image: " + response, function() {
+                            submitting = false;
+                        });
                     }
-
-                    submitting = false;
                 });
             }, function() {
                 submitting = false;
@@ -514,11 +531,12 @@ function editItemInit() {
                 }).always(function(response) {
                     if (response === "success") {
                         $(`#current-file-${name}`).slideUp(200);
+                        submitting = false;
                     } else {
-                        showAlert("Failed to delete file: " + response);
+                        showAlert("Failed to delete file: " + response, function() {
+                            submitting = false;
+                        });
                     }
-
-                    submitting = false;
                 });
             }, function() {
                 submitting = false;
@@ -617,8 +635,10 @@ function editItemInit() {
                     uploadImage(response.replace(/^id:/, ""), 0);
                 } else {
                     hideLoadingModal();
-                    showAlert("Failed to " + operation + " record");
-                    submitting = false;
+
+                    showAlert("Failed to " + operation + " record", function() {
+                        submitting = false;
+                    });
                 }
             });
         }
@@ -658,13 +678,15 @@ function userProfileImageInit() {
                     beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
                 }).always(function(response) {
                     hideLoadingModal();
-                    submitting = false;
 
                     if (/\.png\?version=/.test(response)) {
                         $display.css({ backgroundImage: `url(${response})` });
                         $delete.removeClass("inactive");
+                        submitting = false;
                     } else {
-                        showAlert("Failed to upload image");
+                        showAlert("Failed to upload image", function() {
+                            submitting = false;
+                        });
                     }
                 });
             }, function() {
@@ -690,11 +712,12 @@ function userProfileImageInit() {
                     if (response === "success") {
                         $display.css({ backgroundImage: `url(${defaultImage})` });
                         $delete.addClass("inactive");
+                        submitting = false;
                     } else {
-                        showAlert("Failed to delete profile image");
+                        showAlert("Failed to delete profile image", function() {
+                            submitting = false;
+                        });
                     }
-
-                    submitting = false;
                 });
             }, function() {
                 submitting = false;
@@ -757,11 +780,13 @@ function userProfileUpdateInit() {
                 data: formData
             }).always(function(response) {
                 hideLoadingModal();
-                submitting = false;
 
                 if (response === "success") {
                     $submit.addClass("no-input");
-                    showAlert("User profile updated successfully");
+
+                    showAlert("User profile updated successfully", function() {
+                        submitting = false;
+                    });
                 } else {
                     // add the error class to fields that haven't been filled correctly
                     for (let errorName in response.responseJSON.errors) {
@@ -770,7 +795,9 @@ function userProfileUpdateInit() {
                         }
                     }
 
-                    showAlert("Error updating user profile");
+                    showAlert("Error updating user profile", function() {
+                        submitting = false;
+                    });
                 }
             });
         }
@@ -837,8 +864,10 @@ function userPasswordUpdateInit() {
                 $newpassConfirmation.val("");
                 $newpass.addClass("error");
                 $newpassConfirmation.addClass("error");
-                showAlert("New passwords do not match");
-                submitting = false;
+
+                showAlert("New passwords do not match", function() {
+                    submitting = false;
+                });
             } else {
                 // submit the update
                 $.ajax({
@@ -847,18 +876,26 @@ function userPasswordUpdateInit() {
                     data: formData
                 }).always(function(response) {
                     hideLoadingModal();
-                    submitting = false;
 
                     if (response === "success") {
                         $inputs.val("").trigger("change");
-                        showAlert("Password updated successfully");
+
+                        showAlert("Password updated successfully", function() {
+                            submitting = false;
+                        });
                     } else if (response === "old-password-fail") {
                         $oldpass.addClass("error");
-                        showAlert("Old password is not correct");
+
+                        showAlert("Old password is not correct", function() {
+                            submitting = false;
+                        });
                     } else {
                         $newpass.addClass("error");
                         $newpassConfirmation.val("");
-                        showAlert("New password must be at least 6 characters");
+
+                        showAlert("New password must be at least 6 characters", function() {
+                            submitting = false;
+                        });
                     }
                 });
             }
