@@ -752,6 +752,8 @@ form {
             }
 
             &[type="file"] {
+                overflow: hidden;
+                max-width: 100%;
                 height: $label-height;
                 font-size: 14px;
             }
