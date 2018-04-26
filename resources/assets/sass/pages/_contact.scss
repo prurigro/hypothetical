@@ -7,12 +7,18 @@
         margin-bottom: 20px;
         width: 100%;
         padding: 5px 10px;
-        border: 2px solid fade-out($c-text, 0.75);
+        border: 2px solid fade-out($c-base, 0.75);
         background-color: rgba(255, 255, 255, 0.8);
         font-size: 14px;
         transition: border $trans-speed;
-        &:focus { border: 2px solid fade-out($c-base, 0.4); }
-        &.error { border: 2px solid $c-error; }
+
+        &:focus {
+            border: 2px solid fade-out($c-accent, 0.4);
+        }
+
+        &.error {
+            border: 2px solid $c-error;
+        }
     }
 
     textarea {
@@ -21,13 +27,20 @@
     }
 
     .submit {
-        background-color: lighten($c-base, 5%);
+        @include font-sans-bold;
+        background-color: lighten($c-accent, 5%);
         color: $c-text-light;
-        font-weight: bold;
         text-align: center;
         transition: background-color $trans-speed;
-        &:hover { background-color: $c-base; }
-        &.disabled { background-color: $c-base; }
+        cursor: pointer;
+
+        &:hover {
+            background-color: $c-accent;
+        }
+
+        &.disabled {
+            background-color: $c-base;
+        }
     }
 
     .notification {
@@ -39,13 +52,19 @@
         text-align: center;
         opacity: 0;
         transition: opacity $trans-speed;
-        span { font-weight: bold; }
-        &.visible { opacity: 1; }
+
+        &.visible {
+            opacity: 1;
+        }
 
         &.success {
+            @include font-sans-bold;
             background-color: transparent;
             color: $c-text;
-            font-weight: bold;
+        }
+
+        span {
+            @include font-sans-bold;
         }
     }
 }

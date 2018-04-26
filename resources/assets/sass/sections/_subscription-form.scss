@@ -1,15 +1,22 @@
 .subscription-form-section-component {
     $trans-speed: 100ms;
     width: 200px;
+    border: 2px solid fade-out($c-base, 0.75);
+    border-radius: 3px;
+    background-color: lighten($c-base, 75%);
 
     input {
         margin: 5px;
         width: calc(100% - 10px);
         padding: 3px;
-        border: 1px solid $c-text;
+        border: 2px solid fade-out($c-base, 0.75);
         font-size: 14px;
         text-align: center;
         transition: border-color $trans-speed;
+
+        &:not(:last-child) {
+            margin-bottom: 0px;
+        }
 
         &.error {
             border-color: $c-error;
@@ -17,6 +24,11 @@
 
         &::placeholder, &[type="submit"] {
             text-transform: uppercase;
+        }
+
+        &[type="submit"] {
+            @include font-sans-bold;
+            cursor: pointer;
         }
     }
 }
