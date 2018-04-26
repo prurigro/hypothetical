@@ -39,6 +39,7 @@ body {
 }
 
 .site-content {
+    position: relative;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -46,6 +47,33 @@ body {
     .page-content {
         flex-grow: 1;
     }
+}
+
+.dashboard-background {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: url("/img/dashboard/star-bg.svg");
+    background-position: center top;
+    background-size: 65px auto;
+    background-repeat: repeat;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: fade-out(#fff, 0.02);
+    }
+}
+
+.navbar, .dashboard-footer {
+    z-index: 10;
+    position: relative;
 }
 
 .navbar {
@@ -652,223 +680,283 @@ body {
     }
 }
 
-.edit-item {
-    $label-height: 30px;
+form {
     margin-top: 10px;
 
-    .CodeMirror {
-        height: 300px;
-        padding: 5px;
-
-        &-code {
-            margin-bottom: 10px;
-        }
-    }
-
-    .picker__holder {
-        overflow-y: hidden;
-
-        .picker__button--today {
-            white-space: nowrap;
-        }
-
-        .picker__select--year, .picker__select--month, .picker__month, .picker__day, .picker__weekday, .picker__footer {
-            @include media-breakpoint-down(sm) {
-                font-size: 16px;
-            }
-        }
-
-        .picker__select--year, .picker__select--month {
-            width: auto;
-            height: 1.5em;
-            padding: 0px;
-        }
-    }
-
-    label {
-        min-height: $label-height;
-        line-height: $label-height;
-
-        @include media-breakpoint-up(md) {
-            margin-bottom: 0px;
-        }
-    }
-
-    .text-display, .mkd-editor-container, input, select {
+    .form-title {
+        @include font-sans-semibold;
+        margin-top: 0px;
         margin-bottom: 15px;
-    }
-
-    input {
-        display: block;
-        width: 100%;
-
-        &:not([type="file"]) {
-            padding: 5px 8px;
-            border: 1px solid darken($c-dashboard-light, 10%);
-            border-radius: 2px;
-            transition: border-color 150ms;
-
-            &.error {
-                border-color: $c-dashboard-error;
-            }
-        }
-
-        &[type="file"] {
-            height: $label-height;
-            font-size: 14px;
-        }
-
-        &.date-picker {
-            cursor: pointer;
-        }
-    }
-
-    .current-image {
-        margin-bottom: 15px;
-        display: block;
-        width: 125px;
-        max-width: 100%;
-    }
-
-    .edit-button {
-        margin-bottom: ($grid-gutter-width / 2);
-        display: inline-block;
-        padding: 5px 10px;
-        border-radius: 5px;
+        font-size: 14px;
         text-transform: uppercase;
-        transition: background-color 150ms;
-        cursor: pointer;
-
-        &:hover, &:focus {
-            text-decoration: none;
-        }
-
-        &.view {
-            border: 1px solid darken($c-dashboard-dark, 5%);
-            background-color: $c-dashboard-dark;
-            color: $c-text-light;
-
-            &:hover {
-                background-color: lighten($c-dashboard-dark, 5%);
-            }
-        }
-
-        &.delete {
-            border: 1px solid darken($c-dashboard-delete, 5%);
-            background-color: $c-dashboard-delete;
-            color: $c-text-light;
-
-            &:hover {
-                background-color: lighten($c-dashboard-delete, 5%);
-            }
-        }
     }
 
-    .back-button {
-        float: left;
-    }
+    &.edit-item {
+        $label-height: 30px;
 
-    .submit-button {
-        float: right;
-        transition: opacity 150ms;
+        .CodeMirror {
+            height: 300px;
+            padding: 5px;
 
-        &.no-input {
-            opacity: 0.65;
-            pointer-events: none;
-        }
-    }
-
-    .back-button, .submit-button {
-        margin: 20px 15px 15px 15px;
-
-        @include media-breakpoint-down(sm) {
-            float: none;
-            width: calc(100% - 30px);
-
-            &:first-child {
-                margin-top: 20px;
-                margin-bottom: 5px;
-            }
-
-            &:last-child {
-                margin-top: 5px;
-                margin-bottom: 20px;
+            &-code {
+                margin-bottom: 10px;
             }
         }
 
-        &.no-horizontal-margins {
-            margin-right: 0px;
-            margin-left: 0px;
+        .picker__holder {
+            overflow-y: hidden;
 
-            @include media-breakpoint-down(sm) {
-                width: 100%;
+            .picker__button--today {
+                white-space: nowrap;
+            }
+
+            .picker__select--year, .picker__select--month, .picker__month, .picker__day, .picker__weekday, .picker__footer {
+                @include media-breakpoint-down(sm) {
+                    font-size: 16px;
+                }
+            }
+
+            .picker__select--year, .picker__select--month {
+                width: auto;
+                height: 1.5em;
+                padding: 0px;
             }
         }
-    }
 
-    &.user-profile-image {
-        display: block;
-        width: 100%;
-        max-width: 150px;
+        label {
+            min-height: $label-height;
+            line-height: $label-height;
 
-        @include media-breakpoint-down(sm) {
-            margin: $grid-gutter-width auto;
+            @include media-breakpoint-up(md) {
+                margin-bottom: 0px;
+            }
         }
 
-        .image-display {
-            @include aspect-ratio(1, 1);
-            position: relative;
+        .text-display, .mkd-editor-container, input, select {
+            margin-bottom: 15px;
+        }
+
+        input {
+            display: block;
             width: 100%;
-            border: 1px solid darken($c-dashboard-light, 10%);
-            border-radius: 3px;
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
 
-        .image-buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-around;
+            &:not([type="file"]) {
+                padding: 5px 8px;
+                border: 1px solid darken($c-dashboard-light, 10%);
+                border-radius: 2px;
+                transition: border-color 150ms;
 
-            input {
-                display: none;
+                &.error {
+                    border-color: $c-dashboard-error;
+                }
             }
 
-            .image-upload-button, .image-delete-button {
-                display: block;
-                width: 40px;
-                height: 40px;
-                min-height: 0;
-                border: 1px solid darken($c-dashboard-light, 14%);
-                border-radius: 3px;
-                background-color: darken($c-dashboard-light, 10%);
-                background-position: center center;
-                background-size: 50% auto;
-                background-repeat: no-repeat;
-                font-size: 0px;
-                line-height: 1;
+            &[type="file"] {
+                height: $label-height;
+                font-size: 14px;
+            }
+
+            &.date-picker {
                 cursor: pointer;
+            }
+        }
+
+        .current-image {
+            margin-bottom: 15px;
+            display: block;
+            width: 125px;
+            max-width: 100%;
+        }
+
+        .edit-button {
+            margin-bottom: ($grid-gutter-width / 2);
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            transition: background-color 150ms;
+            cursor: pointer;
+
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+
+            &.view {
+                border: 1px solid darken($c-dashboard-dark, 5%);
+                background-color: $c-dashboard-dark;
+                color: $c-text-light;
 
                 &:hover {
-                    background-color: darken($c-dashboard-light, 7%);
+                    background-color: lighten($c-dashboard-dark, 5%);
                 }
             }
 
-            .image-upload-button {
-                background-image: url("/img/dashboard/icons/upload.svg");
-                transition: background-color 150ms;
+            &.delete {
+                border: 1px solid darken($c-dashboard-delete, 5%);
+                background-color: $c-dashboard-delete;
+                color: $c-text-light;
+
+                &:hover {
+                    background-color: lighten($c-dashboard-delete, 5%);
+                }
+            }
+        }
+
+        .back-button {
+            float: left;
+        }
+
+        .submit-button {
+            float: right;
+            transition: opacity 150ms;
+
+            &.no-input {
+                opacity: 0.65;
+                pointer-events: none;
+            }
+        }
+
+        .back-button, .submit-button {
+            margin: 20px 15px 15px 15px;
+
+            @include media-breakpoint-down(sm) {
+                float: none;
+                width: calc(100% - 30px);
+
+                &:first-child {
+                    margin-top: 20px;
+                    margin-bottom: 5px;
+                }
+
+                &:last-child {
+                    margin-top: 5px;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+}
+
+.dashboard-settings-container {
+    @include media-breakpoint-up(lg) {
+        display: flex;
+        flex-direction: row;
+    }
+
+    form {
+        &.user-profile-image {
+            display: block;
+            width: 100%;
+            max-width: 150px;
+
+            @include media-breakpoint-down(md) {
+                margin: $grid-gutter-width auto;
             }
 
-            .image-delete-button {
-                background-image: url("/img/dashboard/icons/trash-alt.svg");
-                opacity: 1;
-                transition: background-color 150ms, opacity 150ms;
+            @include media-breakpoint-up(lg) {
+                flex-shrink: 0;
+            }
 
-                &.inactive {
-                    opacity: 0.35;
-                    pointer-events: none;
+            .image-display {
+                @include aspect-ratio(1, 1);
+                position: relative;
+                width: 100%;
+                border: 1px solid darken($c-dashboard-light, 10%);
+                border-radius: 3px;
+                background-position: center center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            .image-buttons {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-around;
+
+                input {
+                    display: none;
                 }
+
+                .image-upload-button, .image-delete-button {
+                    display: block;
+                    width: 40px;
+                    height: 40px;
+                    min-height: 0;
+                    border: 1px solid darken($c-dashboard-light, 14%);
+                    border-radius: 3px;
+                    background-color: darken($c-dashboard-light, 10%);
+                    background-position: center center;
+                    background-size: 50% auto;
+                    background-repeat: no-repeat;
+                    font-size: 0px;
+                    line-height: 1;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: darken($c-dashboard-light, 7%);
+                    }
+                }
+
+                .image-upload-button {
+                    background-image: url("/img/dashboard/icons/upload.svg");
+                    transition: background-color 150ms;
+                }
+
+                .image-delete-button {
+                    background-image: url("/img/dashboard/icons/trash-alt.svg");
+                    opacity: 1;
+                    transition: background-color 150ms, opacity 150ms;
+
+                    &.inactive {
+                        opacity: 0.35;
+                        pointer-events: none;
+                    }
+                }
+            }
+        }
+
+        &.user-profile-update {
+            @include media-breakpoint-down(md) {
+                border-top: 1px solid darken($c-dashboard-light, 10%);
+                border-bottom: 1px solid darken($c-dashboard-light, 10%);
+            }
+
+            @include media-breakpoint-up(lg) {
+                margin-right: $grid-gutter-width;
+                margin-left: $grid-gutter-width;
+                width: 100%;
+                padding: 0px $grid-gutter-width;
+                flex-grow: 1;
+                border-right: 1px solid darken($c-dashboard-light, 10%);
+                border-left: 1px solid darken($c-dashboard-light, 10%);
+            }
+        }
+
+        &.user-password-update {
+            @include media-breakpoint-up(lg) {
+                width: 225px;
+                flex-shrink: 0;
+            }
+        }
+
+        .form-title {
+            @include media-breakpoint-down(md) {
+                margin-top: 25px;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
+
+        .submit-button {
+            @include media-breakpoint-down(sm) {
+                margin-right: auto;
+                margin-left: auto;
+                width: 100%;
+            }
+
+            @include media-breakpoint-up(md) {
+                float: none;
+                margin: ($grid-gutter-width / 2) 0px;
             }
         }
     }

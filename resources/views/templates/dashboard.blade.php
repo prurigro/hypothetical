@@ -8,6 +8,7 @@
 @endsection
 
 @section('page-top')
+    <div class="dashboard-background"></div>
     @include('dashboard.sections.nav')
 @endsection
 

@@ -703,8 +703,82 @@ function userProfileImageInit() {
     });
 }
 
-function userPasswordInit() {
-    const $form = $("#user-password"),
+function userProfileUpdateInit() {
+    const $form = $("#user-profile-update"),
+        $submit = $form.find(".submit-button"),
+        $inputs = $form.find("input"),
+        $name = $("#name"),
+        $website = $("#website"),
+        $facebook = $("#facebook"),
+        $soundcloud = $("#soundcloud"),
+        $instagram = $("#instagram"),
+        $twitter = $("#twitter"),
+        $token = $("#token");
+
+    let formData = {},
+        submitting = false;
+
+    const getFormData = function() {
+        formData = {
+            name: $name.val(),
+            website: $website.val(),
+            facebook: $facebook.val(),
+            soundcloud: $soundcloud.val(),
+            instagram: $instagram.val(),
+            twitter: $twitter.val(),
+            _token: $token.val()
+        };
+    };
+
+    // remove the error class from an input and enable submit when its value changes
+    $inputs.on("input change", function() {
+        $submit.removeClass("no-input");
+        $(this).removeClass("error");
+    });
+
+    // initialize submit button
+    $submit.on("click", function() {
+        if (!submitting) {
+            submitting = true;
+
+            // remove the error class from inputs
+            $inputs.removeClass("error");
+
+            // show the loading modal
+            showLoadingModal();
+
+            // populate the formData object
+            getFormData();
+
+            // submit the update
+            $.ajax({
+                type: "POST",
+                url: "/dashboard/user/profile-update",
+                data: formData
+            }).always(function(response) {
+                hideLoadingModal();
+                submitting = false;
+
+                if (response === "success") {
+                    $submit.addClass("no-input");
+                    showAlert("User profile updated successfully");
+                } else {
+                    // add the error class to fields that haven't been filled correctly
+                    for (let errorName in response.responseJSON.errors) {
+                        if ($form.find(`[name='${errorName}']`).length) {
+                            $form.find(`[name='${errorName}']`).addClass("error");
+                        }
+                    }
+
+                    showAlert("Error updating user profile");
+                }
+            });
+        }
+    });
+}
+
+function userPasswordUpdateInit() {
+    const $form = $("#user-password-update"),
         $submit = $form.find(".submit-button"),
         $inputs = $form.find("input"),
         $oldpass = $("#oldpass"),
@@ -806,7 +880,11 @@ $(document).ready(function() {
         userProfileImageInit();
     }
 
-    if ($("#user-password").length) {
-        userPasswordInit();
+    if ($("#user-profile-update").length) {
+        userProfileUpdateInit();
+    }
+
+    if ($("#user-password-update").length) {
+        userPasswordUpdateInit();
     }
 });

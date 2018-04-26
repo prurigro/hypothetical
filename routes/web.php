@@ -46,6 +46,7 @@ Route::group([ 'prefix' => 'dashboard' ], function() {
     // Dashboard Settings
     Route::get('/settings', 'DashboardController@getSettings');
     Route::post('/user/password-update', 'DashboardController@postUserPasswordUpdate');
+    Route::post('/user/profile-update', 'DashboardController@postUserProfileUpdate');
     Route::post('/user/profile-image-upload', 'DashboardController@postUserProfileImageUpload');
     Route::delete('/user/profile-image-delete', 'DashboardController@deleteUserProfileImageDelete');
 

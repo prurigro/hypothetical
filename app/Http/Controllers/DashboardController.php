@@ -392,6 +392,24 @@ class DashboardController extends Controller {
         }
     }
 
+    // User Profile Update
+    public function postUserProfileUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:255'
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->name = $request['name'];
+        $user->website = $request['website'];
+        $user->facebook = $request['facebook'];
+        $user->soundcloud = $request['soundcloud'];
+        $user->instagram = $request['instagram'];
+        $user->twitter = $request['twitter'];
+        $user->save();
+        return 'success';
+    }
+
     // User Profile Image Upload
     public function postUserProfileImageUpload(Request $request)
     {
