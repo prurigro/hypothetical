@@ -1,6 +1,6 @@
 # Hypothetical Template
 
-The Hypothetical website template for bootstraping new projects.
+A Hypothetical website template for bootstraping new projects.
 
 * Written and maintained by Kevin MacMartin
 * Based on Laravel 5.6
