@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -61,13 +62,15 @@ class RegisterController extends Controller {
      */
     protected function create(array $data)
     {
-        if (env('REGISTRATION', false)) {
+        if (Dashboard::canRegister()) {
             return User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'api_token' => str_random(60)
             ]);
+        } else {
+            abort(404);
         }
     }
 
@@ -78,7 +81,7 @@ class RegisterController extends Controller {
      */
     public function showRegistrationForm()
     {
-        if (env('REGISTRATION', false)) {
+        if (Dashboard::canRegister()) {
             return view('auth.register');
         } else {
             header('Location: /login');

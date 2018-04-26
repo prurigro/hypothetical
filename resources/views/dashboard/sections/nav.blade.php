@@ -16,7 +16,7 @@
             @if (Auth::guest())
                 <li class="nav-item"><a class="nav-link {{ $current_page == 'login' ? 'active' : '' }}" href="/login">Login</a></li>
 
-                @if(env('REGISTRATION', false))
+                @if(App\Dashboard::canRegister())
                     <li class="nav-item"><a class="nav-link {{ $current_page == 'register' ? 'active' : '' }}" href="/register">Register</a></li>
                 @endif
             @else

@@ -84,4 +84,15 @@ class Dashboard
             return null;
         }
     }
+
+    /**
+     * Checks the registration status against the REGISTRATION variable in .env
+     *
+     * @return boolean
+     */
+    public static function canRegister()
+    {
+        $registration_status = env('REGISTRATION', false);
+        return $registration_status === true || $registration_status === \Request::ip();
+    }
 }
