@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        @if(Config::get('app.debug'))
+        @if(Config::get('app.debug') && Config::get('app.env') === 'local')
             <script id="__bs_script__">//<![CDATA[
                 document.write("<script async src='http://{{ env('BS_HOST', 'localhost') }}:3000/browser-sync/browser-sync-client.js?version={{ env('CACHE_BUST') }}'><\/script>".replace("HOST", location.hostname));
             //]]></script>
