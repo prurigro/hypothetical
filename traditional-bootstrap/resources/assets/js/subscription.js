@@ -46,7 +46,7 @@ function subscriptionFormInit() {
                 } else {
                     errors = 0;
 
-                    // add the error class to fields that haven't been filled out
+                    // add the error class to fields that haven't been filled correctly
                     for (let errorName in response.responseJSON.errors) {
                         if ($form.find(`[name='${errorName}']`).length) {
                             $form.find(`[name='${errorName}']`).addClass("error");
