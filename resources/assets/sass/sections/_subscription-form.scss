@@ -7,10 +7,16 @@
         width: calc(100% - 10px);
         padding: 3px;
         border: 1px solid lighten($c-accent, 50%);
+        font-size: 14px;
+        text-align: center;
         transition: border-color $trans-speed;
 
         &.error {
             border-color: $c-error;
+        }
+
+        &::placeholder, &[type="submit"] {
+            text-transform: uppercase;
         }
     }
 }
