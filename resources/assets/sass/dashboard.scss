@@ -174,23 +174,33 @@ body {
 
         .dropdown-item {
             background-color: transparent;
-            transition: background-color 150ms;
+            transition: background-color 150ms, color 150ms;
 
             @include media-breakpoint-down(md) {
                 padding-right: 8px;
                 padding-left: 8px;
+                background-color: darken($c-dashboard-dark, 2%);
+                color: $c-text-light-inactive;
             }
 
             &.active, &:hover, &:focus, &:active {
                 color: $c-text;
+
+                @include media-breakpoint-down(md) {
+                    color: $c-text-light;
+                }
             }
 
             &:hover, &:focus {
-                background-color: fade-out(#000, 0.97);
+                @include media-breakpoint-up(lg) {
+                    background-color: fade-out(#000, 0.97);
+                }
             }
 
             &.active {
-                background-color: fade-out(#000, 0.93);
+                @include media-breakpoint-up(lg) {
+                    background-color: fade-out(#000, 0.93);
+                }
             }
         }
     }
