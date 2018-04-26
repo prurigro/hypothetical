@@ -258,7 +258,7 @@ body {
 
         &.dashboard {
             @include media-breakpoint-down(sm) {
-                padding: 0px;
+                padding: 10px 8px 12px 8px;
             }
         }
 
