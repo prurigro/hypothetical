@@ -1,27 +1,68 @@
 # Hypothetical Template
 
-The Hypothetical website template based on Laravel 5.6
+The Hypothetical website bootstrap template.
+
+* Written and maintained by Kevin MacMartin
+* Based on Laravel 5.6
+
+## Setup
+
+The following steps can be followed to get things running for the first time:
+
+1. Copy the `.env.example` file to `.env` and configure its values as required.
+2. Create a new database named whatever you've set `DB_DATABASE` to in the `.env` file.
+3. Run the `init.sh` script and wait for it to complete.
+
+### Environment File
+
+The `.env` file includes deployment-specific configuration options, and Laravel has documentation explaining it in further detail [HERE](https://laravel.com/docs/configuration).
+
+The `APP_ENV` and `APP_DEBUG` variables should be configured in one of the following combinations depending on the scenario:
+
+* Local development should be configured with `APP_ENV=local` and `APP_DEBUG=true`.
+* A remote staging server should be configured with `APP_ENV=staging` and `APP_DEBUG=true`.
+* A remote production server should be configured with `APP_ENV=production` and `APP_DEBUG=false`.
+
+### Init Script
+
+The `init.sh` script is located in the root of the project and is used to keep the database and compiled assets in sync with the codebase.
+
+It's the recommended way to handle the initial project setup, and can also be run manually or by deployment scripts to keep things up to date after pulling in changes.
+
+The following steps are performed in this order when run:
+
+1. Checks the local system for dependencies required by the script and exits with an error if any are missing.
+2. Checks to see if the `.env` file exists and exits with an error if it doesn't.
+3. (artisan) Puts the website in maintenance mode.
+4. Downloads and updates non-development composer dependencies.
+5. Checks to see if the `APP_KEY` variable in the `.env` file is empty, and if it is, generates a value for it.
+6. Clears the route and blade cache to ensure everything will be build fresh against the current codebase and dependencies.
+7. Updates the `CACHE_BUST` variable in the `.env` file, which changes the value of a `version` query string appended to compiled assets and prevents clients from using a previous version in their cache.
+8. (artisan) Run new database migrations.
+9. Cleans, downloads and updates npm dependencies.
+10. Cleans, downloads and updates bower dependencies.
+11. Builds  `public/fonts` with `gulp --production` (using the local version of gulp installed in `node_modules`).
+12. (artisan) Takes the website out of maintenance mode.
+
+**NOTE**: Items with `(artisan)` prepended to them won't be run if `init.sh` is run with the `--no-artisan` flag.
 
 ## Utilities
 
-### Language
+### Gulp
 
-The default language is set by the `DEFAULT_LANGUAGE` variable in the `.env` file. This will be the language used until it is changed, which can be done using the `/language/{lang}` route or directly using `Language::setSessionLanguage($lang)` where in both cases `lang` is the language code for a given language.
+In the root of the project is a file named `gulpfile.js` that can be used by `gulp` to copy fonts, compile javascript and sass, and watch files for changes during development.
 
-In the view, a block of text can be configured with multiple languages using the following syntax:
+Reading through its contents is encouraged for a complete understanding of what it does, but the following commands should handle most of what it's needed for out of the box:
 
-```php
-    @lang([
-        'en' => "This is a sentence",
-        'fr' => "C'est une phrase"
-    ])
-```
+* `gulp`: Update the compiled javascript and css in `public/js` and `public/css`, and copy fonts to `public/fonts`.
+* `gulp --production`: Does the same as `gulp` except the compiled javascript and css is minified, and console logging is removed from the javascript (good for production deployments).
+* `gulp default watch`: Does the same as `gulp` but continues running to watch for changes to files so it can recompile updated assets and reload them in the browser using BrowserSync (good for development environments).
 
-or
+### BrowserSync
 
-```php
-    {{ Language::select([ 'en' => "This is a sentence", 'fr' => "C'est une phrase" ]) }}
-```
+BrowserSync is used to keep the browser in sync with your code when running the `watch` task with gulp.
+
+For this to work on browsers that aren't on the computer running gulp, the `BS_HOST` variable in the `.env` file should be set to the IP address of that computer.
 
 ## Public
 
@@ -52,7 +93,37 @@ Dependencies can be included with bower or npm and loaded either into the `jsPub
 
 Other information about database interaction, routing, controllers, etc can be viewed in the [Laravel Documentation](https://laravel.com/docs).
 
+### Language
+
+The default language is set by the `DEFAULT_LANGUAGE` variable in the `.env` file. This will be the language used until it is changed, which can be done using the `/language/{lang}` route or directly using `Language::setSessionLanguage($lang)` where in both cases `lang` is the language code for a given language.
+
+In the view, a block of text can be configured with multiple languages using the following syntax:
+
+```php
+    @lang([
+        'en' => "This is a sentence",
+        'fr' => "C'est une phrase"
+    ])
+```
+
+or
+
+```php
+    {{ Language::select([ 'en' => "This is a sentence", 'fr' => "C'est une phrase" ]) }}
+```
+
 ## Dashboard
+
+### Registration
+
+The `REGISTRATION` variable in the `.env` file controls whether a new dashboard user can be registered.
+
+The system admin can control registration by configuring the `REGISTRATION` variable in the following ways:
+
+* `REGISTRATION=false`: Registration is disabled
+* `REGISTRATION=true`: Registration is enabled for everyone
+* `REGISTRATION=192.168.1.123`: Registration is selectively enabled for the IP address `192.168.1.123`
+
 
 ### Updating the dashboard menu
 
