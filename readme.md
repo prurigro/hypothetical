@@ -41,7 +41,7 @@ The following steps are performed in this order when run:
 8. (artisan) Run new database migrations.
 9. Cleans, downloads and updates npm dependencies.
 10. Cleans, downloads and updates bower dependencies.
-11. Builds  `public/fonts` with `gulp --production` (using the local version of gulp installed in `node_modules`).
+11. Runs `gulp --production` to build project files and copy fonts to `public/fonts` (uses the local version of gulp installed in `node_modules`).
 12. (artisan) Takes the website out of maintenance mode.
 
 **NOTE**: Items with `(artisan)` prepended to them won't be run if `init.sh` is run with the `--no-artisan` flag.
