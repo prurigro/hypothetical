@@ -19,9 +19,17 @@ Route::middleware('auth:api')->get('/user', function(Request $request) {
 
 /*
 |--------------------------------------------------------------------------
+| Get Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/blog-entries', 'ApiController@getBlogEntries');
+
+/*
+|--------------------------------------------------------------------------
 | Post Routes
 |--------------------------------------------------------------------------
 */
 
-Route::post('/contact-submit', 'ContactController@postContactSubmit');
-Route::post('/subscription-submit', 'SubscriptionController@postSubscriptionSubmit');
+Route::post('/contact-submit', 'ApiController@postContactSubmit');
+Route::post('/subscription-submit', 'ApiController@postSubscriptionSubmit');

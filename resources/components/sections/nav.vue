@@ -40,6 +40,7 @@
 
                 navLinks: [
                     { path: "/", title: "Home" },
+                    { path: "/blog", title: "Blog" },
                     { path: "/contact", title: "Contact" }
                 ]
             };

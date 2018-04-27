@@ -1,11 +1,45 @@
 <?php namespace App\Http\Controllers;
 
-use Newsletter;
 use Log;
+use Mail;
+use Newsletter;
+use App\Models\Blog;
+use App\Models\Contact;
 use App\Models\Subscriptions;
 use Illuminate\Http\Request;
 
-class SubscriptionController extends Controller {
+class ApiController extends Controller {
+
+    public function getBlogEntries()
+    {
+        return Blog::getBlogEntries();
+    }
+
+    public function postContactSubmit(Request $request)
+    {
+        $this->validate($request, [
+            'name'    => 'required',
+            'email'   => 'required|email',
+            'message' => 'required'
+        ]);
+
+        $contact = new Contact;
+        $contact->name = $request['name'];
+        $contact->email = $request['email'];
+        $contact->message = $request['message'];
+        $contact->save();
+
+        // Send the email if the MAIL_SENDTO variable is set
+        if (env('MAIL_SENDTO') != null) {
+            Mail::send('email.contact', [ 'contact' => $contact ], function($mail) use ($contact) {
+                $mail->from(env('MAIL_SENDFROM'), env('APP_NAME'))
+                    ->to(env('MAIL_SENDTO'))
+                    ->subject('Contact form submission');
+            });
+        }
+
+        return 'success';
+    }
 
     public function postSubscriptionSubmit(Request $request)
     {

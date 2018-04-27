@@ -17,6 +17,7 @@ Vue.http.headers.common["X-CSRF-TOKEN"] = env.csrfToken;
 
 // Import page components
 import HomePage from "pages/home.vue";
+import BlogPage from "pages/blog.vue";
 import ContactPage from "pages/contact.vue";
 import Error404Page from "pages/error404.vue";
 
@@ -36,6 +37,7 @@ const router = new VueRouter({
 
     routes: [
         { path: "/", component: HomePage },
+        { path: "/blog", component: BlogPage },
         { path: "/contact", component: ContactPage },
         { path: "/*", component: Error404Page }
     ],

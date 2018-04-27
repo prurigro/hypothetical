@@ -69,6 +69,10 @@ Route::get('/', function() {
     return view('pages.index');
 });
 
+Route::get('/blog', function() {
+    return view('pages.blog');
+});
+
 Route::get('/contact', function() {
     return view('pages.contact');
 });
