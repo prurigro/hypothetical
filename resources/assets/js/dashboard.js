@@ -1,5 +1,9 @@
+// global variables
 const $loadingModal = $("#loading-modal"),
     fadeTime = 250;
+
+// declare a reverse function for jquery
+jQuery.fn.reverse = [].reverse;
 
 // show the loading modal
 function showLoadingModal() {
@@ -17,9 +21,6 @@ function hideLoadingModal() {
         $loadingModal.css({ visibility: "hidden" });
     }, fadeTime);
 }
-
-// declare a reverse function for jquery
-jQuery.fn.reverse = [].reverse;
 
 // show the confirmation modal and run the supplied command if confirm is pressed
 function askConfirmation(message, command, cancelCommand) {
