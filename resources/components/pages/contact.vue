@@ -26,7 +26,7 @@
 
                         <div
                             class="notification"
-                            :class="{ success: submitSuccess, visible: errorCount > 0 && submitSuccess }">
+                            :class="{ success: submitSuccess, visible: errorCount > 0 || submitSuccess }">
 
                             <template v-if="submitSuccess">
                                 Thanks for your message!
