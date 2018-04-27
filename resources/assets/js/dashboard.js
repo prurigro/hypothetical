@@ -302,6 +302,7 @@ function editListInit() {
     filterInputInit();
 }
 
+// initialize edit item functionality
 function editItemInit() {
     const $editItem = $("#edit-item"),
         $submit = $("#submit"),
@@ -646,6 +647,7 @@ function editItemInit() {
     });
 }
 
+// initialize the user profile image functionality
 function userProfileImageInit() {
     const $form = $("#user-profile-image"),
         $upload = $("#profile-image-upload"),
@@ -727,6 +729,7 @@ function userProfileImageInit() {
     });
 }
 
+// initialize the user profile update functionality
 function userProfileUpdateInit() {
     const $form = $("#user-profile-update"),
         $submit = $form.find(".submit-button"),
@@ -805,6 +808,7 @@ function userProfileUpdateInit() {
     });
 }
 
+// initialize the user password update functionality
 function userPasswordUpdateInit() {
     const $form = $("#user-password-update"),
         $submit = $form.find(".submit-button"),
@@ -904,7 +908,7 @@ function userPasswordUpdateInit() {
     });
 }
 
-// run once the document is ready
+// run the respective initialization functions for each form on the current page
 $(document).ready(function() {
     if ($("#edit-list").length) {
         editListInit();
