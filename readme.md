@@ -110,22 +110,22 @@ A multi-language text block can be included in a number of ways depending where 
 In PHP or a Laravel blade:
 
 ```php
-    {{ Language::select([ 'en' => "This is a sentence", 'fr' => "C'est une phrase" ]) }}
+    {{ Language::select([ 'en' => 'This is a sentence', 'fr' => 'C’est une phrase' ]) }}
 ```
 
 In a Laravel blade:
 
 ```php
     @lang([
-        'en' => "This is a sentence",
-        'fr' => "C'est une phrase"
+        'en' => 'This is a sentence',
+        'fr' => 'C’est une phrase'
     ])
 ```
 
 In a Vue.js component:
 
 ```html
-    <lang :c-strings="{ en: 'This is a sentence', fr: 'C'est une phrase' }" />
+    <lang :c-strings="{ en: 'This is a sentence', fr: 'C’est une phrase' }" />
 ```
 
 ## Dashboard
