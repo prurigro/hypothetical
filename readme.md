@@ -58,6 +58,8 @@ Reading through its contents is encouraged for a complete understanding of what 
 * `gulp --production`: Does the same as `gulp` except the compiled javascript and css is minified, and console logging is removed from the javascript (good for production deployments).
 * `gulp default watch`: Does the same as `gulp` but continues running to watch for changes to files so it can recompile updated assets and reload them in the browser using BrowserSync (good for development environments).
 
+**NOTE**: If `gulp` isn't installed globally or its version is less than `4`, you should use the version included in `node_modules` by running `"$(npm bin)/gulp"` in place of the `gulp` command.
+
 ### BrowserSync
 
 BrowserSync is used to keep the browser in sync with your code when running the `watch` task with gulp.
