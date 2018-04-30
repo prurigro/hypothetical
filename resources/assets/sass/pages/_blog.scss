@@ -11,6 +11,7 @@
 
         @include media-breakpoint-up(md) {
             display: flex;
+            flex-direction: row-reverse;
         }
 
 
