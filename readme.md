@@ -178,7 +178,7 @@ These are variables that only function when the `$dashboard_type` variable is se
 * `$dashboard_help_text`: An html string that will add a help box to the top of the edit-item page
 * `$dashboard_display`: An array to configure what column data to show on each item in the edit-list
 * `$dashboard_reorder`: A boolean determining whether to render drag handles to reorder the items in the list
-* `$dashboard_sort_column`: A string containing the column used to sort the list (this should be an `integer` when `$dashboard_reorder` is true)
+* `$dashboard_sort_column`: A string containing the column used to sort the list (this column should be an `integer` when `$dashboard_reorder` is true)
 * `$dashboard_sort_direction`: When `$dashboard_reorder` is false this determines the sort direction (this can be `desc` for descending or `asc` ascending)
 * `$dashboard_button`: An array containing the following items in this order:
     * The title
