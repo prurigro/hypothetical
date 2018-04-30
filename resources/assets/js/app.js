@@ -21,13 +21,15 @@ import BlogPage from "pages/blog.vue";
 import ContactPage from "pages/contact.vue";
 import Error404Page from "pages/error404.vue";
 
-// Import section components
+// Import global components
 import NavSection from "sections/nav.vue";
 import FooterSection from "sections/footer.vue";
+import Lang from "partials/lang.vue";
 
-// Name the nav and footer components so they can be used globally
+// Name the global components
 Vue.component("nav-component", NavSection);
 Vue.component("footer-component", FooterSection);
+Vue.component("lang", Lang);
 
 // Create a router instance
 const router = new VueRouter({
@@ -57,6 +59,8 @@ const router = new VueRouter({
 const store = new Vuex.Store({
     state: {
         appName: env.appName,
+        appLang: env.appLang,
+        appDefaultLang: env.appDefaultLang,
         firstLoad: true,
         lastPath: ""
     },
@@ -64,6 +68,14 @@ const store = new Vuex.Store({
     getters: {
         getAppName: state => {
             return state.appName;
+        },
+
+        getAppLang: state => {
+            return state.appLang;
+        },
+
+        getAppDefaultLang: state => {
+            return state.appDefaultLang;
         },
 
         getFirstLoad: state => {
@@ -76,6 +88,11 @@ const store = new Vuex.Store({
     },
 
     mutations: {
+        setAppLang(state, value) {
+            state.appLang = value;
+            Vue.http.get(`/language/${value}`);
+        },
+
         setFirstLoad(state, value) {
             state.firstLoad = value;
         },

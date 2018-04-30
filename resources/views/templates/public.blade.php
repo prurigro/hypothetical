@@ -3,7 +3,18 @@
 @section('page-includes')
     <script src="/js/lib.js?version={{ env('CACHE_BUST') }}"></script>
     <link rel="stylesheet" href="/css/app.css?version={{ env('CACHE_BUST') }}" />
-    @include('elements.variables')
+
+    <script type="text/javascript">
+        var env = {
+            appName: "{{ env('APP_NAME') }}",
+            appDesc: "{{ env('APP_DESC') }}",
+            appLang: "{{ Language::getSessionLanguage() }}",
+            appDefaultLang: "{{ env('DEFAULT_LANGUAGE') }}",
+            apiToken: "{{ Auth::check() ? '?api_token=' . Auth::user()->api_token : '' }}",
+            csrfToken: "{{ csrf_token() }}",
+            debug: {{ Config::get('app.debug') ? 'true' : 'false' }}
+        };
+    </script>
 @endsection
 
 @section('page-content')

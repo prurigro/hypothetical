@@ -66,7 +66,7 @@ For this to work on browsers that aren't on the computer running gulp, the `BS_H
 
 ## Public
 
-The default public facing website uses vue.js. To configure a non-SPA traditional website, look at the files in `traditional-bootstrap`.
+The default public facing website uses Vue.js. To configure a non-SPA traditional website, look at the files in `traditional-bootstrap`.
 
 The following list of files and directories are where various pieces of the public website are located:
 
@@ -74,9 +74,9 @@ The following list of files and directories are where various pieces of the publ
 * `resources/views/templates/public.blade.php`: The inner template for the public site
 * `resources/assets/fonts`: The folder containing website fonts (these get loaded into `public/fonts/` by the gulpfile)
 * `resources/assets/js/app.js`: The main javascript file that loads the public site
-* `resources/assets/js/mixins`: The folder containing vue.js mixins that can be applied globally in `resources/assets/js/app.js` or in individual components
+* `resources/assets/js/mixins`: The folder containing Vue.js mixins that can be applied globally in `resources/assets/js/app.js` or in individual components
 * `resources/assets/js/mixins/base-page.js`: The base-page mixin with page functionality that should be imported into all page components
-* `resources/components`: The folder containing vue.js components
+* `resources/components`: The folder containing Vue.js components
     * `resources/components/pages`: Page components that should be imported into vue-router in `resources/assets/js/app.js`
     * `resources/components/sections`: Section components (single-use per page) that should be imported into mixins or page components
     * `resources/components/partials`: Partial components (multi-use per page or section) that should be imported into mixins and/or page and section components
@@ -95,9 +95,23 @@ Other information about database interaction, routing, controllers, etc can be v
 
 ### Language
 
-The default language is set by the `DEFAULT_LANGUAGE` variable in the `.env` file. This will be the language used until it is changed, which can be done using the `/language/{lang}` route or directly using `Language::setSessionLanguage($lang)` where in both cases `lang` is the language code for a given language.
+The default language is set by the `DEFAULT_LANGUAGE` variable in the `.env` file; this will be the language used until the cookie has been updated.
 
-In the view, a block of text can be configured with multiple languages using the following syntax:
+The language cookie can be updated a number of ways:
+
+* Visiting a link to `/language/{lang}` will update the language to whatever `{lang}` is set to and then reload the current page.
+* Running `Language::setSessionLanguage($lang)` in PHP will update the language to whatever `$lang` is.
+* Running `this.$store.commit("setAppLang", lang);` in a Vue.js component will update the language to whatever `lang` is as well as update component text to the current language on-the-fly.
+
+A multi-language text block can be included in a number of ways depending where it's being done:
+
+In PHP or a Laravel blade:
+
+```php
+    {{ Language::select([ 'en' => "This is a sentence", 'fr' => "C'est une phrase" ]) }}
+```
+
+In a Laravel blade:
 
 ```php
     @lang([
@@ -106,10 +120,10 @@ In the view, a block of text can be configured with multiple languages using the
     ])
 ```
 
-or
+In a Vue.js component:
 
-```php
-    {{ Language::select([ 'en' => "This is a sentence", 'fr' => "C'est une phrase" ]) }}
+```html
+    <lang :c-strings="{ en: 'This is a sentence', fr: 'C'est une phrase' }" />
 ```
 
 ## Dashboard
