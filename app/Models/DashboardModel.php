@@ -138,7 +138,7 @@ class DashboardModel extends Model
     public static function getDashboardData()
     {
         $sort_direction = static::$dashboard_reorder ? 'desc' : static::$dashboard_sort_direction;
-        $query = self::orderBy(static::$dashboard_sort_column, 'desc');
+        $query = self::orderBy(static::$dashboard_sort_column, $sort_direction);
 
         foreach (static::$dashboard_columns as $column) {
             if (array_key_exists('type', $column) && $column['type'] == 'user') {
