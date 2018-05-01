@@ -6,8 +6,9 @@
 @import "bootstrap/scss/bootstrap.scss";
 
 // Supplementary
-@import "classes/**/*.scss";
 @import "mixins/**/*.scss";
+@import "classes/**/*.scss";
+@import "partials/**/*.scss";
 @import "sections/**/*.scss";
 @import "pages/**/*.scss";
 
