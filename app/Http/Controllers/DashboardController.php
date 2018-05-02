@@ -167,6 +167,10 @@ class DashboardController extends Controller {
         if ($model_class != null) {
             if ($request['id'] == 'new') {
                 $item = new $model_class;
+
+                if ($model_class::$dashboard_reorder) {
+                    $item->{$model_class::$dashboard_sort_column} = $model_class::count();
+                }
             } else {
                 $item = $model_class::find($request['id']);
 
@@ -294,6 +298,14 @@ class DashboardController extends Controller {
                     if (file_exists($file) && !unlink($file)) {
                         return 'file-delete-fail';
                     }
+                }
+            }
+
+            // update the order of the remaining rows if $dashboard_reorder is true
+            if ($model_class::$dashboard_reorder) {
+                foreach ($model_class::getDashboardData() as $index => $item) {
+                    $item->{$model_class::$dashboard_sort_column} = $index;
+                    $item->save();
                 }
             }
 
