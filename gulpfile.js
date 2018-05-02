@@ -5,14 +5,12 @@ const gulp = require("gulp"),
     plumber = require("gulp-plumber"),
     concat = require("gulp-concat");
 
-// Sass packages
+// Sass and CSS packages
 const sass = require("gulp-sass"),
     sassGlob = require("gulp-sass-glob"),
     postCSS = require("gulp-postcss"),
-    autoprefixer = require("autoprefixer");
-
-// CSS packages
-const cleanCSS = require("gulp-clean-css");
+    autoprefixer = require("autoprefixer"),
+    cleanCSS = require("gulp-clean-css");
 
 // Javascript packages
 const babel = require("gulp-babel"),
