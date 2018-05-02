@@ -11,6 +11,9 @@ const sass = require("gulp-sass"),
     postCSS = require("gulp-postcss"),
     autoprefixer = require("autoprefixer");
 
+// CSS packages
+const cleanCSS = require("gulp-clean-css");
+
 // Javascript packages
 const babel = require("gulp-babel"),
     stripDebug = require("gulp-strip-debug"),
@@ -67,6 +70,14 @@ const jsDashboardLibs = [
     "bower_components/simplemde/dist/simplemde.min.js"
 ];
 
+// CSS libraries for the dashboard
+const jsDashboardCSS = [
+    "node_modules/pickadate/lib/themes/default.css",
+    "node_modules/pickadate/lib/themes/default.date.css",
+    "bower_components/simplemde/dist/simplemde.min.css",
+    "bower_components/SpinKit/css/spinners/11-folding-cube.css"
+];
+
 // Paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
     "resources/assets/fonts/**"
@@ -93,6 +104,20 @@ function processSass(filename) {
     }
 
     return css;
+}
+
+// Process css
+function processCSS(ouputFilename, inputFiles) {
+    const css = gulp.src(inputFiles)
+        .pipe(plumber(handleError))
+        .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
+        .pipe(concat(`${ouputFilename}.css`));
+
+    if (isProduction) {
+        css.pipe(cleanCSS());
+    }
+
+    return css.pipe(gulp.dest("public/css/"));
 }
 
 // Process vue
@@ -131,6 +156,11 @@ function processJavaScript(ouputFilename, inputFiles, es6) {
     return javascript.pipe(gulp.dest("public/js/"));
 }
 
+// Task for error page styles
+gulp.task("sass-error", () => {
+    return processSass("error");
+});
+
 // Task for public styles
 gulp.task("sass-public", () => {
     return processSass("app");
@@ -141,9 +171,9 @@ gulp.task("sass-dashboard", () => {
     return processSass("dashboard");
 });
 
-// Task for error page styles
-gulp.task("sass-error", () => {
-    return processSass("error");
+// Task for dashboard css libraries
+gulp.task("css-dashboard-libs", () => {
+    return processCSS("lib-dashboard", jsDashboardCSS);
 });
 
 // Task for public javascript
@@ -202,9 +232,10 @@ gulp.task("watch", () => {
 
 // Task to run non-development tasks
 gulp.task("default", gulp.parallel(
+    "sass-error",
     "sass-public",
     "sass-dashboard",
-    "sass-error",
+    "css-dashboard-libs",
     "js-public",
     "js-public-libs",
     "js-dashboard",
