@@ -21,7 +21,7 @@
     <div id="vue-container">
         <nav-component></nav-component>
 
-        <div class="flex-wrapper">
+        <div class="flex-fix">
             <div class="page-container">
                 <div id="router-view" class="main-content">
                     <router-view></router-view>

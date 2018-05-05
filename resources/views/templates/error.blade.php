@@ -5,7 +5,7 @@
 @endsection
 
 @section('page-content')
-    <div class="flex-wrapper">
+    <div class="flex-fix">
         <div class="error-page">
             <div class="error-page-content">
                 {{ $title }}

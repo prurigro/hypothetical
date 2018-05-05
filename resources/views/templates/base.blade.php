@@ -36,7 +36,7 @@
     </head>
 
     <body class="{{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
-        <div class="flex-wrapper">
+        <div class="flex-fix">
             <div class="site-content">
                 @yield('page-top')
 
