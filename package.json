@@ -20,7 +20,7 @@
     "gsap": "^1.20.4",
     "gulp": "^4.0.0",
     "gulp-babel": "^7.0.1",
-    "gulp-clean-css": "^3.9.3",
+    "gulp-clean-css": "^3.9.4",
     "gulp-concat": "^2.6.1",
     "gulp-plumber": "^1.2.0",
     "gulp-postcss": "^7.0.1",
