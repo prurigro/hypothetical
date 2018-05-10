@@ -1,25 +1,25 @@
 // global variables
-const $loadingModal = $("#loading-modal"),
-    fadeTime = 250;
+const fadeTime = 250;
 
 // declare a reverse function for jquery
 jQuery.fn.reverse = [].reverse;
 
-// show the loading modal
-function showLoadingModal() {
-    $loadingModal.css({
-        visibility: "visible",
-        opacity: 1
-    });
-}
+// show or hide the loading modal
+function loadingModal(action) {
+    const $loadingModal = $("#loading-modal");
 
-// hide the loading modal
-function hideLoadingModal() {
-    $loadingModal.css({ opacity: 0 });
+    if (action === "show") {
+        $loadingModal.css({
+            visibility: "visible",
+            opacity: 1
+        });
+    } else if (action === "hide") {
+        $loadingModal.css({ opacity: 0 });
 
-    setTimeout(function() {
-        $loadingModal.css({ visibility: "hidden" });
-    }, fadeTime);
+        setTimeout(function() {
+            $loadingModal.css({ visibility: "hidden" });
+        }, fadeTime);
+    }
 }
 
 // show the confirmation modal and run the supplied command if confirm is pressed
@@ -380,7 +380,7 @@ function editItemInit() {
 
         // functionality to run on success
         const returnSuccess = function() {
-            hideLoadingModal();
+            loadingModal("hide");
             window.location.href = `/dashboard/edit/${model}/${row_id}`;
         };
 
@@ -409,7 +409,7 @@ function editItemInit() {
                     if (response === "success") {
                         uploadFile(row_id, currentFile + 1);
                     } else {
-                        hideLoadingModal();
+                        loadingModal("hide");
 
                         showAlert("Failed to upload file", function() {
                             submitting = false;
@@ -456,7 +456,7 @@ function editItemInit() {
                     if (response === "success") {
                         uploadImage(row_id, currentImage + 1);
                     } else {
-                        hideLoadingModal();
+                        loadingModal("hide");
 
                         showAlert("Failed to upload image", function() {
                             submitting = false;
@@ -622,7 +622,7 @@ function editItemInit() {
             submitting = true;
 
             // show the loading modal
-            showLoadingModal();
+            loadingModal("show");
 
             // populate the formData object
             getFormData();
@@ -636,7 +636,7 @@ function editItemInit() {
                 if (/^id:[0-9][0-9]*$/.test(response)) {
                     uploadImage(response.replace(/^id:/, ""), 0);
                 } else {
-                    hideLoadingModal();
+                    loadingModal("hide");
 
                     showAlert("Failed to " + operation + " record", function() {
                         submitting = false;
@@ -665,7 +665,7 @@ function userProfileImageInit() {
 
             askConfirmation("Update your user profile image?", function() {
                 // show the loading modal
-                showLoadingModal();
+                loadingModal("show");
 
                 // add the image to the form data
                 file = new FormData();
@@ -680,7 +680,7 @@ function userProfileImageInit() {
                     contentType: false,
                     beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
                 }).always(function(response) {
-                    hideLoadingModal();
+                    loadingModal("hide");
 
                     if (/\.png\?version=/.test(response)) {
                         $display.css({ backgroundImage: `url(${response})` });
@@ -772,7 +772,7 @@ function userProfileUpdateInit() {
             $inputs.removeClass("error");
 
             // show the loading modal
-            showLoadingModal();
+            loadingModal("show");
 
             // populate the formData object
             getFormData();
@@ -783,7 +783,7 @@ function userProfileUpdateInit() {
                 url: "/dashboard/user/profile-update",
                 data: formData
             }).always(function(response) {
-                hideLoadingModal();
+                loadingModal("hide");
 
                 if (response === "success") {
                     $submit.addClass("no-input");
@@ -859,7 +859,7 @@ function userPasswordUpdateInit() {
             $inputs.removeClass("error");
 
             // show the loading modal
-            showLoadingModal();
+            loadingModal("show");
 
             // populate the formData object
             getFormData();
@@ -880,7 +880,7 @@ function userPasswordUpdateInit() {
                     url: "/dashboard/user/password-update",
                     data: formData
                 }).always(function(response) {
-                    hideLoadingModal();
+                    loadingModal("hide");
 
                     if (response === "success") {
                         $inputs.val("").trigger("change");

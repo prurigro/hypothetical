@@ -2,6 +2,7 @@
     $logo-offset: 10px;
     $desktop-logo-width: 35px;
     $mobile-logo-width: 30px;
+    @include font-sans-semibold;
     position: absolute;
     top: 0px;
     left: 0px;
