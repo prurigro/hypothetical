@@ -628,21 +628,25 @@ function editItemInit() {
             getFormData();
 
             // submit the update
-            $.ajax({
-                type: "POST",
-                url: "/dashboard/update",
-                data: formData
-            }).always(function(response) {
-                if (/^id:[0-9][0-9]*$/.test(response)) {
-                    uploadImage(response.replace(/^id:/, ""), 0);
-                } else {
-                    loadingModal("hide");
+            if (Object.keys(formData.columns).length) {
+                $.ajax({
+                    type: "POST",
+                    url: "/dashboard/update",
+                    data: formData
+                }).always(function(response) {
+                    if (/^id:[0-9][0-9]*$/.test(response)) {
+                        uploadImage(response.replace(/^id:/, ""), 0);
+                    } else {
+                        loadingModal("hide");
 
-                    showAlert("Failed to " + operation + " record", function() {
-                        submitting = false;
-                    });
-                }
-            });
+                        showAlert("Failed to " + operation + " record", function() {
+                            submitting = false;
+                        });
+                    }
+                });
+            } else {
+                uploadImage(formData.id, 0);
+            }
         }
     });
 }
