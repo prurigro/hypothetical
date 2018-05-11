@@ -15,12 +15,6 @@ Vue.use(Vuex);
 // CSRF prevention header
 Vue.http.headers.common["X-CSRF-TOKEN"] = env.csrfToken;
 
-// Import page components
-import HomePage from "pages/home.vue";
-import BlogPage from "pages/blog.vue";
-import ContactPage from "pages/contact.vue";
-import Error404Page from "pages/error404.vue";
-
 // Import global components
 import NavSection from "sections/nav.vue";
 import FooterSection from "sections/footer.vue";
@@ -30,6 +24,12 @@ import Lang from "partials/lang.vue";
 Vue.component("nav-component", NavSection);
 Vue.component("footer-component", FooterSection);
 Vue.component("lang", Lang);
+
+// Import page components
+import HomePage from "pages/home.vue";
+import BlogPage from "pages/blog.vue";
+import ContactPage from "pages/contact.vue";
+import Error404Page from "pages/error404.vue";
 
 // Create a router instance
 const router = new VueRouter({
