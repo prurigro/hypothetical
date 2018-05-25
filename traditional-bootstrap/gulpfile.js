@@ -68,7 +68,7 @@ const jsDashboardLibs = [
 ];
 
 // CSS libraries for the dashboard
-const jsDashboardCSS = [
+const cssDashboardLibs = [
     "node_modules/pickadate/lib/themes/default.css",
     "node_modules/pickadate/lib/themes/default.date.css",
     "bower_components/simplemde/dist/simplemde.min.css",
@@ -151,7 +151,7 @@ gulp.task("sass-dashboard", () => {
 
 // Task for dashboard css libraries
 gulp.task("css-dashboard-libs", () => {
-    return processCSS("lib-dashboard", jsDashboardCSS);
+    return processCSS("lib-dashboard", cssDashboardLibs);
 });
 
 // Task for public javascript
