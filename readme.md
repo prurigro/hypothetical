@@ -208,6 +208,7 @@ Models with their `$dashboard_type` set to `edit` also use:
     * `file`: Fields that contains file uploads
     * `display`: Displayed information that can't be edited
     * `user`: This should point to a foreign key that references the id on the users table; setting this will bind items to the user that created them
+* `type-new`: This takes the same options as `type` and overrides it when creating new items (eg: to allow input on a field during creation but not after)
 * `name`: (required by `file` and `image`) Used along with the record id to determine the filename
 * `delete`: (optional for `file` and `image`) Enables a delete button for the upload when set to true
 * `ext`: (required by `file`) Configures the file extension of the upload

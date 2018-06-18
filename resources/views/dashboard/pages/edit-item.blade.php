@@ -20,26 +20,27 @@
             @foreach($columns as $column)
                 <div class="row">
                     @set('value', $item[$column['name']])
+                    @set('type', $id == 'new' && array_key_exists('type-new', $column) ? $column['type-new'] : $column['type'])
 
-                    @if($column['type'] == 'hidden')
+                    @if($type == 'hidden')
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
-                    @elseif($column['type'] == 'user')
+                    @elseif($type == 'user')
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ Auth::id() }}" />
-                    @elseif($column['type'] != 'display' || $id != 'new')
+                    @elseif($type != 'display' || $id != 'new')
                         <div class="col-12 col-md-2">
                             <label for="{{ $column['name'] }}">{{ array_key_exists('title', $column) ? $column['title'] : ucfirst($column['name']) }}:</label>
                         </div>
 
                         <div class="col-12 col-md-10">
-                            @if($column['type'] == 'text')
+                            @if($type == 'text')
                                 <input class="text-input" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
-                            @elseif($column['type'] == 'date')
+                            @elseif($type == 'date')
                                 <input class="date-picker" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value == '' ? date('Y-m-d', time()) : preg_replace('/:[0-9][0-9]$/', '', $value) }}" />
-                            @elseif($column['type'] == 'mkd')
+                            @elseif($type == 'mkd')
                                 <div class="mkd-editor-container">
                                     <textarea class="mkd-editor" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}"></textarea>
                                 </div>
-                            @elseif($column['type'] == 'select')
+                            @elseif($type == 'select')
                                 <select class="text-input" name="{{ $column['name'] }}" id="{{ $column['name'] }}">
                                     @foreach($column['options'] as $option)
                                         @if($option === $value)
@@ -49,7 +50,7 @@
                                         @endif
                                     @endforeach
                                 </select>
-                            @elseif($column['type'] == 'image')
+                            @elseif($type == 'image')
                                 @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . '.jpg')
                                 <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
 
@@ -64,7 +65,7 @@
                                         @endif
                                     </div>
                                 @endif
-                            @elseif($column['type'] == 'file')
+                            @elseif($type == 'file')
                                 @set('current_file', "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'])
                                 <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}" />
 
@@ -79,7 +80,7 @@
                                         @endif
                                     </div>
                                 @endif
-                            @elseif($column['type'] == 'display')
+                            @elseif($type == 'display')
                                 <div class="text-display">{{ $value }}</div>
                             @endif
                         </div>
