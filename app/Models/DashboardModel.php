@@ -147,7 +147,6 @@ class DashboardModel extends Model
             }
         }
 
-
         return $query->get();
     }
 
