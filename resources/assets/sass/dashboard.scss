@@ -271,6 +271,9 @@ body {
         .search {
             margin-bottom: 10px;
             width: 100%;
+            padding: 3px 8px;
+            border: 1px solid fade-out(#000, 0.875);
+            border-radius: 0.25rem;
 
             @include media-breakpoint-down(sm) {
                 margin: 3px 3px 0px 3px;
