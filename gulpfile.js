@@ -216,7 +216,7 @@ gulp.task("watch", () => {
         notify: false,
 
         ghostMode: {
-            clicks: true,
+            clicks: false,
             forms: true,
             scroll: false
         }
