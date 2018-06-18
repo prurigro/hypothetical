@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Subscriptions extends DashboardModel
 {
     protected $table = 'subscriptions';

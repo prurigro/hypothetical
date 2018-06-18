@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Parsedown;
-use Illuminate\Database\Eloquent\Model;
 use App\User;
 
 class Blog extends DashboardModel
