@@ -999,21 +999,20 @@ form {
     top: 0px;
     left: 0px;
     visibility: hidden;
-    display: table;
+    display: flex;
     width: 100%;
     height: 100%;
+    padding: $grid-gutter-width;
+    justify-content: center;
+    align-items: center;
     background-color: fade-out(lighten($c-dashboard-light, 1%), 0.6);
     opacity: 0;
     transition: opacity 250ms;
 
-    .modal-container {
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
-
-        .card {
-            margin: 0px;
-        }
+    .card {
+        position: relative;
+        margin: 0px;
+        max-width: 500px;
 
         .btn {
             margin: 20px 15px;
@@ -1025,19 +1024,23 @@ form {
         }
     }
 
-    &#alert-modal {
-        .modal-container {
-            .card {
-                position: relative;
+    &.alert .card {
+        .message {
+            min-height: 50px;
+            padding: 15px 20px;
+            text-align: left;
+
+            @include media-breakpoint-up(md) {
+                padding-right: 85px;
+            }
+        }
+
+        .btn {
+            @include media-breakpoint-down(sm) {
+                margin-top: 0px;
             }
 
-            .message {
-                min-height: 50px;
-                padding: 15px 75px 15px 20px;
-                text-align: left;
-            }
-
-            .btn {
+            @include media-breakpoint-up(md) {
                 position: absolute;
                 top: 50%;
                 right: 0px;
