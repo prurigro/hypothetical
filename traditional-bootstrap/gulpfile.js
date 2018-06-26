@@ -203,8 +203,7 @@ gulp.task("watch", () => {
     });
 
     gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ], gulp.series(browserSyncReload));
-    gulp.watch(jsPublic, gulp.series("js-public", browserSyncReload));
-    gulp.watch("resources/assets/js/**/dashboard.js", gulp.series("js-dashboard", browserSyncReload));
+    gulp.watch("resources/assets/js/**/*.js", gulp.series(gulp.parallel("js-public", "js-dashboard"), browserSyncReload));
     gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard", "sass-error"));
 });
 
