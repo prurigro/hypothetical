@@ -36,14 +36,15 @@ function askConfirmation(message, command, cancelCommand) {
         $cancelButton.off("click", closeConfirmationModal);
         $confirmButton.off("click", confirmModal);
 
-        // clear the heading
-        $heading.empty();
-
         // hide the modal
         $confirmationModal.css({ opacity: 0 });
 
         setTimeout(function() {
+            // set visibility to hidden
             $confirmationModal.css({ visibility: "hidden" });
+
+            // clear the heading
+            $heading.empty();
         }, fadeTime);
     };
 
