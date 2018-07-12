@@ -108,7 +108,7 @@ class DashboardController extends Controller {
         $model_class = Dashboard::getModel($model);
 
         if ($model_class != null && $model_class::$export) {
-            $filename = preg_replace([ '/\ /', '/[^a-z0-9\-]/' ], [ '-', '' ], strtolower(env('APP_NAME'))) . '-' . $model . '-' . date('m-d-Y');
+            $filename = preg_replace([ '/\ /', '/[^a-z0-9\-]/' ], [ '-', '' ], strtolower(env('APP_NAME'))) . '-' . $model . '-' . date('m-d-Y') . '.xlsx';
             $headings = $model_class::getDashboardColumnData('headings', false);
             $items = $model_class::select($model_class::getDashboardColumnData('names', false))->get()->toArray();
             array_unshift($items, $headings);
