@@ -93,8 +93,8 @@ msg "Updating ${c_y}CACHE_BUST$c_w variable"
 sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(LC_CTYPE=C LANG=C tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env
 
 (( ! no_artisan )) && {
-    msg "Running: ${c_m}php artisan migrate"
-    php artisan migrate || error "${c_m}php artisan migrate$c_w exited with an error status"
+    msg "Running: ${c_m}php artisan migrate --force"
+    php artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"
 }
 
 msg "Running: ${c_m}npm install"
