@@ -1,10 +1,10 @@
 .DS_Store
+.phpunit.result.cache
 /.env
 /.idea
 /.vagrant
 /.vscode
-/npm-debug.log
-/yarn-error.log
+/nbproject
 /bower_components
 /node_modules
 /public/css
@@ -16,3 +16,5 @@
 /storage/*.key
 /storage/exports
 /vendor
+/npm-debug.log
+/yarn-error.log
