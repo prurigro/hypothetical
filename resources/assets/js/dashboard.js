@@ -635,7 +635,7 @@ function editItemInit() {
                     url: "/dashboard/update",
                     data: formData
                 }).always(function(response) {
-                    if (/^id:[0-9][0-9]*$/.test(response)) {
+                    if ((/^id:[0-9][0-9]*$/).test(response)) {
                         uploadImage(response.replace(/^id:/, ""), 0);
                     } else {
                         loadingModal("hide");
@@ -687,7 +687,7 @@ function userProfileImageInit() {
                 }).always(function(response) {
                     loadingModal("hide");
 
-                    if (/\.png\?version=/.test(response)) {
+                    if ((/\.png\?version=/).test(response)) {
                         $display.css({ backgroundImage: `url(${response})` });
                         $delete.removeClass("inactive");
                         submitting = false;
