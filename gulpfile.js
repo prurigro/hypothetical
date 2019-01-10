@@ -19,7 +19,7 @@ const babel = require("gulp-babel"),
 
 // Vue packages
 const browserify = require("browserify"),
-    vueify = require("vueify"),
+    vueify = require("vueify-next"),
     source = require("vinyl-source-stream"),
     buffer = require("vinyl-buffer");
 
