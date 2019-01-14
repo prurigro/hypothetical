@@ -124,10 +124,12 @@ function processJavaScript(ouputFilename, inputFiles, es6) {
         .pipe(concat(`${ouputFilename}.js`));
 
     if (es6) {
-        javascript.pipe(babel());
-    }
-
-    if (isProduction) {
+        if (isProduction) {
+            javascript.pipe(babel()).pipe(stripDebug()).pipe(uglify());
+        } else {
+            javascript.pipe(babel());
+        }
+    } else if (isProduction) {
         javascript.pipe(stripDebug()).pipe(uglify());
     }
 
