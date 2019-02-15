@@ -17,6 +17,7 @@
             <div class="nav-section-component-links-wrapper">
                 <router-link
                     v-for="link in navLinks"
+                    :key="link.path.replace(/^\//, '').replace(/\//, '-')"
                     class="navlink"
                     :to="link.path"
                     exact>
