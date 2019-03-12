@@ -11,9 +11,25 @@
                 <div class="col-12 col-md-8 offset-md-2">
                     <div id="contact-form">
                         <form action="#" method="POST" accept-charset="UTF-8" @submit.prevent="submit">
-                            <input type="text" v-model="form.name" name="name" placeholder="Name" />
-                            <input type="text" v-model="form.email" name="email" placeholder="Email" />
-                            <textarea name="message" v-model="form.message" placeholder="Message"></textarea>
+                            <input
+                                v-model="form.name"
+                                name="name"
+                                type="text"
+                                placeholder="Name"
+                            />
+
+                            <input
+                                v-model="form.email"
+                                name="email"
+                                type="text"
+                                placeholder="Email"
+                            />
+
+                            <textarea
+                                v-model="form.message"
+                                name="message"
+                                placeholder="Message">
+                            </textarea>
 
                             <input
                                 class="submit"
