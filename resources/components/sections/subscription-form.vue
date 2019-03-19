@@ -2,8 +2,8 @@
     <div class="subscription-form-section-component">
         <form action="#" method="POST" accept-charset="UTF-8" @submit.prevent="submit">
             <div class="notification" :class="[ notifyStatus, { visible: notifyStatus !== '' } ]">{{ notifyText }}</div>
-            <input type="text" v-model="form.email" name="email" placeholder="Email" />
-            <input type="text" v-model="form.name" name="name" placeholder="Name" />
+            <input v-model="form.email" type="text" name="email" placeholder="Email" />
+            <input v-model="form.name" type="text" name="name" placeholder="Name" />
             <input type="submit" name="submit" value="Subscribe" />
         </form>
     </div>
