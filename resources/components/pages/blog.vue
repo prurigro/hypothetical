@@ -23,7 +23,10 @@
                                 <span class="blog-entry-content-info-date">{{ entry.date }}</span>
                             </div>
 
-                            <p class="blog-entry-content-body" v-html="entry.body"></p>
+                            <div
+                                class="blog-entry-content-body"
+                                v-html="entry.body">
+                            </div>
 
                             <div class="blog-entry-content-taglist">
                                 <span
