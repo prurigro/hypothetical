@@ -4,7 +4,7 @@
     <script src="/js/lib.js?version={{ env('CACHE_BUST') }}"></script>
     <link rel="stylesheet" href="/css/app.css?version={{ env('CACHE_BUST') }}" />
 
-    <script type="text/javascript">
+    <script>
         var env = {
             appName: "{{ env('APP_NAME') }}",
             appDesc: "{{ env('APP_DESC') }}",
