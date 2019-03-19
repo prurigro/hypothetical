@@ -66,7 +66,7 @@ Route::get('/language/{lang}', function($lang) {
 });
 
 Route::get('/', function() {
-    return view('pages.index');
+    return view('pages.home');
 });
 
 Route::get('/blog', function() {
