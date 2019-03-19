@@ -4,9 +4,9 @@
     @set('device_mobile', preg_match('/Mobi/', Request::header('User-Agent')) || preg_match('/iP(hone|ad|od);/', Request::header('User-Agent')))
 
     <head>
+        <meta charset="UTF-8" />
         <title>{{ $page_title }}</title>
 
-        <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#fcfcfc" />
