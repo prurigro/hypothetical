@@ -93,6 +93,7 @@
                     this.$http.post("/api/contact-submit" + env.apiToken, JSON.stringify(this.form)).then((response) => {
                         // Success
                         $(this.$el).find(":input").attr("disabled", true);
+                        this.errorCount = 0;
                         this.submitSuccess = true;
                         this.submitting = false;
                     }, (response) => {
