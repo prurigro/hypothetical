@@ -120,7 +120,7 @@
                 position: relative;
                 display: inline-block;
                 color: $c-text-light;
-                font-size: 14px;
+                font-size: px2rem(14px);
                 text-transform: uppercase;
 
                 @media (max-width: $nav-mobile-max) {

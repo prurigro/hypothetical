@@ -52,7 +52,7 @@
             &-title {
                 @include font-sans-semibold;
                 margin-bottom: $grid-gutter-width;
-                font-size: 25px;
+                font-size: px2rem(25px);
                 text-transform: uppercase;
             }
 

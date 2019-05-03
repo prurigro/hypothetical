@@ -5,8 +5,11 @@
 // Libraries
 @import "bootstrap/scss/bootstrap.scss";
 
-// Supplementary
+// Functionality
+@import "functions/**/*.scss";
 @import "mixins/**/*.scss";
+
+// Supplementary
 @import "classes/**/*.scss";
 @import "partials/**/*.scss";
 @import "sections/**/*.scss";
@@ -40,6 +43,7 @@ body {
     @include font-sans;
     width: 100%;
     color: $c-text;
+    font-size: $base-font-size;
     -webkit-overflow-scrolling: touch;
 }
 

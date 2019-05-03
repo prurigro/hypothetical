@@ -7,16 +7,16 @@
     h1 {
         @include font-sans-bold;
         width: 100%;
-        font-size: 22px;
+        font-size: px2rem(22px);
         text-align: center;
         text-transform: uppercase;
 
         @include media-breakpoint-up(sm) {
-            font-size: 32px;
+            font-size: px2rem(32px);
         }
 
         @include media-breakpoint-up(lg) {
-            font-size: 48px;
+            font-size: px2rem(48px);
         }
     }
 }

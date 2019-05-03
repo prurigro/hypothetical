@@ -9,7 +9,7 @@
         padding: 5px 10px;
         border: 2px solid fade-out($c-base, 0.75);
         background-color: rgba(255, 255, 255, 0.8);
-        font-size: 14px;
+        font-size: px2rem(14px);
         transition: border $trans-speed;
 
         &:focus {
@@ -48,7 +48,7 @@
         padding: 5px 10px;
         background-color: lighten($c-error, 15%);
         color: $c-text-light;
-        font-size: 14px;
+        font-size: px2rem(14px);
         text-align: center;
         opacity: 0;
         transition: opacity $trans-speed;
