@@ -7,7 +7,7 @@
   "description": "The Hypothetical website template",
   "license": "MIT",
   "dependencies": {
-    "Sortable": "~1.8.4",
+    "Sortable": "~1.9.0",
     "simplemde": "~1.11.2",
     "SpinKit": "~1.2.5",
     "list.js": "^1.5.0"
