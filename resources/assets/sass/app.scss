@@ -1,3 +1,9 @@
+// Base font size
+$base-font-size: 16px;
+
+// Functions
+@import "functions/**/*.scss";
+
 // Core
 @import "_var";
 @import "_fonts";
@@ -5,11 +11,8 @@
 // Libraries
 @import "bootstrap/scss/bootstrap.scss";
 
-// Functionality
-@import "functions/**/*.scss";
-@import "mixins/**/*.scss";
-
 // Supplementary
+@import "mixins/**/*.scss";
 @import "classes/**/*.scss";
 @import "partials/**/*.scss";
 @import "sections/**/*.scss";
