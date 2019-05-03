@@ -33,6 +33,7 @@
 
 html {
     width: 100%;
+    font-size: $base-font-size;
 
     &.no-scroll {
         overflow-y: hidden;
@@ -43,7 +44,6 @@ body {
     @include font-sans;
     width: 100%;
     color: $c-text;
-    font-size: $base-font-size;
     -webkit-overflow-scrolling: touch;
 }
 
