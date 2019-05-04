@@ -1,7 +1,7 @@
 .nav-section-component {
-    $logo-offset: 10px;
-    $desktop-logo-width: 35px;
-    $mobile-logo-width: 30px;
+    $logo-offset: px2rem(10px);
+    $desktop-logo-width: px2rem(35px);
+    $mobile-logo-width: px2rem(30px);
     @include font-sans-semibold;
     position: absolute;
     top: 0px;
@@ -25,8 +25,8 @@
             right: ($grid-gutter-width / 2);
             transform: translateY(-50%);
             margin: 0px;
-            width: 22px;
-            height: 14px;
+            width: px2rem(22px);
+            height: px2rem(14px);
             padding: 0px;
             border: 0;
             border-radius: 0;
@@ -126,7 +126,7 @@
                 @media (max-width: $nav-mobile-max) {
                     display: block;
                     height: $nav-link-height-mobile;
-                    padding: 0px 10px;
+                    padding: 0px px2rem(10px);
                     background-color: $c-base;
                     line-height: $nav-link-height-mobile;
                     transition: background-color 150ms;
@@ -137,7 +137,7 @@
                 }
 
                 @media (min-width: $nav-desktop-min) {
-                    padding: 5px 20px;
+                    padding: px2rem(5px) px2rem(20px);
                     transition: color 150ms;
 
                     &:first-child {
@@ -159,7 +159,7 @@
 
                 span {
                     position: relative;
-                    padding: 3px 0px;
+                    padding: px2rem(3px) 0px;
 
                     &:after {
                         content: "";

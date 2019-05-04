@@ -31,9 +31,10 @@ $c-error: #fa2036; // error
 $nav-link-count: 3;
 
 // Sizes
-$nav-height-desktop: 60px;
-$nav-height-mobile: 50px;
-$nav-link-height-mobile: 50px;
+$nav-height-desktop: px2rem(60px);
+$nav-height-mobile: px2rem(50px);
+$nav-link-height-mobile: px2rem(50px);
+$grid-gutter-width: px2rem(30px);
 
 // Breakpoints
 $nav-desktop-min: 768px;
