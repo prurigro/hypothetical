@@ -1,15 +1,15 @@
 .contact-page-component {
     $trans-speed: 100ms;
-    padding-top: px2rem(35px);
+    padding-top: pxrem(35);
     padding-bottom: 0px;
 
     input, textarea {
-        margin-bottom: px2rem(20px);
+        margin-bottom: pxrem(20);
         width: 100%;
-        padding: px2rem(5px) px2rem(10px);
+        padding: pxrem(5) pxrem(10);
         border: 2px solid fade-out($c-base, 0.75);
         background-color: rgba(255, 255, 255, 0.8);
-        font-size: px2rem(14px);
+        font-size: pxrem(14);
         transition: border $trans-speed;
 
         &:focus {
@@ -23,7 +23,7 @@
 
     textarea {
         resize: none;
-        height: px2rem(150px);
+        height: pxrem(150);
     }
 
     .submit {
@@ -44,11 +44,11 @@
     }
 
     .notification {
-        margin: 0px auto px2rem(15px) auto;
-        padding: px2rem(5px) px2rem(10px);
+        margin: 0px auto pxrem(15) auto;
+        padding: pxrem(5) pxrem(10);
         background-color: lighten($c-error, 15%);
         color: $c-text-light;
-        font-size: px2rem(14px);
+        font-size: pxrem(14);
         text-align: center;
         opacity: 0;
         transition: opacity $trans-speed;

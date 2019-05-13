@@ -1,8 +1,8 @@
 .footer-section-component {
     width: 100%;
-    height: px2rem(32px);
-    padding: 0px px2rem(10px);
+    height: pxrem(32);
+    padding: 0px pxrem(10);
     background-color: $c-base;
     color: $c-text-light;
-    line-height: px2rem(32px);
+    line-height: pxrem(32);
 }

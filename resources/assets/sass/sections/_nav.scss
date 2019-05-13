@@ -1,7 +1,7 @@
 .nav-section-component {
-    $logo-offset: px2rem(10px);
-    $desktop-logo-width: px2rem(35px);
-    $mobile-logo-width: px2rem(30px);
+    $logo-offset: pxrem(10);
+    $desktop-logo-width: pxrem(35);
+    $mobile-logo-width: pxrem(30);
     @include font-sans-semibold;
     position: absolute;
     top: 0px;
@@ -25,8 +25,8 @@
             right: ($grid-gutter-width / 2);
             transform: translateY(-50%);
             margin: 0px;
-            width: px2rem(22px);
-            height: px2rem(14px);
+            width: pxrem(22);
+            height: pxrem(14);
             padding: 0px;
             border: 0;
             border-radius: 0;
@@ -120,13 +120,13 @@
                 position: relative;
                 display: inline-block;
                 color: $c-text-light;
-                font-size: px2rem(14px);
+                font-size: pxrem(14);
                 text-transform: uppercase;
 
                 @media (max-width: $nav-mobile-max) {
                     display: block;
                     height: $nav-link-height-mobile;
-                    padding: 0px px2rem(10px);
+                    padding: 0px pxrem(10);
                     background-color: $c-base;
                     line-height: $nav-link-height-mobile;
                     transition: background-color 150ms;
@@ -137,7 +137,7 @@
                 }
 
                 @media (min-width: $nav-desktop-min) {
-                    padding: px2rem(5px) px2rem(20px);
+                    padding: pxrem(5) pxrem(20);
                     transition: color 150ms;
 
                     &:first-child {
@@ -159,7 +159,7 @@
 
                 span {
                     position: relative;
-                    padding: px2rem(3px) 0px;
+                    padding: pxrem(3) 0px;
 
                     &:after {
                         content: "";
