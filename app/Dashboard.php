@@ -79,7 +79,7 @@ class Dashboard
                 return null;
             }
 
-            return $model_class;
+            return new $model_class;
         } else {
             return null;
         }
