@@ -556,12 +556,8 @@ function editItemInit() {
 
     // enable the datepicker for each element with the date-picker class
     $datePickers.each(function() {
-        $(this).pickadate({
-            format: "yyyy-mm-dd",
-            formatSubmit: "yyyy-mm-dd",
-            clear: false,
-            selectYears: true,
-            selectMonths: true
+        $(this).flatpickr({
+            enableTime: true
         });
     });
 

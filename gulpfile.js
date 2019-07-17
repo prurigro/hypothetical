@@ -61,8 +61,7 @@ const jsDashboardLibs = [
     "node_modules/jquery/dist/jquery.js",
     "node_modules/popper.js/dist/umd/popper.js",
     "node_modules/bootstrap/dist/js/bootstrap.js",
-    "node_modules/pickadate/lib/picker.js",
-    "node_modules/pickadate/lib/picker.date.js",
+    "node_modules/flatpickr/dist/flatpickr.js",
     "bower_components/Sortable/Sortable.js",
     "bower_components/list.js/dist/list.js",
     "bower_components/simplemde/dist/simplemde.min.js"
@@ -70,8 +69,7 @@ const jsDashboardLibs = [
 
 // CSS libraries for the dashboard
 const cssDashboardLibs = [
-    "node_modules/pickadate/lib/themes/default.css",
-    "node_modules/pickadate/lib/themes/default.date.css",
+    "node_modules/flatpickr/dist/flatpickr.css",
     "bower_components/simplemde/dist/simplemde.min.css",
     "bower_components/SpinKit/css/spinners/11-folding-cube.css"
 ];

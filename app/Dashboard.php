@@ -54,7 +54,7 @@ class Dashboard
         [ 'name' => 'GreenSock', 'url' => 'https://greensock.com/gsap' ],
         [ 'name' => 'jQuery', 'url' => 'https://jquery.org' ],
         [ 'name' => 'List.js', 'url' => 'http://listjs.com' ],
-        [ 'name' => 'pickadate.js', 'url' => 'http://amsul.ca/pickadate.js/' ],
+        [ 'name' => 'flatpickr', 'url' => 'https://flatpickr.js.org' ],
         [ 'name' => 'Popper.js', 'url' => 'https://popper.js.org' ],
         [ 'name' => 'SimpleMDE Markdown Editor', 'url' => 'https://simplemde.com' ],
         [ 'name' => 'Sortable', 'url' => 'https://github.com/RubaXa/Sortable' ],
