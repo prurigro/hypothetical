@@ -361,7 +361,7 @@ function editItemInit() {
         $datePickers.each(function() {
             const $this = $(this),
                 column = $this.attr("id"),
-                value = $this.val() + ":00";
+                value = $this.val();
 
             addFormData(column, value);
         });
