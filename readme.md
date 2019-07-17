@@ -202,13 +202,14 @@ Models with their `$dashboard_type` set to `edit` also use:
     * `text`: Text input field for text data
     * `mkd`: Markdown editor for text data containing markdown
     * `date`: Date and time selection tool for date/time data
-    * `select`: Text input via option select with possible options in an `options` array
+    * `select`: Text input via option select
     * `hidden`: Fields that will contain values to pass to the update function but won't appear on the page (this must be used for the sort column)
     * `image`: Fields that contain image uploads
     * `file`: Fields that contains file uploads
     * `display`: Displayed information that can't be edited
     * `user`: This should point to a foreign key that references the id on the users table; setting this will bind items to the user that created them
 * `type-new`: This takes the same options as `type` and overrides it when creating new items (eg: to allow input on a field during creation but not after)
+* `options` (required by `select`) Takes an array of options that are either strings or arrays containing the keys `title` (for what will display with the option) and `value` (for what will be recorded)
 * `name`: (required by `file` and `image`) Used along with the record id to determine the filename
 * `delete`: (optional for `file` and `image`) Enables a delete button for the upload when set to true
 * `ext`: (required by `file`) Configures the file extension of the upload

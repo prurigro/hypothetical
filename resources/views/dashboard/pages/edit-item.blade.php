@@ -43,10 +43,18 @@
                             @elseif($type == 'select')
                                 <select class="text-input" name="{{ $column['name'] }}" id="{{ $column['name'] }}">
                                     @foreach($column['options'] as $option)
-                                        @if($option === $value)
-                                            <option value="{{ $option }}" selected="selected">{{ $option }}</option>
+                                        @if(is_array($option))
+                                            @set('select_value', $option['value'])
+                                            @set('select_title', $option['title'])
                                         @else
-                                            <option value="{{ $option }}">{{ $option }}</option>
+                                            @set('select_value', $option)
+                                            @set('select_title', $option)
+                                        @endif
+
+                                        @if($select_value === $value)
+                                            <option value="{{ $select_value }}" selected="selected">{{ $select_title }}</option>
+                                        @else
+                                            <option value="{{ $select_value }}">{{ $select_title }}</option>
                                         @endif
                                     @endforeach
                                 </select>
