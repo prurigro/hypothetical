@@ -36,7 +36,7 @@ if (!isProduction) {
 // Declare plugin settings
 const sassOutputStyle = isProduction ? "compressed" : "expanded",
     sassPaths = [ "bower_components", "node_modules" ],
-    autoprefixerSettings = { remove: false, cascade: false, browsers: [ "last 6 versions" ] },
+    autoprefixerSettings = { remove: false, cascade: false },
     vuePaths = [ "./bower_components", "./node_modules", "./resources/components", "./resources/assets/js" ];
 
 // Javascript files for the public site
