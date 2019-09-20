@@ -103,11 +103,11 @@ function processSass(filename) {
 }
 
 // Process css
-function processCSS(ouputFilename, inputFiles) {
+function processCSS(outputFilename, inputFiles) {
     const css = gulp.src(inputFiles)
         .pipe(plumber(handleError))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
-        .pipe(concat(`${ouputFilename}.css`));
+        .pipe(concat(`${outputFilename}.css`));
 
     if (isProduction) {
         css.pipe(cleanCSS());
@@ -117,7 +117,7 @@ function processCSS(ouputFilename, inputFiles) {
 }
 
 // Process vue
-function processVue(ouputFilename, inputFile) {
+function processVue(outputFilename, inputFile) {
     const javascript = browserify({
         entries: [ inputFile ],
         paths: vuePaths
@@ -125,7 +125,7 @@ function processVue(ouputFilename, inputFile) {
         .transform(vueify)
         .bundle()
         .on("error", handleError)
-        .pipe(source(`${ouputFilename}.js`))
+        .pipe(source(`${outputFilename}.js`))
         .pipe(buffer());
 
     if (isProduction) {
@@ -136,10 +136,10 @@ function processVue(ouputFilename, inputFile) {
 }
 
 // Process javascript
-function processJavaScript(ouputFilename, inputFiles, es6) {
+function processJavaScript(outputFilename, inputFiles, es6) {
     const javascript = gulp.src(inputFiles)
         .pipe(plumber(handleError))
-        .pipe(concat(`${ouputFilename}.js`));
+        .pipe(concat(`${outputFilename}.js`));
 
     if (es6) {
         if (isProduction) {
