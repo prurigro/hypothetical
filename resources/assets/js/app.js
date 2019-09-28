@@ -1,5 +1,5 @@
-// Determine whether to use vue.js in debug or production mode
-const Vue = env.debug ? require("vue/dist/vue.js") : require("vue/dist/vue.min.js");
+// Initialize Vue
+const Vue = require("vue/dist/vue.js");
 
 // Import plugins
 import VueRouter from "vue-router";

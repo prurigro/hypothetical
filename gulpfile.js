@@ -2,6 +2,7 @@
 const gulp = require("gulp"),
     minimist = require("minimist"),
     log = require("fancy-log"),
+    insert = require("gulp-insert"),
     plumber = require("gulp-plumber"),
     concat = require("gulp-concat");
 
@@ -40,7 +41,7 @@ const sassOutputStyle = isProduction ? "compressed" : "expanded",
     vuePaths = [ "./bower_components", "./node_modules", "./resources/components", "./resources/assets/js" ];
 
 // Javascript files for the public site
-const jsPublic = [ "resources/assets/js/app.js" ];
+const jsPublic = "resources/assets/js/app.js";
 
 // Javascript libraries for the public site
 const jsPublicLibs = [
@@ -118,21 +119,42 @@ function processCSS(outputFilename, inputFiles) {
 
 // Process vue
 function processVue(outputFilename, inputFile) {
-    const javascript = browserify({
-        entries: [ inputFile ],
-        paths: vuePaths
-    }).transform("babelify")
-        .transform(vueify)
-        .bundle()
-        .on("error", handleError)
-        .pipe(source(`${outputFilename}.js`))
-        .pipe(buffer());
+    const processedDir = "storage/app/",
+        processedFile = `__${outputFilename}.js`;
 
-    if (isProduction) {
-        javascript.pipe(stripDebug()).pipe(uglify().on("error", handleError));
-    }
+    const preProcess = () => {
+        const javascript = gulp.src([ inputFile ]);
 
-    return javascript.pipe(gulp.dest("public/js/"));
+        if (isProduction) {
+            javascript.pipe(insert.transform(function(contents) {
+                return contents.replace(/vue\.js/, "vue.min.js");
+            }));
+        }
+
+        return javascript.pipe(concat(processedFile))
+            .pipe(gulp.dest(processedDir));
+    };
+
+    const process = () => {
+        const javascript = browserify({
+            entries: [ processedDir + processedFile ],
+            paths: vuePaths
+        }).transform("babelify")
+            .transform(vueify)
+            .bundle()
+            .on("error", handleError)
+            .pipe(source(`${outputFilename}.js`))
+            .pipe(buffer());
+
+        if (isProduction) {
+            javascript.pipe(stripDebug()).pipe(uglify().on("error", handleError));
+        }
+
+        return javascript.pipe(gulp.dest("public/js/"));
+    };
+
+    preProcess();
+    return process();
 }
 
 // Process javascript
