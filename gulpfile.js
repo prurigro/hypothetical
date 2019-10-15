@@ -63,7 +63,7 @@ const jsDashboardLibs = [
     "node_modules/popper.js/dist/umd/popper.js",
     "node_modules/bootstrap/dist/js/bootstrap.js",
     "node_modules/flatpickr/dist/flatpickr.js",
-    "bower_components/Sortable/Sortable.js",
+    "node_modules/sortablejs/Sortable.js",
     "bower_components/list.js/dist/list.js",
     "bower_components/simplemde/dist/simplemde.min.js"
 ];

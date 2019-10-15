@@ -60,17 +60,15 @@ const jsDashboardLibs = [
     "node_modules/jquery/dist/jquery.js",
     "node_modules/popper.js/dist/umd/popper.js",
     "node_modules/bootstrap/dist/js/bootstrap.js",
-    "node_modules/pickadate/lib/picker.js",
-    "node_modules/pickadate/lib/picker.date.js",
-    "bower_components/Sortable/Sortable.js",
+    "node_modules/flatpickr/dist/flatpickr.js",
+    "node_modules/sortablejs/Sortable.js",
     "bower_components/list.js/dist/list.js",
     "bower_components/simplemde/dist/simplemde.min.js"
 ];
 
 // CSS libraries for the dashboard
 const cssDashboardLibs = [
-    "node_modules/pickadate/lib/themes/default.css",
-    "node_modules/pickadate/lib/themes/default.date.css",
+    "node_modules/flatpickr/dist/flatpickr.css",
     "bower_components/simplemde/dist/simplemde.min.css",
     "bower_components/SpinKit/css/spinners/11-folding-cube.css"
 ];
@@ -104,11 +102,11 @@ function processSass(filename) {
 }
 
 // Process css
-function processCSS(ouputFilename, inputFiles) {
+function processCSS(outputFilename, inputFiles) {
     const css = gulp.src(inputFiles)
         .pipe(plumber(handleError))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
-        .pipe(concat(`${ouputFilename}.css`));
+        .pipe(concat(`${outputFilename}.css`));
 
     if (isProduction) {
         css.pipe(cleanCSS());
@@ -118,10 +116,10 @@ function processCSS(ouputFilename, inputFiles) {
 }
 
 // Process javascript
-function processJavaScript(ouputFilename, inputFiles, es6) {
+function processJavaScript(outputFilename, inputFiles, es6) {
     const javascript = gulp.src(inputFiles)
         .pipe(plumber(handleError))
-        .pipe(concat(`${ouputFilename}.js`));
+        .pipe(concat(`${outputFilename}.js`));
 
     if (es6) {
         if (isProduction) {
