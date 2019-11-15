@@ -46,7 +46,7 @@ const jsPublic = "resources/js/app.js";
 // Javascript libraries for the public site
 const jsPublicLibs = [
     "node_modules/jquery/dist/jquery.js",
-    "node_modules/gsap/src/uncompressed/TweenMax.js",
+    "node_modules/gsap/gsap-core.js",
     "node_modules/what-input/dist/what-input.js"
 ];
 
