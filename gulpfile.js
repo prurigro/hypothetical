@@ -38,10 +38,10 @@ if (!isProduction) {
 const sassOutputStyle = isProduction ? "compressed" : "expanded",
     sassPaths = [ "bower_components", "node_modules" ],
     autoprefixerSettings = { remove: false, cascade: false },
-    vuePaths = [ "./bower_components", "./node_modules", "./resources/components", "./resources/assets/js" ];
+    vuePaths = [ "./bower_components", "./node_modules", "./resources/components", "./resources/js" ];
 
 // Javascript files for the public site
-const jsPublic = "resources/assets/js/app.js";
+const jsPublic = "resources/js/app.js";
 
 // Javascript libraries for the public site
 const jsPublicLibs = [
@@ -52,7 +52,7 @@ const jsPublicLibs = [
 
 // Javascript files for the dashboard
 const jsDashboard = [
-    "resources/assets/js/dashboard.js"
+    "resources/js/dashboard.js"
 ];
 
 // Javascript libraries for the dashboard
@@ -75,7 +75,7 @@ const cssDashboardLibs = [
 
 // Paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
-    "resources/assets/fonts/**"
+    "resources/fonts/**"
 ];
 
 // Handle errors
@@ -86,7 +86,7 @@ function handleError(err) {
 
 // Process sass
 function processSass(filename) {
-    const css = gulp.src(`resources/assets/sass/${filename}.scss`)
+    const css = gulp.src(`resources/sass/${filename}.scss`)
         .pipe(plumber(handleError))
         .pipe(sassGlob())
         .pipe(sass({ outputStyle: sassOutputStyle, includePaths: sassPaths }))
@@ -243,9 +243,9 @@ gulp.task("watch", () => {
     });
 
     gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ], gulp.series(browserSyncReload));
-    gulp.watch([ "resources/assets/js/**/app.js", "resources/assets/js/mixins/**/*.js", "resources/components/**/*.vue" ], gulp.series("js-public", browserSyncReload));
-    gulp.watch("resources/assets/js/**/dashboard.js", gulp.series("js-dashboard", browserSyncReload));
-    gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard", "sass-error"));
+    gulp.watch([ "resources/js/**/app.js", "resources/js/mixins/**/*.js", "resources/components/**/*.vue" ], gulp.series("js-public", browserSyncReload));
+    gulp.watch("resources/js/**/dashboard.js", gulp.series("js-dashboard", browserSyncReload));
+    gulp.watch("resources/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard", "sass-error"));
 });
 
 // Task to run non-development tasks

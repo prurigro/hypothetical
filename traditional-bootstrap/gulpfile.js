@@ -34,11 +34,11 @@ const sassOutputStyle = isProduction ? "compressed" : "expanded",
 
 // Javascript files for the public site
 const jsPublic = [
-    "resources/assets/js/site-vars.js",
-    "resources/assets/js/nav.js",
-    "resources/assets/js/contact.js",
-    "resources/assets/js/subscription.js",
-    "resources/assets/js/app.js"
+    "resources/js/site-vars.js",
+    "resources/js/nav.js",
+    "resources/js/contact.js",
+    "resources/js/subscription.js",
+    "resources/js/app.js"
 ];
 
 // Javascript libraries for the public site
@@ -50,7 +50,7 @@ const jsPublicLibs = [
 
 // Javascript files for the dashboard
 const jsDashboard = [
-    "resources/assets/js/dashboard.js"
+    "resources/js/dashboard.js"
 ];
 
 // Javascript libraries for the dashboard
@@ -73,7 +73,7 @@ const cssDashboardLibs = [
 
 // Paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
-    "resources/assets/fonts/**"
+    "resources/fonts/**"
 ];
 
 // Handle errors
@@ -84,7 +84,7 @@ function handleError(err) {
 
 // Process sass
 function processSass(filename) {
-    const css = gulp.src(`resources/assets/sass/${filename}.scss`)
+    const css = gulp.src(`resources/sass/${filename}.scss`)
         .pipe(plumber(handleError))
         .pipe(sassGlob())
         .pipe(sass({ outputStyle: sassOutputStyle, includePaths: sassPaths }))
@@ -201,8 +201,8 @@ gulp.task("watch", () => {
     });
 
     gulp.watch([ "app/**/*.php", "routes/**/*.php", "resources/views/**/*.blade.php" ], gulp.series(browserSyncReload));
-    gulp.watch("resources/assets/js/**/*.js", gulp.series(gulp.parallel("js-public", "js-dashboard"), browserSyncReload));
-    gulp.watch("resources/assets/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard", "sass-error"));
+    gulp.watch("resources/js/**/*.js", gulp.series(gulp.parallel("js-public", "js-dashboard"), browserSyncReload));
+    gulp.watch("resources/sass/**/*.scss", gulp.parallel("sass-public", "sass-dashboard", "sass-error"));
 });
 
 // Task to run non-development tasks

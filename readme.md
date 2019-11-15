@@ -74,22 +74,22 @@ The following list of files and directories are where various pieces of the publ
 
 * `resources/views/templates/base.blade.php`: The outer template for the entire website
 * `resources/views/templates/public.blade.php`: The inner template for the public site
-* `resources/assets/fonts`: The folder containing website fonts (these get loaded into `public/fonts/` by the gulpfile)
-* `resources/assets/js/app.js`: The main javascript file that loads the public site
-* `resources/assets/js/mixins`: The folder containing Vue.js mixins that can be applied globally in `resources/assets/js/app.js` or in individual components
-* `resources/assets/js/mixins/base-page.js`: The base-page mixin with page functionality that should be imported into all page components
+* `resources/fonts`: The folder containing website fonts (these get loaded into `public/fonts/` by the gulpfile)
+* `resources/js/app.js`: The main javascript file that loads the public site
+* `resources/js/mixins`: The folder containing Vue.js mixins that can be applied globally in `resources/js/app.js` or in individual components
+* `resources/js/mixins/base-page.js`: The base-page mixin with page functionality that should be imported into all page components
 * `resources/components`: The folder containing Vue.js components
-    * `resources/components/pages`: Page components that should be imported into vue-router in `resources/assets/js/app.js`
+    * `resources/components/pages`: Page components that should be imported into vue-router in `resources/js/app.js`
     * `resources/components/sections`: Section components (single-use per page) that should be imported into mixins or page components
     * `resources/components/partials`: Partial components (multi-use per page or section) that should be imported into mixins and/or page and section components
-* `resources/assets/sass/app.scss`: The main sass file for the public site
-* `resources/assets/sass/_fonts.scss`: Stylesheet containing font declarations and mixins declared to use those fonts in other stylesheets
-* `resources/assets/sass/_var.scss`: Stylesheet containing variables to be used in other stylesheets
-* `resources/assets/sass/pages`: Stylesheets for page-specific styles wrapped in the respective page component class
-* `resources/assets/sass/sections`: Stylesheets for section-specific styles wrapped in the respective section component class
-* `resources/assets/sass/partials`: Stylessheets for partial-specific styles wrapped in the respective partial component class
-* `resources/assets/sass/classes`: General stylesheets for classes that can be used anywhere
-* `resources/assets/sass/mixins`: Stylesheets declaring SCSS mixins for use in other stylesheets
+* `resources/sass/app.scss`: The main sass file for the public site
+* `resources/sass/_fonts.scss`: Stylesheet containing font declarations and mixins declared to use those fonts in other stylesheets
+* `resources/sass/_var.scss`: Stylesheet containing variables to be used in other stylesheets
+* `resources/sass/pages`: Stylesheets for page-specific styles wrapped in the respective page component class
+* `resources/sass/sections`: Stylesheets for section-specific styles wrapped in the respective section component class
+* `resources/sass/partials`: Stylessheets for partial-specific styles wrapped in the respective partial component class
+* `resources/sass/classes`: General stylesheets for classes that can be used anywhere
+* `resources/sass/mixins`: Stylesheets declaring SCSS mixins for use in other stylesheets
 
 Dependencies can be included with bower or npm and loaded either into the `jsPublicLibs` array in the gulpfile or imported in the javascript.
 
