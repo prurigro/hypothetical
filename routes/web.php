@@ -19,7 +19,7 @@ use App\Utilities\Language;
 |--------------------------------------------------------------------------
 */
 
-Route::auth([ 'register' => env('REGISTRATION', false) ]);
+Route::auth([ 'register' => env('REGISTRATION', false) === true || env('REGISTRATION', false) === \Request::ip() ]);
 Route::get('/logout', 'Auth\LoginController@logout');
 
 /*
