@@ -50,8 +50,7 @@ done
 }
 
 # Exit with an error if the .env file does not exist
-[[ -f '.env' ]] \
-    || error 'The .env file does not exist'
+[[ -f '.env' ]] || error 'The .env file does not exist'
 
 # Exit with an error on ctrl-c
 trap 'error "script killed"' SIGINT SIGQUIT
@@ -69,14 +68,12 @@ trap 'error "script killed"' SIGINT SIGQUIT
 msg "Running: ${c_m}composer installl --no-dev"
 composer install --no-interaction --no-dev || error "${c_m}composer install --no-interaction --no-dev$c_w exited with an error status"
 
-[[ -f .env ]] && {
-    while read -r; do
-        [[ "$REPLY" =~ ^APP_KEY=(.*)$ && -z "${BASH_REMATCH[1]}" ]] && {
-            msg 'Generating Encryption Key' 'php artisan key:generate'
-            php artisan key:generate
-        }
-    done < .env
-}
+while read -r; do
+    [[ "$REPLY" =~ ^APP_KEY=(.*)$ && -z "${BASH_REMATCH[1]}" ]] && {
+        msg 'Generating Encryption Key' 'php artisan key:generate'
+        php artisan key:generate
+    }
+done < .env
 
 msg "Running: ${c_m}php artisan route:clear"
 php artisan route:clear
