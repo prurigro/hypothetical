@@ -73,7 +73,7 @@ class Dashboard
         $model_name = ucfirst($model);
 
         if (file_exists(app_path() . '/Models/' . $model_name . '.php')) {
-            $model_class = 'App\\Models\\' . ucfirst($model);
+            $model_class = 'App\\Models\\' . $model_name;
 
             if ($type != null && $type != $model_class::$dashboard_type) {
                 return null;
