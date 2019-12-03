@@ -19,7 +19,7 @@
         <div class="container-fluid">
             @foreach($columns as $column)
                 <div class="row">
-                    @set('value', $item[$column['name']])
+                    @set('value', $item !== null ? $item[$column['name']] : '')
                     @set('type', $id == 'new' && array_key_exists('type-new', $column) ? $column['type-new'] : $column['type'])
 
                     @if($type == 'hidden')
