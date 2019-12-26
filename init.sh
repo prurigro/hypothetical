@@ -94,8 +94,13 @@ sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(LC_CTYPE=C LANG=C tr -dc A-Za-z0-9 </dev
     php artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"
 }
 
-msg "Running: ${c_m}npm install"
-npm prune && npm install --production || error "${c_m}npm prune && npm install --production$c_w exited with an error status"
+[[ -d node_modules ]] && {
+    msg "Running: ${c_m}npm prune --production"
+    npm prune --production || error "${c_m}npm prune --production$c_w exited with an error status"
+}
+
+msg "Running: ${c_m}npm install --production"
+npm install --production || error "${c_m}npm install --production$c_w exited with an error status"
 
 msg "Running: ${c_m}bower prune && bower install"
 bower prune && bower install || error "${c_m}bower prune && bower install$c_w exited with an error status"
