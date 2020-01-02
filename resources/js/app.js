@@ -35,7 +35,6 @@ import Error404Page from "pages/error404.vue";
 const router = new VueRouter({
     mode: "history",
     linkActiveClass: "active",
-    root: "/",
 
     routes: [
         { path: "/", component: HomePage },
