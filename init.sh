@@ -4,7 +4,7 @@
 deps=('bower' 'composer' 'egrep' 'npm' 'php' 'sed')
 
 # Default settings
-no_artisan=0
+no_db=0
 
 # Initialize variables
 artisan_down=0
@@ -55,11 +55,10 @@ done
 # Exit with an error on ctrl-c
 trap 'error "script killed"' SIGINT SIGQUIT
 
-# Check for the --no-artisan argument and set a flag that prevents artisan commands from being run if present
-[[ -n "$1" && "$1" = '--no-artisan' ]] \
-    && no_artisan=1
+# Check for the --no-db argument and set a flag that prevents database operations if present
+[[ -n "$1" && "$1" = '--no-db' ]] && no_db=1
 
-(( ! no_artisan )) && [[ -d vendor ]] && {
+[[ -d vendor ]] && {
     artisan_down=1
     msg "Running: ${c_m}php artisan down"
     php artisan down
@@ -72,6 +71,7 @@ while read -r; do
     [[ "$REPLY" =~ ^APP_KEY=(.*)$ && -z "${BASH_REMATCH[1]}" ]] && {
         msg 'Generating Encryption Key' 'php artisan key:generate'
         php artisan key:generate
+        break
     }
 done < .env
 
@@ -89,7 +89,7 @@ grep -qe '^CACHE_BUST=' .env || {
 msg "Updating ${c_y}CACHE_BUST$c_w variable"
 sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(LC_CTYPE=C LANG=C tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env
 
-(( ! no_artisan )) && {
+(( ! no_db )) && {
     msg "Running: ${c_m}php artisan migrate --force"
     php artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"
 }
