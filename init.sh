@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Dependencies
-deps=('bower' 'composer' 'egrep' 'npm' 'php' 'sed')
+deps=('composer' 'egrep' 'npm' 'php' 'sed')
 
 # Default settings
 no_db=0
@@ -101,9 +101,6 @@ sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(LC_CTYPE=C LANG=C tr -dc A-Za-z0-9 </dev
 
 msg "Running: ${c_m}npm install --production"
 npm install --production || error "${c_m}npm install --production$c_w exited with an error status"
-
-msg "Running: ${c_m}bower prune && bower install"
-bower prune && bower install || error "${c_m}bower prune && bower install$c_w exited with an error status"
 
 msg "Running: ${c_m}gulp --production"
 "$(npm bin)/gulp" --production || error "${c_m}gulp --production$c_w exited with an error status"

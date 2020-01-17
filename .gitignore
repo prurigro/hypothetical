@@ -4,7 +4,6 @@
 .env.backup
 npm-debug.log
 yarn-error.log
-/bower_components
 /node_modules
 /public/css
 /public/fonts

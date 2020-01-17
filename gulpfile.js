@@ -36,9 +36,9 @@ if (!isProduction) {
 
 // Declare plugin settings
 const sassOutputStyle = isProduction ? "compressed" : "expanded",
-    sassPaths = [ "bower_components", "node_modules" ],
+    sassPaths = [ "node_modules" ],
     autoprefixerSettings = { remove: false, cascade: false },
-    vuePaths = [ "./bower_components", "./node_modules", "./resources/components", "./resources/js" ];
+    vuePaths = [ "./node_modules", "./resources/components", "./resources/js" ];
 
 // Javascript files for the public site
 const jsPublic = "resources/js/app.js";
@@ -62,15 +62,15 @@ const jsDashboardLibs = [
     "node_modules/bootstrap/dist/js/bootstrap.js",
     "node_modules/flatpickr/dist/flatpickr.js",
     "node_modules/sortablejs/Sortable.js",
-    "bower_components/list.js/dist/list.js",
-    "bower_components/simplemde/dist/simplemde.min.js"
+    "node_modules/list.js/dist/list.js",
+    "node_modules/simplemde/dist/simplemde.min.js"
 ];
 
 // CSS libraries for the dashboard
 const cssDashboardLibs = [
     "node_modules/flatpickr/dist/flatpickr.css",
-    "bower_components/simplemde/dist/simplemde.min.css",
-    "bower_components/SpinKit/css/spinners/11-folding-cube.css"
+    "node_modules/simplemde/dist/simplemde.min.css",
+    "node_modules/spinkit/css/spinners/11-folding-cube.css"
 ];
 
 // Paths to folders containing fonts that should be copied to public/fonts/

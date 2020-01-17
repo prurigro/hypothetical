@@ -40,9 +40,8 @@ The following steps are performed in this order when run:
 7. Updates the `CACHE_BUST` variable in the `.env` file, which changes the value of a `version` query string appended to compiled assets and prevents clients from using a previous version in their cache.
 8. (artisan) Run new database migrations.
 9. Cleans, downloads and updates npm dependencies.
-10. Cleans, downloads and updates bower dependencies.
-11. Runs `gulp --production` to build project files and copy fonts to `public/fonts` (uses the local version of gulp installed in `node_modules`).
-12. (artisan) Takes the website out of maintenance mode.
+10. Runs `gulp --production` to build project files and copy fonts to `public/fonts` (uses the local version of gulp installed in `node_modules`).
+11. (artisan) Takes the website out of maintenance mode.
 
 **NOTE**: Items with `(artisan)` prepended to them won't be run if `init.sh` is run with the `--no-artisan` flag.
 
@@ -91,7 +90,7 @@ The following list of files and directories are where various pieces of the publ
 * `resources/sass/classes`: General stylesheets for classes that can be used anywhere
 * `resources/sass/mixins`: Stylesheets declaring SCSS mixins for use in other stylesheets
 
-Dependencies can be included with bower or npm and loaded either into the `jsPublicLibs` array in the gulpfile or imported in the javascript.
+Dependencies can be included with npm and loaded either into the `jsPublicLibs` array in the gulpfile or imported in the javascript.
 
 Other information about database interaction, routing, controllers, etc can be viewed in the [Laravel Documentation](https://laravel.com/docs).
 
