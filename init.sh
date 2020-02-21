@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Dependencies
-deps=('composer' 'egrep' 'npm' 'php' 'sed')
+deps=('composer' 'grep' 'npm' 'php' 'sed')
 
 # Default settings
 no_db=0
