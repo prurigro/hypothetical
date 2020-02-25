@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "ajthinking/tinx": "^2.4",
         "doctrine/dbal": "^2.6",
         "erusev/parsedown": "~1.6",
         "fideloper/proxy": "^4.0",
