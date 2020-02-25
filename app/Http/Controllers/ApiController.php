@@ -29,11 +29,10 @@ class ApiController extends Controller {
         $contact->message = $request['message'];
         $contact->save();
 
-        // Send the email if the MAIL_SENDTO variable is set
-        if (env('MAIL_SENDTO') != null) {
+        // Send the email if the MAIL_TO_ADDRESS variable is set
+        if (env('MAIL_TO_ADDRESS') != null) {
             Mail::send('email.contact', [ 'contact' => $contact ], function($mail) use ($contact) {
-                $mail->from(env('MAIL_SENDFROM'), env('APP_NAME'))
-                    ->to(env('MAIL_SENDTO'))
+                $mail->to(env('MAIL_TO_ADDRESS'))
                     ->subject('Contact form submission');
             });
         }
