@@ -319,7 +319,7 @@ function editItemInit() {
         operation = id === "new" ? "create" : "update";
 
     let allowTimes = [],
-        simplemde = [],
+        easymde = [],
         formData = {},
         submitting = false,
         hours,
@@ -370,7 +370,7 @@ function editItemInit() {
         $mkdEditors.each(function() {
             const $this = $(this),
                 column = $this.attr("id"),
-                value = simplemde[column].value();
+                value = easymde[column].value();
 
             addFormData(column, value);
         });
@@ -566,7 +566,7 @@ function editItemInit() {
         const $this = $(this),
             column = $this.attr("id");
 
-        simplemde[column] = new SimpleMDE({
+        easymde[column] = new EasyMDE({
             element: this,
             toolbar: [
                 "bold",
@@ -589,11 +589,11 @@ function editItemInit() {
 
         setTimeout(function() {
             // load the initial value into the editor
-            simplemde[column].value($this.attr("value"));
-            simplemde[column].codemirror.refresh();
+            easymde[column].value($this.attr("value"));
+            easymde[column].codemirror.refresh();
 
-            // watch for changes to simplemde editor contents
-            simplemde[column].codemirror.on("change", contentChanged);
+            // watch for changes to easymde editor contents
+            easymde[column].codemirror.on("change", contentChanged);
         }, 500);
     });
 

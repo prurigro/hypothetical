@@ -63,19 +63,20 @@ const jsDashboardLibs = [
     "node_modules/flatpickr/dist/flatpickr.js",
     "node_modules/sortablejs/Sortable.js",
     "node_modules/list.js/dist/list.js",
-    "node_modules/simplemde/dist/simplemde.min.js"
+    "node_modules/easymde/dist/easymde.min.js"
 ];
 
 // CSS libraries for the dashboard
 const cssDashboardLibs = [
     "node_modules/flatpickr/dist/flatpickr.css",
-    "node_modules/simplemde/dist/simplemde.min.css",
+    "node_modules/easymde/dist/easymde.min.css",
     "node_modules/spinkit/css/spinners/11-folding-cube.css"
 ];
 
 // Paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
-    "resources/fonts/**"
+    "resources/fonts/**",
+    "node_modules/@fortawesome/fontawesome-free/webfonts/**"
 ];
 
 // Handle errors

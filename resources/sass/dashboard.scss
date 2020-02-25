@@ -1,4 +1,7 @@
 // Libraries
+$fa-font-path: "/fonts";
+@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "@fortawesome/fontawesome-free/scss/solid.scss";
 @import "bootstrap/scss/bootstrap.scss";
 
 // Core
@@ -1047,103 +1050,5 @@ form {
                 transform: translateY(-50%);
             }
         }
-    }
-}
-
-.fa {
-    position: relative;
-    vertical-align: bottom;
-
-    &:after {
-        content: "";
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        display: block;
-        width: 100%;
-        height: 100%;
-        background-position: center center;
-        background-size: 10px auto;
-        background-repeat: no-repeat;
-    }
-
-    &.fa-arrows-alt:after {
-        background-image: url("/img/dashboard/icons/arrows-alt.svg");
-    }
-
-    &.fa-bold:after {
-        background-image: url("/img/dashboard/icons/bold.svg");
-    }
-
-    &.fa-code:after {
-        background-image: url("/img/dashboard/icons/code.svg");
-    }
-
-    &.fa-columns:after {
-        background-image: url("/img/dashboard/icons/columns.svg");
-    }
-
-    &.fa-eraser:after {
-        background-image: url("/img/dashboard/icons/eraser.svg");
-    }
-
-    &.fa-eye:after {
-        background-image: url("/img/dashboard/icons/eye.svg");
-    }
-
-    &.fa-header:after {
-        background-image: url("/img/dashboard/icons/header.svg");
-    }
-
-    &.fa-italic:after {
-        background-image: url("/img/dashboard/icons/italic.svg");
-    }
-
-    &.fa-link:after {
-        background-image: url("/img/dashboard/icons/link.svg");
-    }
-
-    &.fa-list-ol:after {
-        background-image: url("/img/dashboard/icons/list-ol.svg");
-    }
-
-    &.fa-list-ul:after {
-        background-image: url("/img/dashboard/icons/list-ul.svg");
-    }
-
-    &.fa-minus:after {
-        background-image: url("/img/dashboard/icons/minus.svg");
-    }
-
-    &.fa-picture-o:after {
-        background-image: url("/img/dashboard/icons/picture-o.svg");
-    }
-
-    &.fa-question-circle:after {
-        background-image: url("/img/dashboard/icons/question-circle.svg");
-    }
-
-    &.fa-quote-left:after {
-        background-image: url("/img/dashboard/icons/quote-left.svg");
-    }
-
-    &.fa-repeat:after {
-        background-image: url("/img/dashboard/icons/repeat.svg");
-    }
-
-    &.fa-star:after {
-        background-image: url("/img/dashboard/icons/star.svg");
-    }
-
-    &.fa-strikethrough:after {
-        background-image: url("/img/dashboard/icons/strikethrough.svg");
-    }
-
-    &.fa-table:after {
-        background-image: url("/img/dashboard/icons/table.svg");
-    }
-
-    &.fa-undo:after {
-        background-image: url("/img/dashboard/icons/undo.svg");
     }
 }

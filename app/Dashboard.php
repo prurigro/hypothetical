@@ -50,13 +50,13 @@ class Dashboard
      */
     public static $library_credits = [
         [ 'name' => 'Bootstrap', 'url' => 'https://getbootstrap.com' ],
+        [ 'name' => 'EasyMDE Markdown Editor', 'url' => 'https://easymde.tk' ],
+        [ 'name' => 'flatpickr', 'url' => 'https://flatpickr.js.org' ],
         [ 'name' => 'Font Awesome', 'url' => 'https://fontawesome.com', 'license' => 'https://fontawesome.com/license' ],
         [ 'name' => 'GreenSock', 'url' => 'https://greensock.com/gsap' ],
         [ 'name' => 'jQuery', 'url' => 'https://jquery.org' ],
         [ 'name' => 'List.js', 'url' => 'http://listjs.com' ],
-        [ 'name' => 'flatpickr', 'url' => 'https://flatpickr.js.org' ],
         [ 'name' => 'Popper.js', 'url' => 'https://popper.js.org' ],
-        [ 'name' => 'SimpleMDE Markdown Editor', 'url' => 'https://simplemde.com' ],
         [ 'name' => 'Sortable', 'url' => 'https://github.com/RubaXa/Sortable' ],
         [ 'name' => 'SpinKit', 'url' => 'http://tobiasahlin.com/spinkit/' ],
         [ 'name' => 'Vue.js', 'url' => 'https://vuejs.org' ],
