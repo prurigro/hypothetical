@@ -38,6 +38,14 @@ html {
     width: 100%;
     font-size: $base-font-size;
 
+    @include media-breakpoint-up(xxxl) {
+        font-size: 18px;
+    }
+
+    @include media-breakpoint-up(xxxxl) {
+        font-size: 20px;
+    }
+
     &.no-scroll {
         overflow-y: hidden;
     }
