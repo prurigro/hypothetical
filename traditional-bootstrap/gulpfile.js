@@ -68,7 +68,7 @@ const jsDashboardLibs = [
 const cssDashboardLibs = [
     "node_modules/flatpickr/dist/flatpickr.css",
     "node_modules/easymde/dist/easymde.min.css",
-    "node_modules/spinkit/css/spinners/11-folding-cube.css"
+    "node_modules/spinkit/spinkit.css"
 ];
 
 // Paths to folders containing fonts that should be copied to public/fonts/
