@@ -216,7 +216,7 @@ class DashboardController extends Controller {
                 return 'permission-fail';
             } else if ($request->hasFile('file')) {
                 $directory = base_path() . '/public/uploads/' . $request['model'] . '/img/';
-                file::makeDirectory($directory, 0755, true, true);
+                File::makeDirectory($directory, 0755, true, true);
                 $image = Image::make($request->file('file'));
                 $image->save($directory . $request['id'] . '-' . $request['name'] . '.jpg');
                 $item->touch();
@@ -250,7 +250,7 @@ class DashboardController extends Controller {
                 return 'permission-fail';
             } else if ($request->hasFile('file')) {
                 $directory = base_path() . '/public/uploads/' . $request['model'] . '/files/';
-                file::makeDirectory($directory, 0755, true, true);
+                File::makeDirectory($directory, 0755, true, true);
                 $request->file('file')->move($directory, $request['id'] . '-' . $request['name'] . '.' . $request['ext']);
                 $item->touch();
                 return 'success';
@@ -445,7 +445,7 @@ class DashboardController extends Controller {
                     $image->resize($new_width, $new_height);
                 }
 
-                file::makeDirectory(base_path() . '/public' . User::$profile_image_dir, 0755, true, true);
+                File::makeDirectory(base_path() . '/public' . User::$profile_image_dir, 0755, true, true);
                 $image->save($user->profileImage(true, true));
                 $user->touch();
                 return $user->profileImage() . '?version=' . $user->timestamp();
