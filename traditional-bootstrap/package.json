@@ -8,14 +8,14 @@
     "browser-sync": "2.26.7"
   },
   "dependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
-    "autoprefixer": "^9.7.2",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "autoprefixer": "^9.7.4",
     "babelify": "^10.0.0",
     "bootstrap": "4.3.1",
     "fancy-log": "^1.3.3",
     "flatpickr": "^4.6.3",
-    "gsap": "^3.0.1",
+    "gsap": "^3.2.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.2.0",
@@ -29,9 +29,9 @@
     "jquery": "^3.4.1",
     "list.js": "^1.5.0",
     "minimist": "^1.2.0",
-    "popper.js": "^1.16.0",
+    "popper.js": "^1.16.1",
     "simplemde": "^1.11.2",
-    "sortablejs": "^1.10.1",
+    "sortablejs": "^1.10.2",
     "spinkit": "^1.2.5",
     "what-input": "^5.2.6"
   }
