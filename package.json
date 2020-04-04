@@ -32,7 +32,7 @@
     "gulp-uglify": "^3.0.2",
     "jquery": "^3.4.1",
     "list.js": "^1.5.0",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.3",
     "popper.js": "^1.16.1",
     "sortablejs": "^1.10.2",
     "spinkit": "^2.0.1",
