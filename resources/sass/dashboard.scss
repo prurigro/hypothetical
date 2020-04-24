@@ -271,6 +271,23 @@ body {
             }
         }
 
+        .search-form {
+            display: flex;
+            width: 100%;
+
+            &-input {
+                display: block;
+                width: 100%;
+            }
+
+            &-submit {
+                margin-left: 10px;
+                height: 32px;
+                border: 1px solid fade-out($c-text, 0.75);
+                border-radius: 4px;
+            }
+        }
+
         .search {
             margin-bottom: 10px;
             width: 100%;
@@ -478,6 +495,20 @@ body {
     &.btn-link {
         color: $c-dashboard-light;
     }
+
+    &.btn-outline {
+        background-color: transparent;
+        color: $c-text;
+    }
+
+    &.btn-inactive {
+        pointer-events: none;
+    }
+
+    &.btn-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 }
 
 .view-table-container {
@@ -532,6 +563,123 @@ body {
             > tbody > tr > td { padding: 20px 8px; }
             > tbody > tr:last-child > td { padding-bottom: 0px; }
             .mobile-heading { display: none; }
+        }
+    }
+}
+
+.pagination-navigation-bar {
+    margin-bottom: 10px;
+    margin-left: 4px;
+    display: flex;
+    width: calc(100% - 8px);
+
+    @include media-breakpoint-down(xs) {
+        flex-direction: column;
+    }
+
+    @include media-breakpoint-up(sm) {
+        justify-content: space-between;
+    }
+
+    &-arrow {
+        position: relative;
+        font-size: 0px;
+
+        @include media-breakpoint-down(xs) {
+            height: 35px;
+        }
+
+        &.prev {
+            @include media-breakpoint-down(xs) {
+                margin-bottom: 8px;
+            }
+
+            @include media-breakpoint-up(sm) {
+                margin-right: ($grid-gutter-width / 2);
+            }
+        }
+
+        &.next {
+            transform: rotate(180deg);
+
+            @include media-breakpoint-down(xs) {
+                margin-top: 8px;
+            }
+
+            @include media-breakpoint-up(sm) {
+                margin-left: ($grid-gutter-width / 2);
+            }
+        }
+
+        &:before, &:after {
+            content: "";
+            position: absolute;
+            top: calc(50% - 1px);
+            left: 25%;
+            width: 16px;
+            height: 2px;
+            background-color: $c-text-light;
+
+            @include media-breakpoint-down(xs) {
+                left: 50%;
+            }
+        }
+
+        &:before {
+            transform: rotate(-45deg);
+            transform-origin: bottom left;
+        }
+
+        &:after {
+            transform: rotate(45deg);
+            transform-origin: top left;
+        }
+    }
+
+    &-page-count {
+        display: flex;
+
+        @include media-breakpoint-down(xs) {
+            justify-content: center;
+        }
+
+        .btn {
+            $spacing: 3px;
+
+            &:not(:first-child) {
+                margin-left: $spacing;
+            }
+
+            &:not(:last-child) {
+                margin-right: $spacing;
+            }
+
+            &.space {
+                position: relative;
+
+                &:after {
+                    content: "...";
+                    position: absolute;
+                    top: 0px;
+                    line-height: 25px;
+                }
+
+                &:first-child {
+                    margin-right: 20px;
+
+                    &:after {
+                        left: calc(100% + 7px);
+                    }
+                }
+
+                &:last-child {
+                    margin-left: 20px;
+
+                    &:after {
+                        right: calc(100% + 7px);
+                    }
+                }
+            }
         }
     }
 }
@@ -712,6 +860,108 @@ form {
 
             &-code {
                 margin-bottom: 10px;
+            }
+        }
+
+        .list {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid fade-out($c-text, 0.75);
+
+            &-template, &-data {
+                display: none;
+            }
+
+            &-items-row {
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+
+                .sort-icon {
+                    margin-right: 10px;
+                    display: inline-block;
+                    opacity: 1;
+                    transition: opacity 100ms;
+                    cursor: grab;
+
+                    &-inner {
+                        position: relative;
+                        top: 2px;
+                        display: inline-block;
+                        width: 12px;
+                        height: 14px;
+
+                        &-bar {
+                            position: absolute;
+                            left: 0px;
+                            width: 100%;
+                            height: 2px;
+                            background-color: $c-text;
+
+                            &:nth-child(1) {
+                                top: 2px;
+                            }
+
+                            &:nth-child(2) {
+                                top: 50%;
+                                transform: translateY(-50%);
+                            }
+
+                            &:nth-child(3) {
+                                bottom: 2px;
+                            }
+                        }
+                    }
+                }
+
+                &-input, &-button {
+                    &:not(:first-child) {
+                        margin-left: 5px;
+                    }
+
+                    &:not(:last-child) {
+                        margin-right: 5px;
+                    }
+                }
+
+                &-input {
+                    position: relative;
+
+                    &.wide {
+                        width: 100%;
+                    }
+
+                    &-inner {
+                        margin-bottom: 0px;
+                    }
+
+                    &-overlay {
+                        overflow: hidden;
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                        width: 100%;
+                        height: 100%;
+                        padding: 5px 8px;
+                        background-color: $c-input-bg;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        pointer-events: none;
+                    }
+                }
+
+                &-button {
+                    min-width: 70px;
+                    height: $label-height;
+                    border: 1px solid fade-out($c-text, 0.75);
+                    border-radius: 4px;
+                }
+            }
+
+            &-add-button {
+                height: $label-height;
+                border: 1px solid fade-out($c-text, 0.75);
+                border-radius: 4px;
             }
         }
 
@@ -1023,6 +1273,7 @@ form {
     .card {
         position: relative;
         margin: 0px;
+        width: 100%;
         max-width: 500px;
 
         .btn {

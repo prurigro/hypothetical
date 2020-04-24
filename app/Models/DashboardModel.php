@@ -53,6 +53,20 @@ class DashboardModel extends Model
     public static $filter = true;
 
     /*
+     * Number of items per page (0 for unlimited)
+     *
+     * @var number
+     */
+    public static $items_per_page = 0;
+
+    /*
+     * Query parameters to remember
+     *
+     * @var number
+     */
+    public static $valid_query_params = [];
+
+    /*
      * Dashboard help text
      *
      * @var string
@@ -88,11 +102,18 @@ class DashboardModel extends Model
     public static $dashboard_sort_direction = 'desc';
 
     /**
-     * The dashboard buttons
+     * The dashboard button
      *
      * @var array
      */
     public static $dashboard_button = [];
+
+    /**
+     * The dashboard id link
+     *
+     * @var array
+     */
+    public static $dashboard_id_link = [];
 
     /**
      * Returns the dashboard heading
@@ -131,14 +152,55 @@ class DashboardModel extends Model
     }
 
     /**
+     * Performs a search against the columns in $dashboard_display
+     *
+     * @return array
+     */
+    public static function searchDisplay($term, $query = null)
+    {
+        if (static::$filter) {
+            $first = true;
+
+            if ($query === null) {
+                $query = self::orderBy(static::$dashboard_sort_column, static::$dashboard_sort_direction);
+            }
+
+            foreach (static::$dashboard_display as $display) {
+                $type = '';
+
+                foreach (static::$dashboard_columns as $column) {
+                    if ($column['name'] === $display) {
+                        $type = $column['type'];
+                    }
+                }
+
+                if ($type !== '' && $type !== 'image') {
+                    if ($first) {
+                        $query->where($display, 'LIKE', '%' . $term . '%');
+                    } else {
+                        $query->orWhere($display, 'LIKE', '%' . $term . '%');
+                    }
+
+                    $first = false;
+                }
+            }
+
+            return $query;
+        } else {
+            return [];
+        }
+    }
+
+    /**
      * Returns data for the dashboard
      *
      * @return array
      */
-    public static function getDashboardData()
+    public static function getDashboardData($include_param_display = false)
     {
         $sort_direction = static::$dashboard_reorder ? 'desc' : static::$dashboard_sort_direction;
         $query = self::orderBy(static::$dashboard_sort_column, $sort_direction);
+        $query_param_display = [];
 
         foreach (static::$dashboard_columns as $column) {
             if (array_key_exists('type', $column) && $column['type'] == 'user') {
@@ -147,7 +209,71 @@ class DashboardModel extends Model
             }
         }
 
-        return $query->get();
+        if (count(static::$valid_query_params) > 0) {
+            foreach (static::$valid_query_params as $param) {
+                if (request()->query($param['key'], null) != null) {
+                    if ($include_param_display) {
+                        $query_param_model = 'App\\Models\\' . $param['model'];
+                        $query_param_column = $query_param_model::find(request()->query($param['key']));
+
+                        if ($query_param_column !== null) {
+                            array_push($query_param_display, [
+                                'title' => $param['title'],
+                                'value' => $query_param_column[$param['display']]
+                            ]);
+                        }
+                    }
+
+                    $query->where($param['column'], request()->query($param['key']));
+                }
+            }
+        }
+
+        if (static::$items_per_page === 0) {
+            $results = $query->get();
+        } else {
+            if (static::$filter && request()->query('search', null) != null) {
+                $query = static::searchDisplay(request()->query('search'), $query);
+            }
+
+            $results = $query->paginate(static::$items_per_page);
+        }
+
+        if ($include_param_display) {
+            return [
+                'rows' => $results,
+                'paramdisplay' => $query_param_display
+            ];
+        } else {
+            return $results;
+        }
+    }
+
+    /**
+     * Retrieves the current query string containing valid query parameters
+     *
+     * @return string
+     */
+    public static function getQueryString()
+    {
+        $valid_query_params = static::$valid_query_params;
+        $string = '';
+
+        if (static::$items_per_page !== 0 && static::$filter) {
+            array_push($valid_query_params, [ 'key' => 'search' ]);
+        }
+
+        foreach ($valid_query_params as $param) {
+            if (request()->query($param['key'], null) != null) {
+                if ($string !== '') {
+                    $string .= '&';
+                }
+
+                $string .= $param['key'] . '=' . request()->query($param['key']);
+            }
+        }
+
+        return $string;
     }
 
     /**

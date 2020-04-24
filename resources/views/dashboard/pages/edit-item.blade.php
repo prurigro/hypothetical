@@ -27,13 +27,17 @@
                     @elseif($type == 'user')
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ Auth::id() }}" />
                     @elseif($type != 'display' || $id != 'new')
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-4 col-lg-3">
                             <label for="{{ $column['name'] }}">{{ array_key_exists('title', $column) ? $column['title'] : ucfirst($column['name']) }}:</label>
                         </div>
 
-                        <div class="col-12 col-md-10">
-                            @if($type == 'text')
+                        <div class="col-12 col-md-8 col-lg-9">
+                            @if($type == 'string')
                                 <input class="text-input" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
+                            @elseif($type == 'text')
+                                <textarea class="text-input" name="{{ $column['name'] }}" id="{{ $column['name'] }}">{{ $value }}</textarea>
+                            @elseif($type == 'currency')
+                                <input class="currency-input" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" autocomplete="off" />
                             @elseif($type == 'date')
                                 <input class="date-picker" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value == '' ? date('Y-m-d', time()) : preg_replace('/:[0-9][0-9]$/', '', $value) }}" />
                             @elseif($type == 'mkd')
@@ -58,6 +62,45 @@
                                         @endif
                                     @endforeach
                                 </select>
+                            @elseif($type == 'list')
+                                <div class="list" id="{{ $column['name'] }}">
+                                    <div class="list-template">
+                                        <div class="list-items-row">
+                                            <div class="sort-icon" title="Click and drag to reorder">
+                                                <div class="sort-icon-inner">
+                                                    <div class="sort-icon-inner-bar"></div>
+                                                    <div class="sort-icon-inner-bar"></div>
+                                                    <div class="sort-icon-inner-bar"></div>
+                                                </div>
+                                            </div>
+
+                                            @foreach($column['columns'] as $list_column)
+                                                @set('placeholder', $column['name'] == 'included' || $column['name'] == 'recommended' ? '' : $list_column)
+
+                                                <div class="list-items-row-input {{ count($column['columns']) == 1 ? 'wide' : '' }}">
+                                                    <input class="list-items-row-input-inner" data-column="{{ $list_column }}" placeholder="{{ $placeholder }}" />
+                                                </div>
+                                            @endforeach
+
+                                            <button class="list-items-row-button" type="button">Delete</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="list-data">
+                                        @if($id != 'new')
+                                            @foreach($value as $row)
+                                                <div class="list-data-row">
+                                                    @foreach($column['columns'] as $list_column)
+                                                        <div class="list-data-row-item" data-column="{{ $list_column }}" data-value="{{ $row[$list_column] }}"></div>
+                                                    @endforeach
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="list-items"></div>
+                                    <button class="list-add-button" type="button">Add</button>
+                                </div>
                             @elseif($type == 'image')
                                 @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . '.jpg')
                                 <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />

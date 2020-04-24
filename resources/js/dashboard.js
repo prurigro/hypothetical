@@ -135,7 +135,7 @@ function showAlert(message, command) {
     $acceptButton.on("click", closeAlertModal);
 
     // set the message with the supplied message
-    $message.text(message);
+    $message.html(message);
 
     // show the alert modal
     $alertModal.css({
@@ -150,15 +150,6 @@ function editListInit() {
         $editList = $(editList),
         $token = $("#token"),
         model = $editList.data("model");
-
-    // initialize new button functionality
-    const newButtonInit = function() {
-        const $newButton = $(".btn.new-button");
-
-        $newButton.on("click", function() {
-            window.location.href = "/dashboard/edit/" + model + "/new";
-        });
-    };
 
     // initialize delete button functionality
     const deleteButtonInit = function() {
@@ -282,11 +273,32 @@ function editListInit() {
         }
     };
 
-    newButtonInit();
+    // initialize search functionality if the search-form element exists
+    const searchFormInit = function() {
+        const $form = $("#search-form");
+
+        if ($form.length) {
+            $form.on("submit", function(e) {
+                const term = $form.find(".search").val();
+
+                let url = $form.data("url");
+
+                e.preventDefault();
+
+                if (term !== "") {
+                    url += `?search=${term}`;
+                }
+
+                window.location.href = url;
+            });
+        }
+    };
+
     deleteButtonInit();
     actionButtonInit();
     sortRowInit();
     filterInputInit();
+    searchFormInit();
 }
 
 // initialize edit item functionality
@@ -295,10 +307,12 @@ function editItemInit() {
         $submit = $("#submit"),
         $backButton = $("#back"),
         $textInputs = $(".text-input"),
+        $currencyInputs = $(".currency-input"),
         $datePickers = $(".date-picker"),
         $mkdEditors = $(".mkd-editor"),
         $fileUploads = $(".file-upload"),
         $imgUploads = $(".image-upload"),
+        $lists = $(".list"),
         $token = $("#token"),
         model = $editItem.data("model"),
         id = $editItem.data("id"),
@@ -315,12 +329,12 @@ function editItemInit() {
     // fill the formData object with data from all the form fields
     const getFormData = function() {
         // function to add a column and value to the formData object
-        const addFormData = function(column, value) {
+        const addFormData = function(type, column, value) {
             // add the value to a key with the column name
             formData[column] = value;
 
             // add the column to the array of columns
-            formData.columns.push(column);
+            formData.columns.push({ type: type, name: column });
         };
 
         // reset the formData object
@@ -334,31 +348,63 @@ function editItemInit() {
         // create an empty array to contain the list of columns
         formData.columns = [];
 
-        // add values from the contents of text-input class elements
+        // add values from the contents of text-input elements
         $textInputs.each(function() {
             const $this = $(this),
                 column = $this.attr("id"),
                 value = $this.val();
 
-            addFormData(column, value);
+            addFormData("text", column, value);
         });
 
-        // add values from the contents of date-picker class elements
+        // add values from the contents of date-picker elements
         $datePickers.each(function() {
             const $this = $(this),
                 column = $this.attr("id"),
                 value = $this.val();
 
-            addFormData(column, value);
+            addFormData("date", column, value);
         });
 
-        // add values from the contents of the markdown editor for mkd-editor class elements
+        // add values from the contents of currency-input elements
+        $currencyInputs.each(function() {
+            const $this = $(this),
+                column = $this.attr("id"),
+                value = AutoNumeric.getNumericString(this);
+
+            addFormData("text", column, value);
+        });
+
+        // add values from the contents of the markdown editor for mkd-editor elements
         $mkdEditors.each(function() {
             const $this = $(this),
                 column = $this.attr("id"),
                 value = easymde[column].value();
 
-            addFormData(column, value);
+            addFormData("text", column, value);
+        });
+
+        // add values from list-items inputs
+        $lists.each(function() {
+            const $this = $(this),
+                column = $this.attr("id"),
+                value = [];
+
+            $this.find(".list-items .list-items-row").each(function(index, row) {
+                const rowData = {};
+
+                $(row).find(".list-items-row-input-inner").each(function(index, input) {
+                    const $input = $(input),
+                        column = $input.data("column"),
+                        value = $input.val();
+
+                    rowData[column] = value;
+                });
+
+                value.push(rowData);
+            });
+
+            addFormData("list", column, value);
         });
     };
 
@@ -463,6 +509,7 @@ function editItemInit() {
         $submit.removeClass("no-input");
     };
 
+    // initialize image deletion
     $(".edit-button.delete.image").on("click", function(e) {
         const $this = $(this),
             name = $this.data("name");
@@ -497,6 +544,7 @@ function editItemInit() {
         }
     });
 
+    // initialize file deletion
     $(".edit-button.delete.file").on("click", function(e) {
         const $this = $(this),
             name = $this.data("name"),
@@ -533,21 +581,89 @@ function editItemInit() {
         }
     });
 
-    // allow start time selection to start on the hour and every 15 minutes after
+    // initialize list item functionality
+    $lists.each(function(index, list) {
+        const $list = $(list),
+            $template = $list.find(".list-template"),
+            $items = $list.find(".list-items");
+
+        let sortable = undefined;
+
+        const initSort = function() {
+            if (typeof sortable !== "undefined") {
+                sortable.destroy();
+            }
+
+            sortable = Sortable.create($items[0], {
+                handle: ".sort-icon",
+                onUpdate: contentChanged
+            });
+        };
+
+        const initDelete = function() {
+            $items.find(".list-items-row").each(function(index, row) {
+                const $row = $(row);
+
+                // initialize delete button functionality
+                $row.find(".list-items-row-button").off("click").on("click", function() {
+                    $row.remove();
+                    initSort();
+                    contentChanged();
+                });
+            });
+        };
+
+        const initList = function() {
+            $list.find(".list-data-row").each(function(rowIndex, row) {
+                // Add the values from the current data row to the template
+                $(row).find(".list-data-row-item").each(function(itemIndex, item) {
+                    const $item = $(item),
+                        column = $item.data("column"),
+                        value = $item.data("value");
+
+                    $template.find(".list-items-row-input-inner").each(function(inputIndex, input) {
+                        const $input = $(input);
+
+                        if ($input.data("column") === column) {
+                            $input.val(value);
+                        }
+                    });
+                });
+
+                // Add the populated template to the list of items then clear the template values
+                $template.find(".list-items-row").clone().appendTo($items);
+                $template.find(".list-items-row-input-inner").val("");
+            });
+
+            initSort();
+            initDelete();
+        };
+
+        $list.find(".list-add-button").on("click", function() {
+            $template.find(".list-items-row").clone().appendTo($items);
+            initDelete();
+            initSort();
+            contentChanged();
+        });
+
+        initList();
+    });
+
+    // allow the date picker start time selection to start on the hour and every 15 minutes after
     for (hours = 0; hours <= 23; hours++) {
         for (minutes = 0; minutes <= 3; minutes++) {
             allowTimes.push(hours + ":" + (minutes === 0 ? "00" : minutes * 15));
         }
     }
 
-    // enable the datepicker for each element with the date-picker class
+    // enable the datepicker for date-picker elements
     $datePickers.each(function() {
         $(this).flatpickr({
             enableTime: true
         });
     });
 
-    // enable the markdown editor for each element with the mkd-editor class
+    // enable the markdown editor for mkd-editor elements
     $mkdEditors.each(function() {
         const $this = $(this),
             column = $this.attr("id");
@@ -581,6 +697,14 @@ function editItemInit() {
             // watch for changes to easymde editor contents
             easymde[column].codemirror.on("change", contentChanged);
         }, 500);
+    });
+
+    // enable currency formatting for currency-input elements
+    new AutoNumeric.multiple($currencyInputs.toArray(), {
+        currencySymbol: "$",
+        rawValueDivisor: 0.01,
+        allowDecimalPadding: false,
+        modifyValueOnWheel: false
     });
 
     // watch for changes to input and select element contents
@@ -617,12 +741,22 @@ function editItemInit() {
                     url: "/dashboard/update",
                     data: formData
                 }).always(function(response) {
+                    let message = "";
+
                     if ((/^id:[0-9][0-9]*$/).test(response)) {
                         uploadImage(response.replace(/^id:/, ""), 0);
                     } else {
                         loadingModal("hide");
 
-                        showAlert("Failed to " + operation + " record", function() {
+                        if ((/^not-unique:/).test(response)) {
+                            message = `<strong>${response.replace(/'/g, "").replace(/^[^:]*:/, "").replace(/,([^,]*)$/, "</strong> and <strong>$1").replace(/,/g, "</strong>, <strong>")}</strong> must be unique`;
+                        } else if ((/^required:/).test(response)) {
+                            message = `<strong>${response.replace(/'/g, "").replace(/^[^:]*:/, "").replace(/,([^,]*)$/, "</strong> and <strong>$1").replace(/,/g, "</strong>, <strong>")}</strong> must not be empty`;
+                        } else {
+                            message = `Failed to <strong>${operation}</strong> record`;
+                        }
+
+                        showAlert(message, function() {
                             submitting = false;
                         });
                     }

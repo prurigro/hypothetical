@@ -9,6 +9,8 @@ class Blog extends DashboardModel
 {
     protected $table = 'blog';
 
+    public static $items_per_page = 10;
+
     public static $dashboard_type = 'edit';
 
     public static $dashboard_help_text = '<strong>NOTE</strong>: Tags should be separated by semicolons';
@@ -18,10 +20,10 @@ class Blog extends DashboardModel
     public static $dashboard_columns = [
         [ 'name' => 'user_id', 'type' => 'user' ],
         [ 'name' => 'created_at', 'title' => 'Date', 'type' => 'display' ],
-        [ 'name' => 'title',  'type' => 'text' ],
-        [ 'name' => 'body',  'type' => 'mkd' ],
-        [ 'name' => 'tags', 'type' => 'text' ],
-        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true ]
+        [ 'name' => 'title', 'required' => true, 'unique' => true, 'type' => 'string' ],
+        [ 'name' => 'body', 'required' => true,  'type' => 'mkd' ],
+        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true ],
+        [ 'name' => 'tags', 'type' => 'list', 'model' => 'BlogTags', 'columns' => [ 'name' ], 'foreign' => 'blog_id', 'sort' => 'order' ]
     ];
 
     public static function getBlogEntries()

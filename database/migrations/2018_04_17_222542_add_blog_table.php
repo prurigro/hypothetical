@@ -19,7 +19,6 @@ class AddBlogTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->text('body')->nullable();
-            $table->text('tags')->nullable();
             $table->timestamps();
         });
     }

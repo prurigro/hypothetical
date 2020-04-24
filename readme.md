@@ -179,12 +179,15 @@ These are variables that only function when the `$dashboard_type` variable is se
 * `$dashboard_reorder`: A boolean determining whether to render drag handles to reorder the items in the list
 * `$dashboard_sort_column`: A string containing the column used to sort the list (this column should be an `integer` when `$dashboard_reorder` is true)
 * `$dashboard_sort_direction`: When `$dashboard_reorder` is false this determines the sort direction (this can be `desc` for descending or `asc` ascending)
-* `$dashboard_button`: An array containing the following items in this order:
+* `$dashboard_button`: Add a dashboard button with custom functionality by populating an array containing the following items in this order:
     * The title
     * Confirmation text asking the user to confirm
     * A "success" message to display when the response is `success`
     * A "failure" message to display when the response is not `success`
     * The URL to send the POST request to with the respective `id` in the request variable
+* `$dashboard_id_link`: Add a dashboard button linking to another list filtered by the current item by populating an array containing the following items in this order:
+    * The title
+    * The URL to link to where the id will come after the rest
 
 ##### Configuring the columns
 
@@ -198,15 +201,20 @@ All models use the following attributes:
 Models with their `$dashboard_type` set to `edit` also use:
 
 * `type`: The column type which can be any of the following:
-    * `text`: Text input field for text data
-    * `mkd`: Markdown editor for text data containing markdown
-    * `date`: Date and time selection tool for date/time data
-    * `select`: Text input via option select
     * `hidden`: Fields that will contain values to pass to the update function but won't appear on the page (this must be used for the sort column)
+    * `user`: This should point to a foreign key that references the id on the users table; setting this will bind items to the user that created them
+    * `string`: Single-line text input field
+    * `text`: Multi-line text input field
+    * `currency`: Text input field for currency data
+    * `date`: Date and time selection tool for date/time data
+    * `mkd`: Multi-line text input field with a markdown editor
+    * `select`: Text input via option select
+    * `list`: One or more items saved to a connected table
     * `image`: Fields that contain image uploads
     * `file`: Fields that contains file uploads
     * `display`: Displayed information that can't be edited
-    * `user`: This should point to a foreign key that references the id on the users table; setting this will bind items to the user that created them
+* `required`: If set an error will be displayed if the field has no value
+* `unique`: If set an error will be displayed if another row in the table has the same value for a given column
 * `type-new`: This takes the same options as `type` and overrides it when creating new items (eg: to allow input on a field during creation but not after)
 * `options` (required by `select`) Takes an array of options that are either strings or arrays containing the keys `title` (for what will display with the option) and `value` (for what will be recorded)
 * `name`: (required by `file` and `image`) Used along with the record id to determine the filename
@@ -229,9 +237,9 @@ An example of the `$dashboard_columns` array in a model with its `$dashboard_typ
     public static $dashboard_columns = [
         [ 'name' => 'user_id', 'type' => 'user' ],
         [ 'name' => 'created_at', 'title' => 'Date', 'type' => 'display' ],
-        [ 'name' => 'title',  'type' => 'text' ],
-        [ 'name' => 'body',  'type' => 'mkd' ],
-        [ 'name' => 'tags', 'type' => 'text' ],
-        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true ]
+        [ 'name' => 'title', 'required' => true, 'unique' => true, 'type' => 'string' ],
+        [ 'name' => 'body', 'required' => true,  'type' => 'mkd' ],
+        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true ],
+        [ 'name' => 'tags', 'type' => 'list', 'model' => 'BlogTags', 'columns' => [ 'name' ], 'foreign' => 'blog_id', 'sort' => 'order' ]
     ];
 ```

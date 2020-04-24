@@ -52,17 +52,23 @@ class DashboardController extends Controller {
         $model_class = Dashboard::getModel($model, 'edit');
 
         if ($model_class != null) {
+            $data = $model_class::getDashboardData(true);
+
             return view('dashboard.pages.edit-list', [
-                'heading' => $model_class::getDashboardHeading($model),
-                'model'   => $model,
-                'rows'    => $model_class::getDashboardData(),
-                'display' => $model_class::$dashboard_display,
-                'button'  => $model_class::$dashboard_button,
-                'sortcol' => $model_class::$dashboard_reorder ? $model_class::$dashboard_sort_column : false,
-                'create'  => $model_class::$create,
-                'delete'  => $model_class::$delete,
-                'filter'  => $model_class::$filter,
-                'export'  => $model_class::$export
+                'heading'      => $model_class::getDashboardHeading($model),
+                'model'        => $model,
+                'rows'         => $data['rows'],
+                'paramdisplay' => $data['paramdisplay'],
+                'query'        => $model_class::getQueryString(),
+                'display'      => $model_class::$dashboard_display,
+                'button'       => $model_class::$dashboard_button,
+                'idlink'       => $model_class::$dashboard_id_link,
+                'sortcol'      => $model_class::$dashboard_reorder ? $model_class::$dashboard_sort_column : false,
+                'paginate'     => $model_class::$items_per_page !== 0,
+                'create'       => $model_class::$create,
+                'delete'       => $model_class::$delete,
+                'filter'       => $model_class::$filter,
+                'export'       => $model_class::$export
             ]);
         } else {
             abort(404);
@@ -80,6 +86,13 @@ class DashboardController extends Controller {
             } else {
                 if ($model_class::where('id', $id)->exists()) {
                     $item = $model_class::find($id);
+
+                    foreach ($model_class::$dashboard_columns as $column) {
+                        if ($column['type'] === 'list') {
+                            $list_model_class = 'App\\Models\\' . $column['model'];
+                            $item->{$column['name']} = $list_model_class::where($column['foreign'], $item->id)->orderBy($column['sort'])->get();
+                        }
+                    }
 
                     if (is_null($item) || !$item->userCheck()) {
                         return view('errors.no-such-record');
@@ -181,12 +194,83 @@ class DashboardController extends Controller {
                 }
             }
 
-            // populate the eloquent object with the remaining items in $request
-            foreach ($request['columns'] as $column) {
-                $item->$column = $request[$column];
+            // check to ensure required columns have values
+            $empty = [];
+
+            foreach ($model_class::$dashboard_columns as $column) {
+                if ($request->has($column['name']) && array_key_exists('required', $column) && $column['required'] && ($request[$column['name']] == '' || $request[$column['name']] == null)) {
+                    if (array_key_exists('title', $column)) {
+                        array_push($empty, "'" . $column['title'] . "'");
+                    } else {
+                        array_push($empty, "'" . ucfirst($column['name']) . "'");
+                    }
+                }
             }
 
-            // save the new or updated item
+            if (count($empty) > 0) {
+                return 'required:' . implode(',', $empty);
+            }
+
+            // check to ensure unique columns are unique
+            $not_unique = [];
+
+            foreach ($model_class::$dashboard_columns as $column) {
+                if ($request->has($column['name']) && array_key_exists('unique', $column) && $column['unique'] && $model_class::where($column['name'], $request[$column['name']])->where('id', '!=', $item->id)->exists()) {
+                    if (array_key_exists('title', $column)) {
+                        array_push($not_unique, "'" . $column['title'] . "'");
+                    } else {
+                        array_push($not_unique, "'" . ucfirst($column['name']) . "'");
+                    }
+                }
+            }
+
+            if (count($not_unique) > 0) {
+                return 'not-unique:' . implode(',', $not_unique);
+            }
+
+            // populate the eloquent object with the non-list items in $request
+            foreach ($request['columns'] as $column) {
+                if ($column['type'] !== 'list') {
+                    $column_name = $column['name'];
+                    $item->$column_name = $request[$column_name];
+                }
+            }
+
+            // save the item if it's new so we can access its id
+            if ($request['id'] == 'new') {
+                $item->save();
+            }
+
+            // populate connected lists with list items in $request
+            foreach ($request['columns'] as $column) {
+                if ($column['type'] === 'list') {
+                    $column_name = $column['name'];
+
+                    foreach ($model_class::$dashboard_columns as $dashboard_column) {
+                        if ($dashboard_column['name'] === $column_name) {
+                            $foreign = $dashboard_column['foreign'];
+                            $list_model_class = 'App\\Models\\' . $dashboard_column['model'];
+                            $list_model_class::where($foreign, $item->id)->delete();
+
+                            if ($request->has($column_name)) {
+                                foreach ($request[$column_name] as $index => $row) {
+                                    $list_model_item = new $list_model_class;
+                                    $list_model_item->$foreign = $item->id;
+                                    $list_model_item->{$dashboard_column['sort']} = $index;
+
+                                    foreach ($row as $key => $value) {
+                                        $list_model_item->$key = $value;
+                                    }
+
+                                    $list_model_item->save();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // update the item
             $item->save();
 
             // return the id number in the format '^id:[0-9][0-9]*$' on success
