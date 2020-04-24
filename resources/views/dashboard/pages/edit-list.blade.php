@@ -48,7 +48,7 @@
                             <button type="button" class="action-button btn btn-secondary" data-confirmation="{{ $button[1] }}" data-success="{{ $button[2] }}" data-error="{{ $button[3] }}" data-url="{{ $button[4] }}">{{ $button[0] }}</button>
                         @endif
 
-                        <button type="button" class="edit-button btn btn-warning">Edit</button>
+                        <a class="edit-button btn btn-warning" href="/dashboard/edit/{{ $model }}/{{ $row['id'] }}">Edit</a>
 
                         @if($delete)
                             <button type="button" class="delete-button btn btn-danger">Delete</button>

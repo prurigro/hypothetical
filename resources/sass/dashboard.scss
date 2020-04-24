@@ -744,11 +744,11 @@ form {
             }
         }
 
-        .text-display, .mkd-editor-container, input, select {
+        .text-display, .mkd-editor-container, input, textarea, select {
             margin-bottom: 15px;
         }
 
-        input {
+        input, textarea {
             display: block;
             width: 100%;
 
@@ -773,6 +773,14 @@ form {
             &.date-picker {
                 cursor: pointer;
             }
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        select {
+            max-width: 100%;
         }
 
         .current-image {
@@ -1008,7 +1016,7 @@ form {
     padding: $grid-gutter-width;
     justify-content: center;
     align-items: center;
-    background-color: fade-out(lighten($c-dashboard-light, 1%), 0.6);
+    background-color: fade-out(lighten($c-dashboard-light, 1%), 0.3);
     opacity: 0;
     transition: opacity 250ms;
 

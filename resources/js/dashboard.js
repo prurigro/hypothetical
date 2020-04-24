@@ -160,20 +160,6 @@ function editListInit() {
         });
     };
 
-    // initialize edit button functionality
-    const editButtonInit = function() {
-        const $editButtons = $(".btn.edit-button");
-
-        $editButtons.on("click", function() {
-            const $this = $(this),
-                $listItem = $this.closest(".list-group-item"),
-                itemId = $listItem.data("id");
-
-            // go to the edit page
-            window.location.href = "/dashboard/edit/" + model + "/" + itemId;
-        });
-    };
-
     // initialize delete button functionality
     const deleteButtonInit = function() {
         const $deleteButtons = $(".btn.delete-button");
@@ -244,6 +230,7 @@ function editListInit() {
 
             sortable = Sortable.create(editList, {
                 handle: ".sort-icon",
+
                 onUpdate: function() {
                     // update the sortOrder object based on the updated order
                     $editList.find(".list-group-item").reverse().each(function(index) {
@@ -296,7 +283,6 @@ function editListInit() {
     };
 
     newButtonInit();
-    editButtonInit();
     deleteButtonInit();
     actionButtonInit();
     sortRowInit();

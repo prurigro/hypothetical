@@ -14,7 +14,7 @@ class AddSubscriptionTable extends Migration
     public function up()
     {
         Schema::create('subscriptions', function(Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->timestamps();
