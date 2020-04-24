@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Parsedown;
 use App\User;
+use App\Models\BlogTags;
 
 class Blog extends DashboardModel
 {
@@ -41,8 +42,8 @@ class Blog extends DashboardModel
             // Replace the tags string with an array
             $tags = [];
 
-            foreach (explode(';', $blog_entry['tags']) as $tag) {
-                array_push($tags, $tag);
+            foreach (BlogTags::where('blog_id', $blog_entry->id)->orderBy('order')->get() as $tag) {
+                array_push($tags, $tag['name']);
             }
 
             $blog_entry['tags'] = $tags;
