@@ -61,7 +61,8 @@ const jsDashboardLibs = [
     "node_modules/flatpickr/dist/flatpickr.js",
     "node_modules/sortablejs/Sortable.js",
     "node_modules/list.js/dist/list.js",
-    "node_modules/easymde/dist/easymde.min.js"
+    "node_modules/easymde/dist/easymde.min.js",
+    "node_modules/autonumeric/dist/autoNumeric.js"
 ];
 
 // CSS libraries for the dashboard
