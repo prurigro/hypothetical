@@ -2,10 +2,10 @@
 @set('current_page', preg_replace([ '/https?:\/\//', '/^[^\/]*\/[^\/]*\//', '/\/.*/' ], [ '', '', '' ], Request::url()))
 
 @section('page-includes')
-    <script src="/js/lib-dashboard.js?version={{ env('CACHE_BUST') }}"></script>
-    <script src="/js/dashboard.js?version={{ env('CACHE_BUST') }}"></script>
-    <link rel="stylesheet" href="/css/lib-dashboard.css?version={{ env('CACHE_BUST') }}" />
-    <link rel="stylesheet" href="/css/dashboard.css?version={{ env('CACHE_BUST') }}" />
+    <script src="/js/lib-dashboard.js?version={{ Version::get() }}"></script>
+    <script src="/js/dashboard.js?version={{ Version::get() }}"></script>
+    <link rel="stylesheet" href="/css/lib-dashboard.css?version={{ Version::get() }}" />
+    <link rel="stylesheet" href="/css/dashboard.css?version={{ Version::get() }}" />
 @endsection
 
 @section('page-top')

@@ -27,9 +27,9 @@
         <meta name="twitter:description" content="{{ env('APP_DESC') }}" />
         <meta name="twitter:image" content="{{ asset('/img/logo.png') }}" />
 
-        <link rel="shortcut icon" href="{{ URL::to('/') }}/favicon.ico?version={{ env('CACHE_BUST') }}" />
-        <link rel="icon" href="{{ URL::to('/') }}/favicon.ico?version={{ env('CACHE_BUST') }}" type="image/x-icon" />
-        <link rel="icon" href="{{ URL::to('/') }}/favicon.png?version={{ env('CACHE_BUST') }}" type="image/png" />
+        <link rel="shortcut icon" href="{{ URL::to('/') }}/favicon.ico?version={{ Version::get() }}" />
+        <link rel="icon" href="{{ URL::to('/') }}/favicon.ico?version={{ Version::get() }}" type="image/x-icon" />
+        <link rel="icon" href="{{ URL::to('/') }}/favicon.png?version={{ Version::get() }}" type="image/png" />
         <link rel="canonical" href="{{ Request::url() }}" />
 
         @yield('page-includes')
@@ -50,7 +50,7 @@
 
         @if(Config::get('app.debug') && Config::get('app.env') === 'local')
             <script id="__bs_script__">//<![CDATA[
-                document.write("<script async src='http://{{ env('BS_HOST', 'localhost') }}:3000/browser-sync/browser-sync-client.js?version={{ env('CACHE_BUST') }}'><\/script>".replace("HOST", location.hostname));
+                document.write("<script async src='http://{{ env('BS_HOST', 'localhost') }}:3000/browser-sync/browser-sync-client.js?version={{ Version::get() }}'><\/script>".replace("HOST", location.hostname));
             //]]></script>
         @endif
     </body>

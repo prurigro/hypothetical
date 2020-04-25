@@ -1,7 +1,7 @@
 @extends('templates.base')
 
 @section('page-includes')
-    <link rel="stylesheet" href="/css/error.css?version={{ env('CACHE_BUST') }}" />
+    <link rel="stylesheet" href="/css/error.css?version={{ Version::get() }}" />
 @endsection
 
 @section('page-content')

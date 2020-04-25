@@ -81,14 +81,6 @@ php artisan route:clear
 msg "Running: ${c_m}php artisan view:clear"
 php artisan view:clear
 
-grep -qe '^CACHE_BUST=' .env || {
-    msg "Adding the ${c_y}CACHE_BUST$c_w variable"
-    printf '\n%s\n' 'CACHE_BUST=' >> .env
-}
-
-msg "Updating ${c_y}CACHE_BUST$c_w variable"
-sed -i 's|^CACHE_BUST=.*|CACHE_BUST='"$(LC_CTYPE=C LANG=C tr -dc A-Za-z0-9 </dev/urandom | head -c 32)"'|' .env
-
 (( ! no_db )) && {
     msg "Running: ${c_m}php artisan migrate --force"
     php artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"

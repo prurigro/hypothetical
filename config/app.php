@@ -239,6 +239,7 @@ return [
          */
         'Image'      => Intervention\Image\Facades\Image::class,
         'Language'   => App\Utilities\Language::class,
+        'Version'    => App\Utilities\Version::class,
 
     ]
 

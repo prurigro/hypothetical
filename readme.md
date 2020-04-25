@@ -37,11 +37,10 @@ The following steps are performed in this order when run:
 4. Downloads and updates non-development composer dependencies.
 5. Checks to see if the `APP_KEY` variable in the `.env` file is empty, and if it is, generates a value for it.
 6. Clears the route and blade cache to ensure everything will be build fresh against the current codebase and dependencies.
-7. Updates the `CACHE_BUST` variable in the `.env` file, which changes the value of a `version` query string appended to compiled assets and prevents clients from using a previous version in their cache.
-8. (artisan) Run new database migrations.
-9. Cleans, downloads and updates npm dependencies.
-10. Runs `gulp --production` to build project files and copy fonts to `public/fonts` (uses the local version of gulp installed in `node_modules`).
-11. (artisan) Takes the website out of maintenance mode.
+7. (artisan) Run new database migrations.
+8. Cleans, downloads and updates npm dependencies.
+9. Runs `gulp --production` to build project files and copy fonts to `public/fonts` (uses the local version of gulp installed in `node_modules`).
+10. (artisan) Takes the website out of maintenance mode.
 
 **NOTE**: Items with `(artisan)` prepended to them won't be run if `init.sh` is run with the `--no-artisan` flag.
 
