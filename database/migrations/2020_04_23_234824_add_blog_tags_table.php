@@ -14,7 +14,7 @@ class AddBlogTagsTable extends Migration
     public function up()
     {
         Schema::create('blog_tags', function(Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->bigInteger('blog_id')->unsigned();
             $table->foreign('blog_id')->references('id')->on('blog')->onDelete('cascade');
             $table->string('name')->nullable();
