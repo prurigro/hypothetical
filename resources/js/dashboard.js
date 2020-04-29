@@ -820,7 +820,9 @@ function userProfileImageInit() {
         }
     });
 
-    $delete.on("click", function() {
+    $delete.on("click", function(e) {
+        e.preventDefault();
+
         if (!submitting) {
             submitting = true;
 

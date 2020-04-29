@@ -22,13 +22,13 @@
 
                         <div class="image-buttons">
                             <input id="profile-image-upload" name="profile-image-upload" type="file" />
-                            <label for="profile-image-upload" class="image-upload-button" title="Upload Profile Image"></label>
-                            <span id="profile-image-delete" class="image-delete-button {{ $profile_image === null ? 'inactive' : '' }}" title="Delete Profile Image"></span>
+                            <label for="profile-image-upload" class="image-upload-button" title="Upload Profile Image"><i class="fas fa-upload"></i></label>
+                            <button id="profile-image-delete" class="image-delete-button {{ $profile_image === null ? 'inactive' : '' }}" title="Delete Profile Image"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </form>
 
                     <form id="user-profile-update" class="edit-item user-profile-update">
-                        <h2 class="form-title">User Profile</h2>
+                        <h2 class="form-title">User Profile <i class="fas fa-upload"></i></h2>
 
                         <label for="email">Email:</label>
                         <input class="text-input" type="text" name="email" id="email" value="{{ $user->email }}" disabled />
