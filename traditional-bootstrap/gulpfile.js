@@ -3,7 +3,9 @@ const gulp = require("gulp"),
     minimist = require("minimist"),
     log = require("fancy-log"),
     plumber = require("gulp-plumber"),
-    concat = require("gulp-concat");
+    concat = require("gulp-concat"),
+    fs = require("fs"),
+    crypto = require("crypto");
 
 // Sass and CSS packages
 const sass = require("gulp-sass"),
@@ -134,6 +136,17 @@ function processJavaScript(outputFilename, inputFiles, es6) {
     return javascript.pipe(gulp.dest("public/js/"));
 }
 
+// Update the version string
+function updateVersion() {
+    crypto.randomBytes(16, (err, buf) => {
+        if (err) { throw err; }
+
+        return fs.writeFile("storage/app/__version.txt", buf.toString("hex"), (err) => {
+            if (err) { throw err; }
+        });
+    });
+}
+
 // Task for error page styles
 gulp.task("sass-error", () => {
     return processSass("error");
@@ -183,9 +196,16 @@ gulp.task("fonts", (done) => {
     done();
 });
 
+// Task to update the cache-bust version
+gulp.task("version", (done) => {
+    updateVersion();
+    done();
+});
+
 // Task to watch files and run respective tasks when changes occur
 gulp.task("watch", () => {
     const browserSyncReload = (done) => {
+        updateVersion();
         browserSync.reload();
         done();
     };
@@ -217,5 +237,6 @@ gulp.task("default", gulp.parallel(
     "js-public-libs",
     "js-dashboard",
     "js-dashboard-libs",
-    "fonts"
+    "fonts",
+    "version"
 ));
