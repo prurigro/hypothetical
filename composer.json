@@ -20,7 +20,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "phpoffice/phpspreadsheet": "^1.2",
-        "radic/blade-extensions": "dev-master",
+        "radic/blade-extensions": "^7.4.0",
         "spatie/laravel-newsletter": "^4.8"
     },
     "require-dev": {
