@@ -18,7 +18,7 @@ const sass = require("gulp-sass"),
 // Javascript packages
 const babel = require("gulp-babel"),
     stripDebug = require("gulp-strip-debug"),
-    uglify = require("gulp-uglify");
+    uglify = require("gulp-uglify-es").default;
 
 // Vue packages
 const browserify = require("browserify"),
@@ -63,7 +63,7 @@ const jsDashboardLibs = [
     "node_modules/popper.js/dist/umd/popper.js",
     "node_modules/bootstrap/dist/js/bootstrap.js",
     "node_modules/flatpickr/dist/flatpickr.js",
-    "node_modules/sortablejs/Sortable.js",
+    "node_modules/sortablejs/dist/sortable.umd.js",
     "node_modules/list.js/dist/list.js",
     "node_modules/easymde/dist/easymde.min.js",
     "node_modules/autonumeric/dist/autoNumeric.js"
