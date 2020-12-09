@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Parsedown;
-use App\User;
+use App\Models\User;
 use App\Models\BlogTags;
 
 class Blog extends DashboardModel

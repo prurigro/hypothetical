@@ -11,7 +11,7 @@
                 <div class="dashboard-settings-container">
                     <form id="user-profile-image" class="user-profile-image">
                         @set('profile_image', $user->profileImage())
-                        @set('default_image', App\User::$default_profile_image)
+                        @set('default_image', App\Models\User::$default_profile_image)
                         <h2 class="form-title">Profile Image</h2>
 
                         <div

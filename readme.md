@@ -3,7 +3,7 @@
 A Hypothetical website template for bootstrapping new projects.
 
 * Written and maintained by Kevin MacMartin
-* Based on Laravel 7.25.0
+* Based on Laravel 8.4.4
 
 ## Setup
 

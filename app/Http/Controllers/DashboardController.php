@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Auth;
 use File;
 use Image;
-use App\User;
+use App\Models\User;
 use App\Dashboard;
 
 class DashboardController extends Controller {
