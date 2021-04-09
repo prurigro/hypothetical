@@ -75,10 +75,8 @@
                                             </div>
 
                                             @foreach($column['columns'] as $list_column)
-                                                @set('placeholder', $column['name'] == 'included' || $column['name'] == 'recommended' ? '' : $list_column)
-
                                                 <div class="list-items-row-input {{ count($column['columns']) == 1 ? 'wide' : '' }}">
-                                                    <input class="list-items-row-input-inner" data-column="{{ $list_column }}" placeholder="{{ $placeholder }}" />
+                                                    <input class="list-items-row-input-inner" data-column="{{ $list_column }}" placeholder="{{ $list_column }}" />
                                                 </div>
                                             @endforeach
 
