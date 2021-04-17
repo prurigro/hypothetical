@@ -15,13 +15,13 @@ $grid-breakpoints: (
 );
 
 $container-max-widths: (
-    sm: 540px,
-    md: 720px,
-    lg: 960px,
-    xl: 1140px,
-    xxl: 1540px,
-    xxxl: 1733px,
-    xxxxl: 1925px
+    sm: pxrem(540),
+    md: pxrem(720),
+    lg: pxrem(960),
+    xl: pxrem(1140),
+    xxl: pxrem(1540),
+    xxxl: pxrem(1733),
+    xxxxl: pxrem(1925)
 );
 
 // Colours
