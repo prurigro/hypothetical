@@ -8,6 +8,7 @@
     "browser-sync": "2.26.14"
   },
   "dependencies": {
+    "@mr-hope/gulp-sass": "^2.0.0",
     "@babel/core": "^7.13.16",
     "@babel/preset-env": "^7.13.15",
     "@fortawesome/fontawesome-free": "^5.15.3",
@@ -25,7 +26,6 @@
     "gulp-concat": "^2.6.1",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.0",
-    "gulp-sass": "^4.1.0",
     "gulp-sass-glob": "^1.1.0",
     "gulp-strip-debug": "^4.0.0",
     "gulp-uglify-es": "^2.0.0",
