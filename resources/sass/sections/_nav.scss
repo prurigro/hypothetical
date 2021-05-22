@@ -122,6 +122,7 @@
                 color: $c-text-light;
                 font-size: pxrem(14);
                 text-transform: uppercase;
+                text-decoration: none;
 
                 @media (max-width: $nav-mobile-max) {
                     display: block;

@@ -24,7 +24,7 @@
             background-size: cover;
             background-repeat: no-repeat;
 
-            @include media-breakpoint-down(sm) {
+            @include media-breakpoint-down(md) {
                 @include aspect-ratio(3, 1);
                 width: 100%;
             }

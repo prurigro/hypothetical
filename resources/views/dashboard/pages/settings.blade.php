@@ -28,7 +28,7 @@
                     </form>
 
                     <form id="user-profile-update" class="edit-item user-profile-update">
-                        <h2 class="form-title">User Profile <i class="fas fa-upload"></i></h2>
+                        <h2 class="form-title">User Profile</h2>
 
                         <label for="email">Email:</label>
                         <input class="text-input" type="text" name="email" id="email" value="{{ $user->email }}" disabled />

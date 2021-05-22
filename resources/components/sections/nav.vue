@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="sr-only">Toggle navigation</span>
+                <span class="visually-hidden">Toggle navigation</span>
             </button>
         </div>
 

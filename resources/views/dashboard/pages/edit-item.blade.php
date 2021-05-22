@@ -138,8 +138,10 @@
             @endforeach
 
             <div class="row">
-                <button id="back" type="button" class="back-button btn btn-secondary">Back</button>
-                <button id="submit" type="button" class="submit-button btn btn-primary no-input">{{ $id == 'new' ? 'Create' : 'Update' }} {{ $heading }} Item</button>
+                <div class="col-12">
+                    <button id="back" type="button" class="back-button btn btn-secondary">Back</button>
+                    <button id="submit" type="button" class="submit-button btn btn-primary no-input">{{ $id == 'new' ? 'Create' : 'Update' }} {{ $heading }} Item</button>
+                </div>
             </div>
         </div>
     </form>
