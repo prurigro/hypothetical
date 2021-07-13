@@ -48,10 +48,19 @@ function askConfirmation(message, command, cancelCommand) {
         }, fadeTime);
     };
 
+    // functionality to run when clicking the cancel button
+    const cancelModal = function() {
+        if (cancelCommand !== undefined) {
+            cancelCommand();
+        }
+
+        closeConfirmationModal();
+    };
+
     // close the modal if the escape button is pressed
     const escapeModal = function(e) {
         if (e.keyCode === 27) {
-            closeConfirmationModal();
+            cancelModal();
         } else {
             e.preventDefault();
         }
@@ -60,15 +69,6 @@ function askConfirmation(message, command, cancelCommand) {
     // functionality to run when clicking the confirm button
     const confirmModal = function() {
         command();
-        closeConfirmationModal();
-    };
-
-    // functionality to run when clicking the cancel button
-    const cancelModal = function() {
-        if (cancelCommand !== undefined) {
-            cancelCommand();
-        }
-
         closeConfirmationModal();
     };
 
