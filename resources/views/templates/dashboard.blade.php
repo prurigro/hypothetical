@@ -1,5 +1,5 @@
 @extends('templates.base', [ 'title' => 'Dashboard' ])
-@set('current_page', preg_replace([ '/^.*\//' ], [ '' ], Request::url()))
+@set('current_page', preg_replace([ '/https?:\/\/[^\/]*\/dashboard\/[^\/]*\//', '/\/.*/' ], [ '', '' ],  Request::url()))
 
 @section('page-includes')
     <script src="/js/lib-dashboard.js?version={{ Version::get() }}"></script>
