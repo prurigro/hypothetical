@@ -23,7 +23,7 @@ $c-text-light: #fff; // light text
 $c-text-light-inactive: fade-out($c-text-light, 0.25); // inactive light text
 $c-input-bg: #fff; // white
 $c-dashboard-error: #a80000;
-$c-dashboard-dark: #3e6087;
+$c-dashboard-dark: #111;
 $c-dashboard-light: #f1f1f1;
 $c-dashboard-edit: #87823e;
 $c-dashboard-delete: #87483e;
@@ -81,20 +81,9 @@ body {
     left: 0px;
     width: 100%;
     height: 100%;
-    background-image: url("/img/dashboard/star-bg.svg");
+    background-image: url("/img/dashboard/wavy-bg.svg");
     background-position: center top;
-    background-size: pxrem(65) auto;
     background-repeat: repeat;
-
-    &:after {
-        content: "";
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        background-color: fade-out(#fff, 0.02);
-    }
 }
 
 .navbar, .dashboard-footer {
