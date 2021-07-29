@@ -12,7 +12,7 @@
                         <div
                             v-if="entry.headerimage !== ''"
                             class="blog-entry-header-image"
-                            :style="{ backgroundImage: 'url(' + entry.headerimage + ')' }">
+                            :style="{ backgroundImage: 'url(' + imageType(entry.headerimage) + ')' }">
                         </div>
 
                         <div class="blog-entry-content">

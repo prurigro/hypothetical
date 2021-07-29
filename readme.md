@@ -218,7 +218,9 @@ Models with their `$dashboard_type` set to `edit` also use:
 * `options` (required by `select`) Takes an array of options that are either strings or arrays containing the keys `title` (for what will display with the option) and `value` (for what will be recorded)
 * `name`: (required by `file` and `image`) Used along with the record id to determine the filename
 * `delete`: (optional for `file` and `image`) Enables a delete button for the upload when set to true
-* `ext`: (required by `file`) Configures the file extension of the upload
+* `ext`: (required by `file` and optional for `image`) Configures the file extension of the upload (`image` defaults to `jpg`)
+* `max_width`: (optional for `image`) Configures the maximum width of an image upload (defaults to `0` which sets no maximum width)
+* `max_height`: (optional for `image`) Configures the maximum height of an image upload (defaults to `0` which sets no maximum height)
 
 An example of the `$dashboard_columns` array in a model with its `$dashboard_type` set to `view`:
 
@@ -238,7 +240,7 @@ An example of the `$dashboard_columns` array in a model with its `$dashboard_typ
         [ 'name' => 'created_at', 'title' => 'Date', 'type' => 'display' ],
         [ 'name' => 'title', 'required' => true, 'unique' => true, 'type' => 'string' ],
         [ 'name' => 'body', 'required' => true,  'type' => 'mkd' ],
-        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true ],
+        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true, 'ext' => 'jpg' ],
         [ 'name' => 'tags', 'type' => 'list', 'model' => 'BlogTags', 'columns' => [ 'name' ], 'foreign' => 'blog_id', 'sort' => 'order' ]
     ];
 ```

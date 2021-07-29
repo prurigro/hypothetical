@@ -21,6 +21,7 @@
                 <div class="row">
                     @set('value', $item !== null ? $item[$column['name']] : '')
                     @set('type', $id == 'new' && array_key_exists('type-new', $column) ? $column['type-new'] : $column['type'])
+                    @set('ext', array_key_exists('ext', $column) ? $column['ext'] : 'jpg')
 
                     @if($type == 'hidden')
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
@@ -28,7 +29,17 @@
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ Auth::id() }}" />
                     @elseif($type != 'display' || $id != 'new')
                         <div class="col-12 col-md-4 col-lg-3">
-                            <label for="{{ $column['name'] }}">{{ array_key_exists('title', $column) ? $column['title'] : ucfirst($column['name']) }}:</label>
+                            <label for="{{ $column['name'] }}">
+                                {{ array_key_exists('title', $column) ? $column['title'] : ucfirst($column['name']) }}
+
+                                @if($column['type'] == 'image')
+                                    @if($ext == 'svg')
+                                        (SVG)
+                                    @endif
+                                @elseif($column['type'] == 'file')
+                                    ({{ strtoupper($ext) }})
+                                @endif
+                            </label>
                         </div>
 
                         <div class="col-12 col-md-8 col-lg-9">
@@ -100,7 +111,7 @@
                                     <button class="list-add-button" type="button">Add</button>
                                 </div>
                             @elseif($type == 'image')
-                                @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . '.jpg')
+                                @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . '.' . $ext)
                                 <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
@@ -116,14 +127,14 @@
                                 @endif
                             @elseif($type == 'file')
                                 @set('current_file', "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'])
-                                <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}" />
+                                <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
 
                                 @if(file_exists(base_path() . '/public' . $current_file))
                                     <div id="current-file-{{ $column['name'] }}">
                                         <a class="edit-button view" href="{{ $current_file }}?version={{ $item->timestamp() }}" target="_blank">View {{ strtoupper($column['ext']) }}</a>
 
                                         @if(array_key_exists('delete', $column) && $column['delete'])
-                                            <span class="edit-button delete file" data-name="{{ $column['name'] }}" data-ext="{{ $column['ext'] }}">
+                                            <span class="edit-button delete file" data-name="{{ $column['name'] }}">
                                                 Delete {{ strtoupper($column['ext']) }}
                                             </span>
                                         @endif

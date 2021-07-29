@@ -15,6 +15,15 @@ Vue.use(Vuex);
 // CSRF prevention header
 Vue.http.headers.common["X-CSRF-TOKEN"] = env.csrfToken;
 
+// Import local javascript
+import SupportsWebP from "imports/supports-webp.js";
+
+// Import global mixins
+import ImageType from "mixins/image-type.js";
+
+// Register global mixins
+Vue.mixin(ImageType);
+
 // Import global components
 import NavSection from "sections/nav.vue";
 import FooterSection from "sections/footer.vue";
@@ -61,7 +70,8 @@ const store = new Vuex.Store({
         appLang: env.appLang,
         appDefaultLang: env.appDefaultLang,
         firstLoad: true,
-        lastPath: ""
+        lastPath: "",
+        supportsWebP: null
     },
 
     getters: {
@@ -83,6 +93,10 @@ const store = new Vuex.Store({
 
         getLastPath: state => {
             return state.lastPath;
+        },
+
+        getSupportsWebP: state => {
+            return state.supportsWebP;
         }
     },
 
@@ -98,6 +112,10 @@ const store = new Vuex.Store({
 
         setLastPath(state, value) {
             state.lastPath = value;
+        },
+
+        setSupportsWebP(state, value) {
+            state.supportsWebP = value;
         }
     },
 
@@ -105,6 +123,9 @@ const store = new Vuex.Store({
 
     }
 });
+
+// Detect webp support
+SupportsWebP.detect(store);
 
 // Sync vue-router-sync with vuex store
 sync(store, router);

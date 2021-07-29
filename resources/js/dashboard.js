@@ -4,6 +4,19 @@ const fadeTime = 250;
 // declare a reverse function for jquery
 jQuery.fn.reverse = [].reverse;
 
+// extends an error message with additional text
+function getErrorText(message, response) {
+    let errorText = message;
+
+    switch (response) {
+        case "incorrect-format-fail":
+            errorText += ": Incorrect file format";
+            break;
+    }
+
+    return errorText;
+}
+
 // show or hide the loading modal
 function loadingModal(action) {
     const $loadingModal = $("#loading-modal");
@@ -429,7 +442,6 @@ function editItemInit() {
                 file.append("name", $(fileUpload).attr("name"));
                 file.append("id", row_id);
                 file.append("model", model);
-                file.append("ext", $(fileUpload).data("ext"));
 
                 $.ajax({
                     type: "POST",
@@ -444,7 +456,7 @@ function editItemInit() {
                     } else {
                         loadingModal("hide");
 
-                        showAlert("Failed to upload file", function() {
+                        showAlert(getErrorText("Failed to upload file", response), function() {
                             submitting = false;
                         });
                     }
@@ -491,7 +503,7 @@ function editItemInit() {
                     } else {
                         loadingModal("hide");
 
-                        showAlert("Failed to upload image", function() {
+                        showAlert(getErrorText("Failed to upload image", response), function() {
                             submitting = false;
                         });
                     }

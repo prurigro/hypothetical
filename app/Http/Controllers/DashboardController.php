@@ -28,14 +28,14 @@ class DashboardController extends Controller {
         return view('dashboard.pages.home');
     }
 
-    // View Model Data
+    // Page to View Model Data
     public function getView($model)
     {
         $model_class = Dashboard::getModel($model, 'view');
 
         if ($model_class != null) {
             return view('dashboard.pages.view', [
-                'heading' => $model_class::getDashboardHeading($model),
+                'heading' => $model_class->getDashboardHeading(),
                 'column_headings' => $model_class::getDashboardColumnData('headings'),
                 'model' => $model,
                 'rows' => $model_class::getDashboardData(),
@@ -46,7 +46,7 @@ class DashboardController extends Controller {
         }
     }
 
-    // Edit List of Model Rows
+    // Page to Edit List of Model Rows
     public function getEditList($model)
     {
         $model_class = Dashboard::getModel($model, 'edit');
@@ -55,7 +55,7 @@ class DashboardController extends Controller {
             $data = $model_class::getDashboardData(true);
 
             return view('dashboard.pages.edit-list', [
-                'heading'      => $model_class::getDashboardHeading($model),
+                'heading'      => $model_class->getDashboardHeading(),
                 'model'        => $model,
                 'rows'         => $data['rows'],
                 'paramdisplay' => $data['paramdisplay'],
@@ -75,7 +75,7 @@ class DashboardController extends Controller {
         }
     }
 
-    // Create and Edit Model Item
+    // Page to Create and Edit Model Item
     public function getEditItem($model, $id = 'new')
     {
         $model_class = Dashboard::getModel($model, 'edit');
@@ -103,7 +103,7 @@ class DashboardController extends Controller {
             }
 
             return view('dashboard.pages.edit-item', [
-                'heading'   => $model_class::getDashboardHeading($model),
+                'heading'   => $model_class->getDashboardHeading(),
                 'model'     => $model,
                 'id'        => $id,
                 'item'      => $item,
@@ -296,15 +296,14 @@ class DashboardController extends Controller {
 
             if (is_null($item)) {
                 return 'record-access-fail';
-            } else if (!$item->userCheck()) {
-                return 'permission-fail';
             } else if ($request->hasFile('file')) {
-                $directory = base_path() . '/public/uploads/' . $request['model'] . '/img/';
-                File::makeDirectory($directory, 0755, true, true);
-                $image = Image::make($request->file('file'));
-                $image->save($directory . $request['id'] . '-' . $request['name'] . '.jpg');
-                $item->touch();
-                return 'success';
+                $save_result = $item->saveImage($request['name'], $request->file('file'));
+
+                if ($save_result == 'success') {
+                    $item->touch();
+                }
+
+                return $save_result;
             } else {
                 return 'file-upload-fail';
             }
@@ -319,8 +318,7 @@ class DashboardController extends Controller {
         $this->validate($request, [
             'id'    => 'required',
             'model' => 'required',
-            'name'  => 'required',
-            'ext'   => 'required'
+            'name'  => 'required'
         ]);
 
         $model_class = Dashboard::getModel($request['model'], 'edit');
@@ -330,14 +328,14 @@ class DashboardController extends Controller {
 
             if (is_null($item)) {
                 return 'record-access-fail';
-            } else if (!$item->userCheck()) {
-                return 'permission-fail';
             } else if ($request->hasFile('file')) {
-                $directory = base_path() . '/public/uploads/' . $request['model'] . '/files/';
-                File::makeDirectory($directory, 0755, true, true);
-                $request->file('file')->move($directory, $request['id'] . '-' . $request['name'] . '.' . $request['ext']);
-                $item->touch();
-                return 'success';
+                $save_result = $item->saveFile($request['name'], $request->file('file'));
+
+                if ($save_result == 'success') {
+                    $item->touch();
+                }
+
+                return $save_result;
             } else {
                 return 'file-upload-fail';
             }
@@ -365,25 +363,17 @@ class DashboardController extends Controller {
                 return 'permission-fail';
             }
 
-            // delete the row
-            $item->delete();
-
             // delete associated files if they exist
             foreach ($model_class::$dashboard_columns as $column) {
                 if ($column['type'] == 'image') {
-                    $image = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . '-' . $column['name'] . '.jpg';
-
-                    if (file_exists($image) && !unlink($image)) {
-                        return 'image-delete-fail';
-                    }
+                    $item->deleteImage($column['name'], false);
                 } else if ($column['type'] == 'file') {
-                    $file = base_path() . '/public/uploads/' . $request['model'] . '/files/' . $request['id'] . '-' . $column['name'] . '.' . $column['ext'];
-
-                    if (file_exists($file) && !unlink($file)) {
-                        return 'file-delete-fail';
-                    }
+                    $item->deleteFile($column['name'], false);
                 }
             }
+
+            // delete the row
+            $item->delete();
 
             // update the order of the remaining rows if $dashboard_reorder is true
             if ($model_class::$dashboard_reorder) {
@@ -412,20 +402,13 @@ class DashboardController extends Controller {
         $model_class = Dashboard::getModel($request['model'], 'edit');
 
         if ($model_class != null) {
-            $image = base_path() . '/public/uploads/' . $request['model'] . '/img/' . $request['id'] . '-' . $request['name'] . '.jpg';
             $item = $model_class::find($request['id']);
 
             if (is_null($item)) {
                 return 'record-access-fail';
-            } else if (!$item->userCheck()) {
-                return 'permission-fail';
-            } else if (!file_exists($image)) {
-                return 'image-not-exists-fail';
-            } else if (!unlink($image)) {
-                return 'image-delete-fail';
             }
 
-            return 'success';
+            return $item->deleteImage($request['name'], true);
         } else {
             return 'model-access-fail';
         }
@@ -437,27 +420,19 @@ class DashboardController extends Controller {
         $this->validate($request, [
             'id'    => 'required',
             'model' => 'required',
-            'name'  => 'required',
-            'ext'   => 'required'
+            'name'  => 'required'
         ]);
 
         $model_class = Dashboard::getModel($request['model'], 'edit');
 
         if ($model_class != null) {
-            $file = base_path() . '/public/uploads/' . $request['model'] . '/files/' . $request['id'] . '-' . $request['name'] . '.' . $request['ext'];
             $item = $model_class::find($request['id']);
 
             if (is_null($item)) {
                 return 'record-access-fail';
-            } else if (!$item->userCheck()) {
-                return 'permission-fail';
-            } else if (!file_exists($file)) {
-                return 'file-not-exists-fail';
-            } else if (!unlink($file)) {
-                return 'file-delete-fail';
             }
 
-            return 'success';
+            return $item->deleteFile($request['name'], true);
         } else {
             return 'model-access-fail';
         }

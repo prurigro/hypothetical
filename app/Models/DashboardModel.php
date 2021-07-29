@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Auth;
+use File;
+use Image;
 use App\Traits\Timestamp;
 
 class DashboardModel extends Model
@@ -120,13 +122,316 @@ class DashboardModel extends Model
      *
      * @return string
      */
-    public static function getDashboardHeading($model)
+    public function getDashboardHeading()
     {
-        return static::$dashboard_heading == null ? ucfirst($model) : static::$dashboard_heading;
+        return static::$dashboard_heading == null ? ucfirst($this->getTable()) : static::$dashboard_heading;
     }
 
     /**
-     * Returns an array of column 'headings' or 'names'
+     * Return the upload path for a given type
+     *
+     * @return boolean
+     */
+    public function getUploadsPath($type)
+    {
+        if ($type == 'image') {
+            return '/uploads/' . $this->getTable() . '/img/';
+        } else if ($type == 'file') {
+            return '/uploads/' . $this->getTable() . '/files/';
+        }
+    }
+
+    /**
+     * Save an image
+     *
+     * @return boolean
+     */
+    public function saveImage($name, $file)
+    {
+        // Fail if the user doesn't have permission
+        if (!$this->userCheck()) {
+            return 'permission-fail';
+        }
+
+        $max_width = 0;
+        $max_height = 0;
+        $main_ext = 'jpg';
+
+        // Retrieve the column
+        $column = static::getColumn($name);
+
+        // Return an error if no column is found
+        if ($column == null) {
+            return 'no-such-column-fail';
+        }
+
+        // Update the extension if it's been configured
+        if (array_key_exists('ext', $column)) {
+            $main_ext = $column['ext'];
+        }
+
+        // Create the directory if it doesn't exist
+        $directory = public_path($this->getUploadsPath('image'));
+        File::makeDirectory($directory, 0755, true, true);
+
+        // Set the base file path (including the file name but not the extension)
+        $base_filename = $directory . $this->id . '-' . $name . '.';
+
+        if ($main_ext == 'svg') {
+            // Save the image provided it's an SVG
+            if (gettype($file) == 'string') {
+                if (!preg_match('/\.svg$/i', $file)) {
+                    return 'incorrect-format-fail';
+                }
+
+                copy($file, $base_filename . $main_ext);
+            } else {
+                if ($file->extension() != 'svg') {
+                    return 'incorrect-format-fail';
+                }
+
+                $file->move($directory, $base_filename . $main_ext);
+            }
+        } else {
+            // Update the maximum width if it's been configured
+            if (array_key_exists('max_width', $column)) {
+                $max_width = $column['max_width'];
+            }
+            // Update the maximum height if it's been configured
+            if (array_key_exists('max_height', $column)) {
+                $max_height = $column['max_height'];
+            }
+
+            $image = Image::make($file);
+
+            if ($max_width > 0 || $max_height > 0) {
+                $width = $image->width();
+                $height = $image->height();
+                $new_width = null;
+                $new_height = null;
+
+                if ($max_width > 0 && $max_height > 0) {
+                    if ($width > $max_width || $height > $max_height) {
+                        $new_width = $max_width;
+                        $new_height = ($new_width / $width) * $height;
+
+                        if ($new_height > $max_height) {
+                            $new_width = ($max_height / $height) * $width;
+                        }
+                    }
+                } else if ($max_width > 0) {
+                    if ($width > $max_width) {
+                        $new_width = $max_width;
+                    }
+                } else if ($height > $max_height) {
+                    $new_height = $max_height;
+                }
+
+                if (!is_null($new_width) || !is_null($new_height)) {
+                    $image->resize($new_width, $new_height, function($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            }
+
+            $image->save($base_filename . $main_ext);
+            $image->save($base_filename . 'webp');
+        }
+
+        return 'success';
+    }
+
+    /*
+     * Delete an image
+     *
+     * @return string
+     */
+    public function deleteImage($name, $not_exist_fail)
+    {
+        // Fail if the user doesn't have permission
+        if (!$this->userCheck()) {
+            return 'permission-fail';
+        }
+
+        // Set up our variables
+        $main_ext = 'jpg';
+        $extensions = [];
+
+        // Retrieve the column
+        $column = static::getColumn($name);
+
+        // Return an error if no column is found
+        if ($column == null) {
+            return 'no-such-column-fail';
+        }
+
+        // Update the extension if it's been configured
+        if (array_key_exists('ext', $column)) {
+            $main_ext = $column['ext'];
+        }
+
+        // Build the set of extensions to delete
+        array_push($extensions, $main_ext);
+
+        // If the image extension isn't svg also delete the webp
+        if ($main_ext != 'svg') {
+            array_push($extensions, 'webp');
+        }
+
+        // Delete each image
+        foreach ($extensions as $ext) {
+            // Get the full path of the image
+            $image = public_path($this->getUploadsPath('image') . $this->id . '-' . $name . '.' . $ext);
+
+            // Try to delete the image
+            if (file_exists($image)) {
+                if (!unlink($image)) {
+                    return 'image-delete-fail';
+                }
+            } else if ($not_exist_fail) {
+                return 'image-not-exists-fail';
+            }
+        }
+
+        // Success
+        return 'success';
+    }
+
+    /**
+     * Save a file
+     *
+     * @return boolean
+     */
+    public function saveFile($name, $file)
+    {
+        // Fail if the user doesn't have permission
+        if (!$this->userCheck()) {
+            return 'permission-fail';
+        }
+
+        // Retrieve the column
+        $column = static::getColumn($name);
+
+        // Return an error if no column is found
+        if ($column == null) {
+            return 'no-such-column-fail';
+        }
+
+        // Fail if an ext hasn't been declared
+        if (!array_key_exists('ext', $column)) {
+            return 'no-configured-extension-fail';
+        }
+
+        // Store the extension
+        $ext = $column['ext'];
+
+        // Create the directory if it doesn't exist
+        $directory = public_path($this->getUploadsPath('file'));
+        File::makeDirectory($directory, 0755, true, true);
+
+        // Save the file provided it's the correct extension
+        if (gettype($file) == 'string') {
+            if (!preg_match("/\.$ext/i", $file)) {
+                return 'incorrect-format-fail';
+            }
+
+            copy($file, $base_filename . $main_ext);
+        } else {
+            if ($file->extension() != $ext) {
+                return 'incorrect-format-fail';
+            }
+
+            $file->move($directory, $this->id . '-' . $name . '.' . $ext);
+        }
+
+        // Success
+        return 'success';
+    }
+
+    /*
+     * Delete a file
+     *
+     * @return string
+     */
+    public function deleteFile($name, $not_exist_fail)
+    {
+        // Fail if the user doesn't have permission
+        if (!$this->userCheck()) {
+            return 'permission-fail';
+        }
+
+        // Retrieve the column
+        $column = static::getColumn($name);
+
+        // Return an error if no column is found
+        if ($column == null) {
+            return 'no-such-column-fail';
+        }
+
+        // Fail if an ext hasn't been declared
+        if (!array_key_exists('ext', $column)) {
+            return 'no-configured-extension-fail';
+        }
+
+        // Store the extension
+        $ext = $column['ext'];
+
+        // Get the full path of the file
+        $file = public_path($this->getUploadsPath('file') . $this->id . '-' . $name . '.' . $ext);
+
+        // Try to delete the file
+        if (file_exists($file)) {
+            if (!unlink($file)) {
+                return 'file-delete-fail';
+            }
+        } else if ($not_exist_fail) {
+            return 'file-not-exists-fail';
+        }
+
+        // Success
+        return 'success';
+    }
+
+    /**
+     * Determine whether a user column exists and whether it matches the current user if it does
+     *
+     * @return boolean
+     */
+    public function userCheck()
+    {
+        $user_check = true;
+
+        foreach (static::$dashboard_columns as $column) {
+            if (array_key_exists('type', $column) && $column['type'] == 'user') {
+                if ($this->{$column['name']} != Auth::id()) {
+                    $user_check = false;
+                }
+
+                break;
+            }
+        }
+
+        return $user_check;
+    }
+
+    /**
+     * Get the file extension for an image
+     *
+     * @return string
+     */
+    public static function getColumn($name)
+    {
+        foreach (static::$dashboard_columns as $column) {
+            if ($column['name'] == $name) {
+                return $column;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Return an array of column 'headings' or 'names'
      *
      * @return array
      */
@@ -152,7 +457,7 @@ class DashboardModel extends Model
     }
 
     /**
-     * Performs a search against the columns in $dashboard_display
+     * Perform a search against the columns in $dashboard_display
      *
      * @return array
      */
@@ -192,7 +497,7 @@ class DashboardModel extends Model
     }
 
     /**
-     * Returns data for the dashboard
+     * Return data for the dashboard
      *
      * @return array
      */
@@ -250,7 +555,7 @@ class DashboardModel extends Model
     }
 
     /**
-     * Retrieves the current query string containing valid query parameters
+     * Retrieve the current query string containing valid query parameters
      *
      * @return string
      */
@@ -274,26 +579,5 @@ class DashboardModel extends Model
         }
 
         return $string;
-    }
-
-    /**
-     * Determines whether a user column exists and whether it matches the current user if it does
-     *
-     * @return boolean
-     */
-    public function userCheck() {
-        $user_check = true;
-
-        foreach (static::$dashboard_columns as $column) {
-            if (array_key_exists('type', $column) && $column['type'] == 'user') {
-                if ($this->{$column['name']} != Auth::id()) {
-                    $user_check = false;
-                }
-
-                break;
-            }
-        }
-
-        return $user_check;
     }
 }

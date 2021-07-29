@@ -49,8 +49,8 @@ class Blog extends DashboardModel
             $blog_entry['tags'] = $tags;
 
             // Add the header image if one exists
-            $header_image_path = '/uploads/blog/img/' . $blog_entry->id . '-header-image.jpg';
-            $blog_entry['headerimage'] = file_exists(base_path() . '/public' . $header_image_path) ? $header_image_path . '?version=' . $blog_entry->timestamp() : '';
+            $header_image_path = $blog_entry->getUploadsPath('image') . $blog_entry->id . '-header-image.jpg';
+            $blog_entry['headerimage'] = file_exists(public_path($header_image_path)) ? $header_image_path . '?version=' . $blog_entry->timestamp() : '';
 
             // Add the processed blog entry to the array
             array_push($blog_entries, $blog_entry);
