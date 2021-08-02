@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Dashboard;
 use App\Utilities\Language;
 
 /*
@@ -19,7 +21,7 @@ use App\Utilities\Language;
 |--------------------------------------------------------------------------
 */
 
-Route::auth([ 'register' => env('REGISTRATION', false) === true || env('REGISTRATION', false) === \Request::ip() ]);
+Route::auth([ 'register' => Dashboard::canRegister() ]);
 Route::get('/logout', 'Auth\LoginController@logout');
 
 /*
