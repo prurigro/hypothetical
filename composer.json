@@ -12,10 +12,10 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
-        "laravel/framework": "^8.12",
+        "laravel/framework": "^8.40",
         "laravel/helpers": "^1.2",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^2.1",
+        "laravel/ui": "^3.3.0",
         "phpoffice/phpspreadsheet": "^1.14",
         "radic/blade-extensions": "^7.4.0",
         "spatie/laravel-newsletter": "^4.8"
@@ -44,6 +44,9 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
