@@ -235,6 +235,7 @@ body {
 
     a {
         color: $c-text-light-inactive;
+        text-decoration: none;
         transition: color 150ms;
 
         &:hover, &:focus {
