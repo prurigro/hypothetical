@@ -671,7 +671,7 @@ function editItemInit() {
     // enable the datepicker for date-picker elements
     $datePickers.each(function() {
         $(this).flatpickr({
-            enableTime: true
+            enableTime: $(this).data("type") === "date-time"
         });
     });
 

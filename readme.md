@@ -205,7 +205,8 @@ Models with their `$dashboard_type` set to `edit` also use:
     * `string`: Single-line text input field
     * `text`: Multi-line text input field
     * `currency`: Text input field for currency data
-    * `date`: Date and time selection tool for date/time data
+    * `date`: Date selection tool for date/time data
+    * `date-time`: Date and time selection tool for date/time data
     * `mkd`: Multi-line text input field with a markdown editor
     * `select`: Text input via option select
     * `list`: One or more items saved to a connected table

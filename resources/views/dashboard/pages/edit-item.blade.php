@@ -49,8 +49,8 @@
                                 <textarea class="text-input" name="{{ $column['name'] }}" id="{{ $column['name'] }}">{{ $value }}</textarea>
                             @elseif($type == 'currency')
                                 <input class="currency-input" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" autocomplete="off" />
-                            @elseif($type == 'date')
-                                <input class="date-picker" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value == '' ? date('Y-m-d', time()) : preg_replace('/:[0-9][0-9]$/', '', $value) }}" />
+                            @elseif($type == 'date' || $type == 'date-time')
+                                <input class="date-picker" type="text" name="{{ $column['name'] }}" id="{{ $column['name'] }}" data-type="{{ $type }}" value="{{ $value == '' ? date('Y-m-d', time()) : preg_replace('/:[0-9][0-9]$/', '', $value) }}" />
                             @elseif($type == 'mkd')
                                 <div class="mkd-editor-container">
                                     <textarea class="mkd-editor" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}"></textarea>
