@@ -329,13 +329,16 @@ class DashboardModel extends Model
         $directory = public_path($this->getUploadsPath('file'));
         File::makeDirectory($directory, 0755, true, true);
 
+        // Set the base file path (including the file name but not the extension)
+        $base_filename = $directory . $this->id . '-' . $name . '.';
+
         // Save the file provided it's the correct extension
         if (gettype($file) == 'string') {
             if (!preg_match("/\.$ext/i", $file)) {
                 return 'incorrect-format-fail';
             }
 
-            copy($file, $base_filename . $main_ext);
+            copy($file, $base_filename . $ext);
         } else {
             if ($file->extension() != $ext) {
                 return 'incorrect-format-fail';
