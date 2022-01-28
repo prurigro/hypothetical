@@ -1,9 +1,9 @@
 @extends('templates.base')
 
 @section('page-includes')
-    <script src="/js/lib.js?version={{ env('CACHE_BUST') }}"></script>
-    <script src="/js/app.js?version={{ env('CACHE_BUST') }}"></script>
-    <link rel="stylesheet" href="/css/app.css?version={{ env('CACHE_BUST') }}" />
+    <script src="/js/lib.js?version={{ Version::get() }}"></script>
+    <script src="/js/app.js?version={{ Version::get() }}"></script>
+    <link rel="stylesheet" href="/css/app.css?version={{ Version::get() }}" />
 @endsection
 
 @section('page-content')
