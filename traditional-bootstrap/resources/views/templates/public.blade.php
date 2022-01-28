@@ -9,7 +9,7 @@
 @section('page-content')
     @include('sections.nav')
 
-    <div class="flex-wrapper">
+    <div class="flex-fix">
         <div class="page-container">
             <div class="main-content">
                 @yield('content')
