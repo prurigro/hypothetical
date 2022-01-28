@@ -8,7 +8,7 @@
         </button>
     </div>
 
-    <div class="nav-section-component-links" :class="{ open: openNav }">
+    <div class="nav-section-component-links">
         <div class="nav-section-component-links-wrapper">
             <a class="navlink" href="/"><span>Home</span></a>
             <a class="navlink" href="/blog"><span>Blog</span></a>
