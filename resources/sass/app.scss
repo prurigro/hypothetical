@@ -9,6 +9,7 @@ $base-font-size: 16px;
 @import "_fonts";
 
 // Libraries
+$enable-smooth-scroll: false;
 @import "bootstrap/scss/bootstrap.scss";
 
 // Supplementary
