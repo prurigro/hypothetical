@@ -62,8 +62,6 @@ Reading through its contents is encouraged for a complete understanding of what 
 
 BrowserSync is used to keep the browser in sync with your code when running the `watch` task with gulp.
 
-For this to work on browsers that aren't on the computer running gulp, the `BS_HOST` variable in the `.env` file should be set to the IP address of that computer.
-
 ## Public
 
 The default public facing website uses Vue.js. To configure a non-SPA traditional website, look at the files in `traditional-bootstrap`.
