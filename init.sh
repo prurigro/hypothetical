@@ -76,6 +76,9 @@ while read -r; do
 done < .env
 
 msg "Running: ${c_m}php artisan route:clear"
+php artisan cache:clear
+
+msg "Running: ${c_m}php artisan route:clear"
 php artisan route:clear
 
 msg "Running: ${c_m}php artisan view:clear"
