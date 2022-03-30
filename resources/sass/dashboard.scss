@@ -591,8 +591,10 @@ body {
 
                 @include media-breakpoint-up(xl) {
                     padding: pxrem(20) pxrem(8);
+                }
 
-                    &.mobile-heading {
+                .mobile-heading {
+                    @include media-breakpoint-up(xl) {
                         display: none;
                     }
                 }
