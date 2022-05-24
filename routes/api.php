@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/blog-entries', 'ApiController@getBlogEntries');
+Route::get('/blog-entries', 'App\Http\Controllers\ApiController@getBlogEntries');
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +32,5 @@ Route::get('/blog-entries', 'ApiController@getBlogEntries');
 |--------------------------------------------------------------------------
 */
 
-Route::post('/contact-submit', 'ApiController@postContactSubmit');
-Route::post('/subscription-submit', 'ApiController@postSubscriptionSubmit');
+Route::post('/contact-submit', 'App\Http\Controllers\ApiController@postContactSubmit');
+Route::post('/subscription-submit', 'App\Http\Controllers\ApiController@postSubscriptionSubmit');
