@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ Language::getSessionLanguage() }}">
-    @set('page_title', (isset($title) ? $title . ' - ' : '') . env('APP_NAME'))
-    @set('device_mobile', preg_match('/Mobi/', Request::header('User-Agent')) || preg_match('/iP(hone|ad|od);/', Request::header('User-Agent')))
+    @php
+        $page_title = (isset($title) ? $title . ' - ' : '') . env('APP_NAME');
+        $device_mobile = preg_match('/Mobi/', Request::header('User-Agent')) || preg_match('/iP(hone|ad|od);/', Request::header('User-Agent'));
+    @endphp
 
     <head>
         <meta charset="UTF-8" />

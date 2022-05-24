@@ -1,5 +1,8 @@
 @extends('templates.base', [ 'title' => 'Dashboard' ])
-@set('current_page', preg_match('/\/settings$/', Request::url()) ? 'settings' : preg_replace([ '/https?:\/\/[^\/]*\/dashboard\/[^\/]*\//', '/\/.*/' ], [ '', '' ], Request::url()))
+
+@php
+    $current_page = preg_match('/\/settings$/', Request::url()) ? 'settings' : preg_replace([ '/https?:\/\/[^\/]*\/dashboard\/[^\/]*\//', '/\/.*/' ], [ '', '' ], Request::url());
+@endphp
 
 @section('page-includes')
     <script src="/js/lib-dashboard.js?version={{ Version::get() }}"></script>

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# The PHP version to use
+PHP_BINARY=${PHP_BINARY:=/usr/bin/php}
+
 # Dependencies
 deps=('composer' 'grep' 'npm' 'php' 'sed')
 
@@ -61,32 +64,32 @@ trap 'error "script killed"' SIGINT SIGQUIT
 [[ -d vendor ]] && {
     artisan_down=1
     msg "Running: ${c_m}php artisan down"
-    php artisan down
+    $PHP_BINARY artisan down
 }
 
 msg "Running: ${c_m}composer installl --no-dev"
-composer install --no-interaction --no-dev || error "${c_m}composer install --no-interaction --no-dev$c_w exited with an error status"
+$PHP_BINARY "$(type -P composer)" install --no-interaction --no-dev || error "${c_m}composer install --no-interaction --no-dev$c_w exited with an error status"
 
 while read -r; do
     [[ "$REPLY" =~ ^APP_KEY=(.*)$ && -z "${BASH_REMATCH[1]}" ]] && {
         msg 'Generating Encryption Key' 'php artisan key:generate'
-        php artisan key:generate
+        $PHP_BINARY artisan key:generate
         break
     }
 done < .env
 
 msg "Running: ${c_m}php artisan route:clear"
-php artisan cache:clear
+$PHP_BINARY artisan cache:clear
 
 msg "Running: ${c_m}php artisan route:clear"
-php artisan route:clear
+$PHP_BINARY artisan route:clear
 
 msg "Running: ${c_m}php artisan view:clear"
-php artisan view:clear
+$PHP_BINARY artisan view:clear
 
 (( ! no_db )) && {
     msg "Running: ${c_m}php artisan migrate --force"
-    php artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"
+    $PHP_BINARY artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"
 }
 
 [[ -d node_modules ]] && {
@@ -102,5 +105,5 @@ NODE_ENV=production "$(npm bin)/gulp" --production || error "${c_m}gulp --produc
 
 if (( artisan_down )); then
     msg "Running: ${c_m}php artisan up"
-    php artisan up
+    $PHP_BINARY artisan up
 fi

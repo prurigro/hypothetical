@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Dashboard;
-use App\Utilities\Language;
 
 /*
 |--------------------------------------------------------------------------

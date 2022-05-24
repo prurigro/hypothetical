@@ -19,9 +19,11 @@
         <div class="container-fluid">
             @foreach($columns as $column)
                 <div class="row">
-                    @set('value', $item !== null ? $item[$column['name']] : '')
-                    @set('type', $id == 'new' && array_key_exists('type-new', $column) ? $column['type-new'] : $column['type'])
-                    @set('ext', array_key_exists('ext', $column) ? $column['ext'] : 'jpg')
+                    @php
+                        $value = $item !== null ? $item[$column['name']] : '';
+                        $type = $id == 'new' && array_key_exists('type-new', $column) ? $column['type-new'] : $column['type'];
+                        $ext = array_key_exists('ext', $column) ? $column['ext'] : 'jpg';
+                    @endphp
 
                     @if($type == 'hidden')
                         <input class="text-input" type="hidden" name="{{ $column['name'] }}" id="{{ $column['name'] }}" value="{{ $value }}" />
@@ -59,11 +61,15 @@
                                 <select class="text-input" name="{{ $column['name'] }}" id="{{ $column['name'] }}">
                                     @foreach($column['options'] as $option)
                                         @if(is_array($option))
-                                            @set('select_value', $option['value'])
-                                            @set('select_title', $option['title'])
+                                            @php
+                                                $select_value = $option['value'];
+                                                $select_title = $option['title'];
+                                            @endphp
                                         @else
-                                            @set('select_value', $option)
-                                            @set('select_title', $option)
+                                            @php
+                                                $select_value = $option;
+                                                $select_title = $option;
+                                            @endphp
                                         @endif
 
                                         @if($select_value === $value)
@@ -111,7 +117,10 @@
                                     <button class="list-add-button" type="button">Add</button>
                                 </div>
                             @elseif($type == 'image')
-                                @set('current_image', "/uploads/$model/img/$id-" . $column['name'] . '.' . $ext)
+                                @php
+                                    $current_image = "/uploads/$model/img/$id-" . $column['name'] . '.' . $ext;
+                                @endphp
+
                                 <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
@@ -126,7 +135,10 @@
                                     </div>
                                 @endif
                             @elseif($type == 'file')
-                                @set('current_file', "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'])
+                                @php
+                                    $current_file = "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'];
+                                @endphp
+
                                 <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
 
                                 @if(file_exists(base_path() . '/public' . $current_file))

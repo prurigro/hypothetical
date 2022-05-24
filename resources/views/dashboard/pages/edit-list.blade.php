@@ -54,13 +54,19 @@
                 </a>
 
                 <div class="pagination-navigation-bar-page-count">
-                    @set('pages_around', 2)
-                    @set('start_page', $rows->currentPage() - $pages_around)
+                    @php
+                        $pages_around = 2;
+                        $start_page = $rows->currentPage() - $pages_around;
+                    @endphp
 
                     @if($start_page < 1)
-                        @set('start_page', 1)
+                        @php
+                            $start_page = 1;
+                        @endphp
                     @elseif($start_page + $pages_around > $rows->lastPage())
-                        @set('start_page', $rows->lastPage() - $pages_around)
+                        @php
+                            $start_page = $rows->lastPage() - $pages_around;
+                        @endphp
                     @endif
 
                     @if($start_page > 1)
@@ -121,11 +127,11 @@
                                 </div>
                             @endif
 
-                            @foreach($display as $display_column)
+                            @foreach($display as $index => $display_column)
                                 @if($row[$display_column] != '')
                                     <div class="column">{{ $row[$display_column] }}</div>
 
-                                    @if(!$loop->last)
+                                    @if($index < count($display) - 1)
                                         <div class="spacer">|</div>
                                     @endif
                                 @endif

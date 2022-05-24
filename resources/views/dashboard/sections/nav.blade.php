@@ -31,7 +31,9 @@
                 @else
                     @foreach(App\Dashboard::$menu as $menu_item)
                         @if(array_key_exists('submenu', $menu_item))
-                            @set('dropdown_id', preg_replace([ '/\ \ */', '/[^a-z\-]/' ], [ '-', '' ], strtolower($menu_item['title'])))
+                            @php
+                                $dropdown_id = preg_replace([ '/\ \ */', '/[^a-z\-]/' ], [ '-', '' ], strtolower($menu_item['title']));
+                            @endphp
 
                             <li class="nav-item dropdown">
                                 <button

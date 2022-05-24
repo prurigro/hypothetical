@@ -10,8 +10,11 @@
             <div class="col-12">
                 <div class="dashboard-settings-container">
                     <form id="user-profile-image" class="user-profile-image">
-                        @set('profile_image', $user->profileImage())
-                        @set('default_image', App\Models\User::$default_profile_image)
+                        @php
+                            $profile_image = $user->profileImage();
+                            $default_image = App\Models\User::$default_profile_image;
+                        @endphp
+
                         <h2 class="form-title">Profile Image</h2>
 
                         <div
