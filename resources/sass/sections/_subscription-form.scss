@@ -1,15 +1,20 @@
 .subscription-form-section-component {
     $trans-speed: 100ms;
     width: pxrem(200);
-    border: 2px solid fade-out($c-base, 0.75);
+    border: pxrem(2) solid fade-out($c-base, 0.75);
     border-radius: pxrem(3);
     background-color: lighten($c-base, 75%);
+
+    .notification {
+        padding: pxrem(2);
+        text-align: center;
+    }
 
     input {
         margin: pxrem(5);
         width: calc(100% - #{pxrem(10)});
         padding: pxrem(3);
-        border: 2px solid fade-out($c-base, 0.75);
+        border: pxrem(2) solid fade-out($c-base, 0.75);
         font-size: pxrem(14);
         text-align: center;
         transition: border-color $trans-speed;
