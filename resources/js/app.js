@@ -1,19 +1,22 @@
+// Import features from Vue
+import { createApp, nextTick } from "vue";
+
 // Initialize Vue
-const Vue = require("vue/dist/vue.js");
+const Vue = createApp({});
+
+// Import and configure axios
+window.axios = require("axios");
+
+window.axios.defaults.headers.common = {
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRF-TOKEN": env.csrfToken
+};
+
+Vue.config.globalProperties.$http = window.axios;
 
 // Import plugins
-import VueRouter from "vue-router";
-import VueResource from "vue-resource";
-import Vuex from "vuex";
-import { sync } from "vuex-router-sync";
-
-// Load plugins
-Vue.use(VueRouter);
-Vue.use(VueResource);
-Vue.use(Vuex);
-
-// CSRF prevention header
-Vue.http.headers.common["X-CSRF-TOKEN"] = env.csrfToken;
+import { createRouter, createWebHistory } from "vue-router";
+import { createStore } from "vuex";
 
 // Import local javascript
 import SupportsWebP from "imports/supports-webp.js";
@@ -41,8 +44,8 @@ import ContactPage from "pages/contact.vue";
 import Error404Page from "pages/error404.vue";
 
 // Create a router instance
-const router = new VueRouter({
-    mode: "history",
+const router = new createRouter({
+    history: createWebHistory(),
     linkActiveClass: "active",
 
     routes: [
@@ -64,7 +67,7 @@ const router = new VueRouter({
 });
 
 // Create a vuex store instance
-const store = new Vuex.Store({
+const store = createStore({
     state: {
         appName: env.appName,
         appLang: env.appLang,
@@ -127,9 +130,6 @@ const store = new Vuex.Store({
 // Detect webp support
 SupportsWebP.detect(store);
 
-// Sync vue-router-sync with vuex store
-sync(store, router);
-
 // Functionality to run before page load and change
 router.beforeEach((to, from, next) => {
     if (to.path !== store.getters.getLastPath) {
@@ -159,14 +159,11 @@ router.afterEach((to, from) => {
             // Set Page.firstLoad to false so we know the initial load has completed
             store.commit("setFirstLoad", false);
         } else {
-            Vue.nextTick(() => {
+            nextTick(() => {
                 TweenMax.to("#router-view", 0.25, { opacity: 1 });
             });
         }
     }
 });
 
-const App = new Vue({
-    router,
-    store
-}).$mount("#vue-container");
+Vue.use(router).use(store).mount("#vue-container");

@@ -25,7 +25,9 @@ const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 // Include browsersync when gulp has not been run with --production
 let browserSync = undefined;
 
-if (!isProduction) {
+if (isProduction) {
+    process.env.NODE_ENV = "production";
+} else {
     browserSync = require("browser-sync").create();
 }
 

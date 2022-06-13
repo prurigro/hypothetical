@@ -101,7 +101,7 @@ msg "Running: ${c_m}npm install --production"
 npm install --production || error "${c_m}npm install --production$c_w exited with an error status"
 
 msg "Running: ${c_m}gulp --production"
-NODE_ENV=production "$(npm bin)/gulp" --production || error "${c_m}gulp --production$c_w exited with an error status"
+"$(npm bin)/gulp" --production || error "${c_m}gulp --production$c_w exited with an error status"
 
 if (( artisan_down )); then
     msg "Running: ${c_m}php artisan up"

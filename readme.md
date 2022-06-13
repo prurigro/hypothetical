@@ -3,7 +3,24 @@
 A Hypothetical website template for bootstrapping new projects.
 
 * Written and maintained by Kevin MacMartin
-* Based on Laravel 9.1.8
+
+## Features
+
+* A choice between an SPA on top of a PHP backend or a pure SSR site (See the [Public](#public) section below for more information)
+* A flexible dashboard for managing data/assets and displaying collected form data
+* Great defaults and popular libraries to build on top of
+* A custom Sass function allowing values to be specified in `px` and output in `rem`
+
+## Major Components
+
+* Bootstrap 5
+* Fontawesome 5
+* Gsap 3
+* Gulp 4
+* Jquery 3
+* Laravel 9
+* Sass 1.32
+* Vue 3 (Optional)
 
 ## Setup
 
@@ -64,7 +81,12 @@ BrowserSync is used to keep the browser in sync with your code when running the 
 
 ## Public
 
-The default public facing website uses Vue.js. To configure a non-SPA traditional website, look at the files in `traditional-bootstrap`.
+The default public facing website is an SPA using Vue.js. To configure a non-SPA traditional SSR website remove the following files before moving the contents of `traditional-bootstrap` into the root project:
+
+* `package-lock.json`
+* `resources/components`
+* `resources/js/mixins`
+* `resources/js/imports`
 
 The following list of files and directories are where various pieces of the public website are located:
 

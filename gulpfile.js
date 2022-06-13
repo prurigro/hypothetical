@@ -2,7 +2,6 @@
 const gulp = require("gulp"),
     minimist = require("minimist"),
     log = require("fancy-log"),
-    insert = require("gulp-insert"),
     plumber = require("gulp-plumber"),
     concat = require("gulp-concat"),
     fs = require("fs"),
@@ -21,10 +20,10 @@ const babel = require("gulp-babel"),
     uglify = require("gulp-uglify-es").default;
 
 // Vue packages
-const browserify = require("browserify"),
-    vueify = require("vueify-next"),
-    source = require("vinyl-source-stream"),
-    buffer = require("vinyl-buffer");
+const webpack = require("webpack"),
+    terserWebpackPlugin = require("terser-webpack-plugin"),
+    { VueLoaderPlugin } = require("vue-loader"),
+    path = require("path");
 
 // Determine if gulp has been run with --production
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
@@ -32,15 +31,16 @@ const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 // Include browsersync when gulp has not been run with --production
 let browserSync = undefined;
 
-if (!isProduction) {
+if (isProduction) {
+    process.env.NODE_ENV = "production";
+} else {
     browserSync = require("browser-sync").create();
 }
 
 // Declare plugin settings
 const sassOutputStyle = isProduction ? "compressed" : "expanded",
     sassPaths = [ "node_modules" ],
-    autoprefixerSettings = { remove: false, cascade: false },
-    vuePaths = [ "./node_modules", "./resources/components", "./resources/js" ];
+    autoprefixerSettings = { remove: false, cascade: false };
 
 // Javascript files for the public site
 const jsPublic = "resources/js/app.js";
@@ -120,43 +120,86 @@ function processCSS(outputFilename, inputFiles) {
 }
 
 // Process vue
-function processVue(outputFilename, inputFile) {
-    const processedDir = "storage/app/",
-        processedFile = `__${outputFilename}.js`;
+function processVue(outputFilename, inputFile, done) {
+    webpack({
+        mode: isProduction ? "production" : "development",
+        entry: [ `./${inputFile}` ],
+        output: { path: path.resolve(__dirname, "public/js"), filename: `${outputFilename}.js` },
+        devtool: false,
 
-    const preProcess = () => {
-        const javascript = gulp.src([ inputFile ]);
+        performance: {
+            maxEntrypointSize: 500000,
+            maxAssetSize: 500000
+        },
 
-        if (isProduction) {
-            javascript.pipe(insert.transform(function(contents) {
-                return contents.replace(/vue\.js/, "vue.min.js");
-            }));
+        resolve: {
+            alias: {
+                vue$: "vue/dist/vue.esm-bundler.js",
+                vuex$: "vuex/dist/vuex.esm-bundler.js",
+                pages: path.resolve(__dirname, "resources/components/pages"),
+                sections: path.resolve(__dirname, "resources/components/sections"),
+                partials: path.resolve(__dirname, "resources/components/partials"),
+                mixins: path.resolve(__dirname, "resources/js/mixins"),
+                imports: path.resolve(__dirname, "resources/js/imports")
+            }
+        },
+
+        module: {
+            rules: [
+                {
+                    test: /\.vue$/,
+                    loader: "vue-loader",
+                    options: { presets: [ [ "@babel/preset-env" ] ] }
+                },
+
+                {
+                    test: /\.js$/,
+                    loader: "babel-loader",
+                    options: { presets: [ [ "@babel/preset-env" ] ] }
+                }
+            ]
+        },
+
+        plugins: [
+            new webpack.DefinePlugin({ __VUE_OPTIONS_API__: true, __VUE_PROD_DEVTOOLS__: false }),
+            new VueLoaderPlugin()
+        ],
+
+        optimization: {
+            minimizer: [
+                new terserWebpackPlugin({
+                    extractComments: false,
+
+                    terserOptions: {
+                        format: { comments: false },
+                        compress: { drop_console: isProduction }
+                    }
+                })
+            ]
+        }
+    }, (err, stats) => {
+        let statsJson;
+
+        if (err) {
+            log.error(err.stack || err);
+
+            if (err.details) {
+                log.error(err.details);
+            }
+        } else if (stats.hasWarnings() || stats.hasErrors()) {
+            statsString = stats.toString("errors-only", {
+                colors: true,
+                modules: false,
+                children: false,
+                chunks: false,
+                chunkModules: false
+            });
+
+            log.error(statsString);
         }
 
-        return javascript.pipe(concat(processedFile))
-            .pipe(gulp.dest(processedDir));
-    };
-
-    const process = () => {
-        const javascript = browserify({
-            entries: [ processedDir + processedFile ],
-            paths: vuePaths
-        }).transform("babelify")
-            .transform(vueify)
-            .bundle()
-            .on("error", handleError)
-            .pipe(source(`${outputFilename}.js`))
-            .pipe(buffer());
-
-        if (isProduction) {
-            javascript.pipe(stripDebug()).pipe(uglify().on("error", handleError));
-        }
-
-        return javascript.pipe(gulp.dest("public/js/"));
-    };
-
-    preProcess();
-    return process();
+        done();
+    });
 }
 
 // Process javascript
@@ -210,8 +253,8 @@ gulp.task("css-dashboard-libs", () => {
 });
 
 // Task for public javascript
-gulp.task("js-public", () => {
-    return processVue("app", jsPublic);
+gulp.task("js-public", (done) => {
+    return processVue("app", jsPublic, done);
 });
 
 // Task for public javascript libraries

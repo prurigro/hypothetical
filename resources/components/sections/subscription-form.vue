@@ -31,17 +31,17 @@
                     this.notifyStatus = "";
                     $(this.$el).find(":input.error").removeClass("error");
 
-                    this.$http.post("/api/subscription-submit" + env.apiToken, JSON.stringify(this.form)).then((response) => {
+                    this.$http.post("/api/subscription-submit" + env.apiToken, this.form).then((response) => {
                         // Success
                         $(this.$el).find(":input").fadeOut(150);
                         this.notifyText = "Thanks for subscribing!";
                         this.notifyStatus = "success";
                         this.submitting = false;
-                    }, (response) => {
+                    }).catch((error) => {
                         // Error
                         let errors = 0;
 
-                        for (let errorName in response.body.errors) {
+                        for (let errorName in error.response.data.errors) {
                             if ($(this.$el).find(`[name='${errorName}']`).length) {
                                 $(this.$el).find(`[name='${errorName}']`).addClass("error");
                                 errors++;

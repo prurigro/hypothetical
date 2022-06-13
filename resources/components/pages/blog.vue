@@ -55,8 +55,8 @@
         methods: {
             populateBlogEntries() {
                 this.$http.get("/api/blog-entries" + env.apiToken).then((response) => {
-                    this.blogEntries = response.body;
-                }, (response) => {
+                    this.blogEntries = response.data;
+                }).catch((error) => {
                     console.log("Failed to retrieve blog entries");
                 });
             }
