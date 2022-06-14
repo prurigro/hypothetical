@@ -14,12 +14,13 @@ A Hypothetical website template for bootstrapping new projects.
 ## Major Components
 
 * Bootstrap 5
-* Fontawesome 5
-* Gsap 3
-* Gulp 4
-* Jquery 3
+* Browsersync
+* Fontawesome
+* Gsap
+* Gulp
+* Jquery
 * Laravel 9
-* Sass 1.32
+* Sass
 * Vue 3 (Optional)
 
 ## Setup
@@ -71,13 +72,13 @@ Reading through its contents is encouraged for a complete understanding of what 
 
 * `gulp`: Update the compiled javascript and css in `public/js` and `public/css`, and copy fonts to `public/fonts`.
 * `gulp --production`: Does the same as `gulp` except the compiled javascript and css is minified, and console logging is removed from the javascript (good for production deployments).
-* `gulp default watch`: Does the same as `gulp` but continues running to watch for changes to files so it can recompile updated assets and reload them in the browser using BrowserSync (good for development environments).
+* `gulp default watch`: Does the same as `gulp` but continues running to watch for changes to files so it can recompile updated assets and reload them in the browser using Browsersync (good for development environments).
 
 **NOTE**: If `gulp` isn't installed globally or its version is less than `4`, you should use the version included in `node_modules` by running `"$(npm bin)/gulp"` in place of the `gulp` command.
 
-### BrowserSync
+### Browsersync
 
-BrowserSync is used to keep the browser in sync with your code when running the `watch` task with gulp.
+Browsersync is used to keep the browser in sync with your code when running the `watch` task with gulp.
 
 ## Public
 
@@ -147,6 +148,13 @@ In a Vue.js component:
 ```
 
 ## Dashboard
+
+### Important Note
+
+The naming convention of dashboard database tables and model classes should be the following:
+
+* Database table names should be lower case with hyphen separators: `your_table_name`
+* Model classes should be the same name but in camel case with its first character capitalized: `YourTableName.php` and `class YourTableName extends DashboardModel`
 
 ### Registration
 
@@ -229,7 +237,7 @@ Models with their `$dashboard_type` set to `edit` also use:
     * `date-time`: Date and time selection tool for date/time data
     * `mkd`: Multi-line text input field with a markdown editor
     * `select`: Text input via option select
-    * `list`: One or more items saved to a connected table
+    * `list`: One or more `text` or `image` items saved to a connected table
     * `image`: Fields that contain image uploads
     * `file`: Fields that contains file uploads
     * `display`: Displayed information that can't be edited
@@ -240,8 +248,18 @@ Models with their `$dashboard_type` set to `edit` also use:
 * `name`: (required by `file` and `image`) Used along with the record id to determine the filename
 * `delete`: (optional for `file` and `image`) Enables a delete button for the upload when set to true
 * `ext`: (required by `file` and optional for `image`) Configures the file extension of the upload (`image` defaults to `jpg`)
+* `model`: (required by `list`) The class name of the model that the list will be generated from
+* `foreign` (required by `list`) The name of the list table's foreign id column that references the id on the current table
+* `sort` (required by `list`) The name of the list table's column that the order will be stored in
 * `max_width`: (optional for `image`) Configures the maximum width of an image upload (defaults to `0` which sets no maximum width)
 * `max_height`: (optional for `image`) Configures the maximum height of an image upload (defaults to `0` which sets no maximum height)
+
+Models with their `$dashboard_type` set to `list` also use:
+
+* `type`: The column type which can be any of the following:
+    * `string`: Single-line text input field
+    * `image`: Fields that contain image uploads
+* `ext`: (optional for `image`) Configures the file extension of the upload (`image` defaults to `jpg`)
 
 An example of the `$dashboard_columns` array in a model with its `$dashboard_type` set to `view`:
 
@@ -262,6 +280,15 @@ An example of the `$dashboard_columns` array in a model with its `$dashboard_typ
         [ 'name' => 'title', 'required' => true, 'unique' => true, 'type' => 'string' ],
         [ 'name' => 'body', 'required' => true,  'type' => 'mkd' ],
         [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true, 'ext' => 'jpg' ],
-        [ 'name' => 'tags', 'type' => 'list', 'model' => 'BlogTags', 'columns' => [ 'name' ], 'foreign' => 'blog_id', 'sort' => 'order' ]
+        [ 'name' => 'tags', 'type' => 'list', 'model' => 'BlogTags', 'foreign' => 'blog_id', 'sort' => 'order' ]
+    ];
+```
+
+An example of the `$dashboard_columns` array in a model with its `$dashboard_type` set to `list`:
+
+```php
+    public static $dashboard_columns = [
+        [ 'type' => 'string', 'name' => 'name' ],
+        [ 'type' => 'image', 'name' => 'photo' ]
     ];
 ```

@@ -917,6 +917,12 @@ form {
             }
         }
 
+        .container-fluid {
+            @include media-breakpoint-down(sm) {
+                padding: 0px;
+            }
+        }
+
         .list {
             margin-bottom: pxrem(15);
             padding-bottom: pxrem(15);
@@ -927,16 +933,36 @@ form {
             }
 
             &-items-row {
+                position: relative;
                 margin-bottom: pxrem(10);
-                display: flex;
-                align-items: center;
+                padding: pxrem(8) pxrem(8) pxrem(8) pxrem(33);
+                border-radius: pxrem(6);
+                background-color: darken($c-input-bg, 2%);
+
+                @include media-breakpoint-up(lg) {
+                    display: flex;
+                    padding: pxrem(5) pxrem(5) pxrem(5) pxrem(30);
+                    align-items: center;
+                }
+
+                &:not(:last-child) {
+                    @include media-breakpoint-down(lg) {
+                        margin-bottom: pxrem(15);
+                    }
+                }
 
                 .sort-icon {
-                    margin-right: pxrem(10);
+                    position: absolute;
+                    top: pxrem(11);
+                    left: pxrem(10);
                     display: inline-block;
                     opacity: 1;
                     transition: opacity 100ms;
                     cursor: grab;
+
+                    @include media-breakpoint-up(lg) {
+                        top: pxrem(9);
+                    }
 
                     &-inner {
                         position: relative;
@@ -968,17 +994,29 @@ form {
                     }
                 }
 
-                &-input, &-button {
-                    &:not(:first-child) {
-                        margin-left: pxrem(5);
+                &-content, &-button {
+                    @include media-breakpoint-down(lg) {
+                        width: 100%;
                     }
 
                     &:not(:last-child) {
-                        margin-right: pxrem(5);
+                        @include media-breakpoint-down(lg) {
+                            margin-bottom: pxrem(10);
+                        }
+
+                        @include media-breakpoint-up(lg) {
+                            margin-right: pxrem(5);
+                        }
+                    }
+
+                    &:not(:first-child) {
+                        @include media-breakpoint-up(lg) {
+                            margin-left: pxrem(5);
+                        }
                     }
                 }
 
-                &-input {
+                &-content {
                     position: relative;
 
                     &.wide {
@@ -986,29 +1024,52 @@ form {
                     }
 
                     &-inner {
-                        margin-bottom: 0px;
-                    }
+                        $row-height: pxrem(36);
+                        display: flex;
+                        height: $row-height;
+                        align-items: center;
 
-                    &-overlay {
-                        overflow: hidden;
-                        position: absolute;
-                        top: 0px;
-                        left: 0px;
-                        width: 100%;
-                        height: 100%;
-                        padding: pxrem(5) pxrem(8);
-                        background-color: $c-input-bg;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                        pointer-events: none;
+                        .list-input {
+                            margin-bottom: 0px;
+                            height: auto;
+                        }
+
+                        .image-link {
+                            margin-right: pxrem(10);
+                            display: block;
+                            width: pxrem(50);
+                            height: $row-height;
+                            background-color: $c-input-bg;
+
+                            &:not(.active) {
+                                display: none;
+                            }
+
+                            .image-preview {
+                                display: block;
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
                     }
                 }
 
-                &-button {
-                    min-width: pxrem(70);
-                    height: $label-height;
-                    border: 1px solid fade-out($c-text, 0.75);
-                    border-radius: pxrem(4);
+                &-buttons {
+                    @include media-breakpoint-up(lg) {
+                        display: flex;
+                        flex-grow: 1;
+                        justify-content: flex-end;
+                    }
+
+                    &-delete {
+                        min-width: pxrem(70);
+                        height: $label-height;
+                        border: 1px solid fade-out($c-text, 0.75);
+                        border-radius: pxrem(4);
+                        background-color: $c-dashboard-delete;
+                        color: $c-text-light;
+                    }
                 }
             }
 
@@ -1016,6 +1077,11 @@ form {
                 height: $label-height;
                 border: 1px solid fade-out($c-text, 0.75);
                 border-radius: pxrem(4);
+
+                @include media-breakpoint-down(lg) {
+                    margin-top: pxrem(15);
+                    width: 100%;
+                }
             }
         }
 
@@ -1101,6 +1167,7 @@ form {
             padding: pxrem(5) pxrem(10);
             border-radius: pxrem(5);
             text-transform: uppercase;
+            text-decoration: none;
             transition: background-color 150ms;
             cursor: pointer;
 
@@ -1152,6 +1219,10 @@ form {
                 @include media-breakpoint-down(lg) {
                     margin-top: pxrem(10);
                     margin-bottom: pxrem(20);
+                }
+
+                @include media-breakpoint-down(sm) {
+                    margin-bottom: 0px;
                 }
             }
         }

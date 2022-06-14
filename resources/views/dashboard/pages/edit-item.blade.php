@@ -22,7 +22,7 @@
                     @php
                         $value = $item !== null ? $item[$column['name']] : '';
                         $type = $id == 'new' && array_key_exists('type-new', $column) ? $column['type-new'] : $column['type'];
-                        $ext = array_key_exists('ext', $column) ? $column['ext'] : 'jpg';
+                        $ext = array_key_exists('ext', $column) ? $column['ext'] : $default_img_ext;
                     @endphp
 
                     @if($type == 'hidden')
@@ -72,6 +72,13 @@
                                             @endphp
                                         @endif
 
+                                        @if(gettype($select_title))
+                                            @php
+                                                $select_value = $select_value ? 1 : 0;
+                                                $select_title = $select_title ? 'true' : 'false';
+                                            @endphp
+                                        @endif
+
                                         @if($select_value === $value)
                                             <option value="{{ $select_value }}" selected="selected">{{ $select_title }}</option>
                                         @else
@@ -80,9 +87,14 @@
                                     @endforeach
                                 </select>
                             @elseif($type == 'list')
+                                @php
+                                    $list_model = App\Dashboard::getModel($value['model']);
+                                    $list_columns = $list_model::$dashboard_columns;
+                                @endphp
+
                                 <div class="list" id="{{ $column['name'] }}">
                                     <div class="list-template">
-                                        <div class="list-items-row">
+                                        <div class="list-items-row" data-id="new">
                                             <div class="sort-icon" title="Click and drag to reorder">
                                                 <div class="sort-icon-inner">
                                                     <div class="sort-icon-inner-bar"></div>
@@ -91,22 +103,46 @@
                                                 </div>
                                             </div>
 
-                                            @foreach($column['columns'] as $list_column)
-                                                <div class="list-items-row-input {{ count($column['columns']) == 1 ? 'wide' : '' }}">
-                                                    <input class="list-items-row-input-inner" data-column="{{ $list_column }}" placeholder="{{ $list_column }}" />
+                                            @foreach($list_columns as $list_column)
+                                                <div class="list-items-row-content {{ count($list_columns) == 1 ? 'wide' : '' }}">
+                                                    <div class="list-items-row-content-inner" data-column="{{ $list_column['name'] }}" data-type="{{ $list_column['type'] }}">
+                                                        @if($list_column['type'] == 'string')
+                                                            <input class="list-input" placeholder="{{ $list_column['name'] }}" />
+                                                        @elseif($list_column['type'] == 'image')
+                                                            <a class="image-link" href="" target="_blank"><img class="image-preview" src="" /></a>
+                                                            <input class="list-input image-upload" type="file" data-column="{{ $list_column['name'] }}" data-model="{{ $value['model'] }}" />
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             @endforeach
 
-                                            <button class="list-items-row-button" type="button">Delete</button>
+                                            <div class="list-items-row-buttons">
+                                                <button class="list-items-row-buttons-delete" type="button">Delete</button>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="list-data">
                                         @if($id != 'new')
-                                            @foreach($value as $row)
-                                                <div class="list-data-row">
-                                                    @foreach($column['columns'] as $list_column)
-                                                        <div class="list-data-row-item" data-column="{{ $list_column }}" data-value="{{ $row[$list_column] }}"></div>
+                                            @foreach($value['list'] as $row)
+                                                <div class="list-data-row" data-id="{{ $row['id'] }}">
+                                                    @foreach($list_columns as $list_column)
+                                                        @if($list_column['type'] == 'string')
+                                                            @php
+                                                                $list_column_value = $row[$list_column['name']]
+                                                            @endphp
+                                                        @elseif($list_column['type'] == 'image')
+                                                            @php
+                                                                $list_column_item = $list_model::find($row['id']);
+                                                                $list_column_image_ext = array_key_exists('ext', $list_column) ? $list_column['ext'] : $default_img_ext;
+                                                                $list_column_image_path = $list_model->getUploadsPath('image') . $row['id'] . '-' . $list_column['name'] . '.' . $list_column_image_ext;
+                                                                $list_column_value = file_exists(public_path($list_column_image_path)) ? $list_column_image_path . '?version=' . $list_column_item->timestamp() : '';
+                                                            @endphp
+
+                                                            {{ $list_column_image_path }}
+                                                        @endif
+
+                                                        <div class="list-data-row-item" data-type="{{ $list_column['type'] }}" data-column="{{ $list_column['name'] }}" data-value="{{ $list_column_value }}"></div>
                                                     @endforeach
                                                 </div>
                                             @endforeach
@@ -121,14 +157,14 @@
                                     $current_image = "/uploads/$model/img/$id-" . $column['name'] . '.' . $ext;
                                 @endphp
 
-                                <input class="image-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
+                                <input class="image-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" />
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
                                     <div id="current-image-{{ $column['name'] }}">
                                         <img class="current-image" src="{{ $current_image }}?version={{ $item->timestamp() }}" />
 
                                         @if(array_key_exists('delete', $column) && $column['delete'])
-                                            <span class="edit-button delete image" data-name="{{ $column['name'] }}">
+                                            <span class="edit-button delete image" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}">
                                                 Delete Image
                                             </span>
                                         @endif
@@ -139,14 +175,14 @@
                                     $current_file = "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'];
                                 @endphp
 
-                                <input class="file-upload" type="file" name="{{ $column['name'] }}" id="{{ $column['name'] }}" />
+                                <input class="file-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" />
 
                                 @if(file_exists(base_path() . '/public' . $current_file))
                                     <div id="current-file-{{ $column['name'] }}">
                                         <a class="edit-button view" href="{{ $current_file }}?version={{ $item->timestamp() }}" target="_blank">View {{ strtoupper($column['ext']) }}</a>
 
                                         @if(array_key_exists('delete', $column) && $column['delete'])
-                                            <span class="edit-button delete file" data-name="{{ $column['name'] }}">
+                                            <span class="edit-button delete file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}">
                                                 Delete {{ strtoupper($column['ext']) }}
                                             </span>
                                         @endif

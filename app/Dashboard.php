@@ -70,38 +70,19 @@ class Dashboard
      */
     public static function getModel($model, $type = null)
     {
-        $model_name = ucfirst($model);
+        $model_name = implode('', array_map('ucfirst', explode('_', $model)));
 
-        // Ensure the model has been declared in the menu
-        $model_in_menu = false;
-
-        foreach (self::$menu as $menu_item) {
-            if (array_key_exists('submenu', $menu_item)) {
-                // Check each item if this is a submenu
-                foreach ($menu_item['submenu'] as $submenu_item) {
-                    if ($submenu_item['model'] == $model) {
-                        $model_in_menu = true;
-                        break;
-                    }
-                }
-            } else {
-                // Check the menu item
-                if ($menu_item['model'] == $model) {
-                    $model_in_menu = true;
-                }
-            }
-
-            // Don't bother continuing if we've already confirmed it's in the menu
-            if ($model_in_menu) {
-                break;
-            }
-        }
-
-        if ($model_in_menu && file_exists(app_path() . '/Models/' . $model_name . '.php')) {
+        if (file_exists(app_path() . '/Models/' . $model_name . '.php')) {
             $model_class = 'App\\Models\\' . $model_name;
 
-            if ($type != null && $type != $model_class::$dashboard_type) {
-                return null;
+            if ($type != null) {
+                if (is_array($type)) {
+                    if (!in_array($model_class::$dashboard_type, $type)) {
+                        return null;
+                    }
+                } else if ($type != $model_class::$dashboard_type) {
+                    return null;
+                }
             }
 
             return new $model_class;

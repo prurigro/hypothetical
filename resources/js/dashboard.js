@@ -323,17 +323,17 @@ function editItemInit() {
         $currencyInputs = $(".currency-input"),
         $datePickers = $(".date-picker"),
         $mkdEditors = $(".mkd-editor"),
-        $fileUploads = $(".file-upload"),
-        $imgUploads = $(".image-upload"),
         $lists = $(".list"),
         $token = $("#token"),
         model = $editItem.data("model"),
-        id = $editItem.data("id"),
-        operation = id === "new" ? "create" : "update";
+        operation = $editItem.data("id") === "new" ? "create" : "update";
 
-    let allowTimes = [],
+    let $imgUploads = [],
+        $fileUploads = [],
+        allowTimes = [],
         easymde = [],
         formData = {},
+        id = $editItem.data("id"),
         submitting = false,
         hours,
         minutes,
@@ -404,30 +404,33 @@ function editItemInit() {
                 value = [];
 
             $this.find(".list-items .list-items-row").each(function(index, row) {
-                const rowData = {};
+                const rowData = {},
+                    id = $(row).data("id");
 
-                $(row).find(".list-items-row-input-inner").each(function(index, input) {
-                    const $input = $(input),
-                        column = $input.data("column"),
-                        value = $input.val();
+                $(row).find(".list-items-row-content-inner").each(function(index, inner) {
+                    const $inner = $(inner),
+                        $input = $inner.find(".list-input"),
+                        column = $inner.data("column");
 
-                    rowData[column] = value;
+                    if ($inner.data("type") === "string") {
+                        rowData[column] = { type: "string", value: $input.val() };
+                    }
                 });
 
-                value.push(rowData);
+                value.push({ id: typeof id === "undefined" ? "new" : id, data: rowData });
             });
 
             addFormData("list", column, value);
         });
     };
 
-    const uploadFile = function(row_id, currentFile) {
+    const uploadFile = function(currentFile) {
         let file, fileUpload;
 
         // functionality to run on success
         const returnSuccess = function() {
             loadingModal("hide");
-            window.location.href = `/dashboard/edit/${model}/${row_id}`;
+            window.location.href = `/dashboard/edit/${model}/${id}`;
         };
 
         // add the file from the file upload box for file-upload class elements
@@ -439,9 +442,9 @@ function editItemInit() {
 
                 // add the file, id and model to the formData variable
                 file.append("file", fileUpload.files[0]);
-                file.append("name", $(fileUpload).attr("name"));
-                file.append("id", row_id);
-                file.append("model", model);
+                file.append("name", $(fileUpload).data("column"));
+                file.append("id", $(fileUpload).data("id"));
+                file.append("model", $(fileUpload).data("model"));
 
                 $.ajax({
                     type: "POST",
@@ -452,7 +455,7 @@ function editItemInit() {
                     beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
                 }).always(function(response) {
                     if (response === "success") {
-                        uploadFile(row_id, currentFile + 1);
+                        uploadFile(currentFile + 1);
                     } else {
                         loadingModal("hide");
 
@@ -462,19 +465,19 @@ function editItemInit() {
                     }
                 });
             } else {
-                uploadFile(row_id, currentFile + 1);
+                uploadFile(currentFile + 1);
             }
         } else {
             returnSuccess();
         }
     };
 
-    const uploadImage = function(row_id, currentImage) {
+    const uploadImage = function(currentImage) {
         let file, imgUpload;
 
         // functionality to run on success
         const returnSuccess = function() {
-            uploadFile(row_id, 0);
+            uploadFile(0);
         };
 
         // add the image from the image upload box for image-upload class elements
@@ -486,9 +489,9 @@ function editItemInit() {
 
                 // add the file, id and model to the formData variable
                 file.append("file", imgUpload.files[0]);
-                file.append("name", $(imgUpload).attr("name"));
-                file.append("id", row_id);
-                file.append("model", model);
+                file.append("name", $(imgUpload).data("column"));
+                file.append("id", $(imgUpload).data("id"));
+                file.append("model", $(imgUpload).data("model"));
 
                 $.ajax({
                     type: "POST",
@@ -499,7 +502,7 @@ function editItemInit() {
                     beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRF-TOKEN", $token.val()); }
                 }).always(function(response) {
                     if (response === "success") {
-                        uploadImage(row_id, currentImage + 1);
+                        uploadImage(currentImage + 1);
                     } else {
                         loadingModal("hide");
 
@@ -509,7 +512,7 @@ function editItemInit() {
                     }
                 });
             } else {
-                uploadImage(row_id, currentImage + 1);
+                uploadImage(currentImage + 1);
             }
         } else {
             returnSuccess();
@@ -524,7 +527,7 @@ function editItemInit() {
     // initialize image deletion
     $(".edit-button.delete.image").on("click", function(e) {
         const $this = $(this),
-            name = $this.data("name");
+            name = $this.data("column");
 
         if (!submitting) {
             submitting = true;
@@ -535,8 +538,8 @@ function editItemInit() {
                     type: "DELETE",
                     url: "/dashboard/image-delete",
                     data: {
-                        id: id,
-                        model: model,
+                        id: $this.data("id"),
+                        model: $this.data("model"),
                         name: name,
                         _token: $token.val()
                     }
@@ -559,7 +562,7 @@ function editItemInit() {
     // initialize file deletion
     $(".edit-button.delete.file").on("click", function(e) {
         const $this = $(this),
-            name = $this.data("name"),
+            name = $this.data("column"),
             ext = $this.data("ext");
 
         if (!submitting) {
@@ -571,8 +574,8 @@ function editItemInit() {
                     type: "DELETE",
                     url: "/dashboard/file-delete",
                     data: {
-                        id: id,
-                        model: model,
+                        id: $this.data("id"),
+                        model: $this.data("model"),
                         name: name,
                         ext: ext,
                         _token: $token.val()
@@ -617,7 +620,7 @@ function editItemInit() {
                 const $row = $(row);
 
                 // initialize delete button functionality
-                $row.find(".list-items-row-button").off("click").on("click", function() {
+                $row.find(".list-items-row-buttons-delete").off("click").on("click", function() {
                     $row.remove();
                     initSort();
                     contentChanged();
@@ -627,24 +630,40 @@ function editItemInit() {
 
         const initList = function() {
             $list.find(".list-data-row").each(function(rowIndex, row) {
-                // Add the values from the current data row to the template
+                const id = $(row).data("id");
+
+                // add the values from the current data row to the template
                 $(row).find(".list-data-row-item").each(function(itemIndex, item) {
                     const $item = $(item),
                         column = $item.data("column"),
-                        value = $item.data("value");
+                        value = $item.data("value"),
+                        type = $item.data("type");
 
-                    $template.find(".list-items-row-input-inner").each(function(inputIndex, input) {
-                        const $input = $(input);
+                    $template.find(".list-items-row-content-inner").each(function(inputIndex, inner) {
+                        const $inner = $(inner);
 
-                        if ($input.data("column") === column) {
-                            $input.val(value);
+                        if ($inner.data("column") === column) {
+                            if (type === "string") {
+                                $inner.find(".list-input").val(value);
+                            } else if (type === "image" && value !== "") {
+                                $inner.find(".image-link").attr("href", value).addClass("active");
+                                $inner.find(".image-preview").attr("src", value);
+                            }
                         }
                     });
                 });
 
-                // Add the populated template to the list of items then clear the template values
+                // add the populated template to the list of items
                 $template.find(".list-items-row").clone().appendTo($items);
-                $template.find(".list-items-row-input-inner").val("");
+
+                // set the id for the list items row
+                $items.find(".list-items-row").last().data("id", id);
+                $items.find(".list-items-row").last().find(".list-input").data("id", id);
+
+                // clear the template values
+                $template.find(".list-input").val("");
+                $template.find(".image-link").attr("href", "").removeClass("active");
+                $template.find(".image-preview").attr("src", "");
             });
 
             initSort();
@@ -740,6 +759,10 @@ function editItemInit() {
         if (!submitting && changes) {
             submitting = true;
 
+            // find the image and file upload inputs
+            $imgUploads = $(".image-upload");
+            $fileUploads = $(".file-upload");
+
             // show the loading modal
             loadingModal("show");
 
@@ -755,8 +778,26 @@ function editItemInit() {
                 }).always(function(response) {
                     let message = "";
 
-                    if ((/^id:[0-9][0-9]*$/).test(response)) {
-                        uploadImage(response.replace(/^id:/, ""), 0);
+                    if (typeof response.id !== "undefined") {
+                        id = response.id;
+
+                        // Add the appropriate ids to each list item input
+                        if (Object.keys(response.lists).length) {
+                            Object.keys(response.lists).forEach(function(key) {
+                                $(`#${key}`).find(".list-items").first().find(".list-items-row").each(function(index) {
+                                    const listItemId = response.lists[key][index];
+
+                                    $(this).data("id", listItemId);
+                                    $(this).find(".list-input").data("id", listItemId);
+                                });
+                            });
+                        }
+
+                        // Add the current row id to each image and file upload input
+                        $(".image-upload, .file-upload").not(".list-input").data("id", response.id);
+
+                        // Start uploading images (and then files)
+                        uploadImage(0);
                     } else {
                         loadingModal("hide");
 
@@ -764,6 +805,8 @@ function editItemInit() {
                             message = `<strong>${response.replace(/'/g, "").replace(/^[^:]*:/, "").replace(/,([^,]*)$/, "</strong> and <strong>$1").replace(/,/g, "</strong>, <strong>")}</strong> must be unique`;
                         } else if ((/^required:/).test(response)) {
                             message = `<strong>${response.replace(/'/g, "").replace(/^[^:]*:/, "").replace(/,([^,]*)$/, "</strong> and <strong>$1").replace(/,/g, "</strong>, <strong>")}</strong> must not be empty`;
+                        } else if ((/^invalid-list-model:/).test(response)) {
+                            message = `<strong>${response.replace(/'/g, "").replace(/^[^:]*:/, "").replace(/,([^,]*)$/, "</strong> and <strong>$1").replace(/,/g, "</strong>, <strong>")}</strong> is not a valid list`;
                         } else {
                             message = `Failed to <strong>${operation}</strong> record`;
                         }

@@ -21,8 +21,8 @@ class Blog extends DashboardModel
         [ 'name' => 'created_at', 'title' => 'Date', 'type' => 'display' ],
         [ 'name' => 'title', 'required' => true, 'unique' => true, 'type' => 'string' ],
         [ 'name' => 'body', 'required' => true,  'type' => 'mkd' ],
-        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true ],
-        [ 'name' => 'tags', 'type' => 'list', 'model' => 'BlogTags', 'columns' => [ 'name' ], 'foreign' => 'blog_id', 'sort' => 'order' ]
+        [ 'name' => 'header-image', 'title' => 'Header Image', 'type' => 'image', 'delete' => true, 'ext' => 'jpg' ],
+        [ 'name' => 'tags', 'type' => 'list', 'model' => 'BlogTags', 'foreign' => 'blog_id', 'sort' => 'order' ]
     ];
 
     public static function getBlogEntries()

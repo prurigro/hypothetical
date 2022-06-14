@@ -118,6 +118,33 @@ class DashboardModel extends Model
     public static $dashboard_id_link = [];
 
     /**
+     * The default image extension when none is set
+     *
+     * @var string
+     */
+    public static $default_image_ext = 'jpg';
+
+    /**
+     * Functionality to run when various events occur
+     *
+     * @return null
+     */
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($item) {
+            // delete associated images and files if they exist
+            foreach ($item::$dashboard_columns as $column) {
+                if ($column['type'] == 'image') {
+                    $item->deleteImage($column['name'], false);
+                } else if ($column['type'] == 'file') {
+                    $item->deleteFile($column['name'], false);
+                }
+            }
+        });
+    }
+
+    /**
      * Returns the dashboard heading
      *
      * @return string
@@ -155,7 +182,6 @@ class DashboardModel extends Model
 
         $max_width = 0;
         $max_height = 0;
-        $main_ext = 'jpg';
 
         // Retrieve the column
         $column = static::getColumn($name);
@@ -165,9 +191,11 @@ class DashboardModel extends Model
             return 'no-such-column-fail';
         }
 
-        // Update the extension if it's been configured
+        // Use the configured image extension or fall back on the default if none is set
         if (array_key_exists('ext', $column)) {
             $main_ext = $column['ext'];
+        } else {
+            $main_ext = $this::$default_image_ext;
         }
 
         // Create the directory if it doesn't exist
@@ -254,7 +282,6 @@ class DashboardModel extends Model
         }
 
         // Set up our variables
-        $main_ext = 'jpg';
         $extensions = [];
 
         // Retrieve the column
@@ -265,9 +292,11 @@ class DashboardModel extends Model
             return 'no-such-column-fail';
         }
 
-        // Update the extension if it's been configured
+        // Use the configured image extension or fall back on the default if none is set
         if (array_key_exists('ext', $column)) {
             $main_ext = $column['ext'];
+        } else {
+            $main_ext = $this::$default_image_ext;
         }
 
         // Build the set of extensions to delete

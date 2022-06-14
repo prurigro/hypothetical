@@ -82,17 +82,10 @@ class DashboardController extends Controller {
 
         if ($model_class != null) {
             if ($id == 'new') {
-                $item = null;
+                $item = new $model_class;
             } else {
                 if ($model_class::where('id', $id)->exists()) {
                     $item = $model_class::find($id);
-
-                    foreach ($model_class::$dashboard_columns as $column) {
-                        if ($column['type'] === 'list') {
-                            $list_model_class = 'App\\Models\\' . $column['model'];
-                            $item->{$column['name']} = $list_model_class::where($column['foreign'], $item->id)->orderBy($column['sort'])->get();
-                        }
-                    }
 
                     if (is_null($item) || !$item->userCheck()) {
                         return view('errors.no-such-record');
@@ -102,13 +95,26 @@ class DashboardController extends Controller {
                 }
             }
 
+            foreach ($model_class::$dashboard_columns as $column) {
+                if ($column['type'] === 'list') {
+                    $list_model_class = 'App\\Models\\' . $column['model'];
+                    $list_model_instance = new $list_model_class;
+
+                    $item->{$column['name']} = [
+                        'model' => $list_model_instance->getTable(),
+                        'list' => $id == 'new' ? [] : $list_model_instance::where($column['foreign'], $item->id)->orderBy($column['sort'])->get()
+                    ];
+                }
+            }
+
             return view('dashboard.pages.edit-item', [
-                'heading'   => $model_class->getDashboardHeading(),
-                'model'     => $model,
-                'id'        => $id,
-                'item'      => $item,
-                'help_text' => $model_class::$dashboard_help_text,
-                'columns'   => $model_class::$dashboard_columns
+                'heading'         => $model_class->getDashboardHeading(),
+                'default_img_ext' => $model_class::$default_image_ext,
+                'model'           => $model,
+                'id'              => $id,
+                'item'            => $item,
+                'help_text'       => $model_class::$dashboard_help_text,
+                'columns'         => $model_class::$dashboard_columns
             ]);
         } else {
             abort(404);
@@ -242,6 +248,8 @@ class DashboardController extends Controller {
             }
 
             // populate connected lists with list items in $request
+            $lists = [];
+
             foreach ($request['columns'] as $column) {
                 if ($column['type'] === 'list') {
                     $column_name = $column['name'];
@@ -250,20 +258,44 @@ class DashboardController extends Controller {
                         if ($dashboard_column['name'] === $column_name) {
                             $foreign = $dashboard_column['foreign'];
                             $list_model_class = 'App\\Models\\' . $dashboard_column['model'];
-                            $list_model_class::where($foreign, $item->id)->delete();
 
-                            if ($request->has($column_name)) {
-                                foreach ($request[$column_name] as $index => $row) {
-                                    $list_model_item = new $list_model_class;
-                                    $list_model_item->$foreign = $item->id;
-                                    $list_model_item->{$dashboard_column['sort']} = $index;
+                            if ($list_model_class::$dashboard_type == 'list') {
+                                $ids = [];
 
-                                    foreach ($row as $key => $value) {
-                                        $list_model_item->$key = $value;
+                                if ($request->has($column_name)) {
+                                    foreach ($request[$column_name] as $index => $row) {
+                                        if ($row['id'] == 'new') {
+                                            $list_model_item = new $list_model_class;
+                                        } else {
+                                            $list_model_item = $list_model_class::find($row['id']);
+                                        }
+
+                                        $list_model_item->$foreign = $item->id;
+                                        $list_model_item->{$dashboard_column['sort']} = $index;
+
+                                        foreach ($row['data'] as $key => $data) {
+                                            if ($data['type'] == 'string') {
+                                                $list_model_item->$key = $data['value'];
+                                            }
+                                        }
+
+                                        $list_model_item->save();
+                                        array_push($ids, $list_model_item->id);
                                     }
-
-                                    $list_model_item->save();
                                 }
+
+                                // delete any associated row that wasn't just created or edited
+                                foreach ($list_model_class::where($foreign, $item->id)->whereNotIn('id', $ids)->get() as $list_item) {
+                                    $list_item->delete();
+                                }
+
+                                // store the sets of ids for each list
+                                $lists[$column_name] = $ids;
+
+                                // stop looping through dashboard columns
+                                break;
+                            } else {
+                                return 'invalid-list-model:' . $dashboard_column['model'];
                             }
                         }
                     }
@@ -274,7 +306,10 @@ class DashboardController extends Controller {
             $item->save();
 
             // return the id number in the format '^id:[0-9][0-9]*$' on success
-            return 'id:' . $item->id;
+            return [
+                'id' => $item->id,
+                'lists' => $lists
+            ];
         } else {
             return 'model-access-fail';
         }
@@ -289,7 +324,7 @@ class DashboardController extends Controller {
             'name'  => 'required'
         ]);
 
-        $model_class = Dashboard::getModel($request['model'], 'edit');
+        $model_class = Dashboard::getModel($request['model'], [ 'edit', 'list' ]);
 
         if ($model_class != null) {
             $item = $model_class::find($request['id']);
@@ -321,7 +356,7 @@ class DashboardController extends Controller {
             'name'  => 'required'
         ]);
 
-        $model_class = Dashboard::getModel($request['model'], 'edit');
+        $model_class = Dashboard::getModel($request['model'], [ 'edit', 'list' ]);
 
         if ($model_class != null) {
             $item = $model_class::find($request['id']);
@@ -363,12 +398,16 @@ class DashboardController extends Controller {
                 return 'permission-fail';
             }
 
-            // delete associated files if they exist
-            foreach ($model_class::$dashboard_columns as $column) {
-                if ($column['type'] == 'image') {
-                    $item->deleteImage($column['name'], false);
-                } else if ($column['type'] == 'file') {
-                    $item->deleteFile($column['name'], false);
+            // delete associated list items
+            foreach ($item::$dashboard_columns as $column) {
+                if ($column['type'] == 'list') {
+                    $list_model_class = Dashboard::getModel($column['model'], 'list');
+
+                    if ($list_model_class != null) {
+                        foreach ($list_model_class::where($column['foreign'], $item->id)->get() as $list_item) {
+                            $list_item->delete();
+                        }
+                    }
                 }
             }
 
@@ -399,7 +438,7 @@ class DashboardController extends Controller {
             'name'  => 'required'
         ]);
 
-        $model_class = Dashboard::getModel($request['model'], 'edit');
+        $model_class = Dashboard::getModel($request['model'], [ 'edit', 'list' ]);
 
         if ($model_class != null) {
             $item = $model_class::find($request['id']);
@@ -423,7 +462,7 @@ class DashboardController extends Controller {
             'name'  => 'required'
         ]);
 
-        $model_class = Dashboard::getModel($request['model'], 'edit');
+        $model_class = Dashboard::getModel($request['model'], [ 'edit', 'list' ]);
 
         if ($model_class != null) {
             $item = $model_class::find($request['id']);
