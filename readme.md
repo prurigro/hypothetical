@@ -10,6 +10,7 @@ A Hypothetical website template for bootstrapping new projects.
 * A flexible dashboard for managing data/assets and displaying collected form data
 * Great defaults and popular libraries to build on top of
 * A custom Sass function allowing values to be specified in `px` and output in `rem`
+* A function available in the SPA version of the site that loads webp if supported by the browser and jpg if it isn't
 
 ## Major Components
 
