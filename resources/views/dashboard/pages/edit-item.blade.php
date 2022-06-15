@@ -72,10 +72,15 @@
                                             @endphp
                                         @endif
 
-                                        @if(gettype($select_title))
+                                        @if(gettype($select_title) == 'boolean')
+                                            @php
+                                                $select_title = $select_title ? 'true' : 'false';
+                                            @endphp
+                                        @endif
+
+                                        @if(gettype($select_value) == 'boolean')
                                             @php
                                                 $select_value = $select_value ? 1 : 0;
-                                                $select_title = $select_title ? 'true' : 'false';
                                             @endphp
                                         @endif
 
