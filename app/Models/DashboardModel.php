@@ -225,6 +225,7 @@ class DashboardModel extends Model
             if (array_key_exists('max_width', $column)) {
                 $max_width = $column['max_width'];
             }
+
             // Update the maximum height if it's been configured
             if (array_key_exists('max_height', $column)) {
                 $max_height = $column['max_height'];
