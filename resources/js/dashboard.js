@@ -739,7 +739,7 @@ function editItemInit() {
     });
 
     // watch for changes to input and select element contents
-    $editItem.find("input, select").on("input change", contentChanged);
+    $editItem.find("input, textarea, select").on("input change", contentChanged);
 
     // initialize back button
     $backButton.on("click", function() {
