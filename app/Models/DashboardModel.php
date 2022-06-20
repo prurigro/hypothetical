@@ -129,7 +129,8 @@ class DashboardModel extends Model
      *
      * @return null
      */
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         static::deleting(function($item) {
