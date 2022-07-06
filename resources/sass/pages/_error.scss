@@ -1,6 +1,6 @@
 .error-page-component {
     display: flex;
-    padding: $grid-gutter-width ($grid-gutter-width / 2);
+    padding: $grid-gutter-width $half-gutter-width;
     flex-grow: 1;
     align-items: center;
 

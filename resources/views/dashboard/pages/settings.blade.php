@@ -25,8 +25,8 @@
 
                         <div class="image-buttons">
                             <input id="profile-image-upload" name="profile-image-upload" type="file" />
-                            <label for="profile-image-upload" class="image-upload-button" title="Upload Profile Image"><i class="fas fa-upload"></i></label>
-                            <button id="profile-image-delete" class="image-delete-button {{ $profile_image === null ? 'inactive' : '' }}" title="Delete Profile Image"><i class="fas fa-trash-alt"></i></button>
+                            <label for="profile-image-upload" class="image-upload-button" title="Upload Profile Image"><i class="fa-solid fa-upload"></i></label>
+                            <button id="profile-image-delete" class="image-delete-button {{ $profile_image === null ? 'inactive' : '' }}" title="Delete Profile Image"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                     </form>
 

@@ -1,3 +1,6 @@
+// Sass modules
+@use "sass:math";
+
 // Base font size
 $base-font-size: 16px;
 
@@ -5,13 +8,16 @@ $base-font-size: 16px;
 $fa-font-path: "/fonts";
 @import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "@fortawesome/fontawesome-free/scss/solid.scss";
-@import "bootstrap/scss/bootstrap.scss";
 
-// Core
-@import "_fonts";
+$enable-smooth-scroll: false;
+@import "bootstrap/scss/bootstrap.scss";
 
 // Functions
 @import "functions/**/*.scss";
+
+// Core
+@import "_fonts";
+@import "_common-vars";
 
 // Supplementary
 @import "mixins/**/*.scss";
@@ -28,33 +34,25 @@ $c-dashboard-light: #f1f1f1;
 $c-dashboard-edit: #87823e;
 $c-dashboard-delete: #87483e;
 
-$grid-breakpoints: (
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
-    xxl: 1600px,
-    xxxl: 1950px,
-    xxxxl: 2150px
-);
-
-$container-max-widths: (
-    sm: pxrem(540),
-    md: pxrem(720),
-    lg: pxrem(960),
-    xl: pxrem(1140),
-    xxl: pxrem(1540),
-    xxxl: pxrem(1733),
-    xxxxl: pxrem(1925)
-);
-
 //
 // Main Dashboard Styles
 //
 
 * {
     outline: none !important;
+}
+
+html {
+    width: 100%;
+    font-size: $base-font-size;
+
+    @include media-breakpoint-up(xxxl) {
+        font-size: 18px;
+    }
+
+    @include media-breakpoint-up(xxxxl) {
+        font-size: 20px;
+    }
 }
 
 body {
@@ -229,7 +227,7 @@ body {
 .dashboard-footer {
     margin-top: $grid-gutter-width;
     width: 100%;
-    padding: pxrem(8) ($grid-gutter-width / 2);
+    padding: pxrem(8) $half-gutter-width;
     background-color: $c-dashboard-dark;
     text-align: right;
 
@@ -298,7 +296,7 @@ body {
             width: 100%;
 
             @include media-breakpoint-down(md) {
-                margin-bottom: ($grid-gutter-width / 2);
+                margin-bottom: $half-gutter-width;
             }
 
             &-input {
@@ -649,7 +647,7 @@ body {
             }
 
             @include media-breakpoint-up(sm) {
-                margin-right: ($grid-gutter-width / 2);
+                margin-right: $half-gutter-width;
             }
         }
 
@@ -661,7 +659,7 @@ body {
             }
 
             @include media-breakpoint-up(sm) {
-                margin-left: ($grid-gutter-width / 2);
+                margin-left: $half-gutter-width;
             }
         }
 
@@ -1162,7 +1160,7 @@ form {
         }
 
         .edit-button {
-            margin-bottom: ($grid-gutter-width / 2);
+            margin-bottom: $half-gutter-width;
             display: inline-block;
             padding: pxrem(5) pxrem(10);
             border-radius: pxrem(5);
@@ -1354,7 +1352,7 @@ form {
 
             @include media-breakpoint-up(md) {
                 float: none;
-                margin: ($grid-gutter-width / 2) 0px;
+                margin: $half-gutter-width 0px;
             }
         }
     }

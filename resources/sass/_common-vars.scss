@@ -1,0 +1,27 @@
+//
+// Common Variables
+//
+
+// Breakpoints
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1600px,
+    xxxl: 1950px,
+    xxxxl: 2150px
+);
+
+// Sizes
+$container-max-widths: (
+    sm: pxrem(540),
+    md: pxrem(720),
+    lg: pxrem(960),
+    xl: pxrem(1140),
+    xxl: pxrem(1540)
+);
+
+$grid-gutter-width: pxrem(30);
+$half-gutter-width: math.div($grid-gutter-width, 2);

@@ -4,5 +4,5 @@
 // Usage example: pxrem(32) or pxrem(32px) => 2rem
 //
 @function pxrem($size) {
-    @return ((strip-unit($size) / strip-unit($base-font-size)) * 1rem);
+    @return (math.div(strip-unit($size), strip-unit($base-font-size)) * 1rem);
 }

@@ -1,28 +1,62 @@
-// Core
-@import "_fonts";
+// Sass modules
+@use "sass:math";
+
+// Base font size
+$base-font-size: 16px;
 
 // Libraries
+$enable-smooth-scroll: false;
 @import "bootstrap/scss/bootstrap.scss";
+
+// Functions
+@import "functions/**/*.scss";
+
+// Core
+@import "_fonts";
+@import "_common-vars";
+
+* {
+    outline: none !important;
+}
+
+html {
+    width: 100%;
+    font-size: $base-font-size;
+
+    @include media-breakpoint-up(xxxl) {
+        font-size: 18px;
+    }
+
+    @include media-breakpoint-up(xxxxl) {
+        font-size: 20px;
+    }
+}
+
+body {
+    @include font-sans-bold;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
+}
 
 .error-page {
     display: flex;
     min-height: 100vh;
-    padding: $grid-gutter-width ($grid-gutter-width / 2);
+    padding: $grid-gutter-width math.div($grid-gutter-width, 2);
     align-items: center;
 
     &-content {
-        @include font-sans-bold;
         width: 100%;
-        font-size: 22px;
+        font-size: pxrem(22);
         text-align: center;
         text-transform: uppercase;
 
         @include media-breakpoint-up(sm) {
-            font-size: 32px;
+            font-size: pxrem(32);
         }
 
         @include media-breakpoint-up(lg) {
-            font-size: 48px;
+            font-size: pxrem(48);
         }
     }
 }

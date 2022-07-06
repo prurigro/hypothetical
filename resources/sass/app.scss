@@ -1,16 +1,20 @@
+// Sass modules
+@use "sass:math";
+
 // Base font size
 $base-font-size: 16px;
+
+// Libraries
+$enable-smooth-scroll: false;
+@import "bootstrap/scss/bootstrap.scss";
 
 // Functions
 @import "functions/**/*.scss";
 
 // Core
-@import "_var";
 @import "_fonts";
-
-// Libraries
-$enable-smooth-scroll: false;
-@import "bootstrap/scss/bootstrap.scss";
+@import "_common-vars";
+@import "_site-vars";
 
 // Supplementary
 @import "mixins/**/*.scss";

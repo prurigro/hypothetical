@@ -1,0 +1,22 @@
+//
+// Site Variables
+//
+
+// Breakpoints
+$nav-desktop-min: 768px;
+$nav-mobile-max: ($nav-desktop-min - 1px);
+
+// Sizes
+$nav-height-desktop: pxrem(60);
+$nav-height-mobile: pxrem(50);
+$nav-link-height-mobile: pxrem(50);
+
+// Colours
+$c-text: #111; // text
+$c-text-light: #fff; // light text
+$c-base: #2e2e2e; // base
+$c-accent: #fa7921; // accent
+$c-error: #fa2036; // error
+
+// Values
+$nav-link-count: 3;

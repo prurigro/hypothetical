@@ -22,7 +22,7 @@
         &-toggle {
             position: absolute;
             top: 50%;
-            right: ($grid-gutter-width / 2);
+            right: $half-gutter-width;
             transform: translateY(-50%);
             margin: 0px;
             width: pxrem(22);
@@ -113,7 +113,7 @@
             }
 
             @media (min-width: $nav-desktop-min) {
-                padding: 0px $grid-gutter-width 0px (($grid-gutter-width / 2) + $desktop-logo-width + $logo-offset);
+                padding: 0px $grid-gutter-width 0px ($half-gutter-width + $desktop-logo-width + $logo-offset);
             }
 
             .navlink {
@@ -188,14 +188,14 @@
 
     &-logo {
         position: absolute;
-        top: ($nav-height-mobile / 2);
+        top: math.div($nav-height-mobile, 2);
         left: $logo-offset;
         transform: translateY(-50%);
         display: inline-block;
         width: $mobile-logo-width;
 
         @media (min-width: $nav-desktop-min) {
-            top: ($nav-height-desktop / 2);
+            top: math.div($nav-height-desktop, 2);
             width: $desktop-logo-width;
         }
 
