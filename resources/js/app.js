@@ -58,10 +58,10 @@ const router = new createRouter({
     scrollBehavior(to, from, savedPosition) {
         if (to.hash) {
             return {
-                selector: `[id='${to.hash.slice(1)}']`
+                el: `[id='${to.hash.slice(1)}']`
             };
         } else {
-            return { x: 0, y: 0 };
+            return { top: 0 };
         }
     }
 });
