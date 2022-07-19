@@ -158,7 +158,7 @@ class DashboardModel extends Model
     /**
      * Return the upload path for a given type
      *
-     * @return boolean
+     * @return string
      */
     public function getUploadsPath($type)
     {
@@ -172,7 +172,7 @@ class DashboardModel extends Model
     /**
      * Save an image
      *
-     * @return boolean
+     * @return string
      */
     public function saveImage($name, $file)
     {
@@ -331,7 +331,7 @@ class DashboardModel extends Model
     /**
      * Save a file
      *
-     * @return boolean
+     * @return string
      */
     public function saveFile($name, $file)
     {
@@ -451,7 +451,7 @@ class DashboardModel extends Model
     /**
      * Get the file extension for an image
      *
-     * @return string
+     * @return string|null
      */
     public static function getColumn($name)
     {
