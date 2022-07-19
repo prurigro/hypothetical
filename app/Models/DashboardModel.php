@@ -246,15 +246,18 @@ class DashboardModel extends Model
                         $new_height = ($new_width / $width) * $height;
 
                         if ($new_height > $max_height) {
-                            $new_width = ($max_height / $height) * $width;
+                            $new_height = $max_height;
+                            $new_width = ($new_height / $height) * $width;
                         }
                     }
                 } else if ($max_width > 0) {
                     if ($width > $max_width) {
                         $new_width = $max_width;
+                        $new_height = ($new_width / $width) * $height;
                     }
                 } else if ($height > $max_height) {
                     $new_height = $max_height;
+                    $new_width = ($new_height / $height) * $width;
                 }
 
                 if (!is_null($new_width) || !is_null($new_height)) {
