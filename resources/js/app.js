@@ -106,7 +106,7 @@ const store = createStore({
     mutations: {
         setAppLang(state, value) {
             state.appLang = value;
-            Vue.http.get(`/language/${value}`);
+            window.axios.get(`/language/${value}`);
         },
 
         setFirstLoad(state, value) {
