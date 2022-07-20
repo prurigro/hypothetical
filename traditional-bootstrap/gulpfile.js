@@ -22,19 +22,21 @@ const babel = require("gulp-babel"),
 // Determine if gulp has been run with --production
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 
+// Declare plugin settings
+const sassOutputStyle = isProduction ? "compressed" : "expanded",
+    sassPaths = "node_modules",
+    autoprefixerSettings = { remove: false, cascade: false };
+
 // Include browsersync when gulp has not been run with --production
 let browserSync = undefined;
 
-if (isProduction) {
-    process.env.NODE_ENV = "production";
-} else {
+if (!isProduction) {
     browserSync = require("browser-sync").create();
 }
 
-// Declare plugin settings
-const sassOutputStyle = isProduction ? "compressed" : "expanded",
-    sassPaths = [ "node_modules" ],
-    autoprefixerSettings = { remove: false, cascade: false };
+// Environment
+process.env.NODE_ENV = isProduction ? "production" : "development";
+process.env.SASS_PATH = sassPaths;
 
 // Javascript files for the public site
 const jsPublic = [
@@ -61,7 +63,7 @@ const jsDashboard = [
 const jsDashboardLibs = [
     "node_modules/jquery/dist/jquery.js",
     "node_modules/popper.js/dist/umd/popper.js",
-    "node_modules/bootstrap/dist/js/bootstrap.js",
+    "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
     "node_modules/flatpickr/dist/flatpickr.js",
     "node_modules/sortablejs/Sortable.js",
     "node_modules/list.js/dist/list.js",
@@ -93,7 +95,7 @@ function processSass(filename) {
     const css = gulp.src(`resources/sass/${filename}.scss`)
         .pipe(plumber(handleError))
         .pipe(sassGlob())
-        .pipe(sass({ outputStyle: sassOutputStyle, includePaths: sassPaths }))
+        .pipe(sass({ outputStyle: sassOutputStyle }))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
         .pipe(concat(`${filename}.css`))
         .pipe(gulp.dest("public/css/"));
