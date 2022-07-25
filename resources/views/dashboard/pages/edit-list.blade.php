@@ -154,7 +154,7 @@
                                     }
                                 @endphp
 
-                                @if($name != null && $type != null && ($row[$display_column] != '' || ($type == 'image') && $thumbnail !== null))
+                                @if($name != null && $type != null && ($row[$display_column] != '' || ($type == 'image' && $thumbnail !== null)))
                                     <div class="column">
                                         @if($type == 'image')
                                             <a
