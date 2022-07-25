@@ -61,6 +61,7 @@ class DashboardController extends Controller {
                 'paramdisplay' => $data['paramdisplay'],
                 'query'        => $model_class::getQueryString(),
                 'display'      => $model_class::$dashboard_display,
+                'columns'      => $model_class::$dashboard_columns,
                 'button'       => $model_class::$dashboard_button,
                 'idlink'       => $model_class::$dashboard_id_link,
                 'sortcol'      => $model_class::$dashboard_reorder ? $model_class::$dashboard_sort_column : false,

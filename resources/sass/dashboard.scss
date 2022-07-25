@@ -792,6 +792,7 @@ body {
 
                 @include media-breakpoint-up(md) {
                     overflow: hidden;
+                    display: flex;
                     flex-grow: 1;
                     white-space: nowrap;
                 }
@@ -842,6 +843,23 @@ body {
 
                 .column {
                     display: inline-block;
+
+                    .image-preview {
+                        @include aspect-ratio(16, 9);
+                        display: block;
+                        background-position: center center;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+
+                        @include media-breakpoint-down(md) {
+                            width: pxrem(150);
+                            max-width: 100%;
+                        }
+
+                        @include media-breakpoint-up(md) {
+                            width: pxrem(43);
+                        }
+                    }
                 }
 
                 .spacer {
@@ -851,6 +869,7 @@ body {
                     }
 
                     @include media-breakpoint-up(md) {
+                        margin: 0px pxrem(5);
                         display: inline-block;
                     }
                 }

@@ -128,8 +128,45 @@
                             @endif
 
                             @foreach($display as $index => $display_column)
-                                @if($row[$display_column] != '')
-                                    <div class="column">{{ $row[$display_column] }}</div>
+                                @php
+                                    $name = null;
+                                    $type = null;
+
+                                    foreach ($columns as $column) {
+                                        if ($column['name'] == $display_column) {
+                                            $name = $column['name'];
+                                            $type = $column['type'];
+                                            $ext = array_key_exists('ext', $column) ? $column['ext'] : $row::$default_image_ext;
+                                            break;
+                                        }
+                                    }
+
+                                    if ($type == 'image') {
+                                        $image = $row->getUploadsPath('image') . $row->id . "-$name.$ext";
+                                        $thumbnail = $row->getUploadsPath('thumb') . $row->id . "-$name.$ext";
+
+                                        if (!file_exists(public_path($image))) {
+                                            $image = null;
+                                            $thumbnail = null;
+                                        } else if (!file_exists(public_path($thumbnail))) {
+                                            $thumbnail = $image;
+                                        }
+                                    }
+                                @endphp
+
+                                @if($name != null && $type != null && ($row[$display_column] != '' || ($type == 'image') && $thumbnail !== null))
+                                    <div class="column">
+                                        @if($type == 'image')
+                                            <a
+                                                class="image-preview"
+                                                href="{{ $image }}"
+                                                target="_blank"
+                                                style="background-image: url({{ $thumbnail }})">
+                                            </a>
+                                        @else
+                                            {{ $row[$display_column] }}
+                                        @endif
+                                    </div>
 
                                     @if($index < count($display) - 1)
                                         <div class="spacer">|</div>
