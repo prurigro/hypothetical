@@ -52,7 +52,7 @@ const router = new createRouter({
         { path: "/", component: HomePage },
         { path: "/blog", component: BlogPage },
         { path: "/contact", component: ContactPage },
-        { path: "/:match(.*)", component: Error404 }
+        { path: "/:match(.*)", component: Error404Page }
     ],
 
     scrollBehavior(to, from, savedPosition) {
