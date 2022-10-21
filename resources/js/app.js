@@ -5,14 +5,14 @@ import { createApp, nextTick } from "vue";
 const Vue = createApp({});
 
 // Import and configure axios
-window.axios = require("axios");
+import axios from "axios";
 
-window.axios.defaults.headers.common = {
+axios.defaults.headers.common = {
     "X-Requested-With": "XMLHttpRequest",
     "X-CSRF-TOKEN": env.csrfToken
 };
 
-Vue.config.globalProperties.$http = window.axios;
+Vue.config.globalProperties.$http = axios;
 
 // Import plugins
 import { createRouter, createWebHistory } from "vue-router";
@@ -106,7 +106,7 @@ const store = createStore({
     mutations: {
         setAppLang(state, value) {
             state.appLang = value;
-            window.axios.get(`/language/${value}`);
+            axios.get(`/language/${value}`);
         },
 
         setFirstLoad(state, value) {
