@@ -21,7 +21,7 @@ A Hypothetical website template for bootstrapping new projects.
 * Gsap
 * Gulp
 * Jquery
-* Laravel 9
+* Laravel 10.0.4
 * Sass
 * Vue 3 (Optional)
 

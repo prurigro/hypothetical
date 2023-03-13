@@ -2,43 +2,46 @@
 
 return [
 
-        /*
-         * The api key of a MailChimp account. You can find yours here:
-         * https://us10.admin.mailchimp.com/account/api-key-popup/
-         */
-        'apiKey' => env('MAILCHIMP_APIKEY'),
+    /*
+     * The driver to use to interact with MailChimp API.
+     * You may use "log" or "null" to prevent calling the
+     * API directly from your environment.
+     */
+    'driver' => env('NEWSLETTER_DRIVER', Spatie\Newsletter\Drivers\MailcoachDriver::class),
+
+    /**
+     * These arguments will be given to the driver.
+     */
+    'driver_arguments' => [
+        'api_key' => env('MAILCHIMP_APIKEY'),
+
+        'endpoint' => env('NEWSLETTER_ENDPOINT'),
+    ],
+
+    /*
+     * The list name to use when no list name is specified in a method.
+     */
+    'default_list_name' => 'subscribers',
+
+    'lists' => [
 
         /*
-         * When not specifying a listname in the various methods, use the list with this name
+         * This key is used to identify this list. It can be used
+         * as the listName parameter provided in the various methods.
+         *
+         * You can set it to any string you want and you can add
+         * as many lists as you want.
          */
-        'defaultListName' => 'subscribers',
-
-        /*
-         * Here you can define properties of the lists you want to
-         * send campaigns.
-         */
-        'lists' => [
+        'subscribers' => [
 
             /*
-             * This key is used to identify this list. It can be used
-             * in the various methods provided by this package.
+             * When using the Mailcoach driver, this should be Email list UUID
+             * which is displayed in the Mailcoach UI
              *
-             * You can set it to any string you want and you can add
-             * as many lists as you want.
+             * When using the MailChimp driver, this should be a MailChimp list id.
+             * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
              */
-            'subscribers' => [
-
-                /*
-                 * A mail chimp list id. Check the mailchimp docs if you don't know
-                 * how to get this value:
-                 * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id
-                 */
-                'id' => env('MAILCHIMP_LISTID'),
-            ],
+            'id' => env('MAILCHIMP_LISTID'),
         ],
-
-        /*
-         * If you're having trouble with https connections, set this to false.
-         */
-        'ssl' => true,
+    ],
 ];

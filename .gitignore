@@ -6,6 +6,7 @@
 auth.json
 npm-debug.log
 yarn-error.log
+/.phpunit.cache
 /node_modules
 /public/css
 /public/fonts
