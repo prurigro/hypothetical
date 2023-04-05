@@ -5,20 +5,20 @@
     "dev": "gulp default watch"
   },
   "devDependencies": {
-    "browser-sync": "2.28.3"
+    "browser-sync": "2.29.1"
   },
   "dependencies": {
-    "@babel/core": "7.21.0",
-    "@babel/preset-env": "7.20.2",
-    "@fortawesome/fontawesome-free": "6.3.0",
+    "@babel/core": "7.21.4",
+    "@babel/preset-env": "7.21.4",
+    "@fortawesome/fontawesome-free": "6.4.0",
     "@mr-hope/gulp-sass": "3.1.1",
-    "autonumeric": "4.6.2",
+    "autonumeric": "4.8.1",
     "autoprefixer": "10.4.14",
     "bootstrap": "5.2.3",
     "easymde": "2.18.0",
     "fancy-log": "2.0.0",
     "flatpickr": "4.6.13",
-    "gsap": "3.11.4",
+    "gsap": "3.11.5",
     "gulp": "4.0.2",
     "gulp-babel": "8.0.0",
     "gulp-clean-css": "4.3.0",
@@ -33,7 +33,7 @@
     "minimist": "1.2.8",
     "popper.js": "1.16.1",
     "postcss": "8.4.21",
-    "sass": "1.59.2",
+    "sass": "1.60.0",
     "sortablejs": "1.15.0",
     "spinkit": "2.0.1",
     "what-input": "5.2.12"
