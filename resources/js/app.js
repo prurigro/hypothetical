@@ -60,6 +60,8 @@ const router = new createRouter({
             return {
                 el: `[id='${to.hash.slice(1)}']`
             };
+        } else if (savedPosition) {
+            return savedPosition;
         } else {
             return { top: 0 };
         }
