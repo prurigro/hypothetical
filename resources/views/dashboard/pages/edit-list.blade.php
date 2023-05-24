@@ -22,7 +22,9 @@
 
         @if($filter)
             @if(!$paginate)
-                <input id="filter-input" class="search" placeholder="Filter" />
+                @if(count($rows) > 0)
+                    <input id="filter-input" class="search" placeholder="Filter" />
+                @endif
             @else
                 <form
                     id="search-form"
