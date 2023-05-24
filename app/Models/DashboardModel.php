@@ -164,9 +164,44 @@ class DashboardModel extends Model
     {
         if ($type == 'image') {
             return '/uploads/' . $this->getTable() . '/img/';
+        } else if ($type == 'thumb') {
+            return '/uploads/' . $this->getTable() . '/thumbnails/';
         } else if ($type == 'file') {
             return '/uploads/' . $this->getTable() . '/files/';
         }
+    }
+
+    /**
+     * Find the desired image dimensions based on a maximum width and height
+     *
+     * @return array
+     */
+    public static function maxImageSize($max_width, $max_height, $image_width, $image_height)
+    {
+        $new_width = null;
+        $new_height = null;
+
+        if ($max_width > 0 && $max_height > 0) {
+            if ($image_width > $max_width || $image_height > $max_height) {
+                $new_width = $max_width;
+                $new_height = ($new_width / $image_width) * $image_height;
+
+                if ($new_height > $max_height) {
+                    $new_height = $max_height;
+                    $new_width = ($new_height / $image_height) * $image_width;
+                }
+            }
+        } else if ($max_width > 0) {
+            if ($image_width > $max_width) {
+                $new_width = $max_width;
+                $new_height = ($new_width / $image_width) * $image_height;
+            }
+        } else if ($image_height > $max_height) {
+            $new_height = $max_height;
+            $new_width = ($new_height / $image_height) * $image_width;
+        }
+
+        return [ $new_width, $new_height ];
     }
 
     /**
@@ -199,12 +234,12 @@ class DashboardModel extends Model
             $main_ext = $this::$default_image_ext;
         }
 
-        // Create the directory if it doesn't exist
-        $directory = public_path($this->getUploadsPath('image'));
-        File::makeDirectory($directory, 0755, true, true);
+        // Create the image directory if it doesn't exist
+        $image_directory = public_path($this->getUploadsPath('image'));
+        File::makeDirectory($image_directory, 0755, true, true);
 
         // Set the base file path (including the file name but not the extension)
-        $base_filename = $directory . $this->id . '-' . $name . '.';
+        $base_image_filename = $image_directory . $this->id . '-' . $name . '.';
 
         if ($main_ext == 'svg') {
             // Save the image provided it's an SVG
@@ -213,13 +248,13 @@ class DashboardModel extends Model
                     return 'incorrect-format-fail';
                 }
 
-                copy($file, $base_filename . $main_ext);
+                copy($file, $base_image_filename . $main_ext);
             } else {
                 if ($file->extension() != 'svg') {
                     return 'incorrect-format-fail';
                 }
 
-                $file->move($directory, $base_filename . $main_ext);
+                $file->move($image_directory, $base_image_filename . $main_ext);
             }
         } else {
             // Update the maximum width if it's been configured
@@ -232,43 +267,43 @@ class DashboardModel extends Model
                 $max_height = $column['max_height'];
             }
 
+            // Load and resize the image
             $image = Image::make($file);
 
             if ($max_width > 0 || $max_height > 0) {
-                $width = $image->width();
-                $height = $image->height();
-                $new_width = null;
-                $new_height = null;
+                $new_image_size = self::maxImageSize($max_width, $max_height, $image->width(), $image->height());
 
-                if ($max_width > 0 && $max_height > 0) {
-                    if ($width > $max_width || $height > $max_height) {
-                        $new_width = $max_width;
-                        $new_height = ($new_width / $width) * $height;
-
-                        if ($new_height > $max_height) {
-                            $new_height = $max_height;
-                            $new_width = ($new_height / $height) * $width;
-                        }
-                    }
-                } else if ($max_width > 0) {
-                    if ($width > $max_width) {
-                        $new_width = $max_width;
-                        $new_height = ($new_width / $width) * $height;
-                    }
-                } else if ($height > $max_height) {
-                    $new_height = $max_height;
-                    $new_width = ($new_height / $height) * $width;
-                }
-
-                if (!is_null($new_width) || !is_null($new_height)) {
-                    $image->resize($new_width, $new_height, function($constraint) {
+                if (!is_null($new_image_size[0]) || !is_null($new_image_size[1])) {
+                    $image->resize($new_image_size[0], $new_image_size[0], function($constraint) {
                         $constraint->aspectRatio();
                     });
                 }
             }
 
-            $image->save($base_filename . $main_ext);
-            $image->save($base_filename . 'webp');
+            // Save the image
+            $image->save($base_image_filename . $main_ext);
+            $image->save($base_image_filename . 'webp');
+
+            // Create the thumbnail directory if it doesn't exist
+            $thumb_directory = public_path($this->getUploadsPath('thumb'));
+            File::makeDirectory($thumb_directory, 0755, true, true);
+
+            // Set the base file path (including the file name but not the extension)
+            $base_thumb_filename = $thumb_directory . $this->id . '-' . $name . '.';
+
+            // Load and resize the thumbnail
+            $thumb = Image::make($file);
+            $new_thumb_size = self::maxImageSize(800, 600, $thumb->width(), $thumb->height());
+
+            if (!is_null($new_thumb_size[0]) || !is_null($new_thumb_size[1])) {
+                $thumb->resize($new_thumb_size[0], $new_thumb_size[0], function($constraint) {
+                    $constraint->aspectRatio();
+                });
+            }
+
+            // Save the thumbnail
+            $thumb->save($base_thumb_filename . $main_ext);
+            $thumb->save($base_thumb_filename . 'webp');
         }
 
         return 'success';
