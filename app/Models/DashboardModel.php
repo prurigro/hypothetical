@@ -282,7 +282,10 @@ class DashboardModel extends Model
 
             // Save the image
             $image->save($base_image_filename . $main_ext);
-            $image->save($base_image_filename . 'webp');
+
+            if ($main_ext !== 'webp') {
+                $image->save($base_image_filename . 'webp');
+            }
 
             // Create the thumbnail directory if it doesn't exist
             $thumb_directory = public_path($this->getUploadsPath('thumb'));
@@ -303,7 +306,10 @@ class DashboardModel extends Model
 
             // Save the thumbnail
             $thumb->save($base_thumb_filename . $main_ext);
-            $thumb->save($base_thumb_filename . 'webp');
+
+            if ($main_ext !== 'webp') {
+                $thumb->save($base_thumb_filename . 'webp');
+            }
         }
 
         return 'success';
@@ -342,8 +348,8 @@ class DashboardModel extends Model
         // Build the set of extensions to delete
         array_push($extensions, $main_ext);
 
-        // If the image extension isn't svg also delete the webp
-        if ($main_ext != 'svg') {
+        // If the image extension isn't svg or webp also delete the webp copy
+        if ($main_ext != 'svg' && $main_ext != 'webp') {
             array_push($extensions, 'webp');
         }
 
@@ -359,6 +365,18 @@ class DashboardModel extends Model
                 }
             } else if ($not_exist_fail) {
                 return 'image-not-exists-fail';
+            }
+
+            // Get the full path of the thumbnail
+            $thumb = public_path($this->getUploadsPath('thumb') . $this->id . '-' . $name . '.' . $ext);
+
+            // Try to delete the thumbnail
+            if (file_exists($thumb)) {
+                if (!unlink($thumb)) {
+                    return 'thumb-delete-fail';
+                }
+            } else if ($not_exist_fail) {
+                return 'thumb-not-exists-fail';
             }
         }
 
