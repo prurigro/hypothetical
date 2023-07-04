@@ -218,11 +218,13 @@ class DashboardController extends Controller {
                 return 'required:' . implode(',', $empty);
             }
 
-            // check to ensure unique columns are unique
+            // check to ensure unique columns are unique when they aren't empty
             $not_unique = [];
 
             foreach ($model_class::$dashboard_columns as $column) {
-                if ($request->has($column['name']) && array_key_exists('unique', $column) && $column['unique'] && $model_class::where($column['name'], $request[$column['name']])->where('id', '!=', $item->id)->exists()) {
+                $column_name = $column['name'];
+
+                if ($request->has($column['name']) && $request->$column_name != '' && array_key_exists('unique', $column) && $column['unique'] && $model_class::where($column['name'], $request[$column['name']])->where('id', '!=', $item->id)->exists()) {
                     if (array_key_exists('title', $column)) {
                         array_push($not_unique, "'" . $column['title'] . "'");
                     } else {
