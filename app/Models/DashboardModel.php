@@ -172,6 +172,16 @@ class DashboardModel extends Model
     }
 
     /**
+     * Convert line breaks to <br />s
+     *
+     * @return string
+     */
+    public static function lineBreakToBr($string)
+    {
+        return preg_replace("/<br[^>]*>/", "<br> ", str_replace([ "\r\n", "\r", "\n" ], [ "", "", "" ], nl2br($string)));
+    }
+
+    /**
      * Find the desired image dimensions based on a maximum width and height
      *
      * @return array
