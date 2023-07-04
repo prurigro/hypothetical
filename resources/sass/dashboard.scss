@@ -334,6 +334,10 @@ body {
             border-radius: pxrem(5);
             background-color: $c-dashboard-dark;
             color: $c-text-light;
+
+            ul {
+                margin-bottom: 0px;
+            }
         }
 
         .form-group {
