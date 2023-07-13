@@ -78,7 +78,7 @@ while read -r; do
     }
 done < .env
 
-msg "Running: ${c_m}php artisan route:clear"
+msg "Running: ${c_m}php artisan cache:clear"
 $PHP_BINARY artisan cache:clear
 
 msg "Running: ${c_m}php artisan route:clear"
