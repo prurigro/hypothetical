@@ -602,21 +602,9 @@ body {
                 }
             }
 
-            &:first-child > td {
-                @include media-breakpoint-down(xl) {
-                    padding-top: 0px;
-                }
-            }
-
             &:last-child > td {
                 @include media-breakpoint-up(xl) {
                     padding-bottom: 0px;
-                }
-
-                &:last-child {
-                    @include media-breakpoint-down(xl) {
-                        padding-bottom: 0px;
-                    }
                 }
             }
         }
