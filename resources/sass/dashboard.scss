@@ -551,6 +551,12 @@ body {
         margin-bottom: 0px;
         border-bottom-color: transparent;
 
+        @include media-breakpoint-down(xxl) {
+            overflow-x: auto;
+            display: block;
+            width: 100%;
+        }
+
         > thead > tr {
             @include media-breakpoint-down(xl) {
                 display: none;
