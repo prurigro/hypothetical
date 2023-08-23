@@ -47,7 +47,7 @@ done
     error "${c_w}missing dependencies ($(
         for (( x=0; x < ${#missing_deps[@]}; x++ )); do
             printf '%s' "$c_m${missing_deps[$x]}$c_c"
-            (( (( x + 1 )) < ${#missing_deps[@]} )) && printf '%s' ', '
+            (( (x + 1) < ${#missing_deps[@]} )) && printf '%s' ', '
         done
     )$c_w)"
 }
