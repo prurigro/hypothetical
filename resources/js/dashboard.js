@@ -266,7 +266,7 @@ function editListInit() {
     const filterInputInit = function() {
         const $filter = $("#filter-input");
 
-        if ($filter.length) {
+        if ($filter.length && $editList.find(".list-group-item").length) {
             // empty the filter
             $filter.val("");
 
