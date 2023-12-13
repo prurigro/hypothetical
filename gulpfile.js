@@ -29,8 +29,7 @@ const webpack = require("webpack"),
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 
 // Declare plugin settings
-const sassOutputStyle = isProduction ? "compressed" : "expanded",
-    sassPaths = "node_modules",
+const sassPaths = "node_modules",
     autoprefixerSettings = { remove: false, cascade: false };
 
 // Include browsersync when gulp has not been run with --production
@@ -95,10 +94,15 @@ function processSass(filename) {
     const css = gulp.src(`resources/sass/${filename}.scss`)
         .pipe(plumber(handleError))
         .pipe(sassGlob())
-        .pipe(sass({ outputStyle: sassOutputStyle }))
+        .pipe(sass({ quietDeps: true }))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
-        .pipe(concat(`${filename}.css`))
-        .pipe(gulp.dest("public/css/"));
+        .pipe(concat(`${filename}.css`));
+
+    if (isProduction) {
+        css.pipe(cleanCSS());
+    }
+
+    css.pipe(gulp.dest("public/css/"));
 
     if (!isProduction) {
         css.pipe(browserSync.stream({ match: `**/${filename}.css` }));
