@@ -12,7 +12,7 @@
         "intervention/image": "^2.7.2",
         "laravel/framework": "^10.10",
         "laravel/helpers": "^1.6",
-        "laravel/sanctum": "^3.2",
+        "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2.1",
         "phpoffice/phpspreadsheet": "^1.28.0",
