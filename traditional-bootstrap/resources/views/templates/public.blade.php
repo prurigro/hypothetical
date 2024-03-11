@@ -9,13 +9,11 @@
 @section('page-content')
     @include('sections.nav')
 
-    <div class="flex-fix">
-        <div class="page-container">
-            <div class="main-content">
-                @yield('content')
-            </div>
-
-            @include('sections.footer')
+    <div class="page-container">
+        <div class="main-content">
+            @yield('content')
         </div>
+
+        @include('sections.footer')
     </div>
 @endsection

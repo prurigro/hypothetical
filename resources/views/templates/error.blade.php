@@ -5,11 +5,9 @@
 @endsection
 
 @section('page-content')
-    <div class="flex-fix">
-        <div class="error-page">
-            <div class="error-page-content">
-                {{ $title }}
-            </div>
+    <div class="error-page">
+        <div class="error-page-content">
+            {{ $title }}
         </div>
     </div>
 @endsection

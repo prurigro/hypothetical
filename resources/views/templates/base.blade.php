@@ -38,16 +38,14 @@
     </head>
 
     <body class="{{ $device_mobile ? 'mobile-browser' : 'desktop-browser' }}">
-        <div class="flex-fix">
-            <div class="site-content">
-                @yield('page-top')
+        <div class="site-content">
+            @yield('page-top')
 
-                <div class="page-content">
-                    @yield('page-content')
-                </div>
-
-                @yield('page-bottom')
+            <div class="page-content">
+                @yield('page-content')
             </div>
+
+            @yield('page-bottom')
         </div>
 
         @if(Config::get('app.debug') && Config::get('app.env') === 'local')

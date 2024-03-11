@@ -22,14 +22,12 @@
     <div id="vue-container">
         <nav-component></nav-component>
 
-        <div class="flex-fix">
-            <div class="page-container">
-                <div id="router-view" class="main-content">
-                    <router-view></router-view>
-                </div>
-
-                <footer-component></footer-component>
+        <div class="page-container">
+            <div id="router-view" class="main-content">
+                <router-view></router-view>
             </div>
+
+            <footer-component></footer-component>
         </div>
     </div>
 @endsection
