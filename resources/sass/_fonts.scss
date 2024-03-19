@@ -44,15 +44,15 @@
 
 @mixin font-sans {
     @include normalize-font;
-    font-family: "OpenSans-Regular", Arial, Helvetica, sans-serif;
+    font-family: "OpenSans-Regular", "Arial", "Helvetica", sans-serif;
 }
 
 @mixin font-sans-semibold {
     @include normalize-font;
-    font-family: "OpenSans-SemiBold", Arial, Helvetica, sans-serif;
+    font-family: "OpenSans-SemiBold", "Arial", "Helvetica", sans-serif;
 }
 
 @mixin font-sans-bold {
     @include normalize-font;
-    font-family: "OpenSans-Bold", Arial, Helvetica, sans-serif;
+    font-family: "OpenSans-Bold", "Arial", "Helvetica", sans-serif;
 }

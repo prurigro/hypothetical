@@ -17,7 +17,7 @@ class ApiController extends Controller {
 
     public function postContactSubmit(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'name'    => 'required',
             'email'   => 'required|email',
             'message' => 'required'
@@ -42,7 +42,7 @@ class ApiController extends Controller {
 
     public function postSubscriptionSubmit(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'name'    => 'required',
             'email'   => 'required|email'
         ]);

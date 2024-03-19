@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Auth;
 use File;
 use Image;
+use Illuminate\Database\Eloquent\Model;
 use App\Traits\Timestamp;
 
 class DashboardModel extends Model
@@ -277,16 +277,14 @@ class DashboardModel extends Model
                 $max_height = $column['max_height'];
             }
 
-            // Load and resize the image
-            $image = Image::make($file);
+            // Load and scale the image
+            $image = Image::read($file);
 
             if ($max_width > 0 || $max_height > 0) {
                 $new_image_size = self::maxImageSize($max_width, $max_height, $image->width(), $image->height());
 
                 if (!is_null($new_image_size[0]) || !is_null($new_image_size[1])) {
-                    $image->resize($new_image_size[0], $new_image_size[0], function($constraint) {
-                        $constraint->aspectRatio();
-                    });
+                    $image->scaleDown($new_image_size[0], $new_image_size[0]);
                 }
             }
 
@@ -304,14 +302,12 @@ class DashboardModel extends Model
             // Set the base file path (including the file name but not the extension)
             $base_thumb_filename = $thumb_directory . $this->id . '-' . $name . '.';
 
-            // Load and resize the thumbnail
-            $thumb = Image::make($file);
+            // Load and scale the thumbnail
+            $thumb = Image::read($file);
             $new_thumb_size = self::maxImageSize(800, 600, $thumb->width(), $thumb->height());
 
             if (!is_null($new_thumb_size[0]) || !is_null($new_thumb_size[1])) {
-                $thumb->resize($new_thumb_size[0], $new_thumb_size[0], function($constraint) {
-                    $constraint->aspectRatio();
-                });
+                $thumb->scaleDown($new_thumb_size[0], $new_thumb_size[0]);
             }
 
             // Save the thumbnail

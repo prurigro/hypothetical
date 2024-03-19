@@ -1,23 +1,24 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Auth;
 use File;
 use Image;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\User;
 use App\Dashboard;
 
-class DashboardController extends Controller {
-
+class DashboardController extends Controller implements HasMiddleware
+{
     /**
-     * Create a new controller instance
+     * Get the middleware that should be assigned to the controller.
      */
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [ 'auth' ];
     }
 
     /**
@@ -148,7 +149,7 @@ class DashboardController extends Controller {
     // Reorder Model Rows
     public function postReorder(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'order'  => 'required',
             'column' => 'required',
             'model'  => 'required'
@@ -176,7 +177,7 @@ class DashboardController extends Controller {
     // Create and Update Model Item Data
     public function postUpdate(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'id'      => 'required',
             'model'   => 'required',
             'columns' => 'required'
@@ -321,7 +322,7 @@ class DashboardController extends Controller {
     // Upload Model Item Image
     public function postImageUpload(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'id'    => 'required',
             'model' => 'required',
             'name'  => 'required'
@@ -353,7 +354,7 @@ class DashboardController extends Controller {
     // Upload Model Item File
     public function postFileUpload(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'id'    => 'required',
             'model' => 'required',
             'name'  => 'required'
@@ -385,7 +386,7 @@ class DashboardController extends Controller {
     // Delete Model Item
     public function deleteDelete(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'id'    => 'required',
             'model' => 'required'
         ]);
@@ -435,7 +436,7 @@ class DashboardController extends Controller {
     // Delete Model Item Image
     public function deleteImageDelete(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'id'    => 'required',
             'model' => 'required',
             'name'  => 'required'
@@ -459,7 +460,7 @@ class DashboardController extends Controller {
     // Delete Model Item File
     public function deleteFileDelete(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'id'    => 'required',
             'model' => 'required',
             'name'  => 'required'
@@ -493,7 +494,7 @@ class DashboardController extends Controller {
     // User Password Update
     public function postUserPasswordUpdate(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'oldpass' => 'required|string|min:6',
             'newpass' => 'required|string|min:6|confirmed'
         ]);
@@ -508,7 +509,7 @@ class DashboardController extends Controller {
     // User Profile Update
     public function postUserProfileUpdate(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required|string|max:255'
         ]);
 
@@ -530,7 +531,7 @@ class DashboardController extends Controller {
             $user = User::find(Auth::id());
 
             if ($user !== null) {
-                $image = Image::make($request->file('file'));
+                $image = Image::read($request->file('file'));
                 $max_width = User::$profile_image_max['width'];
                 $max_height = User::$profile_image_max['height'];
 
@@ -543,7 +544,7 @@ class DashboardController extends Controller {
                         $new_width = ($new_height / $image->height()) * $image->width();
                     }
 
-                    $image->resize($new_width, $new_height);
+                    $image->scaleDown($new_width, $new_height);
                 }
 
                 File::makeDirectory(base_path() . '/public' . User::$profile_image_dir, 0755, true, true);
@@ -585,5 +586,4 @@ class DashboardController extends Controller {
     {
         return view('dashboard.pages.credits');
     }
-
 }

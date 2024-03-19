@@ -162,6 +162,10 @@ body {
         color: $c-text-light-inactive;
         transition: color 150ms;
 
+        &.show {
+            color: $c-text-light-inactive;
+        }
+
         &.active {
             color: $c-text-light;
         }
@@ -551,66 +555,74 @@ body {
         margin-bottom: 0px;
         border-bottom-color: transparent;
 
-        @include media-breakpoint-down(xxl) {
+        @include media-breakpoint-down(xl) {
             overflow-x: auto;
             display: block;
             width: 100%;
         }
 
-        > thead > tr {
+        > thead {
             @include media-breakpoint-down(xl) {
                 display: none;
             }
 
-            > th {
+            > tr > th {
                 border-top: 0;
                 border-bottom: 1px solid #666;
             }
         }
 
-        > tbody > tr {
+        > tbody {
             @include media-breakpoint-down(xl) {
-                &:not(:first-child) {
-                    border-top: 1px solid #ddd;
-                }
+                display: block;
+                width: 100%;
             }
 
-            @include media-breakpoint-up(xl) {
-                border-bottom: 1px solid #ddd;
-
-                &:last-child {
-                    border-bottom-color: transparent;
-                }
-            }
-
-            > td {
+            > tr {
                 @include media-breakpoint-down(xl) {
                     display: block;
-                    border-top: 0;
+                    width: 100%;
 
-                    &:first-child {
-                        padding-top: pxrem(20);
+                    &:not(:first-child) {
+                        border-top: 1px solid #ddd;
                     }
+                }
+
+                @include media-breakpoint-up(xl) {
+                    border-bottom: 1px solid #ddd;
 
                     &:last-child {
-                        padding-bottom: pxrem(20);
+                        border-bottom-color: transparent;
+
+                        > td {
+                            padding-bottom: pxrem(10);
+                        }
                     }
                 }
 
-                @include media-breakpoint-up(xl) {
-                    padding: pxrem(20) pxrem(8);
-                }
+                > td {
+                    @include media-breakpoint-down(xl) {
+                        display: block;
+                        border-top: 0;
 
-                .mobile-heading {
+                        &:first-child {
+                            padding-top: pxrem(20);
+                        }
+
+                        &:last-child {
+                            padding-bottom: pxrem(20);
+                        }
+                    }
+
                     @include media-breakpoint-up(xl) {
-                        display: none;
+                        padding: pxrem(20) pxrem(8);
                     }
-                }
-            }
 
-            &:last-child > td {
-                @include media-breakpoint-up(xl) {
-                    padding-bottom: 0px;
+                    .mobile-heading {
+                        @include media-breakpoint-up(xl) {
+                            display: none;
+                        }
+                    }
                 }
             }
         }
@@ -779,10 +791,10 @@ body {
             }
 
             .title-column {
+                @include font-sans-semibold;
                 padding-top: pxrem(6);
                 padding-bottom: pxrem(6);
                 padding-left: 0px;
-                font-family: "Lucida Console", Monaco, monospace;
 
                 @include media-breakpoint-down(md) {
                     text-align: center;
