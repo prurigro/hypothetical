@@ -8,13 +8,13 @@
     "browser-sync": "3.0.2"
   },
   "dependencies": {
-    "@babel/core": "7.23.9",
-    "@babel/preset-env": "7.23.9",
+    "@babel/core": "7.24.1",
+    "@babel/preset-env": "7.24.1",
     "@fortawesome/fontawesome-free": "6.5.1",
     "@mr-hope/gulp-sass": "3.1.1",
     "autonumeric": "4.10.5",
-    "autoprefixer": "10.4.17",
-    "bootstrap": "5.3.2",
+    "autoprefixer": "10.4.18",
+    "bootstrap": "5.3.3",
     "easymde": "2.18.0",
     "fancy-log": "2.0.0",
     "flatpickr": "4.6.13",
@@ -32,8 +32,8 @@
     "list.js": "2.3.1",
     "minimist": "1.2.8",
     "popper.js": "1.16.1",
-    "postcss": "8.4.35",
-    "sass": "1.70.0",
+    "postcss": "8.4.37",
+    "sass": "1.72.0",
     "sortablejs": "1.15.2",
     "spinkit": "2.0.1",
     "what-input": "5.2.12"
