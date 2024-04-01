@@ -4,6 +4,7 @@ const gulp = require("gulp"),
     log = require("fancy-log"),
     plumber = require("gulp-plumber"),
     concat = require("gulp-concat"),
+    ordered = require("ordered-read-streams"),
     fs = require("fs"),
     crypto = require("crypto");
 
@@ -90,6 +91,13 @@ function handleError(err) {
     this.emit("end");
 }
 
+// Takes an array of files and returns an stream of gulp sources
+function orderedGulpSources(array) {
+    return ordered(array.map(function(item) {
+        return gulp.src(item);
+    }));
+}
+
 // Process sass
 function processSass(filename) {
     const css = gulp.src(`resources/sass/${filename}.scss`)
@@ -109,7 +117,7 @@ function processSass(filename) {
 
 // Process css
 function processCSS(outputFilename, inputFiles) {
-    const css = gulp.src(inputFiles)
+    const css = orderedGulpSources(inputFiles)
         .pipe(plumber(handleError))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
         .pipe(concat(`${outputFilename}.css`));
@@ -123,7 +131,7 @@ function processCSS(outputFilename, inputFiles) {
 
 // Process javascript
 function processJavaScript(outputFilename, inputFiles, es6) {
-    const javascript = gulp.src(inputFiles)
+    const javascript = orderedGulpSources(inputFiles)
         .pipe(plumber(handleError))
         .pipe(concat(`${outputFilename}.js`));
 
