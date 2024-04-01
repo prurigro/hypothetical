@@ -80,8 +80,8 @@ const cssDashboardLibs = [
 
 // Paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
-    "resources/fonts/**",
-    "node_modules/@fortawesome/fontawesome-free/webfonts/**"
+    "resources/fonts/*",
+    "node_modules/@fortawesome/fontawesome-free/webfonts/*"
 ];
 
 // Handle errors
@@ -288,7 +288,7 @@ gulp.task("js-dashboard-libs", () => {
 
 // Task to copy fonts
 gulp.task("fonts", (done) => {
-    gulp.src(fontPaths)
+    gulp.src(fontPaths, { encoding: false })
         .pipe(plumber(handleError))
         .pipe(gulp.dest("public/fonts/"));
 
