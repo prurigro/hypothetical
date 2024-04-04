@@ -10,13 +10,6 @@
     export default {
         mixins: [
             BasePageMixin
-        ],
-
-        data() {
-            return {
-                metaTitle: "Page Not Found",
-                metaDescription: "The requested page cannot be found"
-            };
-        }
+        ]
     };
 </script>

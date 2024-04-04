@@ -6,9 +6,15 @@ use Newsletter;
 use App\Models\Blog;
 use App\Models\Contact;
 use App\Models\Subscriptions;
+use App\Models\Meta;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller {
+
+    public function getMeta($path = null)
+    {
+        return Meta::getData($path);
+    }
 
     public function getBlogEntries()
     {

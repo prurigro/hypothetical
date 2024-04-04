@@ -1,4 +1,4 @@
-@extends('templates.public', [ 'title' => 'Contact' ])
+@extends('templates.public')
 
 @section('content')
     <div class="contact-page-component">

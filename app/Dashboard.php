@@ -11,6 +11,12 @@ class Dashboard
      */
     public static $menu = [
         [
+            'title' => 'Metadata',
+            'type'  => 'edit',
+            'model' => 'meta'
+        ],
+
+        [
             'title' => 'Blog',
             'type'  => 'edit',
             'model' => 'blog'

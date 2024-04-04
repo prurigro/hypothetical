@@ -1,10 +1,6 @@
 export default {
     data() {
         return {
-            metaTitle: "",
-            metaDescription: "",
-            metaKeywords: "",
-
             metaTags: {
                 "title": [ "name", "title" ],
                 "description": [ "name", "description" ],
@@ -21,14 +17,6 @@ export default {
     },
 
     computed: {
-        pageTitle() {
-            return this.metaTitle === "" ? env.appName : `${this.metaTitle} | ${env.appName}`;
-        },
-
-        pageDescription() {
-            return this.metaDescription === "" ? env.appDesc : this.metaDescription;
-        },
-
         fullPath() {
             return document.location.origin + this.$route.path;
         }
@@ -43,22 +31,22 @@ export default {
             }
         },
 
-        updateMetaData() {
+        updateMetadata(meta) {
             let metaContent;
 
-            document.title = this.pageTitle;
+            document.title = meta.title;
             $("link[rel=canonical]").attr("href", this.fullPath);
 
             Object.keys(this.metaTags).forEach((name) => {
                 switch (this.metaTags[name][1]) {
                     case "title":
-                        metaContent = this.pageTitle;
+                        metaContent = meta.title;
                         break;
                     case "description":
-                        metaContent = this.pageDescription;
+                        metaContent = meta.description;
                         break;
                     case "keywords":
-                        metaContent = this.metaKeywords;
+                        metaContent = meta.keywords;
                         break;
                     case "url":
                         metaContent = this.fullPath;
@@ -69,10 +57,24 @@ export default {
 
                 this.updateMetaTag(this.metaTags[name][0], name, metaContent);
             });
+        },
+
+        fetchMetadata() {
+            this.$http.get(`/api/meta${this.$route.path}${env.apiToken}`).then((response) => {
+                this.updateMetadata(response.data);
+            }).catch((error) => {
+                console.log("error fetching metadata");
+                this.updateMetadata({ title: appName, description: "", keywords: "" });
+            });
         }
     },
 
     created() {
-        this.updateMetaData();
+        // Don't fetch metadata on the first page load as this is handled by the page render
+        if (this.$store.getters.getFirstPage) {
+            this.$store.commit("setFirstPage", false);
+        } else {
+            this.fetchMetadata();
+        }
     }
 };

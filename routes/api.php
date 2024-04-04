@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/blog-entries', 'App\Http\Controllers\ApiController@getBlogEntries');
+Route::get('/meta/{path?}', 'App\Http\Controllers\ApiController@getMeta');
 
 /*
 |--------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-@extends('templates.base', [ 'title' => 'Dashboard' ])
+@extends('templates.base')
 
 @php
     $current_page = preg_match('/\/settings$/', Request::url()) ? 'settings' : preg_replace([ '/https?:\/\/[^\/]*\/dashboard\/[^\/]*\//', '/\/.*/' ], [ '', '' ], Request::url());

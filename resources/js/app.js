@@ -75,6 +75,7 @@ const store = createStore({
         appLang: env.appLang,
         appDefaultLang: env.appDefaultLang,
         firstLoad: true,
+        firstPage: true,
         lastPath: "",
         supportsWebP: null
     },
@@ -96,6 +97,10 @@ const store = createStore({
             return state.firstLoad;
         },
 
+        getFirstPage: state => {
+            return state.firstPage;
+        },
+
         getLastPath: state => {
             return state.lastPath;
         },
@@ -113,6 +118,10 @@ const store = createStore({
 
         setFirstLoad(state, value) {
             state.firstLoad = value;
+        },
+
+        setFirstPage(state, value) {
+            state.firstPage = value;
         },
 
         setLastPath(state, value) {

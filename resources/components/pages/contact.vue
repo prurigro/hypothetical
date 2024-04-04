@@ -69,9 +69,6 @@
 
         data() {
             return {
-                metaTitle: "Contact",
-                metaDescription: "Contact Us",
-                metaKeywords: "contact",
                 submitting: false,
                 errorCount: 0,
                 submitSuccess: false,

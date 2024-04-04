@@ -15,12 +15,6 @@
 
         components: {
             "subscription-form": SubscriptionFormSection
-        },
-
-        data() {
-            return {
-                metaKeywords: "home"
-            };
         }
     };
 </script>

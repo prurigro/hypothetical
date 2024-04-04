@@ -1,4 +1,4 @@
-@extends('templates.public', [ 'title' => 'Blog' ])
+@extends('templates.public')
 
 @section('content')
     <div class="blog-page-component">
