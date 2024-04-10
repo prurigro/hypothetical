@@ -44,8 +44,6 @@ class Meta extends DashboardModel
                     'description' => 'The requested page cannot be found',
                     'keywords' => ''
                 ];
-            } else {
-                $page['title'] = $page['title'] . ' | ' . env('APP_NAME');
             }
         }
 
