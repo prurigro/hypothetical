@@ -111,6 +111,9 @@ The following list of files and directories are where various pieces of the publ
 * `resources/sass/partials`: Stylessheets for partial-specific styles wrapped in the respective partial component class
 * `resources/sass/classes`: General stylesheets for classes that can be used anywhere
 * `resources/sass/mixins`: Stylesheets declaring SCSS mixins for use in other stylesheets
+* `public/favicon.ico` and `public/favicon.png`: Placeholders for the favicon files
+* `public/img/logo.png`: Placeholder for the website logo
+* `public/img/social-image-card.jpg` and `public/img/social-image-opengraph.jpg`: Placeholders for images that will show up in social shares
 
 Dependencies can be included with npm and loaded either into the `jsPublicLibs` array in the gulpfile or imported in the javascript.
 

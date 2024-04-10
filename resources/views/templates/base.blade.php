@@ -30,12 +30,12 @@
         <meta property="og:title" content="{{ $meta['title'] }}" />
         <meta property="og:description" content="{{ $meta['description'] }}" />
         <meta property="og:url" content="{{ Request::url() }}" />
-        <meta property="og:image" content="{{ asset('/img/logo.png') }}" />
+        <meta property="og:image" content="{{ asset('/img/social-image-opengraph.jpg') }}" />
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="{{ $meta['title'] }}" />
         <meta name="twitter:description" content="{{ $meta['description'] }}" />
-        <meta name="twitter:image" content="{{ asset('/img/logo.png') }}" />
+        <meta name="twitter:image" content="{{ asset('/img/social-image-card.jpg') }}" />
 
         <link rel="shortcut icon" href="{{ URL::to('/') }}/favicon.ico?version={{ Version::get() }}" />
         <link rel="icon" href="{{ URL::to('/') }}/favicon.ico?version={{ Version::get() }}" type="image/x-icon" />
