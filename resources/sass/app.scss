@@ -29,7 +29,7 @@ $enable-smooth-scroll: false;
 
 [data-whatinput="initial"], [data-whatinput="keyboard"] {
     :focus {
-        outline: 1px dotted $c-base;
+        outline: 1px dotted $c-accent;
     }
 }
 
