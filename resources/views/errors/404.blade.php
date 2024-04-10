@@ -1,1 +1,3 @@
-@extends('templates.error')
+@extends('templates.error', [
+    'title' => 'Page Not Found'
+])
