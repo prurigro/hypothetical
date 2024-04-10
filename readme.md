@@ -195,7 +195,10 @@ Create a model that extends the `DashboardModel` class and override variables th
 
 #### DashboardModel variables
 
-* `$dashboard_type`: The dashboard type (this can be `view` for a viewable table or `edit` for an editable list)
+* `$dashboard_type`: The dashboard type:
+    * `view`: Display a viewable table showing the data
+    * `edit`: Provides a list of rows and the option to edit their contents
+    * `list`: Allows another model to use this one to create an editable list of one or more items
 * `$dashboard_heading`: This sets the heading that appears on the dashboard page; not setting this will use the model name
 * `$export`: This enables a button that allows the table to be exported as a spreadsheet
 
