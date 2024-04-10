@@ -324,6 +324,7 @@ function editItemInit() {
         $datePickers = $(".date-picker"),
         $mkdEditors = $(".mkd-editor"),
         $lists = $(".list"),
+        $clearUploadButtons = $(".clear-upload"),
         $token = $("#token"),
         model = $editItem.data("model"),
         operation = $editItem.data("id") === "new" ? "create" : "update";
@@ -523,6 +524,14 @@ function editItemInit() {
         changes = true;
         $submit.removeClass("no-input");
     };
+
+    // initialize upload clearing buttons
+    $clearUploadButtons.on("click", function(e) {
+        const $this = $(this),
+            $upload = $this.parent().find("input").first();
+
+        $upload.val("");
+    });
 
     // initialize image deletion
     $(".edit-button.delete.image").on("click", function(e) {

@@ -163,7 +163,7 @@
                                 @endphp
 
                                 <div class="upload-wrapper">
-                                    <input class="image-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" />
+                                    <input class="image-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" /> <button type="button" class="clear-upload" title="Clear Upload"></button>
                                 </div>
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
@@ -183,7 +183,7 @@
                                 @endphp
 
                                 <div class="upload-wrapper">
-                                    <input class="file-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" />
+                                    <input class="file-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" /> <button type="button" class="clear-upload" title="Clear Upload"></button>
                                 </div>
 
                                 @if(file_exists(base_path() . '/public' . $current_file))

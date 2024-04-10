@@ -1175,6 +1175,35 @@ form {
                 max-width: 100%;
                 font-size: pxrem(14);
             }
+
+            .clear-upload {
+                position: relative;
+                transform: rotate(45deg);
+                width: pxrem(20);
+                height: pxrem(20);
+                padding: 0px;
+                border: 0;
+                background-color: transparent;
+
+                &:before, &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(-50%);
+                    background-color: $c-dashboard-error;
+                }
+
+                &:before {
+                    width: 2px;
+                    height: 50%;
+                }
+
+                &:after {
+                    width: 50%;
+                    height: 2px;
+                }
+            }
         }
 
         textarea {
