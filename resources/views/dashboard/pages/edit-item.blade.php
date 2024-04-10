@@ -162,7 +162,9 @@
                                     $current_image = "/uploads/$model/img/$id-" . $column['name'] . '.' . $ext;
                                 @endphp
 
-                                <input class="image-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" />
+                                <div class="upload-wrapper">
+                                    <input class="image-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" />
+                                </div>
 
                                 @if(file_exists(base_path() . '/public' . $current_image))
                                     <div id="current-image-{{ $column['name'] }}">
@@ -180,7 +182,9 @@
                                     $current_file = "/uploads/$model/files/$id-" . $column['name'] . '.' . $column['ext'];
                                 @endphp
 
-                                <input class="file-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" />
+                                <div class="upload-wrapper">
+                                    <input class="file-upload" type="file" data-column="{{ $column['name'] }}" data-model="{{ $model }}" data-id="{{ $id }}" />
+                                </div>
 
                                 @if(file_exists(base_path() . '/public' . $current_file))
                                     <div id="current-file-{{ $column['name'] }}">

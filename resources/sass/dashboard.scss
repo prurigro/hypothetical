@@ -1141,7 +1141,7 @@ form {
             }
         }
 
-        .text-display, .mkd-editor-container, input, textarea, select {
+        .text-display, .mkd-editor-container, input:not([type="file"]), textarea, select, .upload-wrapper {
             margin-bottom: pxrem(15);
         }
 
@@ -1160,15 +1160,20 @@ form {
                 }
             }
 
-            &[type="file"] {
-                overflow: hidden;
-                max-width: 100%;
-                height: $label-height;
-                font-size: pxrem(14);
-            }
-
             &.date-picker {
                 cursor: pointer;
+            }
+        }
+
+        .upload-wrapper {
+            display: flex;
+            height: $label-height;
+            align-items: center;
+
+            input {
+                overflow: hidden;
+                max-width: 100%;
+                font-size: pxrem(14);
             }
         }
 
