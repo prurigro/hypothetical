@@ -61,6 +61,14 @@ body {
     width: 100%;
     color: $c-text;
     -webkit-overflow-scrolling: touch;
+
+    a, button {
+        color: inherit;
+
+        &:hover, &:focus {
+            color: inherit;
+        }
+    }
 }
 
 .page-container {
