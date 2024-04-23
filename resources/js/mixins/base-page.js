@@ -60,7 +60,7 @@ export default {
         },
 
         fetchMetadata() {
-            this.$http.get(`/api/meta${this.$route.path}${env.apiToken}`).then((response) => {
+            this.$http.post(`/api/meta${env.apiToken}`, { path: this.$route.path }).then((response) => {
                 this.updateMetadata(response.data);
             }).catch((error) => {
                 console.log("error fetching metadata");

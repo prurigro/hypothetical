@@ -11,14 +11,14 @@ use Illuminate\Http\Request;
 
 class ApiController extends Controller {
 
-    public function getMeta($path = null)
-    {
-        return Meta::getData($path);
-    }
-
     public function getBlogEntries()
     {
         return Blog::getBlogEntries();
+    }
+
+    public function postMeta()
+    {
+        return Meta::getData(request()->path);
     }
 
     public function postContactSubmit(Request $request)

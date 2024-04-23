@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/blog-entries', 'App\Http\Controllers\ApiController@getBlogEntries');
-Route::get('/meta/{path?}', 'App\Http\Controllers\ApiController@getMeta');
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +17,6 @@ Route::get('/meta/{path?}', 'App\Http\Controllers\ApiController@getMeta');
 |--------------------------------------------------------------------------
 */
 
+Route::post('/meta', 'App\Http\Controllers\ApiController@postMeta');
 Route::post('/contact-submit', 'App\Http\Controllers\ApiController@postContactSubmit');
 Route::post('/subscription-submit', 'App\Http\Controllers\ApiController@postSubscriptionSubmit');
