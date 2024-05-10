@@ -18,7 +18,7 @@ class Language
      */
     public static function getSessionLanguage()
     {
-        return session(self::$language_cookie, env('DEFAULT_LANGUAGE', 'en'));
+        return session(self::$language_cookie, env('APP_LOCALE', 'en'));
     }
 
     /**
@@ -43,7 +43,7 @@ class Language
     public static function select($string_array)
     {
         $session_language = self::getSessionLanguage();
-        $default_language = env('DEFAULT_LANGUAGE');
+        $default_language = env('APP_LOCALE');
         $string = '';
 
         if (array_key_exists($session_language, $string_array)) {

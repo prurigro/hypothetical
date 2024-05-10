@@ -121,7 +121,7 @@ Other information about database interaction, routing, controllers, etc can be v
 
 ### Language
 
-The default language is set by the `DEFAULT_LANGUAGE` variable in the `.env` file; this will be the language used until the cookie has been updated.
+The default language is set by the `APP_LOCALE` variable in the `.env` file; this will be the language used until the cookie has been updated.
 
 The language cookie can be updated a number of ways:
 

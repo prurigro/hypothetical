@@ -8,7 +8,7 @@
         var env = {
             appName: "{!! env('APP_NAME') !!}",
             appLang: "{{ Language::getSessionLanguage() }}",
-            appDefaultLang: "{{ env('DEFAULT_LANGUAGE') }}",
+            appDefaultLang: "{{ env('APP_LOCALE') }}",
             apiToken: "{{ Auth::check() ? '?api_token=' . Auth::user()->api_token : '' }}",
             currentUrl: "{{ Request::url() }}",
             csrfToken: "{{ csrf_token() }}",
