@@ -51,8 +51,7 @@ Route::group([ 'prefix' => 'dashboard' ], function() {
 */
 
 Route::get('/language/{lang}', function($lang) {
-    Language::setSessionLanguage($lang);
-    return redirect()->back();
+    return Language::setSessionLanguage($lang);
 });
 
 Route::get('/{vue?}', function() {
