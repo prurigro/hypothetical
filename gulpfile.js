@@ -9,7 +9,7 @@ const gulp = require("gulp"),
     crypto = require("crypto");
 
 // Sass and CSS packages
-const { sass } = require("@mr-hope/gulp-sass"),
+const { sass } = require("gulp5-sass-plugin"),
     sassGlob = require("gulp-sass-glob"),
     postCSS = require("gulp-postcss"),
     autoprefixer = require("autoprefixer"),
