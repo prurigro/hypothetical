@@ -62,7 +62,6 @@ class Dashboard
         [ 'name' => 'GreenSock', 'url' => 'https://greensock.com/gsap' ],
         [ 'name' => 'jQuery', 'url' => 'https://jquery.com' ],
         [ 'name' => 'List.js', 'url' => 'http://listjs.com' ],
-        [ 'name' => 'Popper.js', 'url' => 'https://popper.js.org' ],
         [ 'name' => 'Sortable', 'url' => 'https://github.com/RubaXa/Sortable' ],
         [ 'name' => 'SpinKit', 'url' => 'http://tobiasahlin.com/spinkit/' ],
         [ 'name' => 'Vue.js', 'url' => 'https://vuejs.org' ],

@@ -63,7 +63,6 @@ const jsDashboard = [
 // Javascript libraries for the dashboard
 const jsDashboardLibs = [
     "node_modules/jquery/dist/jquery.js",
-    "node_modules/popper.js/dist/umd/popper.js",
     "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
     "node_modules/flatpickr/dist/flatpickr.js",
     "node_modules/sortablejs/Sortable.js",
