@@ -22,8 +22,6 @@ function contactFormInit() {
     };
 
     $submit.on("click", function(e) {
-        const $submit = $(this);
-
         e.preventDefault();
 
         if (!submitting) {
