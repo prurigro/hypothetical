@@ -6,7 +6,7 @@
     }
 
     .blog-entry {
-        border: 1px solid lighten($c-base, 75%);
+        border: 1px solid color.adjust($c-base, $lightness: 75%);
         border-radius: pxrem(5);
 
         @include media-breakpoint-up(md) {
@@ -55,7 +55,7 @@
             }
 
             &-info {
-                color: lighten($c-text, 30%);
+                color: color.adjust($c-text, $lightness: 30%);
             }
 
             &-body {

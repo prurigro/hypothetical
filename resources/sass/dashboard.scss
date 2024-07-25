@@ -1,4 +1,5 @@
 // Sass modules
+@use "sass:color";
 @use "sass:math";
 
 // Base font size
@@ -24,9 +25,9 @@ $enable-smooth-scroll: false;
 
 // Colours
 $c-text: #111; // text
-$c-text-inactive: fade-out($c-text, 0.25); // inactive text
+$c-text-inactive: color.adjust($c-text, $alpha: -0.25); // inactive text
 $c-text-light: #fff; // light text
-$c-text-light-inactive: fade-out($c-text-light, 0.25); // inactive light text
+$c-text-light-inactive: color.adjust($c-text-light, $alpha: -0.25); // inactive light text
 $c-input-bg: #fff; // white
 $c-dashboard-error: #a80000;
 $c-dashboard-dark: #111;
@@ -201,7 +202,7 @@ body {
             @include media-breakpoint-down(lg) {
                 padding-right: pxrem(8);
                 padding-left: pxrem(8);
-                background-color: darken($c-dashboard-dark, 2%);
+                background-color: color.adjust($c-dashboard-dark, $lightness: -2%);
                 color: $c-text-light-inactive;
             }
 
@@ -215,13 +216,13 @@ body {
 
             &:hover, &:focus {
                 @include media-breakpoint-up(lg) {
-                    background-color: fade-out(#000, 0.97);
+                    background-color: color.adjust(#000, $alpha: -0.97);
                 }
             }
 
             &.active {
                 @include media-breakpoint-up(lg) {
-                    background-color: fade-out(#000, 0.93);
+                    background-color: color.adjust(#000, $alpha: -0.93);
                 }
             }
         }
@@ -258,9 +259,9 @@ body {
         @include font-sans-bold;
         position: relative;
         padding: pxrem(9) pxrem(15);
-        border-top: 1px solid darken($c-dashboard-dark, 5%);
-        border-right: 1px solid darken($c-dashboard-dark, 5%);
-        border-left: 1px solid darken($c-dashboard-dark, 5%);
+        border-top: 1px solid color.adjust($c-dashboard-dark, $lightness: -5%);
+        border-right: 1px solid color.adjust($c-dashboard-dark, $lightness: -5%);
+        border-left: 1px solid color.adjust($c-dashboard-dark, $lightness: -5%);
         background-color: $c-dashboard-dark;
         color: $c-dashboard-light;
         font-size: pxrem(14);
@@ -287,7 +288,7 @@ body {
 
     .card-body {
         padding: pxrem(15);
-        background-color: lighten($c-dashboard-light, 1%);
+        background-color: color.adjust($c-dashboard-light, $lightness: 1%);
 
         &.dashboard {
             @include media-breakpoint-down(md) {
@@ -312,7 +313,7 @@ body {
                 margin-top: pxrem(2);
                 margin-left: pxrem(10);
                 height: pxrem(32);
-                border: 1px solid fade-out($c-text, 0.75);
+                border: 1px solid color.adjust($c-text, $alpha: -0.75);
                 border-radius: pxrem(4);
             }
         }
@@ -321,7 +322,7 @@ body {
             margin-bottom: pxrem(10);
             width: 100%;
             padding: pxrem(3) pxrem(8);
-            border: 1px solid fade-out(#000, 0.875);
+            border: 1px solid color.adjust(#000, $alpha: -0.875);
             border-radius: 0.25rem;
 
             @include media-breakpoint-down(md) {
@@ -334,7 +335,7 @@ body {
             margin-top: pxrem(10);
             margin-bottom: pxrem(10);
             padding: pxrem(5) pxrem(10);
-            border: 1px solid darken($c-dashboard-dark, 5%);
+            border: 1px solid color.adjust($c-dashboard-dark, $lightness: -5%);
             border-radius: pxrem(5);
             background-color: $c-dashboard-dark;
             color: $c-text-light;
@@ -362,7 +363,7 @@ body {
 
                 &:focus {
                     border-color: $c-dashboard-dark;
-                    box-shadow: inset 0 pxrem(1) pxrem(1) fade-out(#000, 0.925), 0 0 pxrem(8) fade-out($c-dashboard-dark, 0.4);
+                    box-shadow: inset 0 pxrem(1) pxrem(1) color.adjust(#000, $alpha: -0.925), 0 0 pxrem(8) color.adjust($c-dashboard-dark, $alpha: -0.4);
                 }
             }
 
@@ -389,7 +390,7 @@ body {
                 }
 
                 span {
-                    border: 1px solid lighten($c-text, 50%);
+                    border: 1px solid color.adjust($c-text, $lightness: 50%);
                     border-radius: pxrem(4);
                     background-color: $c-input-bg;
                     pointer-events: none;
@@ -458,18 +459,18 @@ body {
 }
 
 .btn {
-    border-color: darken($c-dashboard-dark, 5%);
+    border-color: color.adjust($c-dashboard-dark, $lightness: -5%);
     background-color: $c-dashboard-dark;
     color: $c-text-light;
     font-size: pxrem(14);
     transition: background-color 100ms;
 
     &:hover {
-        background-color: darken($c-dashboard-dark, 5%);
+        background-color: color.adjust($c-dashboard-dark, $lightness: -5%);
     }
 
     &:focus {
-        background-color: lighten($c-dashboard-dark, 5%);
+        background-color: color.adjust($c-dashboard-dark, $lightness: 5%);
     }
 
     &, &:hover, &:focus {
@@ -488,42 +489,42 @@ body {
     }
 
     &.btn-warning {
-        border-color: darken($c-dashboard-edit, 10%);
+        border-color: color.adjust($c-dashboard-edit, $lightness: -10%);
         background-color: $c-dashboard-edit;
 
         &:hover {
-            background-color: darken($c-dashboard-edit, 5%);
+            background-color: color.adjust($c-dashboard-edit, $lightness: -5%);
         }
 
         &:focus {
-            background-color: lighten($c-dashboard-edit, 5%);
+            background-color: color.adjust($c-dashboard-edit, $lightness: 5%);
         }
     }
 
     &.btn-danger {
-        border-color: darken($c-dashboard-delete, 10%);
+        border-color: color.adjust($c-dashboard-delete, $lightness: -10%);
         background-color: $c-dashboard-delete;
 
         &:hover {
-            background-color: darken($c-dashboard-delete, 5%);
+            background-color: color.adjust($c-dashboard-delete, $lightness: -5%);
         }
 
         &:focus {
-            background-color: lighten($c-dashboard-delete, 5%);
+            background-color: color.adjust($c-dashboard-delete, $lightness: 5%);
         }
     }
 
     &.btn-secondary {
-        border-color: darken($c-dashboard-light, 10%);
+        border-color: color.adjust($c-dashboard-light, $lightness: -10%);
         background-color: $c-dashboard-light;
         color: $c-text;
 
         &:hover {
-            background-color: darken($c-dashboard-light, 5%);
+            background-color: color.adjust($c-dashboard-light, $lightness: -5%);
         }
 
         &:focus {
-            background-color: lighten($c-dashboard-light, 5%);
+            background-color: color.adjust($c-dashboard-light, $lightness: 5%);
         }
     }
 
@@ -765,7 +766,7 @@ body {
             transition: background-color 150ms;
 
             &:hover {
-                background-color: fade-out(#000, 0.97);
+                background-color: color.adjust(#000, $alpha: -0.97);
                 text-decoration: none;
             }
         }
@@ -953,7 +954,7 @@ form {
         .list {
             margin-bottom: pxrem(15);
             padding-bottom: pxrem(15);
-            border-bottom: 1px solid fade-out($c-text, 0.9);
+            border-bottom: 1px solid color.adjust($c-text, $alpha: -0.9);
 
             &-template, &-data {
                 display: none;
@@ -964,7 +965,7 @@ form {
                 margin-bottom: pxrem(10);
                 padding: pxrem(8) pxrem(8) pxrem(8) pxrem(33);
                 border-radius: pxrem(6);
-                background-color: darken($c-input-bg, 2%);
+                background-color: color.adjust($c-input-bg, $lightness: -2%);
 
                 @include media-breakpoint-up(lg) {
                     display: flex;
@@ -1092,7 +1093,7 @@ form {
                     &-delete {
                         min-width: pxrem(70);
                         height: $label-height;
-                        border: 1px solid fade-out($c-text, 0.75);
+                        border: 1px solid color.adjust($c-text, $alpha: -0.75);
                         border-radius: pxrem(4);
                         background-color: $c-dashboard-delete;
                         color: $c-text-light;
@@ -1102,7 +1103,7 @@ form {
 
             &-add-button {
                 height: $label-height;
-                border: 1px solid fade-out($c-text, 0.75);
+                border: 1px solid color.adjust($c-text, $alpha: -0.75);
                 border-radius: pxrem(4);
 
                 @include media-breakpoint-down(lg) {
@@ -1151,7 +1152,7 @@ form {
 
             &:not([type="file"]) {
                 padding: pxrem(5) pxrem(8);
-                border: 1px solid darken($c-dashboard-light, 10%);
+                border: 1px solid color.adjust($c-dashboard-light, $lightness: -10%);
                 border-radius: pxrem(2);
                 transition: border-color 150ms;
 
@@ -1237,22 +1238,22 @@ form {
             }
 
             &.view {
-                border: 1px solid darken($c-dashboard-dark, 5%);
+                border: 1px solid color.adjust($c-dashboard-dark, $lightness: -5%);
                 background-color: $c-dashboard-dark;
                 color: $c-text-light;
 
                 &:hover {
-                    background-color: lighten($c-dashboard-dark, 5%);
+                    background-color: color.adjust($c-dashboard-dark, $lightness: 5%);
                 }
             }
 
             &.delete {
-                border: 1px solid darken($c-dashboard-delete, 5%);
+                border: 1px solid color.adjust($c-dashboard-delete, $lightness: -5%);
                 background-color: $c-dashboard-delete;
                 color: $c-text-light;
 
                 &:hover {
-                    background-color: lighten($c-dashboard-delete, 5%);
+                    background-color: color.adjust($c-dashboard-delete, $lightness: 5%);
                 }
             }
         }
@@ -1323,7 +1324,7 @@ form {
                 position: relative;
                 width: 100%;
                 aspect-ratio: 1/1;
-                border: 1px solid darken($c-dashboard-light, 10%);
+                border: 1px solid color.adjust($c-dashboard-light, $lightness: -10%);
                 border-radius: pxrem(3);
                 background-position: center center;
                 background-size: cover;
@@ -1344,14 +1345,14 @@ form {
                     width: pxrem(40);
                     height: pxrem(40);
                     min-height: 0;
-                    border: 1px solid darken($c-dashboard-light, 14%);
+                    border: 1px solid color.adjust($c-dashboard-light, $lightness: -14%);
                     border-radius: pxrem(3);
-                    background-color: darken($c-dashboard-light, 10%);
+                    background-color: color.adjust($c-dashboard-light, $lightness: -10%);
                     line-height: 1;
                     cursor: pointer;
 
                     &:hover {
-                        background-color: darken($c-dashboard-light, 7%);
+                        background-color: color.adjust($c-dashboard-light, $lightness: -7%);
                     }
                 }
 
@@ -1376,8 +1377,8 @@ form {
 
         &.user-profile-update {
             @include media-breakpoint-down(lg) {
-                border-top: 1px solid darken($c-dashboard-light, 10%);
-                border-bottom: 1px solid darken($c-dashboard-light, 10%);
+                border-top: 1px solid color.adjust($c-dashboard-light, $lightness: -10%);
+                border-bottom: 1px solid color.adjust($c-dashboard-light, $lightness: -10%);
             }
 
             @include media-breakpoint-up(lg) {
@@ -1386,8 +1387,8 @@ form {
                 width: 100%;
                 padding: 0px $grid-gutter-width;
                 flex-grow: 1;
-                border-right: 1px solid darken($c-dashboard-light, 10%);
-                border-left: 1px solid darken($c-dashboard-light, 10%);
+                border-right: 1px solid color.adjust($c-dashboard-light, $lightness: -10%);
+                border-left: 1px solid color.adjust($c-dashboard-light, $lightness: -10%);
             }
         }
 
@@ -1429,7 +1430,7 @@ form {
     visibility: hidden;
     width: 100%;
     height: 100%;
-    background-color: fade-out(lighten($c-dashboard-light, 1%), 0.6);
+    background-color: color.adjust(color.adjust($c-dashboard-light, $lightness: 1%), $alpha: -0.6);
     opacity: 0;
     transition: opacity 250ms;
 
@@ -1453,7 +1454,7 @@ form {
     padding: $grid-gutter-width;
     justify-content: center;
     align-items: center;
-    background-color: fade-out(lighten($c-dashboard-light, 1%), 0.3);
+    background-color: color.adjust(color.adjust($c-dashboard-light, $lightness: 1%), $alpha: -0.3);
     opacity: 0;
     transition: opacity 250ms;
 

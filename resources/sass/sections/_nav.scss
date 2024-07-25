@@ -133,7 +133,7 @@
                     transition: background-color 150ms;
 
                     &:not(.active):hover {
-                        background-color: lighten($c-base, 5%);
+                        background-color: color.adjust($c-base, $lightness: 5%);
                     }
                 }
 
@@ -150,7 +150,7 @@
                     }
 
                     &:not(.active):hover {
-                        color: darken($c-text-light, 5%);
+                        color: color.adjust($c-text-light, $lightness: -5%);
                     }
                 }
 

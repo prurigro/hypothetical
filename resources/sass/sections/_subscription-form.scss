@@ -1,9 +1,9 @@
 .subscription-form-section-component {
     $trans-speed: 100ms;
     width: pxrem(200);
-    border: pxrem(2) solid fade-out($c-base, 0.75);
+    border: pxrem(2) solid color.adjust($c-base, $alpha: -0.75);
     border-radius: pxrem(3);
-    background-color: lighten($c-base, 75%);
+    background-color: color.adjust($c-base, $lightness: 75%);
 
     .notification {
         padding: pxrem(2);
@@ -14,7 +14,7 @@
         margin: pxrem(5);
         width: calc(100% - #{pxrem(10)});
         padding: pxrem(3);
-        border: pxrem(2) solid fade-out($c-base, 0.75);
+        border: pxrem(2) solid color.adjust($c-base, $alpha: -0.75);
         font-size: pxrem(14);
         text-align: center;
         transition: border-color $trans-speed;
