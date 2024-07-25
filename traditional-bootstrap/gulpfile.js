@@ -24,8 +24,7 @@ const babel = require("gulp-babel"),
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 
 // Declare plugin settings
-const sassOutputStyle = isProduction ? "compressed" : "expanded",
-    sassPaths = "node_modules",
+const sassPaths = "node_modules",
     autoprefixerSettings = { remove: false, cascade: false };
 
 // Include browsersync when gulp has not been run with --production
@@ -80,8 +79,8 @@ const cssDashboardLibs = [
 
 // Paths to folders containing fonts that should be copied to public/fonts/
 const fontPaths = [
-    "resources/fonts/**",
-    "node_modules/@fortawesome/fontawesome-free/webfonts/**"
+    "resources/fonts/*",
+    "node_modules/@fortawesome/fontawesome-free/webfonts/*"
 ];
 
 // Handle errors
@@ -102,10 +101,15 @@ function processSass(filename) {
     const css = gulp.src(`resources/sass/${filename}.scss`)
         .pipe(plumber(handleError))
         .pipe(sassGlob())
-        .pipe(sass({ outputStyle: sassOutputStyle }))
+        .pipe(sass({ quietDeps: true }))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
-        .pipe(concat(`${filename}.css`))
-        .pipe(gulp.dest("public/css/"));
+        .pipe(concat(`${filename}.css`));
+
+    if (isProduction) {
+        css.pipe(cleanCSS());
+    }
+
+    css.pipe(gulp.dest("public/css/"));
 
     if (!isProduction) {
         css.pipe(browserSync.stream({ match: `**/${filename}.css` }));
@@ -200,7 +204,7 @@ gulp.task("js-dashboard-libs", () => {
 
 // Task to copy fonts
 gulp.task("fonts", (done) => {
-    gulp.src(fontPaths)
+    gulp.src(fontPaths, { encoding: false })
         .pipe(plumber(handleError))
         .pipe(gulp.dest("public/fonts/"));
 
