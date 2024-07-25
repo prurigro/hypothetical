@@ -14,7 +14,7 @@ class Blog extends DashboardModel
 
     public static $dashboard_type = 'edit';
 
-    public static $dashboard_display = [ 'title', 'created_at' ];
+    public static $dashboard_display = [ 'header-image', 'title', 'created_at' ];
 
     public static $dashboard_columns = [
         [ 'name' => 'user_id', 'type' => 'user' ],

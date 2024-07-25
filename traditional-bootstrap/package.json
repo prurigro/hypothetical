@@ -8,9 +8,9 @@
     "browser-sync": "3.0.2"
   },
   "dependencies": {
-    "@babel/core": "7.24.7",
-    "@babel/preset-env": "7.24.7",
-    "@fortawesome/fontawesome-free": "6.5.2",
+    "@babel/core": "7.24.9",
+    "@babel/preset-env": "7.24.8",
+    "@fortawesome/fontawesome-free": "6.6.0",
     "autonumeric": "4.10.5",
     "autoprefixer": "10.4.19",
     "bootstrap": "5.3.3",
@@ -27,12 +27,13 @@
     "gulp-sass-glob": "1.1.0",
     "gulp-strip-debug": "4.0.0",
     "gulp-uglify-es": "3.0.0",
-    "gulp5-sass-plugin": "^1.0.0",
+    "gulp5-sass-plugin": "^2.0.0",
     "jquery": "3.7.1",
     "list.js": "2.3.1",
     "minimist": "1.2.8",
     "ordered-read-streams": "^2.0.0",
-    "postcss": "8.4.38",
+    "postcss": "8.4.40",
+    "sass": "^1.77.8",
     "sortablejs": "1.15.2",
     "spinkit": "2.0.1",
     "what-input": "5.2.12"

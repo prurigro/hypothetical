@@ -855,8 +855,8 @@ body {
                     display: inline-block;
 
                     .image-preview {
-                        @include aspect-ratio(16, 9);
                         display: block;
+                        aspect-ratio: 16/9;
                         background-position: center center;
                         background-size: cover;
                         background-repeat: no-repeat;
@@ -1320,9 +1320,9 @@ form {
             }
 
             .image-display {
-                @include aspect-ratio(1, 1);
                 position: relative;
                 width: 100%;
+                aspect-ratio: 1/1;
                 border: 1px solid darken($c-dashboard-light, 10%);
                 border-radius: pxrem(3);
                 background-position: center center;
