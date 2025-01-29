@@ -4,7 +4,7 @@
 PHP_BINARY=${PHP_BINARY:=/usr/bin/php}
 
 # Dependencies
-deps=('composer' 'grep' 'npm' 'php' 'sed')
+deps=('composer' 'grep' 'npm' "$PHP_BINARY" 'sed')
 
 # Default settings
 no_db=0
