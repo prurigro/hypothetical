@@ -4,10 +4,10 @@
 .env.backup
 .env.production
 .phpactor.json
-auth.json
 npm-debug.log
 yarn-error.log
 /.phpunit.cache
+/auth.json
 /node_modules
 /public/css
 /public/fonts
@@ -15,5 +15,6 @@ yarn-error.log
 /public/storage
 /public/uploads
 /storage/*.key
+/storage/pail
 /storage/exports
 /vendor
