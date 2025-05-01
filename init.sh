@@ -11,6 +11,7 @@ no_db=0
 
 # Initialize variables
 artisan_down=0
+db_cache=0
 
 # Colour scheme
 [[ -t 1 ]] && {
@@ -71,20 +72,24 @@ msg "Running: ${c_m}composer installl --no-dev"
 $PHP_BINARY "$(type -P composer)" install --no-interaction --no-dev || error "${c_m}composer install --no-interaction --no-dev$c_w exited with an error status"
 
 while read -r; do
-    [[ "$REPLY" =~ ^APP_KEY=(.*)$ && -z "${BASH_REMATCH[1]}" ]] && {
+    if [[ "$REPLY" =~ ^APP_KEY=(.*)$ && -z "${BASH_REMATCH[1]}" ]]; then
         msg 'Generating Encryption Key' 'php artisan key:generate'
         $PHP_BINARY artisan key:generate
         break
-    }
+    elif [[ "$REPLY" =~ CACHE_STORE=([^ ]*) && "${BASH_REMATCH[1]}" = 'database' ]]; then
+        db_cache=1
+    fi
 done < .env
 
-(( ! no_db )) && {
+if (( ! no_db )); then
     msg "Running: ${c_m}php artisan migrate --force"
     $PHP_BINARY artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"
-}
+fi
 
-msg "Running: ${c_m}php artisan cache:clear"
-$PHP_BINARY artisan cache:clear
+if (( ! no_db )) || (( ! db_cache )); then
+    msg "Running: ${c_m}php artisan cache:clear"
+    $PHP_BINARY artisan cache:clear
+fi
 
 msg "Running: ${c_m}php artisan route:clear"
 $PHP_BINARY artisan route:clear
