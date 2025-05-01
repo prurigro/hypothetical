@@ -78,6 +78,11 @@ while read -r; do
     }
 done < .env
 
+(( ! no_db )) && {
+    msg "Running: ${c_m}php artisan migrate --force"
+    $PHP_BINARY artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"
+}
+
 msg "Running: ${c_m}php artisan cache:clear"
 $PHP_BINARY artisan cache:clear
 
@@ -86,11 +91,6 @@ $PHP_BINARY artisan route:clear
 
 msg "Running: ${c_m}php artisan view:clear"
 $PHP_BINARY artisan view:clear
-
-(( ! no_db )) && {
-    msg "Running: ${c_m}php artisan migrate --force"
-    $PHP_BINARY artisan migrate --force || error "${c_m}php artisan migrate --force$c_w exited with an error status"
-}
 
 [[ -d node_modules ]] && {
     msg "Running: ${c_m}npm prune --production"
