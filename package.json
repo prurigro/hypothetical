@@ -5,21 +5,21 @@
     "dev": "gulp default watch"
   },
   "devDependencies": {
-    "browser-sync": "3.0.3"
+    "browser-sync": "3.0.4"
   },
   "dependencies": {
-    "@babel/core": "7.26.7",
-    "@babel/preset-env": "7.26.7",
+    "@babel/core": "7.27.1",
+    "@babel/preset-env": "7.27.1",
     "@fortawesome/fontawesome-free": "6.7.2",
-    "autonumeric": "4.10.7",
-    "autoprefixer": "10.4.20",
-    "axios": "1.7.9",
-    "babel-loader": "9.2.1",
-    "bootstrap": "5.3.3",
-    "easymde": "2.18.0",
+    "autonumeric": "4.10.8",
+    "autoprefixer": "10.4.21",
+    "axios": "1.9.0",
+    "babel-loader": "10.0.0",
+    "bootstrap": "5.3.5",
+    "easymde": "2.20.0",
     "fancy-log": "2.0.0",
     "flatpickr": "4.6.13",
-    "gsap": "3.12.7",
+    "gsap": "3.13.0",
     "gulp": "5.0.0",
     "gulp-babel": "8.0.0",
     "gulp-clean-css": "4.3.0",
@@ -34,16 +34,16 @@
     "list.js": "2.3.1",
     "minimist": "1.2.8",
     "ordered-read-streams": "^2.0.0",
-    "postcss": "8.5.1",
-    "sass": "^1.84.0",
+    "postcss": "8.5.3",
+    "sass": "^1.87.0",
     "sortablejs": "1.15.6",
     "spinkit": "2.0.1",
-    "terser-webpack-plugin": "5.3.11",
+    "terser-webpack-plugin": "5.3.14",
     "vue": "3.5.13",
     "vue-loader": "17.4.2",
-    "vue-router": "4.5.0",
+    "vue-router": "4.5.1",
     "vuex": "4.1.0",
-    "webpack": "5.97.1",
+    "webpack": "5.99.7",
     "what-input": "5.2.12"
   }
 }
