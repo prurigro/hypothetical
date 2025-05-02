@@ -101,7 +101,7 @@ function processSass(filename) {
     const css = gulp.src(`resources/sass/${filename}.scss`)
         .pipe(plumber(handleError))
         .pipe(sassGlob())
-        .pipe(sass({ quietDeps: true }))
+        .pipe(sass({ quietDeps: true, silenceDeprecations: [ "import" ] }))
         .pipe(postCSS([ autoprefixer(autoprefixerSettings) ]))
         .pipe(concat(`${filename}.css`));
 
