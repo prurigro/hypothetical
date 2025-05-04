@@ -6,7 +6,7 @@ class Meta extends DashboardModel
 {
     protected $table = 'meta';
 
-    public static $create = false;
+    public static $create = true;
 
     public static $items_per_page = 0;
 
