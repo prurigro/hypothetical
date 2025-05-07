@@ -19,8 +19,8 @@ class Meta extends DashboardModel
     public static $dashboard_columns = [
         [ 'name' => 'path', 'required' => true, 'unique' => true, 'type' => 'string' ],
         [ 'name' => 'title', 'required' => true, 'unique' => false, 'type' => 'string' ],
-        [ 'name' => 'description', 'required' => true, 'unique' => false, 'type' => 'text' ],
-        [ 'name' => 'keywords', 'required' => true, 'unique' => false, 'type' => 'string' ]
+        [ 'name' => 'description', 'required' => false, 'unique' => false, 'type' => 'text' ],
+        [ 'name' => 'keywords', 'required' => false, 'unique' => false, 'type' => 'string' ]
     ];
 
     public static function getData($path)
