@@ -741,10 +741,9 @@ function editItemInit() {
 
     // enable currency formatting for currency-input elements
     new AutoNumeric.multiple($currencyInputs.toArray(), {
+        alwaysAllowDecimalCharacter: true,
         currencySymbol: "$",
-        rawValueDivisor: 0.01,
-        allowDecimalPadding: false,
-        modifyValueOnWheel: false
+        onInvalidPaste: "truncate"
     });
 
     // watch for changes to input and select element contents
