@@ -553,7 +553,7 @@ body {
 
 .view-table-container {
     @include media-breakpoint-down(md) {
-        padding: pxrem(10) pxrem(5);
+        padding: pxrem(10) 0px;
     }
 
     .table {
