@@ -535,6 +535,10 @@ body {
     &.btn-outline {
         background-color: transparent;
         color: $c-text;
+
+        &:hover, &:focus {
+            border: 1px solid $c-text;
+        }
     }
 
     &.btn-inactive {
