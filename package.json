@@ -9,13 +9,13 @@
   },
   "dependencies": {
     "@babel/core": "7.27.1",
-    "@babel/preset-env": "7.27.1",
+    "@babel/preset-env": "7.27.2",
     "@fortawesome/fontawesome-free": "6.7.2",
     "autonumeric": "4.10.8",
     "autoprefixer": "10.4.21",
     "axios": "1.9.0",
     "babel-loader": "10.0.0",
-    "bootstrap": "5.3.5",
+    "bootstrap": "5.3.6",
     "easymde": "2.20.0",
     "fancy-log": "2.0.0",
     "flatpickr": "4.6.13",
@@ -43,7 +43,7 @@
     "vue-loader": "17.4.2",
     "vue-router": "4.5.1",
     "vuex": "4.1.0",
-    "webpack": "5.99.7",
+    "webpack": "5.99.8",
     "what-input": "5.2.12"
   }
 }
