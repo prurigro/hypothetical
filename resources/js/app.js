@@ -112,6 +112,7 @@ const store = createStore({
 
     mutations: {
         setAppLang(state, value) {
+            $("html").attr("lang", value);
             state.appLang = value;
             axios.get(`/language/${value}`);
         },
