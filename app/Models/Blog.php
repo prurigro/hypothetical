@@ -39,7 +39,7 @@ class Blog extends DashboardModel
             // Convert the markdown in the body to html
             $blog_entry['body'] = Parsedown::instance()->setBreaksEnabled(true)->setMarkupEscaped(true)->parse($blog_entry['body']);
 
-            // Replace the tags string with an array
+            // Load the tags into an array
             $tags = [];
 
             foreach (BlogTags::where('blog_id', $blog_entry->id)->orderBy('order')->get() as $tag) {
