@@ -45,7 +45,13 @@
 </template>
 
 <script>
+    import BasePageMixin from "mixins/base-page.js";
+
     export default {
+        mixins: [
+            BasePageMixin
+        ],
+
         data() {
             return {
                 blogEntries: []
