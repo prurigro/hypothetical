@@ -143,10 +143,10 @@ const store = createStore({
 SupportsWebP.detect(store);
 
 // Functionality to run before page load and change
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
     if (to.path !== store.getters.getLastPath) {
         if (store.getters.getFirstLoad) {
-            next();
+            return;
         } else {
             // Unfocused any focused elements
             if ("activeElement" in document) {
@@ -154,9 +154,11 @@ router.beforeEach((to, from, next) => {
             }
 
             // Fade the page out and scroll when moving from one page to another
-            TweenMax.to("#router-view", 0.25, {
-                opacity: 0,
-                onComplete: next
+            return new Promise((resolve) => {
+                TweenMax.to("#router-view", 0.25, {
+                    opacity: 0,
+                    onComplete: resolve
+                });
             });
         }
     }
