@@ -134,12 +134,14 @@ class DashboardModel extends Model
         parent::boot();
 
         static::deleting(function($item) {
-            // delete associated images and files if they exist
-            foreach ($item::$dashboard_columns as $column) {
-                if ($column['type'] == 'image') {
-                    $item->deleteImage($column['name'], false);
-                } else if ($column['type'] == 'file') {
-                    $item->deleteFile($column['name'], false);
+            if ($item::$dashboard_type == 'edit') {
+                // delete associated images and files if they exist
+                foreach ($item::$dashboard_columns as $column) {
+                    if ($column['type'] == 'image') {
+                        $item->deleteImage($column['name'], false);
+                    } else if ($column['type'] == 'file') {
+                        $item->deleteFile($column['name'], false);
+                    }
                 }
             }
         });
