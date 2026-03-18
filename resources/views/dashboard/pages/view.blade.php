@@ -1,4 +1,6 @@
-@extends('dashboard.core')
+@extends('dashboard.core', [
+    'container_class' => 'container-fluid'
+])
 
 @section('dashboard-heading')
     @if(count($rows) > 0)

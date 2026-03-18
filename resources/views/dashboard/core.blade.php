@@ -1,7 +1,13 @@
 @extends('templates.dashboard')
 
 @section('page-content')
-    <div class="container spark-screen">
+    @php
+        if (!isset($container_class)) {
+            $container_class = 'container';
+        }
+    @endphp
+
+    <div class="{{ $container_class }} spark-screen">
         <div class="row">
             <div class="col-12">
                 <div class="card">

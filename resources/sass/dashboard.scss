@@ -552,6 +552,8 @@ body {
 }
 
 .view-table-container {
+    overflow-x: auto;
+
     @include media-breakpoint-down(md) {
         padding: pxrem(10) 0px;
     }
