@@ -2,9 +2,16 @@
 // Site Variables
 //
 
-// Breakpoints
-$nav-desktop-min: 768px;
-$nav-mobile-max: ($nav-desktop-min - 1px);
+// bootstrap
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    nav: 992px,
+    xl: 1200px,
+    xxl: 1600px
+);
 
 // Sizes
 $nav-height-desktop: pxrem(60);

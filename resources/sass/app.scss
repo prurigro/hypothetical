@@ -77,11 +77,11 @@ body {
     min-height: 100vh;
     flex-direction: column;
 
-    @media (max-width: $nav-mobile-max) {
+    @include media-breakpoint-down(nav) {
         padding-top: $nav-height-mobile;
     }
 
-    @media (min-width: $nav-desktop-min) {
+    @include media-breakpoint-up(nav) {
         padding-top: $nav-height-desktop;
     }
 

@@ -15,7 +15,7 @@
         height: $nav-height-mobile;
         background-color: $c-base;
 
-        @media (min-width: $nav-desktop-min) {
+        @include media-breakpoint-up(nav) {
             display: none;
         }
 
@@ -87,7 +87,7 @@
         opacity: 1;
         transition: max-height 500ms;
 
-        @media (max-width: $nav-mobile-max) {
+        @include media-breakpoint-down(nav) {
             overflow: hidden;
             z-index: 100;
             position: relative;
@@ -98,7 +98,7 @@
             }
         }
 
-        @media (min-width: $nav-desktop-min) {
+        @include media-breakpoint-up(nav) {
             display: flex;
             width: 100%;
             height: $nav-height-desktop;
@@ -107,12 +107,12 @@
         }
 
         &-wrapper {
-            @media (max-width: $nav-mobile-max) {
+            @include media-breakpoint-down(nav) {
                 overflow-y: auto;
                 max-height: calc(100vh - #{$nav-height-mobile});
             }
 
-            @media (min-width: $nav-desktop-min) {
+            @include media-breakpoint-up(nav) {
                 padding: 0px $grid-gutter-width 0px ($half-gutter-width + $desktop-logo-width + $logo-offset);
             }
 
@@ -124,7 +124,7 @@
                 text-transform: uppercase;
                 text-decoration: none;
 
-                @media (max-width: $nav-mobile-max) {
+                @include media-breakpoint-down(nav) {
                     display: block;
                     height: $nav-link-height-mobile;
                     padding: 0px pxrem(10);
@@ -137,7 +137,7 @@
                     }
                 }
 
-                @media (min-width: $nav-desktop-min) {
+                @include media-breakpoint-up(nav) {
                     padding: pxrem(5) pxrem(20);
                     transition: color 150ms;
 
@@ -194,7 +194,7 @@
         display: inline-block;
         width: $mobile-logo-width;
 
-        @media (min-width: $nav-desktop-min) {
+        @include media-breakpoint-up(nav) {
             top: math.div($nav-height-desktop, 2);
             width: $desktop-logo-width;
         }
