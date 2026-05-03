@@ -32,5 +32,5 @@
 @endsection
 
 @section('page-bottom')
-    <script src="/js/app.js?version={{ Version::get() }}"></script>
+    <script type="module" src="/js/app.js?version={{ Version::get() }}"></script>
 @endsection

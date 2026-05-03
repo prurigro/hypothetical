@@ -6,7 +6,8 @@ const gulp = require("gulp"),
     concat = require("gulp-concat"),
     ordered = require("ordered-read-streams"),
     fs = require("fs"),
-    crypto = require("crypto");
+    crypto = require("crypto"),
+    path = require("path");
 
 // Sass and CSS packages
 const { sass } = require("gulp5-sass-plugin"),
@@ -19,12 +20,6 @@ const { sass } = require("gulp5-sass-plugin"),
 const babel = require("gulp-babel"),
     stripDebug = require("gulp-strip-debug"),
     uglify = require("gulp-uglify-es").default;
-
-// Vue packages
-const webpack = require("webpack"),
-    terserWebpackPlugin = require("terser-webpack-plugin"),
-    { VueLoaderPlugin } = require("vue-loader"),
-    path = require("path");
 
 // Determine if gulp has been run with --production
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
@@ -133,86 +128,63 @@ function processCSS(outputFilename, inputFiles) {
 }
 
 // Process vue
-function processVue(outputFilename, inputFile, done) {
-    webpack({
-        mode: isProduction ? "production" : "development",
-        entry: [ `./${inputFile}` ],
-        output: { path: path.resolve(__dirname, "public/js"), filename: `${outputFilename}.js` },
-        devtool: false,
+async function processVue(outputFilename, inputFile, done) {
+    try {
+        // Import libraries
+        const { build } = await import("vite"),
+            vue = (await import("@vitejs/plugin-vue")).default;
 
-        performance: {
-            maxEntrypointSize: 500000,
-            maxAssetSize: 500000
-        },
+        // Build javascript
+        await build({
+            configFile: false,
+            root: __dirname,
+            mode: isProduction ? "production" : "development",
+            logLevel: "error", // don't output info and warnings
+            publicDir: false, // don't copy public files to destination
 
-        resolve: {
-            alias: {
-                vue$: "vue/dist/vue.esm-bundler.js",
-                vuex$: "vuex/dist/vuex.esm-bundler.js",
-                pages: path.resolve(__dirname, "resources/components/pages"),
-                sections: path.resolve(__dirname, "resources/components/sections"),
-                partials: path.resolve(__dirname, "resources/components/partials"),
-                mixins: path.resolve(__dirname, "resources/js/mixins"),
-                imports: path.resolve(__dirname, "resources/js/imports")
-            }
-        },
+            plugins: [
+                vue({ template: { transformAssetUrls: false } })
+            ],
 
-        module: {
-            rules: [
-                {
-                    test: /\.vue$/,
-                    loader: "vue-loader",
-                    options: { presets: [ [ "@babel/preset-env" ] ] }
+            resolve: {
+                alias: {
+                    vue: "vue/dist/vue.esm-bundler.js",
+                    vuex: "vuex/dist/vuex.esm-bundler.js",
+                    pages: path.resolve(__dirname, "resources/components/pages"),
+                    sections: path.resolve(__dirname, "resources/components/sections"),
+                    partials: path.resolve(__dirname, "resources/components/partials"),
+                    mixins: path.resolve(__dirname, "resources/js/mixins"),
+                    imports: path.resolve(__dirname, "resources/js/imports")
+                }
+            },
+
+            build: {
+                outDir: path.resolve(__dirname, "public/js"),
+                emptyOutDir: false,
+                sourcemap: false,
+                minify: isProduction ? "terser" : false,
+
+                terserOptions: {
+                    format: { comments: false },
+                    compress: { drop_console: isProduction }
                 },
 
-                {
-                    test: /\.js$/,
-                    loader: "babel-loader",
-                    options: { presets: [ [ "@babel/preset-env" ] ] }
+                rollupOptions: {
+                    input: path.resolve(__dirname, inputFile),
+                    output: { entryFileNames: `${outputFilename}.js` }
                 }
-            ]
-        },
-
-        plugins: [
-            new webpack.DefinePlugin({ __VUE_OPTIONS_API__: true, __VUE_PROD_DEVTOOLS__: false, __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false }),
-            new VueLoaderPlugin()
-        ],
-
-        optimization: {
-            minimizer: [
-                new terserWebpackPlugin({
-                    extractComments: false,
-
-                    terserOptions: {
-                        format: { comments: false },
-                        compress: { drop_console: isProduction }
-                    }
-                })
-            ]
-        }
-    }, (err, stats) => {
-        let statsJson;
-
-        if (err) {
-            log.error(err.stack || err);
-
-            if (err.details) {
-                log.error(err.details);
             }
-        } else if (stats.hasWarnings() || stats.hasErrors()) {
-            statsString = stats.toString("errors-only", {
-                colors: true,
-                modules: false,
-                children: false,
-                chunks: false,
-                chunkModules: false
-            });
+        });
+    } catch (err) {
+        // Log errors
+        log.error(err.stack || err);
 
-            log.error(statsString);
+        if (err.details) {
+            log.error(err.details);
         }
+    }
 
-        done();
-    });
+    done();
 }
 
 // Process javascript
