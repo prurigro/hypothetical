@@ -1,17 +1,18 @@
-// Sass modules
+// Sass features and settings
 @use "sass:color";
 @use "sass:math";
+@use "@fortawesome/fontawesome-free/scss/variables" with ($font-path: "/fonts");
 
 // Base font size
 $base-font-size: 16px;
 
 // Libraries
 $fa-font-path: "/fonts";
-@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "@fortawesome/fontawesome-free/scss/solid.scss";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
 
 $enable-smooth-scroll: false;
-@import "bootstrap/scss/bootstrap.scss";
+@import "bootstrap/scss/bootstrap";
 
 // Functions
 @import "functions/**/*.scss";
