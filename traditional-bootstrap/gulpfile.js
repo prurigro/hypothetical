@@ -18,7 +18,6 @@ import cleanCSS from "gulp-clean-css";
 // Javascript packages
 import babel from "gulp-babel";
 import stripDebug from "gulp-strip-debug";
-import uglify from "gulp-uglify-es";
 
 // Determine if gulp has been run with --production
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
@@ -27,12 +26,17 @@ const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 const sassPaths = "node_modules",
     autoprefixerSettings = { remove: false, cascade: false };
 
-// Include browsersync when gulp has not been run with --production
-let browserSyncPackage, browserSync;
+// Conditional imports
+let uglifyModule, uglify, browserSyncModule, browserSync;
 
-if (!isProduction) {
-    browserSyncPackage = await import("browser-sync");
-    browserSync = browserSyncPackage.default.create();
+if (isProduction) {
+    // Include uglify when gulp has been run with --production
+    uglifyModule = await import("gulp-uglify-es");
+    uglify = uglifyModule.default.default;
+} else {
+    // Include browsersync when gulp has not been run with --production
+    browserSyncModule = await import("browser-sync");
+    browserSync = browserSyncModule.default.create();
 }
 
 // Environment
