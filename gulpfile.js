@@ -1,25 +1,26 @@
 // Core packages
-const gulp = require("gulp"),
-    minimist = require("minimist"),
-    log = require("fancy-log"),
-    plumber = require("gulp-plumber"),
-    concat = require("gulp-concat"),
-    ordered = require("ordered-read-streams"),
-    fs = require("fs"),
-    crypto = require("crypto"),
-    path = require("path");
+import gulp from "gulp";
+import minimist from "minimist";
+import log from "fancy-log";
+import plumber from "gulp-plumber";
+import concat from "gulp-concat";
+import ordered from "ordered-read-streams";
+import fs from "node:fs";
+import crypto from "node:crypto";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 // Sass and CSS packages
-const { sass } = require("gulp5-sass-plugin"),
-    sassGlob = require("gulp-sass-glob"),
-    postCSS = require("gulp-postcss"),
-    autoprefixer = require("autoprefixer"),
-    cleanCSS = require("gulp-clean-css");
+import { sass } from "gulp5-sass-plugin";
+import sassGlob from "gulp-sass-glob";
+import postCSS from "gulp-postcss";
+import autoprefixer from "autoprefixer";
+import cleanCSS from "gulp-clean-css";
 
 // Javascript packages
-const babel = require("gulp-babel"),
-    stripDebug = require("gulp-strip-debug"),
-    uglify = require("gulp-uglify-es").default;
+import babel from "gulp-babel";
+import stripDebug from "gulp-strip-debug";
+import uglify from "gulp-uglify-es";
 
 // Determine if gulp has been run with --production
 const isProduction = minimist(process.argv.slice(2)).production !== undefined;
@@ -28,11 +29,16 @@ const isProduction = minimist(process.argv.slice(2)).production !== undefined;
 const sassPaths = "node_modules",
     autoprefixerSettings = { remove: false, cascade: false };
 
+// Root directory
+const __filename = fileURLToPath(import.meta.url),
+    __dirname = path.dirname(__filename);
+
 // Include browsersync when gulp has not been run with --production
-let browserSync = undefined;
+let browserSyncPackage, browserSync;
 
 if (!isProduction) {
-    browserSync = require("browser-sync").create();
+    browserSyncPackage = await import("browser-sync");
+    browserSync = browserSyncPackage.default.create();
 }
 
 // Environment
