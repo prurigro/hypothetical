@@ -48,11 +48,11 @@ html {
     width: 100%;
     font-size: $base-font-size;
 
-    @include media-breakpoint-up(xxxl) {
+    @media (min-width: 1950px) {
         font-size: 18px;
     }
 
-    @include media-breakpoint-up(xxxxl) {
+    @media (min-width: 2150px) {
         font-size: 20px;
     }
 }
